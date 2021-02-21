@@ -92,18 +92,33 @@
       transition: background-color $duration ease-in-out;
       background-color: $white;
       width: 100%;
-      padding: 16px;
+      padding: 4px 16px;
+      min-height: 43px;
       box-sizing: border-box;
       text-align: center;
       cursor: pointer;
-
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
 
       > p {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
         transition: color $duration ease-in-out;
+        > svg {
+          width: 24px;
+          margin: 0 8px;
+          transition: fill $duration ease-in-out;
+        }
       }
       &:hover {
         > p {
           color: $white !important;
+          > svg {
+            fill: $white !important;
+          }
         }
       }
 
@@ -120,6 +135,9 @@
         }
         > p {
           color: #179cde;
+          > svg {
+            fill: #179cde;
+          }
         }
         &:hover {
           background-color: #179cde;
@@ -137,6 +155,11 @@
         }
         > p {
           color: #675DA9;
+          > svg {
+            fill: #675DA9;
+            width: 32px;
+            margin: 0 4px 0 6px;
+          }
         }
         &:hover {
           background-color: #675DA9;
@@ -156,6 +179,10 @@
         }
         > p {
           color: #e6683c;
+          > svg {
+            fill: #e6683c;
+            // fill: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+          }
         }
 
         &:hover {
@@ -166,6 +193,28 @@
           background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
           background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
           filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+        }
+      }
+      &.facebook {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          z-index: -1;
+          margin: -2px; /* !importanté */
+          border-radius: inherit; /* !importanté */
+          background: #3b5998; 
+        }
+        > p {
+          color: #3b5998;
+          > svg {
+            fill: #3b5998;
+            width: 32px;
+            margin: 0 4px 0 6px;
+          }
+        }
+        &:hover {
+          background-color: #3b5998;
         }
       }
 

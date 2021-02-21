@@ -1,3 +1,5 @@
+@import '../../palette.scss';
+
 $width: 1200px;
 
 .StudentsPage {
@@ -7,6 +9,9 @@ $width: 1200px;
   align-items: center;
 
   padding-top: 147px;
+  @include mobile {
+    padding-top: 104px;
+  }
 
   .Brief {
     position: relative;
@@ -28,6 +33,9 @@ $width: 1200px;
     }
     @media (max-width: $width / 2) {
       background-position: 70% 60%;
+    }
+    @include mobile {
+      display: none;
     }
 
     &:before {
@@ -66,9 +74,20 @@ $width: 1200px;
     }
   }
 
+  .Brief--mobile {
+    display: none;
+    @include mobile {
+      display: block;
+    }
+    width: 100%;
+    padding: 32px;
+    box-sizing: border-box;
+  }
+
   .StudentsBlock {
     margin: 32px 0;
     width: 100%;
     max-width: $width;
+    overflow: auto;
   }
 }

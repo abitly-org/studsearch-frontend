@@ -34,6 +34,20 @@ const StudentsPage = () => {
           </div>
         </div>
       </div>
+      <div className="Brief--mobile">
+        <H1>{t('students-first-header')}</H1>
+        <br />
+        <br />
+        <ul>
+          <li><P1>{t('main-first-question1')}</P1></li>
+          <li><P1>{t('main-first-question2')}</P1></li>
+          <li><P1>{t('main-first-question3')}</P1></li>
+          <li><P1>{t('main-first-question4')}</P1></li>
+        </ul>
+        <br />
+        <P1>{t('main-first-body1')}</P1>
+        <P1>{t('main-first-body2')}</P1>
+      </div>
       <StudentsBlock>
         <AutoScrollable
           data={React.useMemo(() => Students(), [])}

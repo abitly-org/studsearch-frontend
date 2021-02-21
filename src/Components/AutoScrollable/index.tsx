@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
 import { DataSource } from '../../Helpers/api';
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -18,6 +20,8 @@ export default class AutoScrollable<T> extends React.Component<AutoScrollablePro
     }
 
     atBottom(gap: number = 16): boolean {
+        const parent = ReactDOM.findDOMNode(this);
+        console.log(parent);
         if (root() === null)
             return false;
         return root().scrollTop + root().clientHeight >= root().scrollHeight - gap;

@@ -7,7 +7,7 @@ const ua = {
     'header-tab-students': 'Студенти',
 
 
-    'main-first-header': 'Дізнайся про ВНЗ безпосередньо від студентів',
+    'main-first-header': 'Дізнайся про ВНЗ від студентів, які там навчаються',
     'main-first-question1': 'Яку спеціальність обрати?',
     'main-first-question2': 'Як навчають в університеті?',
     'main-first-question3': 'Які умови в гуртожитку?',
@@ -27,11 +27,13 @@ const ua = {
     'main-fourth-students': 'Студентів',
     'main-fourth-universities': 'Університетів',
     'main-fourth-header': 'В одному місці',
-    'main-fourth-text': 'Обрати заклад вищої освіти - це надзвичайно важливо та складно! Тому ми прагнемо допомогти абітурієнтам. Разом з StudSearch.org абітурієнтам більше не доведеться робити один з найважливіших виборів життя наосліп.',
+    'main-fourth-text1': 'Обрати заклад вищої освіти — це надзвичайно важливо та складно! Тому ми прагнемо допомогти абітурієнтам.',
+    'main-fourth-text2': 'Разом з StudSearch.org абітурієнтам більше не доведеться робити один з найважливіших виборів життя наосліп.',
     'main-fourth-register': 'Стати волонтером',
 
 
-    'students-first-header': 'Каталог студентів'
+    'students-first-header': 'Каталог студентів',
+    'student-contact': 'Зв\'язатись у'
 };
 const ru = {
     'header-login': 'Войти',
@@ -61,10 +63,12 @@ const ru = {
     'main-fourth-students': 'Студентов',
     'main-fourth-universities': 'Университетов',
     'main-fourth-header': 'В одном месте',
-    'main-fourth-text': 'Выбрать высшее учебное заведение — это очень важно и сложно! Поэтому мы стремимся помочь абитуриентам. Вместе с StudSearch.org абитуриентам больше не придется делать один из важнейших выборов жизни вслепую.',
+    'main-fourth-text1': 'Выбрать высшее учебное заведение — это очень важно и сложно! Поэтому мы стремимся помочь абитуриентам.',
+    'main-fourth-text2': 'Вместе с StudSearch.org абитуриентам больше не придется делать один из важнейших выборов жизни вслепую.',
     'main-fourth-register': 'Стать волонтёром',
 
-    'students-first-header': 'Каталог студентов'
+    'students-first-header': 'Каталог студентов',
+    'student-contact': 'Связаться в'
 };
 const en = {
     'header-login': 'Sign in',
@@ -94,10 +98,12 @@ const en = {
     'main-fourth-students': 'Students',
     'main-fourth-universities': 'Universities',
     'main-fourth-header': 'In one place',
-    'main-fourth-text': 'Choosing university is very important and difficult! That\'s why we strive to help future students. Together with StudSearch.org applicants do not need to make one of the most important choices blindly.',
+    'main-fourth-text1': 'Choosing university is very important and difficult! That\'s why we strive to help future students.',
+    'main-fourth-text2': 'Together with StudSearch.org applicants do not need to make one of the most important choices blindly.',
     'main-fourth-register': 'Become a volunteer',
 
-    'students-first-header': 'Students list'
+    'students-first-header': 'Students list',
+    'student-contact': 'Contact in'
 };
 
 export default {

@@ -102,7 +102,9 @@ const MainPage = () => {
           <H1>{t('main-fourth-header')}</H1>
           <br />
           <br />
-          <P2>{t('main-fourth-text')}</P2>
+          <P2>{t('main-fourth-text1')}</P2>
+          <br />
+          <P2>{t('main-fourth-text2')}</P2>
           <br />
           <br />
           <Button to="/register">

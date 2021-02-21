@@ -3,7 +3,7 @@ import UpdateEmitter from './updateemitter';
 export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const baseURL = DEV ? "https://localhost.test" : "https://studsearch.org";
-export const endpoint = DEV ? "http://localhost:2323" : "https://server.studsearch.org:2323";
+export const endpoint = DEV ? "http://192.168.3.7:2323" : "https://server.studsearch.org:2323";
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
@@ -27,6 +27,7 @@ export const __reqjson = async (path: string, query?: any) : Promise<any> => {
     // if (store[path])
     //     return store[path];
     const result = await (await fetch(endpoint + path + makeQuery(query))).json();
+    
     // store[path] = result;
     return result;
 };

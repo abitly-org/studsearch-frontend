@@ -18,7 +18,7 @@ i18next
     interpolation: {
       escapeValue: false
     }
-  }, console.log);
+  });
 
 ReactDOM.render(
   <React.StrictMode>

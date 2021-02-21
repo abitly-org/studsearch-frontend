@@ -7,11 +7,28 @@ div.Header {
   right: 0;
   z-index: 100500;
 
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.1s ease-in-out,
+              box-shadow 0.1s ease-in-out;
   background-color: $white;
   &.atTop {
     background-color: rgba($white, 0.7);
+    box-shadow: none;
+    @include mobile {
+      > div {
+        padding-top: 16px;
+        > .Header_Top {
+          > .Header_Logo {
+            height: 30px;
+            opacity: 1;
+          }
+        }
+        > .Header_Bottom {
+          margin-top: 16px;
+        }
+      }
+    }
   }
+  box-shadow: 0 3px 4px rgba($black, 0.2);
 
   box-sizing: border-box;
 
@@ -24,7 +41,8 @@ div.Header {
     box-sizing: border-box;
 
     @include mobile {
-      padding: 24px 16px 16px 16px;
+      padding: 8px;
+      transition: padding-top 0.1s ease-in-out;
     }
 
     > .Header_Top {
@@ -32,15 +50,18 @@ div.Header {
       align-items: center;
       flex: 1 0 auto;
       @include mobile {
-        flex-direction: column;
-        > * {
-          margin-bottom: 16px;
-          &:last-child { margin-bottom: 0; }
-        }
+        // flex-direction: column;
+        // > * {
+        //   margin-bottom: 16px;
+        //   &:last-child { margin-bottom: 0; }
+        // }
       }
 
       > .Header_Languages {
         flex: 1 0 0;
+        @include mobile {
+          display: none;
+        }
 
         > span {
           cursor: pointer;
@@ -70,7 +91,12 @@ div.Header {
         cursor: pointer;
 
         @include mobile {
-          order: -1;
+          // order: -1;
+          text-align: center;
+          transition: height 0.1s ease-in-out,
+                      opacity 0.1s ease-in-out;
+          height: 0;
+          opacity: 0;
         }
       }
       > .Header_Buttons {
@@ -83,11 +109,19 @@ div.Header {
         > *:first-child {
           margin-right: 14px;
         }
+
+        @include mobile {
+          display: none;
+        }
       }
     }
     > .Header_Bottom {
       flex: 1 0 auto;
       margin-top: 16px;
+      transition: margin-top 0.1s ease-in-out;
+      @include mobile {
+        margin-top: 0;
+      }
     }
   }
 }
