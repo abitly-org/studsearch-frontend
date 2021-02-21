@@ -24,10 +24,10 @@ const Button = ({
   if (to) {
     return (
       <Link
-        component={React.forwardRef((props, ref) => (
-          <a ref={ref} style={style} {...props}>
+        component={React.forwardRef<HTMLAnchorElement>(({ children, className, href, navigate, style} : any, ref) => (
+          <a ref={ref} href={href} style={style} className={className}>
             <RippleEffect />
-            {props.children}
+            {children}
           </a>
         ))}
         className={cx('Button', { outline }, className)}

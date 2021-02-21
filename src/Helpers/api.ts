@@ -180,6 +180,8 @@ export const Students = (regionId?: number, universityId?: number, facultyId?: n
 //     __reqjson(`/link/${studentUUID}/${social}/`);
 export const studentLink = (studentUUID: string, social: string) =>
     `${endpoint}/link/${studentUUID}/${social}/`;
+export const studentPhoto = (studentUUID: string) =>
+    `${endpoint}/photo/${studentUUID}`
 
 export const login = async (socialName: string, data: any) =>
     await __reqjson(`/auth/${socialName}`, {data: JSON.stringify(data)});

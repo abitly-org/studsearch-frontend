@@ -19,13 +19,30 @@
     display: flex;
     flex-direction: row;
 
-    > img {
+    > .StudentPhoto {
       flex: 0 0 auto;
       width: 100px;
       height: 100px;
       border-radius: 50%;
       contain: size;
       margin-right: 12px;
+      overflow: hidden;
+
+      background-color: $lightBlue;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > svg {
+        fill: $primary;
+        width: 45px;
+        height: 45px;
+      }
+
+      > img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     > div {

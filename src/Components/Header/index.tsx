@@ -80,10 +80,10 @@ const HeaderTabs = () => {
 
   return (
     <div className="HeaderTabs">
-      { pages.map(({ textKey, path }) => {
+      { pages.map(({ textKey, path }, key) => {
         const selected = location.pathname === path;
         return (
-          <span className={cx('HeaderTabs_Tab', { selected })}>
+          <span key={key} className={cx('HeaderTabs_Tab', { selected })}>
             <span
               onClick={() => {
                 history.push(path);

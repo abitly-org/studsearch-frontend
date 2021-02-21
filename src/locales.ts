@@ -37,7 +37,14 @@ const ua = {
 
 
     'students-first-header': 'Каталог студентів',
-    'student-contact': 'Зв\'язатись у'
+    'student-contact': 'Зв\'язатись у',
+    'student-course-0': '1 курс',
+    'student-course-1': '2 курс',
+    'student-course-2': '3 курс',
+    'student-course-3': '4 курc',
+    'student-course-4': "5 курс",
+    'student-course-5': "6 курс",
+    'student-course-6': "Випускник"
 };
 const ru = {
     'header-login': 'Войти',
@@ -76,7 +83,14 @@ const ru = {
     'main-fourth-register': 'Стать волонтёром',
 
     'students-first-header': 'Каталог студентов',
-    'student-contact': 'Связаться в'
+    'student-contact': 'Связаться в',
+    'student-course-0': '1 курс',
+    'student-course-1': '2 курс',
+    'student-course-2': '3 курс',
+    'student-course-3': '4 курc',
+    'student-course-4': "5 курс",
+    'student-course-5': "6 курс",
+    'student-course-6': "Выпускник"
 };
 const en = {
     'header-login': 'Sign in',
@@ -115,7 +129,14 @@ const en = {
     'main-fourth-register': 'Become a volunteer',
 
     'students-first-header': 'Students list',
-    'student-contact': 'Contact in'
+    'student-contact': 'Contact in',
+    'student-course-0': '1 course',
+    'student-course-1': '2 course',
+    'student-course-2': '3 course',
+    'student-course-3': '4 course',
+    'student-course-4': "5 course",
+    'student-course-5': "6 course",
+    'student-course-6': "Graduate"
 };
 
 export default {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Courses, Student, studentLink } from '../../Helpers/api';
+import { Courses, Student, studentLink, studentPhoto } from '../../Helpers/api';
 import { P1, P2, P3 } from '../Text';
 
 import Button from '../Button';
@@ -10,10 +10,12 @@ import RippleEffect from '../Button/RippleEffect';
 import specialty from './specialty.svg';
 import university from './university.svg';
 import quote from './quote.svg';
+import { ReactComponent as PhotoPlaceholder } from './photoPlaceholder.svg';
 import { ReactComponent as TelegramIcon } from './telegram.svg';
 import { ReactComponent as InstagramIcon } from './instagram.svg';
 import { ReactComponent as ViberIcon } from './viber.svg';
 import './index.scss';
+import useLoad from '../../Helpers/useLoad';
 
 const withFirstLetterUppercase = (str: string) => {
   str = str?.trim?.();
@@ -38,14 +40,31 @@ const StudentCard = ({ student }: {
     socials.push('viber')
   if (Math.random() > 0.5)
     socials.push('facebook')
+
+  const photoSrc = studentPhoto(student?.uuid);
+  const photo = useLoad(() =>
+    new Promise<HTMLImageElement>((resolve) => {
+      const image = new Image();
+      image.src = photoSrc;
+      image.onload = () => resolve(image);
+      return image;
+    }),
+    [ photoSrc ]
+  );
+
   return (
     <div className="StudentCard">
       <div className="Top">
-        <img src={`https://thispersondoesnotexist.com/image?${student?.uuid}`} />
+        <span className="StudentPhoto">
+          { photo ?
+            <img src={photoSrc} /> :
+            <PhotoPlaceholder />
+          }
+        </span>
         <div>
           <P1>{student?.name}</P1>
           <span className="Course">
-            <P2>{Courses.find(({ id }) => student?.course === id)?.title}</P2>
+            <P2>{t(`student-course-${student?.course}`)}</P2>
           </span>
         </div>
       </div>
