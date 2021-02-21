@@ -1,0 +1,27 @@
+$accent: #FFC13D;
+$primary: #2653AF;
+$sea: #6DB5CA;
+$lightBlue: #CFE5FF;
+$darkBlue: #325D79;
+$black: #3B3C44;
+$grey: #787A87;
+$carrot: #FF7235;
+$white: #FFFFFF;
+
+:export {
+    accent: $accent;
+    primary: $primary;
+    sea: $sea;
+    lightBlue: $lightBlue;
+    darkBlue: $darkBlue;
+    black: $black;
+    grey: $grey;
+    carrot: $carrot;
+    white: $white;
+}
+
+@mixin mobile {
+    @media (max-width: 600px) {
+        @content;       
+    }
+}

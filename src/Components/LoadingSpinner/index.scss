@@ -1,0 +1,56 @@
+.LoadingSpinner {
+  display: inline-block;
+
+  &.xcenter, &.ycenter {
+      display: flex;
+      flex-direction: row;
+  }
+  &.xcenter {
+      justify-content: center;
+  }
+  &.ycenter {
+      width: 100%;
+      height: 100%;
+      align-items: center;
+  }
+
+  > span {
+      padding-bottom: 8px;
+      box-sizing: content-box;
+
+      > svg {
+          animation: spinner_rotator 1.4s linear infinite;
+          transform-origin: center;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+
+          > circle {
+              stroke-dasharray: 187;
+              stroke-dashoffset: 0;
+              transform-origin: center;
+              animation: spinner_dash 1.4s ease-in-out infinite;
+              -webkit-backface-visibility: hidden;
+              backface-visibility: hidden;
+          }
+      }
+  }
+}
+
+
+@keyframes spinner_rotator {
+  0%   { transform: rotate(0deg);   }
+  100% { transform: rotate(270deg); }
+}
+@keyframes spinner_dash {
+  0% {
+      stroke-dashoffset: 187;
+  }
+  50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+  }
+  100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+  }
+}

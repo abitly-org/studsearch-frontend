@@ -1,0 +1,19 @@
+.Page {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.topMargin {
+    padding-top: 147px;
+  }
+
+  > .Page_Container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 1100px;
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,61 @@
+@import '../../palette';
+
+h1, h2, h3, h4, h5, h6, p,
+ul, li,
+button, input {
+  font-family: 'Montserrat', sans-serif;
+}
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  display: inline-block;
+}
+
+h1 { 
+  font-weight: 600;
+  font-size: 50px;
+  color: $black;
+  line-height: 60px;
+}
+
+p.p1 {
+  font-weight: 500;
+  font-size: 18px;
+  color: $black;
+  line-height: 22px;
+}
+p.p2 {
+  font-weight: 500;
+  font-size: 16px;
+  color: $black;
+  line-height: 20px;
+}
+p.p3 {
+  font-weight: 400;
+  font-size: 12px;
+  color: $black;
+  line-height: 20px;
+}
+
+ul {
+  list-style: none;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  li {
+    padding-left: 1.5em;
+    margin: 15px 0;
+    &:before {
+      position: absolute;
+      // content: "•";
+      // font-size: 35px;
+      // color: $carrot;
+      content: "";
+      width: 12px;
+      height: 12px;
+      margin-top: 4px;
+      border-radius: 50%;
+      background-color: $carrot;
+      left: 0;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@import '../../palette';
+
+.Button {
+  position: relative;
+  overflow: hidden;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  padding: 13px;
+  box-sizing: border-box;
+  text-decoration: none;
+  background-color: $accent;
+  border: 1px solid $accent;
+  border-radius: 4px;
+
+  cursor: pointer;
+  outline: none;
+
+  transition: background-color 0.075s ease-in-out,
+              border-color 0.075s ease-in-out;
+
+  &.outline {
+    background-color: $white;
+    &:hover {
+      background-color: mix($accent, $white, 25%);
+    }
+
+    .ripple {
+      background-color: rgba($accent, 0.25);
+    }
+  }
+  
+  &:hover {
+    border-color: mix($white, $accent, 25%);
+    background-color: mix($white, $accent, 25%);
+  }
+
+  user-select: none;
+}

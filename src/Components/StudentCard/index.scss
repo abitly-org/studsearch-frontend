@@ -1,0 +1,175 @@
+@import '../../palette';
+
+.StudentCard {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  width: 100%;
+
+  padding: 16px;
+  box-sizing: border-box;
+
+  border-radius: 4px;
+  box-shadow: -1px 0px 4px rgba(202, 201, 199, 0.4),
+              2px 2px 4px rgba(210, 207, 204, 0.4);
+              // inset 0px -2px 0px $accent;
+
+  > .Top {
+    display: flex;
+    flex-direction: row;
+
+    > img {
+      flex: 0 0 auto;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      contain: size;
+      margin-right: 12px;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      > span.Course {
+        margin-top: 8px;
+        padding: 4px 8px;
+        background-color: $darkBlue;
+        border-radius: 4px;
+        > p {
+          color: $white;
+        }
+      }
+    }
+
+    margin-bottom: 16px;
+  }
+  > .Specialty, > .University {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    > img {
+      flex: 0 0 auto;
+    }
+    > p {
+      margin-top: 2px;
+    }
+  }
+  > .University > img {
+    width: 24px;
+    margin: 8px 12px 0 4px;
+  }
+  > .Specialty > img {
+    width: 32px;
+    margin: 0 8px 0 0px;
+  }
+  > .Bio {
+    position: relative;
+    padding-top: 12px;
+    > .Quote {
+      position: absolute;
+      top: -4px;
+      left: -3px;
+      opacity: 0.075;
+      width: 34px;
+    }
+  }
+
+  > .Socials {
+    margin-top: auto;
+    padding-top: 16px;
+    > a {
+      display: block;
+      position: relative;
+      // overflow: hidden;
+      margin: 8px 0;
+
+      $duration: 0.05s;
+      transition: background-color $duration ease-in-out;
+      background-color: $white;
+      width: 100%;
+      padding: 16px;
+      box-sizing: border-box;
+      text-align: center;
+      cursor: pointer;
+
+
+      > p {
+        transition: color $duration ease-in-out;
+      }
+      &:hover {
+        > p {
+          color: $white !important;
+        }
+      }
+
+      border-radius: 4px;
+      &.telegram {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          z-index: -1;
+          margin: -2px; /* !importanté */
+          border-radius: inherit; /* !importanté */
+          background: #179cde; 
+        }
+        > p {
+          color: #179cde;
+        }
+        &:hover {
+          background-color: #179cde;
+        }
+      }
+      &.viber {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          z-index: -1;
+          margin: -2px; /* !importanté */
+          border-radius: inherit; /* !importanté */
+          background: #675DA9; 
+        }
+        > p {
+          color: #675DA9;
+        }
+        &:hover {
+          background-color: #675DA9;
+        }
+      }
+      &.instagram {
+        background-clip: padding-box; /* !importanté */
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          z-index: -1;
+          margin: -2px; /* !importanté */
+          border-radius: inherit; /* !importanté */
+          background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+        }
+        > p {
+          color: #e6683c;
+        }
+
+        &:hover {
+          &:before {
+            // background: transparent;
+          }
+          background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+          background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+          background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+        }
+      }
+
+      user-select: none;
+    }
+  }
+}

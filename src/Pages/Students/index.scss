@@ -1,0 +1,74 @@
+$width: 1200px;
+
+.StudentsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 147px;
+
+  .Brief {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    max-width: $width;
+
+    background-size: contain;
+    background-position: 100% 60%;
+    background-repeat: no-repeat;
+
+    @media (max-width: $width) {
+      background-size: cover;
+      background-position: 50% 60%;
+      background-repeat: no-repeat;
+    }
+    @media (max-width: $width / 2) {
+      background-position: 70% 60%;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      opacity: 1;
+      transition: opacity 0.2s ease-in-out;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      @media (max-width: $width) {
+        opacity: 0;
+      }
+    }
+
+    > div {
+      width: 100%;
+      max-width: $width;
+
+      > .Info {
+        padding: 64px 100px 64px 32px;
+        max-width: 55%;
+        height: 100%;
+        min-height: 500px;
+        box-sizing: border-box;
+
+        background: linear-gradient(90deg, rgba(255,255,255,1) 65%, rgba(255,255,255,0.5) 90%, rgba(255,255,255,0) 100%);
+
+        @media (max-width: $width * 0.7) {
+          max-width: 80%;
+          background: linear-gradient(90deg, rgba(255,255,255,0.8) 65%, rgba(255,255,255,0.4) 90%, rgba(255,255,255,0) 100%);
+        }
+      }
+    }
+  }
+
+  .StudentsBlock {
+    margin: 32px 0;
+    width: 100%;
+    max-width: $width;
+  }
+}

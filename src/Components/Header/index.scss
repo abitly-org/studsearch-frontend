@@ -1,0 +1,150 @@
+@import '../../palette';
+
+div.Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100500;
+
+  transition: background-color 0.1s ease-in-out;
+  background-color: $white;
+  &.atTop {
+    background-color: rgba($white, 0.7);
+  }
+
+  box-sizing: border-box;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    max-width: 1100px;
+    margin: auto;
+    padding: 33px 16px 16px 16px;
+    box-sizing: border-box;
+
+    @include mobile {
+      padding: 24px 16px 16px 16px;
+    }
+
+    > .Header_Top {
+      display: flex;
+      align-items: center;
+      flex: 1 0 auto;
+      @include mobile {
+        flex-direction: column;
+        > * {
+          margin-bottom: 16px;
+          &:last-child { margin-bottom: 0; }
+        }
+      }
+
+      > .Header_Languages {
+        flex: 1 0 0;
+
+        > span {
+          cursor: pointer;
+          transition: background-color 0.05s ease-in-out;
+          padding: 6px;
+          border-radius: 4px;
+          &:hover {
+            background-color: mix($sea, $white, 25%);
+          }
+          > p {
+            transition: color 0.05s ease-in-out;
+          }
+          &.selected {
+            background-color: $sea;
+            > p {
+              color: $white !important;
+            }
+          }
+          user-select: none;
+        }
+      }
+      > .Header_Logo {
+        flex: 1 0 0;
+        display: flex;
+        justify-content: center;
+
+        cursor: pointer;
+
+        @include mobile {
+          order: -1;
+        }
+      }
+      > .Header_Buttons {
+        flex: 1 0 0;
+
+        display: flex;
+        justify-content: flex-end;
+        
+        margin-left: 14px;
+        > *:first-child {
+          margin-right: 14px;
+        }
+      }
+    }
+    > .Header_Bottom {
+      flex: 1 0 auto;
+      margin-top: 16px;
+    }
+  }
+}
+
+.HeaderTabs {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+
+  user-select: none;
+
+  > span.HeaderTabs_Tab {
+    flex: 1 0 0;
+
+    display: inline-flex;
+    justify-content: center;
+    
+    > span {
+      position: relative;
+      overflow: hidden;
+
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      
+      padding: 6px 7px;
+      transition: border-color 0.1s ease-in-out,
+                  background-color 0.1s ease-in-out;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: mix($accent, $white, 15%);
+      }
+
+      .ripple {
+        background-color: rgba($accent, 0.2);
+      }
+    }
+
+    &.selected {
+      > span {
+        cursor: default;
+        border: 1px solid $accent;
+        &:hover {
+          background-color: $white;
+        }
+      }
+    }
+  }
+
+}
+
+@media (max-width: 600px) {
+  .Header_Buttons_Register {
+    display: none !important;
+  }
+}

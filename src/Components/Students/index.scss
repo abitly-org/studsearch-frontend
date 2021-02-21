@@ -1,0 +1,12 @@
+.StudentsBlock {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 32px;
+  column-gap: 64px;
+
+  .LoadingSpinner {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+}
