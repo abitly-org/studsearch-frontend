@@ -23,6 +23,10 @@ const ua = {
     'main-second-step4': 'Абітурієнт отримує відповіді на питання, які її/його хвилюють',
 
     'main-third-header': 'Ми прагнемо ділитись досвідом з абітурієнтами',
+    'main-third-button_one': 'Ще {{count}} студент',
+    'main-third-button_few': 'Ще {{count}} студента',
+    'main-third-button_many': 'Ще {{count}} студентів',
+    'main-third-button_other': 'Ще {{count}} студентів',
 
     'main-fourth-students': 'Студентів',
     'main-fourth-universities': 'Університетів',
@@ -59,6 +63,10 @@ const ru = {
     'main-second-step4': 'Абитуриент получает ответы на вопросы, которые его волнуют',
 
     'main-third-header': 'Мы стремимся делиться опытом с абитуриентами',
+    'main-third-button_one': 'Ещё {{count}} студент',
+    'main-third-button_few': 'Ещё {{count}} студента',
+    'main-third-button_many': 'Ещё {{count}} студентов',
+    'main-third-button_other': 'Ещё {{count}} студентов',
 
     'main-fourth-students': 'Студентов',
     'main-fourth-universities': 'Университетов',
@@ -94,6 +102,10 @@ const en = {
     'main-second-step4': 'Applicant gets answers to questions he/she is worried about',
 
     'main-third-header': 'We strive to share the experience with future students',
+    'main-third-button_one': '{{count}} more students',
+    'main-third-button_few': '{{count}} more students',
+    'main-third-button_many': '{{count}} more students',
+    'main-third-button_other': '{{count}} more students',
 
     'main-fourth-students': 'Students',
     'main-fourth-universities': 'Universities',

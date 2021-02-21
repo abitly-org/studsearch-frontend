@@ -119,6 +119,17 @@ $width: 1200px;
       text-align: center;
       margin-bottom: 32px;
     }
+
+    > .StudentsBlock {
+      text-align: left;
+    }
+
+    text-align: center;
+    > .Button {
+      // display: block;
+      margin: 16px 0;
+
+    }
   }
 
   .Fourth {
