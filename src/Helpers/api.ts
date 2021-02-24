@@ -3,14 +3,17 @@ import UpdateEmitter from './updateemitter';
 export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const baseURL = DEV ? "https://localhost.test" : "https://studsearch.org";
-export const endpoint = DEV ? "http://192.168.3.7:2323" : "https://server.studsearch.org:2323";
+export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://server.studsearch.org:2323";
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
 const makeQuery = (query?: {[key: string]: any}) => {
     if (typeof query !== 'object')
         return '';
-    return '?' + Object.keys(query).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(query[key])).join('&');
+    return '?' + Object.entries(query)
+                        .filter(([key, value]) => value !== undefined)
+                        .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
+                        .join('&');
 };
 export const getQuery = (name : string, url : string = window.location.href) => {
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -22,7 +25,7 @@ export const getQuery = (name : string, url : string = window.location.href) => 
 };
 
 
-const store : {[path: string]: any} = {};
+// const store : {[path: string]: any} = {};
 export const __reqjson = async (path: string, query?: any) : Promise<any> => {
     // if (store[path])
     //     return store[path];
