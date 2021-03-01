@@ -23,6 +23,7 @@ import useLoad from '../../Helpers/useLoad';
 import StudentsBlock from '../../Components/Students';
 import StudentCard from '../../Components/StudentCard';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import Header from "../../Components/Header";
 
 var plural = function(k : string, n : number){
   var postfix = '_other';
@@ -45,12 +46,13 @@ var plural = function(k : string, n : number){
 
 const MainPage = () => {
   const { i18n, t } = useTranslation();
-  
+
   const stat = useLoad(() => count());
   const firstStudents = useLoad(() => getStudents(3, 0));
 
   return (
     <div className="MainPage">
+      <Header/>
       <div className="First" style={{ backgroundImage: `url(${bg})` }}>
         <div>
           <div className="Info">
