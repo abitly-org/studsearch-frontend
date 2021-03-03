@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
 import {
   Courses,
   University,
@@ -8,111 +8,113 @@ import {
   getUniversities,
 } from "../../Helpers/api";
 
-import { setUniversitiesList } from "../OptionsList";
+import { OptionUniversity } from "../Options";
 
 import "./index.scss";
 
 import arrowImg from "./Vector.png";
 
-export function RegionDropDown(props: Region[]) {}
-
 type IUniversityState = {
   clazzName: string;
   universities: University[];
-  query: string;
   itemValue: string;
 };
 
-type IUniversityProp = {
-  // universities: University[];
-  // query: string;
-  // clickedItemValue: string;
-};
+type IUniversityProp = {};
 
-export default class UniversityDropDown extends Component<
-  IUniversityProp,
-  IUniversityState
-> {
-  constructor(props: IUniversityProp) {
-    super(props);
-    this.state = {
-      clazzName: "list-inactive",
-      universities: [],
-      query: "",
-      itemValue: "",
-    };
-    this.onFocusDropdown = this.onFocusDropdown.bind(this);
-    this.onBlurDropdown = this.onBlurDropdown.bind(this);
-    this.onArrowClick = this.onArrowClick.bind(this);
-    this.onClickedItemValue = this.onClickedItemValue.bind(this);
-  }
+export default function UniversityDropDown(props: IUniversityProp) {
+  // constructor(props: IUniversityProp) {
+  //   super(props);
+  //   this.state = {
+  //     clazzName: "list-inactive",
+  //     universities: [],
+  //     itemValue: "",
+  //   };
+  //   this.onFocusDropdown = this.onFocusDropdown.bind(this);
+  //   this.onBlurDropdown = this.onBlurDropdown.bind(this);
+  //   this.onArrowClick = this.onArrowClick.bind(this);
+  //   this.onClickedItemValue = this.onClickedItemValue.bind(this);
+  //   this.onQueryChange = this.onQueryChange.bind(this);
+  // }
 
-  componentDidMount() {
-    getUniversities("льо", 2, 10, 0).then((universities) => {
-      this.setState({
-        universities: universities,
-      });
+  // componentDidMount() {
+
+  // }
+
+  // componentDidUpdate() {
+
+  // }
+
+  const [clazzName, toggleClassName] = useState("list-inactive");
+  const [universities, setUniversities] = useState([
+    { id: 0, name: "", studentsCount: 0 },
+  ]);
+  const [itemValue, setItemValue] = useState("");
+
+  function onFocusDropdown() {
+    getUniversities("", undefined, 50, 0).then((universities) => {
+      setUniversities(universities);
+      toggleClassName("list-active");
     });
   }
-  onFocusDropdown() {
-    this.setState({
-      clazzName: "list-active",
-    });
+
+  function onBlurDropdown() {
+    // toggleClassName("list-inactive");
   }
 
-  onBlurDropdown() {
-    // this.setState({
-    //   clazzName: "list-inactive",
-    // });
-  }
-
-  onArrowClick() {
-    // if (this.state.clazzName === "list-inactive") {
-    //   this.onFocusDropdown();
+  function onArrowClick() {
+    // if (clazzName === "list-inactive") {
+    //   onFocusDropdown();
     // } else {
-    //   this.onBlurDropdown();
+    //   onBlurDropdown();
     // }
   }
-  onClickedItemValue(event: any) {
-    this.setState({
-      itemValue: event.target.textContent,
-    });
+  function onClickedItemValue(value: string) {
+    console.log("Clicked",value);
+    setItemValue(value);
   }
 
-  render() {
-    const { universities, query } = this.state;
-
-    // console.log("ClickedVal", this.state.itemValue)// remove
-
-    return (
-      <div className="dropdown">
-        <div className="input-block">
-          <input
-            className="input"
-            type="text"
-            placeholder="Вищий навчальний заклад"
-            defaultValue={this.state.itemValue}
-            onFocus={this.onFocusDropdown}
-            onBlur={this.onBlurDropdown}
-          />
-          <img
-            src={arrowImg}
-            alt="arrow"
-            className="arrow"
-            onClick={this.onArrowClick}
-          />
-        </div>
-
-        <div className={`option-list ${this.state.clazzName}`}>
-          {setUniversitiesList(universities, query, this.onClickedItemValue)}
-        </div>
-      </div>
+  function onQueryChange(event: any) {
+    getUniversities(event.target.value, undefined, 50, 0).then(
+      (universities) => {
+        setUniversities(universities);
+      }
     );
   }
+
+  const dropdownItems = universities.map((university) => {
+    const { id, name, studentsCount } = university;
+    return (
+      <OptionUniversity
+        key={id}
+        value={name}
+        studentsCount={studentsCount}
+        onClickedItemValue={onClickedItemValue}
+      />
+    );
+  });
+
+  return (
+    <div className="dropdown">
+      <div className="input-block">
+        <input
+          className="input"
+          type="text"
+          placeholder="Вищий навчальний заклад"
+          defaultValue={itemValue}
+          onFocus={onFocusDropdown}
+          onBlur={onBlurDropdown}
+          onChange={onQueryChange}
+        />
+        <img
+          src={arrowImg}
+          alt="arrow"
+          className="arrow"
+          onClick={onArrowClick}
+        />
+      </div>
+
+      <div className={`option-list ${clazzName}`}>{dropdownItems}</div>
+    </div>
+  );
 }
-
-export function FacultyDropDown(props: Faculty[]) {}
-
-export function SpecialityDropDown(props: Speciality[]) {}
-
-export function CourseDropDown() {}

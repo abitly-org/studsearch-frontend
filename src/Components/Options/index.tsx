@@ -19,18 +19,18 @@ export function OptionRegion(props: RegionProps) {
 type UniversityProps = {
   value: string;
   studentsCount: number;
-  onUniversityClicked:  ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined
+  onClickedItemValue:  Function
 };
 
 export function OptionUniversity(props: UniversityProps) {
-
+  const {value,  studentsCount, onClickedItemValue} = props;
 
   return (
-    <div className="option" onClick={props.onUniversityClicked}>
+    <div className="option" onClick={() => { onClickedItemValue(value) }}>
       <span className="text">{props.value}</span>
       <span className="count-block">
         <span className="icon"> 🎓</span>
-        <span className="count">{props.studentsCount}</span>
+        <span className="count">{studentsCount}</span>
       </span>
     </div>
   );
