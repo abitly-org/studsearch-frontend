@@ -15,7 +15,7 @@ import {
   DataSource,
 } from "..//..//Helpers/api";
 
-import { UniversityDropDown } from "../DropDown";
+import UniversityDropDown from "../DropDown";
 
 type IFormState = {
   values: {
@@ -26,6 +26,7 @@ type IFormState = {
     specialtiesValue: string;
     courseValue: string;
   };
+
   universities: University[];
   faculty: string[];
   specialties: string[];
@@ -33,10 +34,14 @@ type IFormState = {
   courses: string[];
 };
 
-type IFormProps = {};
+type IFormProps = {
+  // universities: University[];
+  // query: string;
+  // clickedItemValue: string;
+};
 
 export default class Form extends Component<IFormProps, IFormState> {
-  constructor(props: IForm) {
+  constructor(props: IFormProps) {
     super(props);
     // this.handleChange = this.handleChange.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,22 +73,20 @@ export default class Form extends Component<IFormProps, IFormState> {
   //   getUniversities().then((universities) => {});
   // }
 
-  componentDidMount() {
-    //  getRegions().then(regions => {
-    //    console.log(regions)
-    //  })
-    getUniversities("", 1, 10, 0).then((universities) => {
-      console.log("in setState", universities);
-
-      this.setState({
-        universities: universities,
-      });
-    });
-  }
+  // componentDidMount() {
+  //   //  getRegions().then(regions => {
+  //   //    console.log(regions)
+  //   //  })
+  //   getUniversities("", 1, 10, 0).then((universities) => {
+  //     this.setState({
+  //       universities: universities,
+  //     });
+  //   });
+  // }
 
   render() {
     const { universities } = this.state;
-    console.log("in form", universities);
+
     return (
       <>
         <div>
@@ -103,7 +106,7 @@ export default class Form extends Component<IFormProps, IFormState> {
             // onChange={this.handleChange}
           ></input>
         </div>
-        {UniversityDropDown(universities)}
+        <UniversityDropDown />
       </>
     );
   }

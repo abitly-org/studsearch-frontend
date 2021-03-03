@@ -7,9 +7,7 @@
   margin-top: 5px;
   box-sizing: border-box;
   max-width: 730px;
-  max-height: 246px;
   background: #ffffff;
-  border: 2px solid #d6ccc4;
   overflow-y: scroll;
 
   font-family: Montserrat;
@@ -20,21 +18,39 @@
   color: #3b3c44;
 }
 
-.option-list::-webkit-scrollbar { width: 4px; height: 3px;}
-.option-list::-webkit-scrollbar-track {  background-color: #999;}
-.option-list::-webkit-scrollbar-track-piece { background-color: #ffffff;}
-.option-list::-webkit-scrollbar-thumb {background-color: #2653af; border-radius: 5px;}
-.option-list::-webkit-scrollbar-corner { background-color: #999;}
-.option-list::-webkit-resizer { background-color: #666;}
+.list-inactive {
+  height: 0;
+  border: none;
+  transition: all 0.3s ease-out;
+}
+
+.list-active {
+  max-height: 246px;
+  border: 2px solid #d6ccc4;
+  transition: all 0.3s ease-out;
+}
+
+.option-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.option-list::-webkit-scrollbar-thumb {
+  background-color: #2653af;
+  border-radius: 5px;
+}
 
 .input {
-  max-width: 730px;
+  width: 100%;
   height: 49px;
   box-sizing: border-box;
   border: none;
   border-bottom: 2px solid#a1a1a1;
   outline: 0;
   outline-offset: 0;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
 }
 
 .input:focus {
@@ -53,4 +69,20 @@
 
   color: #787a87;
   transform: translate(22px, -10px);
+}
+
+.arrow {
+  position: absolute;
+  width: 16px;
+  height: 10px;
+  right: 29px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.input-block {
+  max-width: 730px;
+  height: 49px;
+  position: relative;
+ 
 }

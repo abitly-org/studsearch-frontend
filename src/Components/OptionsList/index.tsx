@@ -9,17 +9,26 @@ import {
 
 import { OptionUniversity } from "../Options";
 
-export function setUniversitiesList(universities: University[]) {
+export function setUniversitiesList(
+  universities: University[],
+  query: string,
+  onGetItemValue: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined
+) {
+  // function onUniversityClicked(event: any) {
+  //   console.log(event.target.textContent);
+  //   clickedItemValue = event.target.textContent;
+  // }
 
-  console.log("univers",universities);
-
-  const options = universities.map((university) => {
+  const universitiesList: University[] = !Array.isArray(universities)
+    ? Object.values(universities)
+    : universities;
+  const options = universitiesList.map((university) => {
     return (
       <OptionUniversity
         key={university.id}
         value={university.name}
-        imgSrc=""
         studentsCount={university.studentsCount}
+        onUniversityClicked={onGetItemValue}
       />
     );
   });
