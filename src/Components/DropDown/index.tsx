@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Courses,
   University,
@@ -14,42 +14,14 @@ import "./index.scss";
 
 import arrowImg from "./Vector.png";
 
-type IUniversityState = {
-  clazzName: string;
-  universities: University[];
-  itemValue: string;
-};
-
 type IUniversityProp = {};
 
 export default function UniversityDropDown(props: IUniversityProp) {
-  // constructor(props: IUniversityProp) {
-  //   super(props);
-  //   this.state = {
-  //     clazzName: "list-inactive",
-  //     universities: [],
-  //     itemValue: "",
-  //   };
-  //   this.onFocusDropdown = this.onFocusDropdown.bind(this);
-  //   this.onBlurDropdown = this.onBlurDropdown.bind(this);
-  //   this.onArrowClick = this.onArrowClick.bind(this);
-  //   this.onClickedItemValue = this.onClickedItemValue.bind(this);
-  //   this.onQueryChange = this.onQueryChange.bind(this);
-  // }
-
-  // componentDidMount() {
-
-  // }
-
-  // componentDidUpdate() {
-
-  // }
-
   const [clazzName, toggleClassName] = useState("list-inactive");
   const [universities, setUniversities] = useState([
     { id: 0, name: "", studentsCount: 0 },
   ]);
-  const [itemValue, setItemValue] = useState("");
+  const [query, setQuery] = useState("");
 
   function onFocusDropdown() {
     getUniversities("", undefined, 50, 0).then((universities) => {
@@ -59,27 +31,27 @@ export default function UniversityDropDown(props: IUniversityProp) {
   }
 
   function onBlurDropdown() {
-    // toggleClassName("list-inactive");
+    toggleClassName("list-inactive");
   }
 
   function onArrowClick() {
-    // if (clazzName === "list-inactive") {
-    //   onFocusDropdown();
-    // } else {
-    //   onBlurDropdown();
-    // }
+    if (clazzName === "list-inactive") {
+      onFocusDropdown();
+    } else {
+      onBlurDropdown();
+    }
   }
   function onClickedItemValue(value: string) {
-    console.log("Clicked",value);
-    setItemValue(value);
+    setQuery(value);
   }
 
   function onQueryChange(event: any) {
-    getUniversities(event.target.value, undefined, 50, 0).then(
+    getUniversities(event.target.value, undefined, 10, 0).then(
       (universities) => {
         setUniversities(universities);
       }
     );
+    setQuery(event.target.value);
   }
 
   const dropdownItems = universities.map((university) => {
@@ -101,7 +73,7 @@ export default function UniversityDropDown(props: IUniversityProp) {
           className="input"
           type="text"
           placeholder="Вищий навчальний заклад"
-          defaultValue={itemValue}
+          value={query}
           onFocus={onFocusDropdown}
           onBlur={onBlurDropdown}
           onChange={onQueryChange}
@@ -113,7 +85,6 @@ export default function UniversityDropDown(props: IUniversityProp) {
           onClick={onArrowClick}
         />
       </div>
-
       <div className={`option-list ${clazzName}`}>{dropdownItems}</div>
     </div>
   );

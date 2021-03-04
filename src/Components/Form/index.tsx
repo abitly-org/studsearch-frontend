@@ -35,17 +35,12 @@ type IFormState = {
 };
 
 type IFormProps = {
-  // universities: University[];
-  // query: string;
-  // clickedItemValue: string;
+  
 };
 
 export default class Form extends Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    // this.setUniversities = this.setUniversities.bind(this);
 
     this.state = {
       values: {
@@ -64,30 +59,10 @@ export default class Form extends Component<IFormProps, IFormState> {
     };
   }
 
-  // handleChange(event: { target: { value: any } }) {
-  //   console.log(event.target.value);
-  //    this.setState({ nameValue: event.target.value });
-  // }
-
-  // setUniversities() {
-  //   getUniversities().then((universities) => {});
-  // }
-
-  // componentDidMount() {
-  //   //  getRegions().then(regions => {
-  //   //    console.log(regions)
-  //   //  })
-  //   getUniversities("", 1, 10, 0).then((universities) => {
-  //     this.setState({
-  //       universities: universities,
-  //     });
-  //   });
-  // }
+  
 
   render() {
-    const { universities } = this.state;
-
-    return (
+      return (
       <>
         <div>
           <input
@@ -95,7 +70,7 @@ export default class Form extends Component<IFormProps, IFormState> {
             type="text"
             className=" "
             placeholder="name"
-            // onChange={this.handleChange}
+            
           ></input>
 
           <input
@@ -103,10 +78,10 @@ export default class Form extends Component<IFormProps, IFormState> {
             type="text"
             className=" "
             placeholder="surname"
-            // onChange={this.handleChange}
+            
           ></input>
         </div>
-        <UniversityDropDown />
+          <UniversityDropDown />
       </>
     );
   }
