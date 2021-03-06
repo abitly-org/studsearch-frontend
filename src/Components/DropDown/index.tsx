@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
+import classnames from "classnames";
 import {
   Courses,
   University,
@@ -16,31 +17,51 @@ import arrowImg from "./Vector.png";
 
 type IUniversityProp = {};
 
+const startUniversitiesValue: University[] = [];
+
 export default function UniversityDropDown(props: IUniversityProp) {
   const [clazzName, toggleClassName] = useState("list-inactive");
-  const [universities, setUniversities] = useState([
-    { id: 0, name: "", studentsCount: 0 },
-  ]);
+  const [universities, setUniversities] = useState(startUniversitiesValue);
   const [query, setQuery] = useState("");
+  // const [offcet.setOffset] = useState(0);
+
+  const isBottom = useRef(false);
+  const offset = useRef(0);
+
+  const count = 10;
+
+  let optionList: HTMLDivElement;
+
+  useEffect(() => {
+    // console.log("effect");
+    getUniversities("", undefined, count, offset.current).then((universities) => {
+      setUniversities(universities);
+    });
+   
+  }, []);
 
   function onFocusDropdown() {
-    getUniversities("", undefined, 50, 0).then((universities) => {
-      setUniversities(universities);
-      toggleClassName("list-active");
-    });
+    // getUniversities("", undefined, count, offset.current).then((universities) => {
+    //   setUniversities(universities);
+    // });
+    toggleClassName("list-active");
   }
 
   function onBlurDropdown() {
-    toggleClassName("list-inactive");
+    setTimeout(() => {
+      toggleClassName("list-inactive");
+    },300)
+    // toggleClassName("list-inactive");
   }
 
   function onArrowClick() {
-    if (clazzName === "list-inactive") {
-      onFocusDropdown();
-    } else {
-      onBlurDropdown();
-    }
+    // if (clazzName === "list-inactive") {
+    //   onFocusDropdown();
+    // } else {
+    //   onBlurDropdown();
+    // }
   }
+
   function onClickedItemValue(value: string) {
     setQuery(value);
   }
@@ -52,6 +73,40 @@ export default function UniversityDropDown(props: IUniversityProp) {
       }
     );
     setQuery(event.target.value);
+  }
+
+  function onWheelScroll(event: React.WheelEvent) {
+    dropdownListScroll();
+  }
+
+  function dropdownListScroll() {
+    const { scrollTop, scrollHeight, clientHeight } = optionList;
+    if (scrollHeight - scrollTop === clientHeight && !isBottom.current) {
+     
+      isBottom.current = true;
+      offset.current += count;
+      console.log(isBottom.current);
+      console.log(offset.current);
+
+      getUniversities(query, undefined, count, offset.current).then(
+        (newUniversities) => {
+          let currentUniversities: University[] = [];
+          if (universities.length !== 0) {
+            currentUniversities = [...universities, ...newUniversities];
+          } else {
+            currentUniversities = newUniversities;
+          }
+  
+          console.log("Curr", currentUniversities);
+          setUniversities(currentUniversities);
+          isBottom.current = false;
+        }
+      );
+    }
+  }
+
+  function setOptionListElement(element: HTMLDivElement) {
+    optionList = element;
   }
 
   const dropdownItems = universities.map((university) => {
@@ -67,7 +122,7 @@ export default function UniversityDropDown(props: IUniversityProp) {
   });
 
   return (
-    <div className="dropdown">
+    <div className="dropdown" onWheel={onWheelScroll}>
       <div className="input-block">
         <input
           className="input"
@@ -85,7 +140,9 @@ export default function UniversityDropDown(props: IUniversityProp) {
           onClick={onArrowClick}
         />
       </div>
-      <div className={`option-list ${clazzName}`}>{dropdownItems}</div>
+      <div className={`option-list ${clazzName}`} ref={setOptionListElement}>
+        {dropdownItems}
+      </div>
     </div>
   );
 }

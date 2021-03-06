@@ -26,10 +26,13 @@ export function OptionUniversity(props: UniversityProps) {
   const {value,  studentsCount, onClickedItemValue} = props;
 
   return (
-    <div className="option" onClick={() => { onClickedItemValue(value) }}>
+    <div className="option" onClick={() => {
+      onClickedItemValue(value)
+      console.log("clicked")
+    }}>
       <span className="text">{props.value}</span>
       <span className="count-block">
-        <span className="icon"> 🎓</span>
+        <span className="icon">🎓</span>
         <span className="count">{studentsCount}</span>
       </span>
     </div>
