@@ -14,16 +14,16 @@ import { OptionUniversity } from "../Options";
 import "./index.scss";
 
 import arrowImg from "./Vector.png";
+import classNames from "classnames";
 
 type IUniversityProp = {};
 
 const startUniversitiesValue: University[] = [];
 
 export default function UniversityDropDown(props: IUniversityProp) {
-  const [clazzName, toggleClassName] = useState("list-inactive");
+  const [isOpen, setIsOpen] = useState(false);
   const [universities, setUniversities] = useState(startUniversitiesValue);
   const [query, setQuery] = useState("");
-  // const [offcet.setOffset] = useState(0);
 
   const isBottom = useRef(false);
   const offset = useRef(0);
@@ -33,25 +33,29 @@ export default function UniversityDropDown(props: IUniversityProp) {
   let optionList: HTMLDivElement;
 
   useEffect(() => {
-    // console.log("effect");
-    getUniversities("", undefined, count, offset.current).then((universities) => {
-      setUniversities(universities);
-    });
-   
+    getUniversities("", undefined, count, offset.current).then(
+      (universities) => {
+        setUniversities(universities);
+      }
+    );
   }, []);
 
+  const dropdownStyle = classNames(
+    "option-list",
+    {
+      "list-active": isOpen,
+      "list-inactive": !isOpen,
+    }
+  );
+
   function onFocusDropdown() {
-    // getUniversities("", undefined, count, offset.current).then((universities) => {
-    //   setUniversities(universities);
-    // });
-    toggleClassName("list-active");
+    setIsOpen(true);
   }
 
   function onBlurDropdown() {
     setTimeout(() => {
-      toggleClassName("list-inactive");
-    },300)
-    // toggleClassName("list-inactive");
+      setIsOpen(false);
+    }, 300);
   }
 
   function onArrowClick() {
@@ -82,7 +86,6 @@ export default function UniversityDropDown(props: IUniversityProp) {
   function dropdownListScroll() {
     const { scrollTop, scrollHeight, clientHeight } = optionList;
     if (scrollHeight - scrollTop === clientHeight && !isBottom.current) {
-     
       isBottom.current = true;
       offset.current += count;
       console.log(isBottom.current);
@@ -96,7 +99,7 @@ export default function UniversityDropDown(props: IUniversityProp) {
           } else {
             currentUniversities = newUniversities;
           }
-  
+
           console.log("Curr", currentUniversities);
           setUniversities(currentUniversities);
           isBottom.current = false;
@@ -140,7 +143,7 @@ export default function UniversityDropDown(props: IUniversityProp) {
           onClick={onArrowClick}
         />
       </div>
-      <div className={`option-list ${clazzName}`} ref={setOptionListElement}>
+      <div className={dropdownStyle} ref={setOptionListElement}>
         {dropdownItems}
       </div>
     </div>
