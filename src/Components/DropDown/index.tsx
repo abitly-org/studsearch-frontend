@@ -40,13 +40,12 @@ export default function UniversityDropDown(props: IUniversityProp) {
     );
   }, []);
 
-  const dropdownStyle = classNames(
-    "option-list",
-    {
-      "list-active": isOpen,
-      "list-inactive": !isOpen,
-    }
-  );
+  const dropdownStyle = classNames("option-list", {
+    "list-active": isOpen,
+    "list-inactive": !isOpen,
+  });
+
+  const arrowStyle = classNames("arrow", { "arrow-rotate": isOpen });
 
   function onFocusDropdown() {
     setIsOpen(true);
@@ -59,11 +58,7 @@ export default function UniversityDropDown(props: IUniversityProp) {
   }
 
   function onArrowClick() {
-    // if (clazzName === "list-inactive") {
-    //   onFocusDropdown();
-    // } else {
-    //   onBlurDropdown();
-    // }
+    setIsOpen(!isOpen);
   }
 
   function onClickedItemValue(value: string) {
@@ -139,7 +134,7 @@ export default function UniversityDropDown(props: IUniversityProp) {
         <img
           src={arrowImg}
           alt="arrow"
-          className="arrow"
+          className={arrowStyle}
           onClick={onArrowClick}
         />
       </div>

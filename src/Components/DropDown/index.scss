@@ -30,6 +30,7 @@
   transition: all 0.3s ease-out;
 }
 
+
 .option-list::-webkit-scrollbar {
   width: 4px;
 }
@@ -78,6 +79,14 @@
   right: 29px;
   top: 10px;
   cursor: pointer;
+
+  transform: rotate(0);
+  transition: transform 0.3s ease-out;
+}
+
+.arrow-rotate{
+  transform: rotate(0.5turn);
+  transition: transform 0.3s ease-out;
 }
 
 .input-block {
