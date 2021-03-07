@@ -20,8 +20,8 @@ export default function RegistrationForm() {
     }
 
     const {
-        loading, error, items, lastListElementRef
-    } = useLoadPagination(getStudents(10, 0));
+        loading, error, items, dispatch
+    } = useLoadPagination((count, offset) => getStudents(count, offset), []);
 
     const showItems = () => {
         return (// @ts-ignore
@@ -31,7 +31,7 @@ export default function RegistrationForm() {
                         const {name} = element;
                         if (items.length === index + 1) {
                             return (// @ts-ignore
-                                <div ref={lastListElementRef} style= {divStyle}
+                                <div style= {divStyle}
                                      key={index}>
                                     {name}
                                 </div>
