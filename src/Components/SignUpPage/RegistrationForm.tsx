@@ -1,19 +1,56 @@
 import React from "react";
-import {DataSource, getRegions} from "../../Helpers/api";
+import {DataSource, getRegions, getStudents} from "../../Helpers/api";
+import useLoadPagination from "../LoadPagination/useLoadPagination";
 
 export default function RegistrationForm() {
-    // const {
-    //     RegionDropdown
-    //     UniversityDropdown
-    //     FacultyDropdown
-    //     SpecialityDropdown
-    //     students
-    // } = api;
+    const divStyle = {
+        color: 'blue',
+        height: '40px',
+        textAlign: 'center',
+        padding: '3px 10px',
+        background: '#eee',
+        marginTop: '15px'
+    };
+    const containerStyle = {
+        maxWidth: '500px',
+        maxHeight: '300px',
+        margin: '0 auto',
+        overflow: 'auto',
+        border: '1px solid black'
+    }
 
-    getRegions().then( res =>  console.log(res.regions));
-    // getRegions().then((res) => res.regions.map(el => console.log(el.name)));
+    const {
+        loading, error, items, lastListElementRef
+    } = useLoadPagination(getStudents(10, 0));
+
+    const showItems = () => {
+        return (// @ts-ignore
+            <React.Fragment>
+                <div style= {containerStyle}>
+                    {items.map((element: any, index)  => {
+                        const {name} = element;
+                        if (items.length === index + 1) {
+                            return (// @ts-ignore
+                                <div ref={lastListElementRef} style= {divStyle}
+                                     key={index}>
+                                    {name}
+                                </div>
+                            );}
+                        else {
+                            // @ts-ignore
+                            return <div   style= {divStyle} key={index}>{name}</div>
+                        }
+                    })}
+                    <div>{loading && 'Loading...'}</div>
+                    <div>{error && 'Error'}</div>
+                </div>
+            </React.Fragment>
+        );
+    };
+
 
     return <div className={`SignForm`}>
+        {showItems()}
 
         <div className={`SureNameForm`}>
             <input type={`text`} placeholder={`Ім’я`}/>
