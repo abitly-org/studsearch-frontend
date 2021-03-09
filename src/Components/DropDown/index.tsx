@@ -28,15 +28,16 @@ export default function DropDown(props: DropdownProp) {
   const isScrollBottom = useRef(false);
 
   function dropdownListScroll(optionList: HTMLDivElement) {
-    optionList.addEventListener("scroll", () => {
-      const { scrollTop, scrollHeight, clientHeight } = optionList;
-      if (scrollHeight - scrollTop === clientHeight) {
-        isScrollBottom.current = true;
-      }
-    });
+    if (optionList) {
+      optionList.addEventListener("scroll", () => {
+        const { scrollTop, scrollHeight, clientHeight } = optionList;
+        if (scrollHeight - scrollTop === clientHeight) {
+          isScrollBottom.current = true;
+        }
+      });
+    }
   }
 
-  
   const { dataItems, placeholderValue, loading } = props;
   const dropdownItems = dataItems.map((item: Item) => {
     const { id, name, studentsCount, universitiesCount, code, title } = item;
