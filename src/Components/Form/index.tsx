@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Component } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IForm } from "../../interfaces";
 import Input from "../Input";
 import {
@@ -15,74 +15,49 @@ import {
   DataSource,
 } from "..//..//Helpers/api";
 
-import UniversityDropDown from "../DropDown";
+import DropDown from "../DropDown";
 
-type IFormState = {
-  values: {
-    nameValue: string;
-    surnameValue: string;
-    regionValue: string;
-    facultyValue: string;
-    specialtiesValue: string;
-    courseValue: string;
-  };
+type FormProps = {};
 
-  universities: University[];
-  faculty: string[];
-  specialties: string[];
-  regions: string[];
-  courses: string[];
-};
+const startUniversitiesValue: University[] = [];
 
-type IFormProps = {
-  
-};
-
-export default class Form extends Component<IFormProps, IFormState> {
-  constructor(props: IFormProps) {
-    super(props);
-
-    this.state = {
-      values: {
-        nameValue: "",
-        surnameValue: "",
-        regionValue: "",
-        facultyValue: "",
-        specialtiesValue: "",
-        courseValue: "",
-      },
-      regions: [],
-      universities: [],
-      faculty: [],
-      specialties: [],
-      courses: [],
+export default function Form(props: FormProps) {
+  const [universities, setUniversities] = useState(startUniversitiesValue);
+  const isMounted = useRef(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (!isMounted.current) {
+      getUniversities("", undefined, 10, 0).then((universities) => {
+        if (!universities) {
+          setLoading(true);
+        } else {
+          setLoading(false);
+        }
+        setUniversities(universities);
+      });
+    }
+    return () => {
+      isMounted.current = true;
     };
-  }
+  });
 
-  
+  return (
+    <>
+      <div>
+        <input name="name" type="text" className=" " placeholder="name"></input>
+        <input
+          name="surname"
+          type="text"
+          className=" "
+          placeholder="surname"
+        ></input>
+      </div>
 
-  render() {
-      return (
-      <>
-        <div>
-          <input
-            name="name"
-            type="text"
-            className=" "
-            placeholder="name"
-            
-          ></input>
-
-          <input
-            name="surname"
-            type="text"
-            className=" "
-            placeholder="surname"
-            
-          ></input>
-        </div>
-          <UniversityDropDown />
-      </>
-    );
-  }
+      <DropDown
+        dataItems={universities}
+        placeholderValue="Вищий навчальний заклад"
+        loading={loading}
+      />
+    </>
+  );
 }

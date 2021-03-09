@@ -1,145 +1,114 @@
-import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
-import classnames from "classnames";
-import {
-  Courses,
-  University,
-  Region,
-  Faculty,
-  Speciality,
-  getUniversities,
-} from "../../Helpers/api";
-
-import { OptionUniversity } from "../Options";
-
-import "./index.scss";
-
-import arrowImg from "./Vector.png";
+import React, { useState, useRef } from "react";
 import classNames from "classnames";
+import { OptionItem } from "../Options";
+import LoadingSpiner from "../LoadingSpinner";
+import "./index.scss";
+import arrowImg from "./Vector.svg";
 
-type IUniversityProp = {};
+interface DropdownProp {
+  dataItems: Item[];
+  placeholderValue?: string;
+  loading: boolean;
+  // error: Error,
+  // dispatch: Function
+}
 
-const startUniversitiesValue: University[] = [];
+type Item = {
+  id: number;
+  name?: string;
+  universitiesCount?: number | string;
+  studentsCount?: number | string;
+  code?: string;
+  title?: string;
+};
 
-export default function UniversityDropDown(props: IUniversityProp) {
+export default function DropDown(props: DropdownProp) {
   const [isOpen, setIsOpen] = useState(false);
-  const [universities, setUniversities] = useState(startUniversitiesValue);
   const [query, setQuery] = useState("");
+  const isScrollBottom = useRef(false);
 
-  const isBottom = useRef(false);
-  const offset = useRef(0);
-
-  const count = 10;
-
-  let optionList: HTMLDivElement;
-
-  useEffect(() => {
-    getUniversities("", undefined, count, offset.current).then(
-      (universities) => {
-        setUniversities(universities);
+  function dropdownListScroll(optionList: HTMLDivElement) {
+    optionList.addEventListener("scroll", () => {
+      const { scrollTop, scrollHeight, clientHeight } = optionList;
+      if (scrollHeight - scrollTop === clientHeight) {
+        isScrollBottom.current = true;
       }
-    );
-  }, []);
-
-  const dropdownStyle = classNames("option-list", {
-    "list-active": isOpen,
-    "list-inactive": !isOpen,
-  });
-
-  const arrowStyle = classNames("arrow", { "arrow-rotate": isOpen });
-
-  function onFocusDropdown() {
-    setIsOpen(true);
+    });
   }
 
-  function onBlurDropdown() {
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 300);
-  }
+  
+  const { dataItems, placeholderValue, loading } = props;
+  const dropdownItems = dataItems.map((item: Item) => {
+    const { id, name, studentsCount, universitiesCount, code, title } = item;
 
-  function onArrowClick() {
-    setIsOpen(!isOpen);
-  }
-
-  function onClickedItemValue(value: string) {
-    setQuery(value);
-  }
-
-  function onQueryChange(event: any) {
-    getUniversities(event.target.value, undefined, 10, 0).then(
-      (universities) => {
-        setUniversities(universities);
-      }
-    );
-    setQuery(event.target.value);
-  }
-
-  function onWheelScroll(event: React.WheelEvent) {
-    dropdownListScroll();
-  }
-
-  function dropdownListScroll() {
-    const { scrollTop, scrollHeight, clientHeight } = optionList;
-    if (scrollHeight - scrollTop === clientHeight && !isBottom.current) {
-      isBottom.current = true;
-      offset.current += count;
-      console.log(isBottom.current);
-      console.log(offset.current);
-
-      getUniversities(query, undefined, count, offset.current).then(
-        (newUniversities) => {
-          let currentUniversities: University[] = [];
-          if (universities.length !== 0) {
-            currentUniversities = [...universities, ...newUniversities];
-          } else {
-            currentUniversities = newUniversities;
-          }
-
-          console.log("Curr", currentUniversities);
-          setUniversities(currentUniversities);
-          isBottom.current = false;
-        }
-      );
-    }
-  }
-
-  function setOptionListElement(element: HTMLDivElement) {
-    optionList = element;
-  }
-
-  const dropdownItems = universities.map((university) => {
-    const { id, name, studentsCount } = university;
     return (
-      <OptionUniversity
+      <OptionItem
         key={id}
-        value={name}
+        name={name}
         studentsCount={studentsCount}
-        onClickedItemValue={onClickedItemValue}
+        universitiesCount={universitiesCount}
+        code={code}
+        title={title}
+        onClickedItemValue={(value: string) => {
+          setQuery(value);
+        }}
       />
     );
   });
 
+  const dropdownClass = classNames("option-list", {
+    "list-active": isOpen,
+    "list-inactive": !isOpen,
+  });
+
+  const arrowClass = classNames("arrow", { "arrow-rotate": isOpen });
+
+  const placeholderClass = classNames("placeholder", {
+    "placeholder-focus": isOpen,
+  });
+
   return (
-    <div className="dropdown" onWheel={onWheelScroll}>
+    <div className="dropdown">
       <div className="input-block">
         <input
           className="input"
           type="text"
-          placeholder="Вищий навчальний заклад"
           value={query}
-          onFocus={onFocusDropdown}
-          onBlur={onBlurDropdown}
-          onChange={onQueryChange}
+          onFocus={() => {
+            setIsOpen(true);
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              setIsOpen(false);
+            }, 300);
+          }}
+          onChange={(event) => {
+            setQuery(event.target.value);
+          }}
         />
         <img
           src={arrowImg}
           alt="arrow"
-          className={arrowStyle}
-          onClick={onArrowClick}
+          className={arrowClass}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
         />
+        <span className={placeholderClass}>{placeholderValue}</span>
       </div>
-      <div className={dropdownStyle} ref={setOptionListElement}>
-        {dropdownItems}
+      <div
+        className={dropdownClass}
+        ref={(element: HTMLDivElement) => {
+          dropdownListScroll(element);
+        }}
+      >
+        {!loading ? (
+          dropdownItems
+        ) : (
+          <div className="loading">
+            <LoadingSpiner />
+          </div>
+        )}
       </div>
     </div>
   );

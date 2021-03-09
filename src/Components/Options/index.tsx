@@ -1,42 +1,54 @@
 import React from "react";
 import "./index.scss";
 
-type RegionProps = {
-  value: string;
-  imgSrc: string;
-  universitiesCount: number;
-};
+import studImg from "./studico.svg";
+import universImg from "./universico.svg";
 
-export function OptionRegion(props: RegionProps) {
-  return (
-    <span className="option">
-      <img src={props.imgSrc} alt="university" />
-      <span className="count">{props.universitiesCount}</span>
-    </span>
-  );
-}
-
-type UniversityProps = {
-  value: string;
-  studentsCount: number;
+type OptionProps = {
+  name?: string;
+  universitiesCount?: number | string;
+  studentsCount?: number | string;
+  code?: string;
   onClickedItemValue: Function;
+  title?: string;
 };
 
-export function OptionUniversity(props: UniversityProps) {
-  const { value, studentsCount, onClickedItemValue } = props;
+export function OptionItem(props: OptionProps) {
+  const {
+    name,
+    universitiesCount,
+    studentsCount,
+    code,
+    onClickedItemValue,
+    title,
+  } = props;
 
   return (
     <div
       className="option"
       onClick={() => {
-        onClickedItemValue(value);
+        onClickedItemValue(name);
       }}
     >
-      <span className="text">{props.value}</span>
-      <span className="count-block">
-        <span className="icon">🎓</span>
-        <span className="count">{studentsCount}</span>
+      <span className="text">
+        {code ? <span className="code">{code}</span> : null}
+        {name ? <span className="value">{name}</span> : null}
+        {title ? <span className="value">{title}</span> : null}
       </span>
+
+      {studentsCount ? (
+        <span className="icon">
+          <img src={studImg} alt="icon" />
+          <span>{studentsCount}</span>
+        </span>
+      ) : null}
+
+      {universitiesCount ? (
+        <span className="icon">
+          <img src={universImg} alt="icon" />
+          <span>{universitiesCount}</span>
+        </span>
+      ) : null}
     </div>
   );
 }
