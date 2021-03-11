@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 import OptionItem from "./Options";
 import LoadingSpiner from "../LoadingSpinner";
 import useLoadPagination from "../LoadPagination/useLoadPagination";
 import "./index.scss";
-import arrowImg from "./Vector.svg";
+import arrowImg from "./arrow.svg";
 
 interface DropdownProp<T> {
   placeholder?: string;
@@ -16,20 +16,20 @@ interface DropdownProp<T> {
 type Item = {
   id: number;
   name?: string;
-  universitiesCount?: number;
-  studentsCount?: number;
+  universitiesCount?: number|string;
+  studentsCount?: number|string;
   code?: string;
   title?: string;
 };
 
 export default function DropDown<T extends Item>(props: DropdownProp<T>) {
+  const { value, onChange, request, placeholder } = props;
+
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const isScrollBottom = useRef(false);
-
-  const [elements, setElements] = useState([]);
-
-  const { value, onChange, request, placeholder } = props;
+  const [inputValue, setInputValue] = useState<string | undefined>();
+  const scrollItem = useRef<HTMLDivElement>(null);
+  const scrollEnd = useRef(false);
 
   const {
     loading,
@@ -39,19 +39,24 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     dispatch,
   } = useLoadPagination(request, [query]);
 
-  function dropdownListScroll(optionList: HTMLDivElement) {
+  useEffect(() => {
+    if (!loading) {
+      scrollEnd.current = false;
+    }
+    return () => {
+      setInputValue(
+        value?.code ? `${value?.code} ${value?.name}` : value?.name
+      );
+    };
+  });
+
+  function dropdownListScroll(optionList: HTMLDivElement | null) {
     if (optionList) {
       optionList.addEventListener("scroll", () => {
         const { scrollTop, scrollHeight, clientHeight } = optionList;
-        if (
-          scrollHeight - scrollTop === clientHeight &&
-          !isScrollBottom.current
-        ) {
-          isScrollBottom.current = true;
-         
-          console.log(isScrollBottom.current);
-        } else {
-          isScrollBottom.current = false;
+        if (scrollHeight - scrollTop === clientHeight && !scrollEnd.current) {
+          scrollEnd.current = true;
+          dispatch();
         }
       });
     }
@@ -62,8 +67,8 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       <OptionItem
         key={item.id}
         {...item}
-        onClickedItemValue={(value: string) => {
-          setQuery(value);
+        onClickedItemValue={() => {
+          onChange(item);
         }}
       />
     );
@@ -80,13 +85,15 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     "placeholder-focus": isOpen,
   });
 
+  const inputClass = classNames("input", { "active": isOpen });
+
   return (
     <div className="dropdown">
       <div className="input-block">
         <input
-          className="input"
+          className={inputClass}
           type="text"
-          value={query}
+          value={inputValue}
           onFocus={() => {
             setIsOpen(true);
           }}
@@ -99,9 +106,9 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
             setQuery(event.target.value);
           }}
         />
-        <img
-          src={arrowImg}
-          alt="arrow"
+        <div
+          // src={arrowImg}
+          // alt="arrow"
           className={arrowClass}
           onClick={() => {
             setIsOpen(!isOpen);
@@ -111,10 +118,9 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       </div>
       <div
         className={dropdownClass}
-        onScroll={(e) => {
-          // dropdownListScroll(e.target);
-          console.dir(e.target);
-
+        ref={scrollItem}
+        onScroll={() => {
+          dropdownListScroll(scrollItem.current);
         }}
       >
         {!loading ? (

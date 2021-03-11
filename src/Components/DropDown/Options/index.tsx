@@ -27,11 +27,11 @@ export default function OptionItem(props: OptionProps) {
     <div
       className="option"
       onClick={() => {
-        onClickedItemValue(name);
+        onClickedItemValue();
       }}
     >
       <span className="text">
-        {code ? <span className="code">{code}</span> : null}
+        {code ? <span className="code">{`${code} `}</span> : null}
         {name ? <span className="value">{name}</span> : null}
         {title ? <span className="value">{title}</span> : null}
       </span>

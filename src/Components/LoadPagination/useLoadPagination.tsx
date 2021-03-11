@@ -24,7 +24,6 @@ const useLoadPagination = <T extends unknown>(
   useEffect(() => {
     setLoading(true);
     setError(null);
-    console.log(unmounted);
     request(count, offset, query)
       .then((res) => {
         if (unmounted) return;
@@ -34,15 +33,7 @@ const useLoadPagination = <T extends unknown>(
         setHasMore(res.length >= count);
         setLoading(false);
         setOffset(offset + count);
-        console.log(res);
-        console.log(
-          offset +
-            " offset: " +
-            count +
-            ": dispatchIndex" +
-            dispatchIndex +
-            ": page"
-        );
+       
       })
       .catch();
     return () => {
