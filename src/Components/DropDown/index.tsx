@@ -1,55 +1,67 @@
 import React, { useState, useRef } from "react";
 import classNames from "classnames";
-import { OptionItem } from "../Options";
+import OptionItem from "./Options";
 import LoadingSpiner from "../LoadingSpinner";
+import useLoadPagination from "../LoadPagination/useLoadPagination";
 import "./index.scss";
 import arrowImg from "./Vector.svg";
 
-interface DropdownProp {
-  dataItems: Item[];
-  placeholderValue?: string;
-  loading: boolean;
-  // error: Error,
-  // dispatch: Function
+interface DropdownProp<T> {
+  placeholder?: string;
+  value: T | undefined;
+  onChange: (newValue: T) => void;
+  request: (count: number, offset: number, query: string) => Promise<T[]>;
 }
 
 type Item = {
   id: number;
   name?: string;
-  universitiesCount?: number | string;
-  studentsCount?: number | string;
+  universitiesCount?: number;
+  studentsCount?: number;
   code?: string;
   title?: string;
 };
 
-export default function DropDown(props: DropdownProp) {
+export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const isScrollBottom = useRef(false);
+
+  const [elements, setElements] = useState([]);
+
+  const { value, onChange, request, placeholder } = props;
+
+  const {
+    loading,
+    error,
+    hasMore,
+    items,
+    dispatch,
+  } = useLoadPagination(request, [query]);
 
   function dropdownListScroll(optionList: HTMLDivElement) {
     if (optionList) {
       optionList.addEventListener("scroll", () => {
         const { scrollTop, scrollHeight, clientHeight } = optionList;
-        if (scrollHeight - scrollTop === clientHeight) {
+        if (
+          scrollHeight - scrollTop === clientHeight &&
+          !isScrollBottom.current
+        ) {
           isScrollBottom.current = true;
+         
+          console.log(isScrollBottom.current);
+        } else {
+          isScrollBottom.current = false;
         }
       });
     }
   }
 
-  const { dataItems, placeholderValue, loading } = props;
-  const dropdownItems = dataItems.map((item: Item) => {
-    const { id, name, studentsCount, universitiesCount, code, title } = item;
-
+  const dropdownItems = items.map((item: T) => {
     return (
       <OptionItem
-        key={id}
-        name={name}
-        studentsCount={studentsCount}
-        universitiesCount={universitiesCount}
-        code={code}
-        title={title}
+        key={item.id}
+        {...item}
         onClickedItemValue={(value: string) => {
           setQuery(value);
         }}
@@ -95,12 +107,14 @@ export default function DropDown(props: DropdownProp) {
             setIsOpen(!isOpen);
           }}
         />
-        <span className={placeholderClass}>{placeholderValue}</span>
+        <span className={placeholderClass}>{placeholder}</span>
       </div>
       <div
         className={dropdownClass}
-        ref={(element: HTMLDivElement) => {
-          dropdownListScroll(element);
+        onScroll={(e) => {
+          // dropdownListScroll(e.target);
+          console.dir(e.target);
+
         }}
       >
         {!loading ? (

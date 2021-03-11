@@ -13,7 +13,7 @@ type OptionProps = {
   title?: string;
 };
 
-export function OptionItem(props: OptionProps) {
+export default function OptionItem(props: OptionProps) {
   const {
     name,
     universitiesCount,
