@@ -8,7 +8,7 @@ import {
 
 import MainPage from './Pages/Main';
 import StudentsPage from './Pages/Students';
-import SignUpPage from "./Pages/SignUpPage/SignUpPage";
+import Registration from "./Pages/Registration/registration";
 
 function App() {
     return (
@@ -16,7 +16,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 <Route exact path="/students" component={StudentsPage}/>
-                <Route exact path="/sign-up" component={SignUpPage}/>
+                <Route exact path="/sign-up" component={Registration}/>
             </Switch>
         </Router>
     );

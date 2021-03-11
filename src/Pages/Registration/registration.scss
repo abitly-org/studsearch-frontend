@@ -1,0 +1,234 @@
+$width: 1440px;
+$height: 1113px;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap');
+
+.SignUpPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Registration {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: $width;
+  height: $height;
+  background-size: contain;
+  background-position: inherit;
+  background-repeat: no-repeat;
+}
+
+//--------------------------------//
+.RegistrationContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 1113px; //1160px
+  background: #FFFFFF;
+}
+.secondPhoto {
+  position: absolute;
+  width: 100%;
+  height: 1113px;
+  z-index: -1;
+  overflow: initial;
+  background: no-repeat right;
+}
+
+.SignUpLogo {
+  width: 231px;
+  margin: 36px auto 0 auto; // margin: 36px auto 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin style-text {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.SignUpText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 29px;
+
+  h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 33px;
+    line-height: 40px;
+    margin-bottom: 14px;
+  }
+
+  span {
+    @include style-text;
+    font-size: 20px;
+    line-height: 24px;
+    color: #787A87;
+    padding-right: 10px;
+  }
+
+  a {
+    @include style-text;
+    font-size: 20px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: #2653AF;
+  }
+}
+
+//------------------------------------//
+.SignForm {
+  padding-left: 35px;
+
+  input {
+    @include style-text;
+    font-size: 16px;
+    line-height: 20px;
+    color: #787A87;
+  }
+}
+
+.FormBox {
+  //Some drop down css code/
+  height: 481px;
+}
+
+.InputBoxText {
+  @include style-text;
+  font-size: 12px;
+  line-height: 15px;
+  max-width: 649px;
+  color: #9A9BA5;
+}
+
+.Input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 730px;
+  height: 48px;
+  margin-bottom: 3px;
+  box-shadow: inset 0px -2px 0px #D6CCC4;
+
+  > span {
+    @include style-text;
+    font-size: 14px;
+    line-height: 17px;
+    color: #787A87;
+  }
+
+  > textarea {
+    border: 0;
+    padding: 0;
+    width: 100%;
+    height: 20px;
+    resize: none;
+    overflow: hidden;
+     @include style-text;
+    font-size: 16px;
+    line-height: 20px;
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+
+//********************//
+
+@mixin checkBox {
+  display: flex;
+  align-items: center;
+  @include style-text;
+  font-size: 15px;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  color: #3B3C44;
+}
+
+@mixin checkBoxInput {
+  margin: 0 10px 0 0;
+  width: 21px;
+  height: 21px;
+}
+
+.TgPhoto {
+  margin-top: 38px;
+  @include checkBox;
+
+  input {
+    @include checkBoxInput
+  }
+}
+
+.Politic {
+  margin-top: 19px;
+  @include checkBox;
+
+  input {
+    @include checkBoxInput
+  }
+
+  a {
+    color: #2653AF;
+    padding-left: 5px;
+    text-decoration-skip-ink: none;
+  }
+}
+
+.useTelegram {
+  max-width: 605px;
+  margin-top: 21px;
+  padding-left: 2px;
+  @include style-text;
+  font-size: 15px;
+  line-height: 18px;
+
+  color: #3B3C44;
+}
+
+.authTelegram {
+  margin: 51px 0 0 calc(50% - 259px);
+  width: 478px;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  background: #68A8E5;
+
+  img {
+    padding: 0 22px 0 29px;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  span {
+    @include style-text;
+    font-size: 15.5px;
+    letter-spacing: 0.006em;
+    color: #FFFFFF;
+  }
+}
+
+.goBack {
+  width: 75px;
+  height: 28px;
+  margin: 21px 0 0 calc(50% - 56px);
+}
+
+.goBack-btn {
+  @include style-text;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0.05em;
+  text-decoration-skip-ink: none;
+  color: #3B3C44;
+}

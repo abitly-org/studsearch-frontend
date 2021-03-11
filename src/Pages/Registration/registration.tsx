@@ -1,24 +1,19 @@
 import React from 'react';
-import './signUpPage.scss';
-import bg from "./sign-up-img.png";
+import './registration.scss';
+import girl1 from "./PhotoWithGirl-1.png";
+import girl2 from "./PhotoWithGirl-2.png";
 import {Link} from "react-router-dom";
 import logo from "./signLogo.svg";
 import RegistrationForm from "../../Components/SignUpPage/RegistrationForm"
 
-type PropsType = {
-    line: string;
-};
-
-export default class SignUpPage extends React.Component {
-    constructor(props: PropsType) {
-        super(props);
-        this.state = {};
-    }
+export default class Registration extends React.Component {
 
     render(): JSX.Element {
         return (
             <div className="SignUpPage">
-                <div className="Registration" style={{backgroundImage: `url(${bg})`}}>
+
+                <div className="Registration" style={{backgroundImage: `url(${girl1})`}}>
+                    <div className={`secondPhoto`} style={{backgroundImage: `url(${girl2})`}}/>
                     <div className={`RegistrationContainer`}>
                         <Link className="SignUpLogo" to='/'>
                             <img src={logo} alt={`logo`}/>
