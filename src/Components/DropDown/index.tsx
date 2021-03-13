@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import classNames from "classnames";
+import cx from "classnames";
+
 import OptionItem from "./Options";
-import LoadingSpiner from "../LoadingSpinner";
 import useLoadPagination from "../LoadPagination/useLoadPagination";
+import LoadingSpinner from "../LoadingSpinner";
+
 import "./index.scss";
 
 interface DropdownProp<T> {
@@ -27,8 +29,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   
-  const scrollItem = useRef<HTMLDivElement>(null);
-  const scrollEnd = useRef(false);
+  const dropdownDiv = useRef<HTMLDivElement>(null);
 
   const {
     loading,
@@ -36,33 +37,17 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     hasMore,
     items,
     dispatch,
-  } = useLoadPagination(request, [query]);
+  } = useLoadPagination(
+    (count, offset) => request?.(count, offset, query),
+    [query]
+  );
 
-  useEffect(() => {
-    console.log("rend: ", placeholder);
-    if (!loading) {
-      scrollEnd.current = false;
-    }
-    return () => {
-      // setInputValue(
-      //   value?.code
-      //     ? `${value?.code} ${value?.name}`
-      //     : value?.title
-      //     ? value?.title
-      //     : value?.name
-      // );
-    };
-  }, [isOpen,loading, placeholder]);
-
-  function dropdownListScroll(optionList: HTMLDivElement | null) {
-    if (optionList) {
-      optionList.addEventListener("scroll", () => {
-        const { scrollTop, scrollHeight, clientHeight } = optionList;
-        if (scrollHeight - scrollTop === clientHeight && !scrollEnd.current) {
-          scrollEnd.current = true;
-          dispatch();
-        }
-      });
+  function onScroll() {
+    if (dropdownDiv.current) {
+      const { scrollTop, scrollHeight, clientHeight } = dropdownDiv.current;
+      if (scrollHeight - scrollTop === clientHeight) {
+        dispatch();
+      }
     }
   }
 
@@ -73,34 +58,19 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         {...item}
         onClickedItemValue={(title:string) => {
           onChange(item);
-          setQuery(
-            title
-          );
         }}
       />
     );
   });
-
-  const dropdownClass = classNames("option-list", {
-    "list-active": isOpen,
-    "list-inactive": !isOpen,
-  });
-
-  const arrowClass = classNames("arrow", { "arrow-rotate": isOpen });
-
-  const placeholderClass = classNames("placeholder", {
-    "placeholder-focus": isOpen,
-  });
-
-  const inputClass = classNames("input", { active: isOpen });
-
+  
   return (
     <div className="dropdown">
       <div className="input-block">
         <input
-          className={inputClass}
+          className={cx("input", { active: isOpen })}
           type="text"
-          value={query}
+          placeholder={value?.name}
+          value={isOpen ? query : value?.name}
           onFocus={() => {
             setIsOpen(true);
           }}
@@ -114,27 +84,29 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
           }}
         />
         <div
-          className={arrowClass}
+          className={cx("arrow", { "arrow-rotate": isOpen })}
           onClick={() => {
             setIsOpen(!isOpen);
           }}
         />
-        <span className={placeholderClass}>{placeholder}</span>
+        <span
+          className={cx("placeholder", { "placeholder-focus": isOpen })}
+        >
+          {placeholder}
+        </span>
       </div>
       <div
-        className={dropdownClass}
-        ref={scrollItem}
-        onScroll={() => {
-          dropdownListScroll(scrollItem.current);
-        }}
+        className={cx("option-list", {
+          "list-active": isOpen,
+          "list-inactive": !isOpen,
+        })}
+        ref={dropdownDiv}
+        onScroll={onScroll}
       >
-        {!loading ? (
-          dropdownItems
-        ) : (
-          <div className="loading">
-            <LoadingSpiner />
-          </div>
-        )}
+        { dropdownItems }
+        { loading &&
+          <LoadingSpinner center-x />
+        }
       </div>
     </div>
   );

@@ -1,37 +1,46 @@
+@import "../../palette.scss";
+
 .dropdown {
   display: flex;
   flex-direction: column;
-}
+  position: relative;
 
-.option-list {
-  margin-top: 5px;
-  box-sizing: border-box;
-  max-width: 730px;
-  background: #ffffff;
-  overflow-y: scroll;
+  > .option-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100500;
+    width: 100%;
 
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 20px;
-  color: #3b3c44;
+    margin-top: 5px;
+    box-sizing: border-box;
+    max-width: 730px;
+    background: #ffffff;
+    overflow-y: scroll;
+  
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: $black;
+  }
 }
 
 .list-inactive {
   height: 0;
   border: none;
-  transition: all 0.3s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .list-active {
   height: 246px;
   border: 2px solid #d6ccc4;
-  transition: all 0.3s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .input-block {
-  max-width: 730px;
+  max-width: 100%;
   height: 49px;
   position: relative;
   
@@ -88,7 +97,7 @@
   cursor: pointer;
 
   transform: rotate(0);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.1s ease-out;
   -webkit-mask-image: url('./arrow.svg');
   background-color:#D3D3D3;
 }
@@ -96,7 +105,7 @@
 .arrow-rotate {
   transform: rotate(0.5turn);
   background-color:#2653AF;
-  transition: all 0.3s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .loading{
