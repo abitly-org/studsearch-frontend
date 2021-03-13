@@ -92,7 +92,7 @@ export default function Form(props: FormProps) {
         )}
       />
 
-      {/* <DropDown<CoursesType>
+      <DropDown<CoursesType>
         placeholder="Курс"
         value={course}
         onChange={setCourse}
@@ -103,7 +103,7 @@ export default function Form(props: FormProps) {
             }),
           []
         )}
-      /> */}
+      />
     </>
   );
 }

@@ -30,7 +30,6 @@ const useLoadPagination = <T extends unknown>(
   }, [ request ]);
 
   useEffect(() => {
-    console.log("load(), dispatchIndex=", state.dispatchIndex);
     setState({
       ...state,
       loading: true,

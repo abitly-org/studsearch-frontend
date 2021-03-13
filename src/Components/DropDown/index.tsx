@@ -7,6 +7,8 @@ import LoadingSpinner from "../LoadingSpinner";
 
 import "./index.scss";
 
+import Input from "../Input";
+
 interface DropdownProp<T> {
   placeholder?: string;
   value: T | undefined;
@@ -55,7 +57,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       <OptionItem
         key={item.id}
         {...item}
-        onClickedItemValue={(title:string) => {
+        onClickedItemValue={(title: string) => {
           onChange(item);
         }}
       />
@@ -64,7 +66,28 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   
   return (
     <div className="dropdown">
-      <div className="input-block">
+      <div className="input-container">
+        <Input
+          value={query}
+          error={false}
+          placeholder={placeholder}
+          onFocusHandler={(focusStatus: boolean) => {
+            console.log(focusStatus);
+            setIsOpen(focusStatus);
+          }}
+          onChangeHandler={(changedVal: string) => {
+            setQuery(changedVal);
+          }}
+        />
+        <div
+          className={cx("arrow", { "arrow-rotate": isOpen })}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        />
+      </div>
+
+       {/* <div className="input-block">
         <input
           className={cx("input", { active: isOpen })}
           type="text"
@@ -93,7 +116,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         >
           {placeholder}
         </span>
-      </div>
+      </div> */}
       <div
         className={cx("option-list", {
           "list-active": isOpen,
