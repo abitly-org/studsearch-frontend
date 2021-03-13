@@ -40,12 +40,13 @@ export default function Form(props: FormProps) {
   function onChange<T>(value: T) {
     console.log("onChange", value);
   }
-  
+
   console.log("Form region", region);
   console.log("Form university", university);
   console.log("Form faculty", faculty);
   console.log("Form speciality", speciality);
   console.log("Form course", course);
+ 
   return (
     <>
       <DropDown<Region>

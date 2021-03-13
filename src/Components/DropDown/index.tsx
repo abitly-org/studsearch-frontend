@@ -74,7 +74,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         {...item}
         onClickedItemValue={(title:string) => {
           onChange(item);
-          setInputValue(
+          setQuery(
             title
           );
         }}
@@ -101,7 +101,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         <input
           className={inputClass}
           type="text"
-          value={inputValue}
+          value={query}
           onFocus={() => {
             setIsOpen(true);
           }}

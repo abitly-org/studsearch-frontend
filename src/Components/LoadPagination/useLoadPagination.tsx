@@ -15,11 +15,11 @@ const useLoadPagination = <T extends unknown>(
 
   const [query, setQuery] = useState("");
 
-  // useEffect(() => {
-  //     console.log(  "deps" + deps + "|" + deps.length)
-  //      setOffset(0);
-  //     setDispatchIndex(0);
-  // }, [deps]);
+  useEffect(() => {
+      console.log(  "deps" + deps + "|" + deps.length)
+       setOffset(0);
+      setDispatchIndex(0);
+  }, [deps]);
 
   useEffect(() => {
     setLoading(true);
