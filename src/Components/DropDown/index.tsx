@@ -26,8 +26,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [inputValue, setInputValue] = useState<string | undefined>();
-
+  
   const scrollItem = useRef<HTMLDivElement>(null);
   const scrollEnd = useRef(false);
 
