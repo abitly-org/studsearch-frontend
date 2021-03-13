@@ -5,6 +5,8 @@ import LoadingSpiner from "../LoadingSpinner";
 import useLoadPagination from "../LoadPagination/useLoadPagination";
 import "./index.scss";
 
+import Input from "../Input";
+
 interface DropdownProp<T> {
   placeholder?: string;
   value: T | undefined;
@@ -26,7 +28,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  
+
   const scrollItem = useRef<HTMLDivElement>(null);
   const scrollEnd = useRef(false);
 
@@ -52,7 +54,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       //     : value?.name
       // );
     };
-  }, [isOpen,loading, placeholder]);
+  }, [isOpen, loading, placeholder]);
 
   function dropdownListScroll(optionList: HTMLDivElement | null) {
     if (optionList) {
@@ -71,11 +73,9 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       <OptionItem
         key={item.id}
         {...item}
-        onClickedItemValue={(title:string) => {
+        onClickedItemValue={(title: string) => {
           onChange(item);
-          setQuery(
-            title
-          );
+          setQuery(title);
         }}
       />
     );
@@ -96,7 +96,28 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
 
   return (
     <div className="dropdown">
-      <div className="input-block">
+      <div className="input-container">
+        <Input
+          value={query}
+          error={false}
+          placeholder={placeholder}
+          onFocusHandler={(focusStatus: boolean) => {
+            console.log(focusStatus);
+            setIsOpen(focusStatus);
+          }}
+          onChangeHandler={(changedVal: string) => {
+            setQuery(changedVal);
+          }}
+        />
+        <div
+          className={arrowClass}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        />
+      </div>
+
+      {/* <div className="input-block">
         <input
           className={inputClass}
           type="text"
@@ -120,7 +141,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
           }}
         />
         <span className={placeholderClass}>{placeholder}</span>
-      </div>
+      </div> */}
       <div
         className={dropdownClass}
         ref={scrollItem}

@@ -14,9 +14,7 @@ const useLoadPagination = <T extends unknown>(
   const [dispatchIndex, setDispatchIndex] = useState(0);
 
   const [query, setQuery] = useState("");
-
   useEffect(() => {
-      console.log(  "deps" + deps + "|" + deps.length)
        setOffset(0);
       setDispatchIndex(0);
   }, [deps]);
@@ -24,15 +22,16 @@ const useLoadPagination = <T extends unknown>(
   useEffect(() => {
     setLoading(true);
     setError(null);
+    console.log(unmounted);
     request(count, offset, query)
       .then((res) => {
         if (unmounted) return;
         setItems((prevList) => {
           return [...prevList, ...res];
         });
-        setHasMore(res.length >= count);
+         setHasMore(res.length >= count);
         setLoading(false);
-        setOffset(offset + count);
+         setOffset(offset + count);
        
       })
       .catch();

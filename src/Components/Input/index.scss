@@ -1,0 +1,45 @@
+.input-block {
+  max-width: 730px;
+  height: 49px;
+  position: relative;
+  border-radius: 4px;
+
+  > .input {
+    width: 100%;
+    height: 49px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid#D3D3D3;
+    outline: 0;
+    outline-offset: 0;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    padding-top: 25px;
+    color: #3b3c44;
+
+    &:focus {
+      border: none;
+      border-bottom: 2px solid #2653af;
+      outline: 0;
+      outline-offset: 0;
+    }
+    
+    &.active {
+      border-bottom: 2px solid #2653af;
+    }
+  }
+  .placeholder {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #787a87;
+    position: absolute;
+    top: 0;
+    left: 2px;
+  }
+}
