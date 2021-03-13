@@ -2,14 +2,15 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  min-height: 48px;
+  min-height: 50px;
+  margin-bottom: 5px;
   align-items: center;
   &:hover {
     background-color: rgba(214, 204, 196, 0.25);
     cursor: pointer;
-    transition: background-color .25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
   }
-  >span {
+  > span {
     height: 100%;
   }
 }
@@ -17,16 +18,24 @@
 .text {
   vertical-align: center;
   margin-left: 36px;
+  max-width: 435px;
 }
 
+.icon {
+  min-width: 80px;
+  min-height: 80px;
+  display: flex;
+    align-items: center;
+}
 .count-block {
-  min-width: 70px;
+  width: 200px;
   margin-left: 30px;
   margin-right: 55px;
+  display: flex;
+  justify-content: flex-end;
+  
 }
 
 .count {
   margin-left: 10px;
 }
-
-

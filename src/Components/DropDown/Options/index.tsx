@@ -23,11 +23,17 @@ export default function OptionItem(props: OptionProps) {
     title,
   } = props;
 
+  const optionTitle: string|undefined = code
+    ? `${code} ${name}`
+    : title
+    ? title
+    : name;
+
   return (
     <div
       className="option"
       onClick={() => {
-        onClickedItemValue();
+        onClickedItemValue(optionTitle);
       }}
     >
       <span className="text">
@@ -36,19 +42,21 @@ export default function OptionItem(props: OptionProps) {
         {title ? <span className="value">{title}</span> : null}
       </span>
 
-      {studentsCount ? (
-        <span className="icon">
-          <img src={studImg} alt="icon" />
-          <span>{studentsCount}</span>
-        </span>
-      ) : null}
+      <div className="count-block">
+        {studentsCount ? (
+          <span className="icon">
+            <img src={studImg} alt="icon" />
+            <span className="count">{studentsCount}</span>
+          </span>
+        ) : null}
 
-      {universitiesCount ? (
-        <span className="icon">
-          <img src={universImg} alt="icon" />
-          <span>{universitiesCount}</span>
-        </span>
-      ) : null}
+        {universitiesCount ? (
+          <span className="icon">
+            <img src={universImg} alt="icon" />
+            <span className="count">{universitiesCount}</span>
+          </span>
+        ) : null}
+      </div>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import OptionItem from "./Options";
 import LoadingSpiner from "../LoadingSpinner";
 import useLoadPagination from "../LoadPagination/useLoadPagination";
 import "./index.scss";
-import arrowImg from "./arrow.svg";
 
 interface DropdownProp<T> {
   placeholder?: string;
@@ -16,8 +15,8 @@ interface DropdownProp<T> {
 type Item = {
   id: number;
   name?: string;
-  universitiesCount?: number|string;
-  studentsCount?: number|string;
+  universitiesCount?: number | string;
+  studentsCount?: number | string;
   code?: string;
   title?: string;
 };
@@ -28,6 +27,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [inputValue, setInputValue] = useState<string | undefined>();
+
   const scrollItem = useRef<HTMLDivElement>(null);
   const scrollEnd = useRef(false);
 
@@ -40,15 +40,20 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   } = useLoadPagination(request, [query]);
 
   useEffect(() => {
+    console.log("rend: ", placeholder);
     if (!loading) {
       scrollEnd.current = false;
     }
     return () => {
-      setInputValue(
-        value?.code ? `${value?.code} ${value?.name}` : value?.name
-      );
+      // setInputValue(
+      //   value?.code
+      //     ? `${value?.code} ${value?.name}`
+      //     : value?.title
+      //     ? value?.title
+      //     : value?.name
+      // );
     };
-  });
+  }, [isOpen,loading, placeholder]);
 
   function dropdownListScroll(optionList: HTMLDivElement | null) {
     if (optionList) {
@@ -67,8 +72,11 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       <OptionItem
         key={item.id}
         {...item}
-        onClickedItemValue={() => {
+        onClickedItemValue={(title:string) => {
           onChange(item);
+          setInputValue(
+            title
+          );
         }}
       />
     );
@@ -85,7 +93,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     "placeholder-focus": isOpen,
   });
 
-  const inputClass = classNames("input", { "active": isOpen });
+  const inputClass = classNames("input", { active: isOpen });
 
   return (
     <div className="dropdown">
@@ -100,15 +108,13 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
           onBlur={() => {
             setTimeout(() => {
               setIsOpen(false);
-            }, 300);
+            }, 200);
           }}
           onChange={(event) => {
             setQuery(event.target.value);
           }}
         />
         <div
-          // src={arrowImg}
-          // alt="arrow"
           className={arrowClass}
           onClick={() => {
             setIsOpen(!isOpen);
