@@ -69,7 +69,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     <div className="dropdown">
       <div className="input-container">
         <Input
-          value={query}
+          value={isOpen ? query : value?.name}
           error={false}
           placeholder={placeholder}
           onFocusHandler={(focusStatus: boolean) => {

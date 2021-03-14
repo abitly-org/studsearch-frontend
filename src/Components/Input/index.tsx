@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import classNames from "classnames";
 import "./index.scss";
 
 export interface IInput {
-  value: string;
+  value: string | undefined;
   error: boolean;
   placeholder: string | undefined;
   onChangeHandler: Function;
@@ -13,18 +13,18 @@ export interface IInput {
 export default function Input(props: IInput): JSX.Element {
   const { value, error, placeholder, onFocusHandler, onChangeHandler } = props;
   const [focus, setIsFocus] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string | undefined>("");
   const [inputError, setInputError] = useState(false);
 
   useEffect(() => {
-    console.log("input render");
+    setInputError(error);
     setInputError(error);
     onFocusHandler(focus);
     onChangeHandler(query);
   }, [error, focus, query]);
 
   useEffect(() => {
-    setQuery(value);
+    setQuery(value ? value : "");
   }, [value]);
 
   const inputClass = classNames("input", { active: focus });
@@ -37,10 +37,12 @@ export default function Input(props: IInput): JSX.Element {
         value={query}
         onFocus={() => {
           setIsFocus(true);
+          console.log("focus")
         }}
         onBlur={() => {
           setTimeout(() => {
             setIsFocus(false);
+            console.log("blur")
           }, 200);
         }}
         onChange={(event) => {
