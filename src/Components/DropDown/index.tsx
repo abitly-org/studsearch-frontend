@@ -30,18 +30,39 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  
-  const dropdownDiv = useRef<HTMLDivElement>(null);
 
-  const {
-    loading,
-    error,
-    hasMore,
-    items,
-    dispatch,
-  } = useLoadPagination(
-    useCallback((count, offset) => request?.(count, offset, query), [ request, query ])
+  const dropdownDiv = useRef<HTMLDivElement>(null);
+  const uniqueId = Math.round(Math.random() * 1000).toString();
+
+  useEffect(() => {
+    window.addEventListener("click", onGlobalClick);
+    return () => {
+      window.removeEventListener("click", onGlobalClick);
+    };
+  });
+
+  const { loading, error, hasMore, items, dispatch } = useLoadPagination(
+    useCallback((count, offset) => request?.(count, offset, query), [
+      request,
+      query,
+    ])
   );
+
+  function onGlobalClick(e: MouseEvent) {
+    if (!isOpen || e.target === null) return;
+    let element = e.target;
+    while (element !== null) {
+      //@ts-ignore
+      element = element.parentElement;
+      //@ts-ignore
+      if (element?.className === "dropdown" && element?.id === uniqueId) return;
+      if (element === null) {
+        setIsOpen(!isOpen);
+      }
+    }
+
+    console.dir(e.target);
+  }
 
   function onScroll() {
     if (dropdownDiv.current) {
@@ -63,16 +84,16 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       />
     );
   });
-  
+
   return (
-    <div className="dropdown">
+    <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
           value={isOpen ? query : value?.name}
           error={false}
           placeholder={placeholder}
+          active={isOpen}
           onFocusHandler={(focusStatus: boolean) => {
-            console.log(focusStatus);
             setIsOpen(focusStatus);
           }}
           onChangeHandler={(changedVal: string) => {
@@ -87,7 +108,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         />
       </div>
 
-       {/* <div className="input-block">
+      {/* <div className="input-block">
         <input
           className={cx("input", { active: isOpen })}
           type="text"
@@ -125,10 +146,8 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         ref={dropdownDiv}
         onScroll={onScroll}
       >
-        { dropdownItems }
-        { loading &&
-          <LoadingSpinner center-x />
-        }
+        {dropdownItems}
+        {loading && <LoadingSpinner center-x />}
       </div>
     </div>
   );
