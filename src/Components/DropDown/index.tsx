@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import cx from "classnames";
 
 import OptionItem from "./Options";
@@ -40,8 +40,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     items,
     dispatch,
   } = useLoadPagination(
-    (count, offset) => request?.(count, offset, query),
-    [query]
+    useCallback((count, offset) => request?.(count, offset, query), [ request, query ])
   );
 
   function onScroll() {
