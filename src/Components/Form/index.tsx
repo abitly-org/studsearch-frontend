@@ -68,7 +68,7 @@ export default function Form(props: FormProps) {
         )}
       />
 
-      {/* <DropDown<Faculty>
+      <DropDown<Faculty>
         placeholder="Факультет"
         value={faculty}
         onChange={setFaculty}
@@ -77,7 +77,7 @@ export default function Form(props: FormProps) {
             getFaculties(query, university?.id, count, offset),
           [university]
         )}
-      /> */}
+      />
 
       <DropDown<Speciality>
         placeholder="Спеціальність"

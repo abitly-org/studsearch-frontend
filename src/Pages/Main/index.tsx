@@ -18,13 +18,14 @@ import student5 from "./student5.png";
 import student6 from "./student6.png";
 import "./index.scss";
 
-import { count, getStudents } from "../../Helpers/api";
-import useLoad from "../../Helpers/useLoad";
-import StudentsBlock from "../../Components/Students";
-import StudentCard from "../../Components/StudentCard";
-import LoadingSpinner from "../../Components/LoadingSpinner";
-
+import { count, getStudents } from '../../Helpers/api';
+import useLoad from '../../Helpers/useLoad';
+import StudentsBlock from '../../Components/Students';
+import StudentCard from '../../Components/StudentCard';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 import Header from "../../Components/Header";
+
+
 
 var plural = function (k: string, n: number) {
   var postfix = "_other";
@@ -58,10 +59,42 @@ const MainPage = () => {
   const firstStudents = useLoad(() => getStudents(3, 0));
 
   return (
-    <>
-      {/* <Header /> */}
-      <div className="MainPage">
-        <div className="First" style={{ backgroundImage: `url(${bg})` }}>
+    <div className="MainPage">
+      <Header/>
+      <div className="First" style={{ backgroundImage: `url(${bg})` }}>
+        <div>
+          <div className="Info">
+            <H1>{t('main-first-header')}</H1>
+            <br />
+            <br />
+            <ul>
+              <li><P1>{t('main-first-question1')}</P1></li>
+              <li><P1>{t('main-first-question2')}</P1></li>
+              <li><P1>{t('main-first-question3')}</P1></li>
+              <li><P1>{t('main-first-question4')}</P1></li>
+            </ul>
+            <br />
+            <P1>{t('main-first-body1')}</P1>
+            <P1>{t('main-first-body2')}</P1>
+            <br />
+            <br />
+            <Button to="/students">
+              <P2>{t('main-first-button')}</P2>
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="Second">
+        <H1>{t('main-second-header')}</H1>
+        <div className="Steps">
+          <div>
+            <img src={step1} />
+            <P2>{t('main-second-step1')}</P2>
+          </div>
+          <div>
+            <img src={step2} />
+            <P2>{t('main-second-step2')}</P2>
+          </div>
           <div>
             <div className="Info">
               <H1>{t("main-first-header")}</H1>
@@ -188,7 +221,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
