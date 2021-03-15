@@ -89,7 +89,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : value?.name}
+          value={isOpen ? query : value?.name ? value?.name : value?.title}
           error={false}
           placeholder={placeholder}
           active={isOpen}
@@ -107,37 +107,6 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
           }}
         />
       </div>
-
-      {/* <div className="input-block">
-        <input
-          className={cx("input", { active: isOpen })}
-          type="text"
-          placeholder={value?.name}
-          value={isOpen ? query : value?.name}
-          onFocus={() => {
-            setIsOpen(true);
-          }}
-          onBlur={() => {
-            setTimeout(() => {
-              setIsOpen(false);
-            }, 200);
-          }}
-          onChange={(event) => {
-            setQuery(event.target.value);
-          }}
-        />
-        <div
-          className={cx("arrow", { "arrow-rotate": isOpen })}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        />
-        <span
-          className={cx("placeholder", { "placeholder-focus": isOpen })}
-        >
-          {placeholder}
-        </span>
-      </div> */}
       <div
         className={cx("option-list", {
           "list-active": isOpen,

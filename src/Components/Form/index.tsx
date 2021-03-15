@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { IForm } from "../../interfaces";
-import Input from "../Input";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   getUniversities,
   getFaculties,
