@@ -83,9 +83,26 @@ $height: 1113px;
 .SignForm {
   padding: 0 35px;
 
-  .FormBox {
-    //Some drop down scss code/
-    height: 481px;
+  .flName {
+    margin-top: 20px;
+  }
+
+  .regionBlock {
+    margin-top: 40px;
+  }
+
+  .universityBlock {
+    margin-top: 28px;
+  }
+
+  .facultyBlock {
+    margin-top: 30px;
+  }
+
+  .specialityCourseBlock {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .InputBoxText {
@@ -93,10 +110,11 @@ $height: 1113px;
     @include style-text(12px, 15px);
     max-width: 650px;
     padding-right: 80px;
-    color: #9A9BA5; /////////////////////////////////////////////////////// Color
+    color: #9A9BA5;
   }
 
   .Input {
+    margin-top: 31px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -108,6 +126,7 @@ $height: 1113px;
     }
 
     input {
+      margin-top: 10px;
       border: 0;
       padding: 0;
       @include style-text(16px, 20px);
@@ -206,7 +225,6 @@ $height: 1113px;
       width: 300px;
     }
   }
-
 }
 
 .goBack {
@@ -238,7 +256,7 @@ $height: 1113px;
     height: 49px;
     box-sizing: border-box;
     border: none;
-    border-bottom: 2px solid #D3D3D3;
+    border-bottom: 3px solid #D3D3D3;
     outline: 0;
     outline-offset: 0;
 
@@ -275,7 +293,6 @@ $height: 1113px;
 }
 
 // Radio block style
-
 .RadioBlock {
   height: 20px;
   margin-top: 40px;
@@ -300,7 +317,8 @@ $height: 1113px;
     border-radius: 100%;
     position: relative;
     transition: border .2s;
-    &:hover{
+
+    &:hover {
       border: 2px solid #2653af;
       transition: border .2s;
     }
@@ -323,6 +341,7 @@ $height: 1113px;
     opacity: 0;
     transition: .3s;
   }
+
   /* checked state */
   input:checked + .designOval::before {
     opacity: 1;
@@ -332,7 +351,6 @@ $height: 1113px;
   label {
     display: flex;
     align-items: center;
-
   }
 
   .radio {
@@ -340,3 +358,21 @@ $height: 1113px;
   }
 }
 
+
+.specialityCourseBlock {
+  .dropdown {
+    width: 306px;
+    margin-right: 1px;
+  }
+}
+
+@media (max-width: 640px) {
+  .specialityCourseBlock {
+    margin-top: 28px;
+    flex-direction: column;
+
+    .dropdown {
+      width: auto;
+    }
+  }
+}
