@@ -25,7 +25,7 @@
       outline: 0;
       outline-offset: 0;
     }
-    
+
     &.active {
       border-bottom: 2px solid #2653af;
     }
@@ -41,5 +41,39 @@
     position: absolute;
     top: 0;
     left: 2px;
+  }
+
+  &.error .input {
+    border-bottom: 2px solid #ff4255;
+  }
+
+  .text-error {
+    display: none;
+  }
+
+  &.error .text-error {
+    display: unset;
+    margin-top: 5px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ff4255;
+  }
+
+  .error-icon {
+    display: none;
+  }
+  &.error .error-icon {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    top: 20px;
+    -webkit-mask-image: url("./error.svg");
+    background: #ff4255;
+    border-radius: 1px;
   }
 }
