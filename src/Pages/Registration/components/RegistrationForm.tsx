@@ -16,6 +16,7 @@ import {
   Speciality,
 } from "../../../Helpers/api";
 import DropDown from "../../../Components/DropDown";
+import Input from "../../../Components/Input"
 
 type FormProps = {};
 type CoursesType = { id: number; title: string };
@@ -26,7 +27,8 @@ export default function RegistrationForm() {
   const [faculty, setFaculty] = useState<Faculty>();
   const [speciality, setSpeciality] = useState<Speciality>();
   const [course, setCourse] = useState<CoursesType>();
-
+  const [nameSurname, setNameSurname] = useState("");
+  
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function RegistrationForm() {
 
     function onInputErrorHandler<T>(item: T): boolean {
     //    return !item && isSubmitted ? true : false;
-        return false
+        return true
   }
 
   console.log("Form region", region);
@@ -46,12 +48,14 @@ export default function RegistrationForm() {
   console.log("Form faculty", faculty);
   console.log("Form speciality", speciality);
   console.log("Form course", course);
+  console.log("Form nameSurname", nameSurname);
 
   //----------------------------------------------------//
   const [state, setState] = React.useState({
     tg: false,
     politic: false,
   });
+  
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.checked;
     setState({
@@ -70,7 +74,19 @@ export default function RegistrationForm() {
   return (
     <div className={`SignForm`}>
       <div className={`flName`}>
-        <FirstLastName />
+        {/* <FirstLastName /> */}
+        <Input
+          value={nameSurname}
+          error={onInputErrorHandler(nameSurname)}
+          placeholder="Ім’я, Прізвище"
+          active={false}
+          onFocusHandler={(focusStatus: boolean) => {
+            // setIsOpen(focusStatus);
+          }}
+          onChangeHandler={(changedVal: string) => {
+            setNameSurname(changedVal);
+          }}
+        />
       </div>
       <RadioBtnGender />
       <div className={`regionBlock`}>
