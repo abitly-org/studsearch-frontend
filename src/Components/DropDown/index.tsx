@@ -12,6 +12,7 @@ import Input from "../Input";
 interface DropdownProp<T> {
   placeholder?: string;
   value: T | undefined;
+  inputError: boolean;
   onChange: (newValue: T) => void;
   request: (count: number, offset: number, query: string) => Promise<T[]>;
 }
@@ -26,7 +27,7 @@ type Item = {
 };
 
 export default function DropDown<T extends Item>(props: DropdownProp<T>) {
-  const { value, onChange, request, placeholder } = props;
+  const { value, inputError, onChange, request, placeholder } = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -60,8 +61,6 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         setIsOpen(!isOpen);
       }
     }
-
-    console.dir(e.target);
   }
 
   function onScroll() {
@@ -90,7 +89,8 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       <div className="input-container">
         <Input
           value={isOpen ? query : value?.name ? value?.name: value?.title}
-          error={false}
+
+          error={inputError}
           placeholder={placeholder}
           active={isOpen}
           onFocusHandler={(focusStatus: boolean) => {
@@ -101,43 +101,15 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
           }}
         />
         <div
-          className={cx("arrow", { "arrow-rotate": isOpen })}
+          className={cx("arrow", {
+            "arrow-rotate": isOpen,
+            "arrow-hide": inputError
+          })}
           onClick={() => {
             setIsOpen(!isOpen);
           }}
         />
       </div>
-
-      {/* <div className="input-block">
-        <input
-          className={cx("input", { active: isOpen })}
-          type="text"
-          placeholder={value?.name}
-          value={isOpen ? query : value?.name}
-          onFocus={() => {
-            setIsOpen(true);
-          }}
-          onBlur={() => {
-            setTimeout(() => {
-              setIsOpen(false);
-            }, 200);
-          }}
-          onChange={(event) => {
-            setQuery(event.target.value);
-          }}
-        />
-        <div
-          className={cx("arrow", { "arrow-rotate": isOpen })}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        />
-        <span
-          className={cx("placeholder", { "placeholder-focus": isOpen })}
-        >
-          {placeholder}
-        </span>
-      </div> */}
       <div
         className={cx("option-list", {
           "list-active": isOpen,

@@ -3,7 +3,6 @@
   justify-content: space-between;
   width: 100%;
   min-height: 50px;
-  margin-bottom: 5px;
   align-items: center;
   &:hover {
     background-color: rgba(214, 204, 196, 0.25);
@@ -19,6 +18,7 @@
   vertical-align: center;
   margin-left: 36px;
   max-width: 435px;
+  min-width: 150px;
 }
 
 .icon {

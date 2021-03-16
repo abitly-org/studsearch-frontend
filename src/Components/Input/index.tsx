@@ -6,9 +6,9 @@ export interface IInput {
   value: string | undefined;
   error: boolean;
   placeholder: string | undefined;
-  active: boolean;
+  active?: boolean;
   onChangeHandler: Function;
-  onFocusHandler: Function;
+  onFocusHandler?: Function;
 }
 
 export default function Input(props: IInput): JSX.Element {
@@ -22,11 +22,13 @@ export default function Input(props: IInput): JSX.Element {
   } = props;
   const [focus, setFocus] = useState(false);
   const [query, setQuery] = useState<string | undefined>("");
-  const [inputError, setInputError] = useState(false);
+  const [inputError, setInputError] = useState(error);
 
   useEffect(() => {
     setInputError(error);
-    onFocusHandler(focus);
+    if (onFocusHandler) {
+      onFocusHandler(focus);
+    }
     onChangeHandler(query);
   }, [error, focus, query]);
 
@@ -35,13 +37,18 @@ export default function Input(props: IInput): JSX.Element {
   }, [value]);
 
   useEffect(() => {
-    setFocus(active);
-  },[active])
+    setFocus(active? active: false);
+  }, [active]);
 
-  const inputClass = classNames("input", { active: focus });
+  const inputClass = classNames("input", {
+    active: focus,
+  });
+  const inputBlockClass = classNames("input-block", {
+    error: inputError,
+  });
 
   return (
-    <div className="input-block">
+    <div className={inputBlockClass}>
       <input
         className={inputClass}
         type="text"
@@ -58,7 +65,9 @@ export default function Input(props: IInput): JSX.Element {
           setQuery(event.target.value);
         }}
       />
+      <div className={"error-icon"}></div>
       <span className={"placeholder"}>{placeholder}</span>
+      <span className={"text-error"}>{`Введіть ${placeholder}`}</span>
     </div>
   );
 }
