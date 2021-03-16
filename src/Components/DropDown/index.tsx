@@ -89,7 +89,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : value?.name}
+          value={isOpen ? query : value?.name ? value?.name: value?.title}
           error={false}
           placeholder={placeholder}
           active={isOpen}
