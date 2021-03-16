@@ -32,23 +32,18 @@ export default function RegistrationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    console.log("Form mount");
+    
     return () => {
-      console.log("Form UNmount");
+      
     };
   });
 
     function onInputErrorHandler<T>(item: T): boolean {
     //    return !item && isSubmitted ? true : false;
-        return true
+        return false
   }
 
-  console.log("Form region", region);
-  console.log("Form university", university);
-  console.log("Form faculty", faculty);
-  console.log("Form speciality", speciality);
-  console.log("Form course", course);
-  console.log("Form nameSurname", nameSurname);
+ 
 
   //----------------------------------------------------//
   const [state, setState] = React.useState({
@@ -74,15 +69,10 @@ export default function RegistrationForm() {
   return (
     <div className={`SignForm`}>
       <div className={`flName`}>
-        {/* <FirstLastName /> */}
         <Input
           value={nameSurname}
           error={onInputErrorHandler(nameSurname)}
           placeholder="Ім’я, Прізвище"
-          active={false}
-          onFocusHandler={(focusStatus: boolean) => {
-            // setIsOpen(focusStatus);
-          }}
           onChangeHandler={(changedVal: string) => {
             setNameSurname(changedVal);
           }}

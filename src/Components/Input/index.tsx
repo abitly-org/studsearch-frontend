@@ -6,9 +6,9 @@ export interface IInput {
   value: string | undefined;
   error: boolean;
   placeholder: string | undefined;
-  active: boolean;
+  active?: boolean;
   onChangeHandler: Function;
-  onFocusHandler: Function;
+  onFocusHandler?: Function;
 }
 
 export default function Input(props: IInput): JSX.Element {
@@ -26,7 +26,9 @@ export default function Input(props: IInput): JSX.Element {
 
   useEffect(() => {
     setInputError(error);
-    onFocusHandler(focus);
+    if (onFocusHandler) {
+      onFocusHandler(focus);
+    }
     onChangeHandler(query);
   }, [error, focus, query]);
 
@@ -35,17 +37,15 @@ export default function Input(props: IInput): JSX.Element {
   }, [value]);
 
   useEffect(() => {
-    setFocus(active);
-  },[active])
+    setFocus(active? active: false);
+  }, [active]);
 
   const inputClass = classNames("input", {
     active: focus,
-   
   });
   const inputBlockClass = classNames("input-block", {
-    error: inputError
-  })
- 
+    error: inputError,
+  });
 
   return (
     <div className={inputBlockClass}>
