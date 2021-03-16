@@ -39,13 +39,11 @@ export default function RegistrationForm() {
   });
 
     function onInputErrorHandler<T>(item: T): boolean {
-    //    return !item && isSubmitted ? true : false;
+        // return !item && isSubmitted ? true : false;
         return false
   }
 
  
-
-  //----------------------------------------------------//
   const [state, setState] = React.useState({
     tg: false,
     politic: false,
@@ -139,7 +137,7 @@ export default function RegistrationForm() {
           onChange={setCourse}
           request={useCallback(
             (count, offset, query) =>
-              new Promise<CoursesType[]>((resolve, reject) => {
+              new Promise<CoursesType[]>((resolve) => {
                 resolve(Courses);
               }),
             []
