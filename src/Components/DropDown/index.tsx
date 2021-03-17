@@ -117,7 +117,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         ref={dropdownDiv}
         onScroll={onScroll}
       >
-        {dropdownItems}
+        {isOpen?dropdownItems:null}
         {loading && <LoadingSpinner center-x />}
       </div>
     </div>
