@@ -1,0 +1,57 @@
+@import "src/palette";
+
+@mixin style-text($fSize, $lHeight) {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: $fSize;
+  line-height: $lHeight;
+}
+
+.RegistrationContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  height: 1113px; //1160px
+  background: $white;
+}
+
+.SignUpLogo {
+  width: 231px;
+  margin: 36px auto 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.SignUpText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 29px;
+
+  h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 33px;
+    line-height: 40px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  span {
+    @include style-text(20px, 24px);
+    color: $grey;
+    padding-right: 10px;
+  }
+
+  a {
+    @include style-text(20px, 24px);
+    text-decoration-line: underline;
+    color: $primary;
+
+    &:hover {
+      color: #137dcf;
+    }
+  }
+}

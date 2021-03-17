@@ -30,55 +30,6 @@ $height: 1113px;
   }
 }
 
-//--------------------------------//
-.RegistrationContainer {
-  display: flex;
-  flex-direction: column;
-  max-width: 800px;
-  height: 1113px; //1160px
-  background: $white;
-}
-
-.SignUpLogo {
-  width: 231px;
-  margin: 36px auto 0 auto;
-  display: flex;
-  justify-content: center;
-}
-
-.SignUpText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 29px;
-
-  h1 {
-    font-family: 'Montserrat Alternates', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 33px;
-    line-height: 40px;
-    margin-bottom: 14px;
-    text-align: center;
-  }
-
-  span {
-    @include style-text(20px, 24px);
-    color: $grey;
-    padding-right: 10px;
-  }
-
-  a {
-    @include style-text(20px, 24px);
-    text-decoration-line: underline;
-    color: $primary;
-
-    &:hover {
-      color: #137dcf;
-    }
-  }
-}
-
 //------------------------------------//
 .SignForm {
   padding: 0 35px;
@@ -105,80 +56,6 @@ $height: 1113px;
     justify-content: space-between;
   }
 
-  .InputBoxText {
-    margin-top: 3px;
-    @include style-text(12px, 15px);
-    max-width: 650px;
-    padding-right: 80px;
-    color: #9A9BA5;
-  }
-
-  .Input {
-    margin-top: 31px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-bottom: 3px;
-
-    span {
-      @include style-text(14px, 17px);
-      color: $grey;
-    }
-
-    input {
-      margin-top: 10px;
-      border: 0;
-      padding: 0;
-      @include style-text(16px, 20px);
-      box-shadow: inset 0px -2px 0px #D6CCC4;
-
-      &:focus {
-        box-shadow: inset 0px -2px 0px $primary;
-        outline: 0;
-      }
-    }
-  }
-
-  //********************//
-  @mixin checkBox {
-    @include style-text(15px, 19px);
-    letter-spacing: 0.05em;
-    color: $black;
-  }
-
-  @mixin checkBoxInput {
-    cursor: pointer;
-    margin: 0 10px 0 0;
-    width: 21px;
-    height: 21px;
-  }
-
-  .checkBoxBlock {
-    margin-top: 38px;
-    @include checkBox;
-
-    div {
-      margin-top: 19px;
-      display: flex;
-      align-items: center;
-    }
-
-    input {
-      @include checkBoxInput;
-    }
-
-    a {
-      color: $primary;
-      padding-left: 5px;
-      text-decoration-skip-ink: none;
-
-      &:hover {
-        color: #137dcf;
-      }
-
-    }
-  }
-
   .useTelegram {
     max-width: 605px;
     margin-top: 21px;
@@ -192,25 +69,31 @@ $height: 1113px;
     width: 478px;
     height: 49px;
     display: flex;
-    align-items: center;
     border-radius: 6px;
-    background: #68A8E5;;
 
     &:hover {
       box-shadow: 3px 5px 9px 0 $grey;
       -webkit-box-shadow: 3px 5px 9px 0 $grey;
     }
 
-    img {
-      padding: 0 22px 0 29px;
-    }
-
-    a {
+    button {
       display: flex;
       align-items: center;
       width: 100%;
       height: 100%;
-      text-decoration: none;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      background: #68A8E5;;
+      border-radius: 6px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    img {
+      padding: 0 22px 0 29px;
     }
 
     span {
@@ -244,121 +127,6 @@ $height: 1113px;
   }
 }
 
-// Sergei input style need remove leather
-.input-block {
-  max-width: 730px;
-  height: 49px;
-  position: relative;
-  border-radius: 4px;
-
-  > .input {
-    width: 100%;
-    height: 49px;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 3px solid #D3D3D3;
-    outline: 0;
-    outline-offset: 0;
-
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
-    padding-top: 25px;
-    color: #3b3c44;
-
-    &:focus {
-      border: none;
-      border-bottom: 2px solid #2653af;
-      outline: 0;
-      outline-offset: 0;
-    }
-
-    &.active {
-      border-bottom: 2px solid #2653af;
-    }
-  }
-
-  .placeholder {
-    font-family: Montserrat, sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-
-    color: #787a87;
-    position: absolute;
-    top: 0;
-    left: 2px;
-  }
-}
-
-// Radio block style
-.RadioBlock {
-  height: 20px;
-  margin-top: 40px;
-  display: flex;
-  font-family: Montserrat, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: #3B3C44;
-
-  input[type="radio"] {
-    display: none;
-  }
-
-  .designOval {
-    margin-right: 10px;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    border: 2px solid grey;
-    border-radius: 100%;
-    position: relative;
-    transition: border .2s;
-
-    &:hover {
-      border: 2px solid #2653af;
-      transition: border .2s;
-    }
-  }
-
-  .designOval::before,
-  .designOval::after {
-    content: '';
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
-    position: absolute;
-    transform: scale(0);
-    transform-origin: center center;
-  }
-
-  .designOval:before {
-    box-shadow: 0 0 0 14px #2653af;
-    background: white;
-    opacity: 0;
-    transition: .3s;
-  }
-
-  /* checked state */
-  input:checked + .designOval::before {
-    opacity: 1;
-    transform: scale(.45);
-  }
-
-  label {
-    display: flex;
-    align-items: center;
-  }
-
-  .radio {
-    margin-right: 40px;
-  }
-}
-
-
 .specialityCourseBlock {
   .dropdown {
     width: 306px;
@@ -367,6 +135,13 @@ $height: 1113px;
 }
 
 @media (max-width: 640px) {
+  .SignUpText {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   .specialityCourseBlock {
     margin-top: 28px;
     flex-direction: column;

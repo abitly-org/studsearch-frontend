@@ -44,7 +44,28 @@ const ua = {
     'student-course-3': '4 курc',
     'student-course-4': "5 курс",
     'student-course-5': "6 курс",
-    'student-course-6': "Випускник"
+    'student-course-6': "Випускник",
+
+
+    'registration-main-text': "Реєстрація студента-волонтера",
+    'registration-account': 'Вже є обліковий запис?',
+    'registration-log': 'Увійти',
+    'registration-names': 'Ім’я,Прізвище',
+    'registration-man': 'Чоловік',
+    'registration-girl': 'Жінка',
+    'registration-region': 'Регіон',
+    'registration-institute': 'Вищий навчальний заклад',
+    'registration-faculty': 'Факультет',
+    'registration-speciality': 'Спеціальність',
+    'registration-course': 'Курс',
+    'registration-about': 'Про себе',
+    'registration-optional': 'Це поле не є обов’язковим. Проте ми будемо вдячні якщо ти скажеш декілька слів про своє навчання та студентське життя.',
+    'registration-add-tg-photo': 'Додати моє фото з Telegram',
+    'registration-confidential-1': 'Погоджуюся з',
+    'registration-confidential-2': 'Політикою конфіденційності',
+    'registration-useTg': 'Ми використовуемо Telegram для зв’язку між абітурієнтом та студентом, тому просимо тебе підтвердити свій аккаунт через Telegram-бота',
+    'registration-confirm': 'Підтвердити Telegram та зареєструватись',
+    'registration-back': 'Назад',
 };
 const ru = {
     'header-login': 'Войти',
@@ -90,7 +111,28 @@ const ru = {
     'student-course-3': '4 курc',
     'student-course-4': "5 курс",
     'student-course-5': "6 курс",
-    'student-course-6': "Выпускник"
+    'student-course-6': "Выпускник",
+
+
+    'registration-main-text': "Регистрация студента-волонтера",
+    'registration-account': 'Уже есть учетная запись?',
+    'registration-log': 'Войти',
+    'registration-names': 'Имя,Фамилия',
+    'registration-man': 'Мужчина',
+    'registration-girl': 'Женщина',
+    'registration-region': 'Регион',
+    'registration-institute': 'Высшее учебное заведение',
+    'registration-faculty': 'Факультет',
+    'registration-speciality': 'Специальность',
+    'registration-course': 'Курс',
+    'registration-about': 'Про себя',
+    'registration-optional': 'Это поле не является обязательным. Однако мы будем благодарны если ты скажешь несколько слов о своей учебе и студенческой жизни.',
+    'registration-add-tg-photo': 'Добавить мое фото с Telegram',
+    'registration-confidential-1': 'Согласен с',
+    'registration-confidential-2': 'Политикой конфиденциальности',
+    'registration-useTg': 'Мы используем Telegram для связи между абитуриентом и студентом, поэтому просим тебя подтвердить свой аккаунт через Telegram-бота',
+    'registration-confirm': 'Подтвердить Telegram и зарегистрироваться',
+    'registration-back': 'Назад',
 };
 const en = {
     'header-login': 'Sign in',
@@ -140,7 +182,7 @@ const en = {
 };
 
 export default {
-    'uk-UA': { translation: ua },
-    'ru-RU': { translation: ru },
-    'en-US': { translation: en }
+    'uk-UA': {translation: ua},
+    'ru-RU': {translation: ru},
+    'en-US': {translation: en}
 }
