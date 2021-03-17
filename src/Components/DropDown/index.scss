@@ -29,13 +29,13 @@
 
 .list-inactive {
   height: 0;
-  border: none;
+  border: none; //  box-shadow: none;
   transition: all 0.1s ease-out;
 }
 
 .list-active {
   height: 246px;
-  border: 2px solid #d6ccc4;
+  border: 2px solid #d6ccc4;  //box-shadow: 0 0 0 2px  #d6ccc4;
   transition: all 0.1s ease-out;
 }
 

@@ -72,8 +72,7 @@
     height: 30px;
     right: 10px;
     top: 20px;
-    -webkit-mask-image: url("./error.svg");
-    background: #ff4255;
+    background: url("./error.svg");
     border-radius: 1px;
   }
 }

@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
-import tgPhoto from "./tgPhoto.svg"
+import tgPhoto from "./tgPhoto.svg";
+import './registrationForm.scss';
 import Checkbox from "../CheckBox/Checkbox";
 import MultiInput from "../MultiInput/MultiInput";
 import RadioBtnGender from "../RadioBtnGender/RadioBtnGender";
@@ -31,19 +32,15 @@ export default function RegistrationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    
-    return () => {
-      
-    };
+        return () => {
+          };
   });
 
     function onInputErrorHandler<T>(item: T): boolean {
     //    return !item && isSubmitted ? true : false;
         return false
   }
-
-    const [query, setQuery] = useState("");
-    const [selectOption, setSelectOption] = useState('')
+   const [selectOption, setSelectOption] = useState('')
     const [aboutMyself, setAboutMyself] = useState('');
     const [state, setState] = React.useState({
         tg: false,
@@ -63,13 +60,9 @@ export default function RegistrationForm() {
         console.log("you try submit states")
     }
 
-  function handleChangeAbout(event: React.ChangeEvent<HTMLInputElement>) {
-    setAboutMyself(event.target.value);
-    console.log(event.target.value);
-  }
-
   return (
     <div className={`SignForm`}>
+        <form>
       <div className={`flName`}>
         <Input
           value={nameSurname}
@@ -156,7 +149,10 @@ export default function RegistrationForm() {
       <MultiInput
         name={`textValue`}
         value={aboutMyself}
-        onChange={handleChangeAbout}
+        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setAboutMyself(event.target.value);
+            console.log(event.target.value);
+        }}
       />
       <div className="checkBoxBlock">
         <Checkbox
@@ -183,6 +179,7 @@ export default function RegistrationForm() {
           <span>Підтвердити Telegram та зареєструватись</span>
         </a>
       </div>
+        </form>
     </div>
   );
 }

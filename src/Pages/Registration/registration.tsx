@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 import logo from "./signLogo.svg";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
-
 export default class Registration extends React.Component {
 
     render(): JSX.Element {

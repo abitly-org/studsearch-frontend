@@ -1,0 +1,44 @@
+@import "src/palette";
+
+@mixin checkBox {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  color: $black;
+}
+
+@mixin checkBoxInput {
+  cursor: pointer;
+  margin: 0 10px 0 0;
+  width: 21px;
+  height: 21px;
+}
+
+.checkBoxBlock {
+  margin-top: 38px;
+  @include checkBox;
+
+  div {
+    margin-top: 19px;
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    @include checkBoxInput;
+  }
+
+  a {
+    color: $primary;
+    padding-left: 5px;
+    text-decoration-skip-ink: none;
+
+    &:hover {
+      color: #137dcf;
+    }
+
+  }
+}

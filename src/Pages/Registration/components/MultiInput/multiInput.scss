@@ -1,0 +1,63 @@
+@import "src/palette";
+
+@mixin style-text($fSize, $lHeight) {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: $fSize;
+  line-height: $lHeight;
+}
+
+.InputBoxText {
+  @include style-text(12px, 15px);
+  max-width: 650px;
+  padding-right: 80px;
+  color: #9A9BA5;
+}
+
+.Input {
+  margin-top: 31px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  span {
+    @include style-text(14px, 17px);
+    color: $grey;
+  }
+  .areaBlock {
+    position: relative;
+    .svg {
+      position: absolute;
+      width: 7px;
+      height: 8px;
+      right: 6px;
+      bottom: 9px;
+      -webkit-mask-image:  url('inputArrow.svg');
+      mask-image: url('inputArrow.svg');
+    }
+  }
+  .Focus {
+    background: $primary;
+  }
+  .nonFocus {
+    background: $grey;
+  }
+
+  textarea {
+    width: 100%;
+    margin-top: 10px;
+    height: 20px;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    resize: inherit;
+    @include style-text(16px, 20px);
+    box-shadow: inset 0px -2px 0px #D6CCC4;
+
+    &:focus{
+      box-shadow: inset 0px -2px 0px $primary;
+      outline: 0;
+    }
+  }
+}

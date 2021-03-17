@@ -1,4 +1,5 @@
 import React from "react";
+import './radioBtnGender.scss';
 
 interface IRadioBtnGender {
     selectOption: string
