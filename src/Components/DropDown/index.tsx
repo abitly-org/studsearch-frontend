@@ -43,10 +43,10 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   });
 
   const { loading, error, hasMore, items, dispatch } = useLoadPagination(
-      useCallback((count, offset) => request?.(count, offset, query), [
-        request,
-        query,
-      ])
+    useCallback((count, offset) => request?.(count, offset, query), [
+      request,
+      query,
+    ])
   );
 
   function onGlobalClick(e: MouseEvent) {
@@ -88,7 +88,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : value?.name ? value?.name: value?.title}
+          value={isOpen ? query : value?.name ? value?.name : value?.title}
           error={inputError}
           placeholder={placeholder}
           active={isOpen}
@@ -102,7 +102,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         <div
           className={cx("arrow", {
             "arrow-rotate": isOpen,
-            "arrow-hide": inputError
+            "arrow-hide": inputError,
           })}
           onClick={() => {
             setIsOpen(!isOpen);
@@ -117,7 +117,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         ref={dropdownDiv}
         onScroll={onScroll}
       >
-        {isOpen?dropdownItems:null}
+        {isOpen ? dropdownItems : null}
         {loading && <LoadingSpinner center-x />}
       </div>
     </div>
