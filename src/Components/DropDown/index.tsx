@@ -88,15 +88,17 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : value?.name ? value?.name: value?.title}
+          value={isOpen ? query : value?.name ?? value?.title}
+          placeholder={value?.name ?? value?.title}
           error={inputError}
-          placeholder={placeholder}
-          active={isOpen}
+          title={placeholder}
+          enabled={isOpen}
           onFocusHandler={(focusStatus: boolean) => {
             setIsOpen(focusStatus);
           }}
-          onChangeHandler={(changedVal: string) => {
-            setQuery(changedVal);
+          onChange={(changedVal: string) => {
+            if (changedVal !== value?.name)
+              setQuery(changedVal);
           }}
         />
         <div
@@ -117,7 +119,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
         ref={dropdownDiv}
         onScroll={onScroll}
       >
-        {isOpen?dropdownItems:null}
+        {isOpen ? dropdownItems : null}
         {loading && <LoadingSpinner center-x />}
       </div>
     </div>

@@ -17,6 +17,7 @@ const useLoadPagination = <T extends unknown>(
   useEffect(() => {
     setState({
       ...state,
+      hasMore: true,
       items: [],
       offset: 0,
       dispatchIndex: state.dispatchIndex + 1,
@@ -24,6 +25,8 @@ const useLoadPagination = <T extends unknown>(
   }, [request]);
 
   useEffect(() => {
+    if (!state.hasMore)
+      return;
     setState({
       ...state,
       loading: true,
@@ -32,14 +35,7 @@ const useLoadPagination = <T extends unknown>(
     request(count, state.offset)
       .then((res) => {
         if (unmounted) return;
-        if (!state.hasMore) {
-          setState({
-            ...state,
-            loading: false,
-          });
-          return;
-        }
-       
+
         setState({
           ...state,
           items: [...state.items, ...res],
@@ -63,9 +59,8 @@ const useLoadPagination = <T extends unknown>(
     hasMore: state.hasMore,
     items: state.items,
     dispatch: () => {
-     
-      if (!state.loading && state.hasMore)
       console.log("dispatch(): loading=", state.loading);
+      if (!state.loading && state.hasMore)
         setState({ ...state, dispatchIndex: state.dispatchIndex + 1 });
     },
   };

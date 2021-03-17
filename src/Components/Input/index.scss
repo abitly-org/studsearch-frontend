@@ -19,6 +19,8 @@
     padding-top: 25px;
     color: #3b3c44;
 
+    transition: border-bottom 0.1s ease-in-out;
+
     &:focus {
       border: none;
       border-bottom: 2px solid #2653af;
@@ -30,7 +32,7 @@
       border-bottom: 2px solid #2653af;
     }
   }
-  .placeholder {
+  .title {
     font-family: Montserrat;
     font-style: normal;
     font-weight: 500;
