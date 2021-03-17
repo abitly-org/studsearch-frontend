@@ -31,15 +31,7 @@ const useLoadPagination = <T extends unknown>(
     });
     request(count, state.offset)
       .then((res) => {
-        if (unmounted) return;
-        if (!state.hasMore) {
-          setState({
-            ...state,
-            loading: false,
-          });
-          return;
-        }
-       
+        if (unmounted) return;       
         setState({
           ...state,
           items: [...state.items, ...res],
