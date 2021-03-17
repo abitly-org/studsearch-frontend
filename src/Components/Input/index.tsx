@@ -3,56 +3,51 @@ import classNames from "classnames";
 import "./index.scss";
 
 export interface IInput {
-  value: string | undefined;
-  error: boolean;
-  placeholder: string | undefined;
-  active?: boolean;
-  onChangeHandler: Function;
+  value?: string;
+  onChange: (newValue: string) => void;
+
+  error?: boolean;
+  placeholder?: string;
+  title?: string;
+  enabled?: boolean;
   onFocusHandler?: Function;
 }
 
 export default function Input(props: IInput): JSX.Element {
   const {
     value,
+    onChange,
     error,
-    placeholder,
-    active,
-    onFocusHandler,
-    onChangeHandler,
+    placeholder, 
+    title,
+    enabled = true,
+    onFocusHandler
   } = props;
+
   const [focus, setFocus] = useState(false);
-  const [query, setQuery] = useState<string | undefined>("");
-  const [inputError, setInputError] = useState(error);
+  // const [query, setQuery] = useState<string | undefined>("");
+  // const [inputError, setInputError] = useState(error);
 
   useEffect(() => {
-    setInputError(error);
-    if (onFocusHandler) {
-      onFocusHandler(focus);
-    }
-    onChangeHandler(query);
-  }, [error, focus, query]);
+    // setInputError(error);
+    onFocusHandler?.(focus);
+    // onChange(query);
+  }, [ focus ]);
 
-  useEffect(() => {
-    setQuery(value ? value : "");
-  }, [value]);
+  // useEffect(() => {
+  //   setFocus(active ? active : false);
+  // }, [active]);
 
-  useEffect(() => {
-    setFocus(active? active: false);
-  }, [active]);
-
-  const inputClass = classNames("input", {
-    active: focus,
-  });
-  const inputBlockClass = classNames("input-block", {
-    error: inputError,
-  });
+  const inputClass = classNames("input", { active: enabled && focus });
+  const inputBlockClass = classNames("input-block", { error });
 
   return (
     <div className={inputBlockClass}>
       <input
         className={inputClass}
         type="text"
-        value={query}
+        placeholder={placeholder}
+        value={value ?? ""}
         onFocus={() => {
           setFocus(true);
         }}
@@ -62,12 +57,12 @@ export default function Input(props: IInput): JSX.Element {
           }, 200);
         }}
         onChange={(event) => {
-          setQuery(event.target.value);
+          onChange(event.target.value);
         }}
       />
       <div className={"error-icon"}></div>
-      <span className={"placeholder"}>{placeholder}</span>
-      <span className={"text-error"}>{`Введіть ${placeholder}`}</span>
+      <span className={"title"}>{title}</span>
+      <span className={"text-error"}>{`Введіть ${title}`}</span>
     </div>
   );
 }

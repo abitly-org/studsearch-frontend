@@ -88,15 +88,21 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
+<<<<<<< HEAD
           value={isOpen ? query : value?.name ? value?.name : value?.title}
+=======
+          value={isOpen ? query : value?.name ?? value?.title}
+          placeholder={value?.name ?? value?.title}
+>>>>>>> c1d27b07a5e1e0a20a059804f0a59946c645002b
           error={inputError}
-          placeholder={placeholder}
-          active={isOpen}
+          title={placeholder}
+          enabled={isOpen}
           onFocusHandler={(focusStatus: boolean) => {
             setIsOpen(focusStatus);
           }}
-          onChangeHandler={(changedVal: string) => {
-            setQuery(changedVal);
+          onChange={(changedVal: string) => {
+            if (changedVal !== value?.name)
+              setQuery(changedVal);
           }}
         />
         <div

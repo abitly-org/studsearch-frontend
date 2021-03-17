@@ -71,7 +71,7 @@ export default function RegistrationForm() {
           value={nameSurname}
           error={onInputErrorHandler(nameSurname)}
           placeholder="Ім’я, Прізвище"
-          onChangeHandler={(changedVal: string) => {
+          onChange={(changedVal: string) => {
             setNameSurname(changedVal);
           }}
         />
