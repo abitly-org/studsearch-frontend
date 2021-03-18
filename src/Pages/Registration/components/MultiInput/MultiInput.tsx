@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './multiInput.scss';
 import cx from "classnames";
 
@@ -12,12 +12,18 @@ function MultiInput(props: textArea) {
     const [focus, setFocus] = useState(false);
     const {name, value, onChange} = props;
 
+    function handleKeyDown(e: any) {
+        e.target.style.height = 'inherit';
+        e.target.style.height = Math.min(e.target.scrollHeight, 300) + "px";
+    }
+
     return (
         <div className="Input">
             <span>Про себе</span>
-
             <div className={`areaBlock`}>
               <textarea
+                  rows={1}
+                  onInput={handleKeyDown}
                   name={name}
                   value={value}
                   onChange={onChange}

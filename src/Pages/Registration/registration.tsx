@@ -11,10 +11,10 @@ export default class Registration extends React.Component {
 
     render(): JSX.Element {
         return (
-            <div className="SignUpPage" style={{backgroundImage: `url(${splitGirl})`}}>
+            <div className="SignUpPage"  >
+                <div className={`secondPhoto`} style={{backgroundImage: `url(${splitGirl})`}}/>
                 <div className="Registration"  >
-                    {/*<div className={`secondPhoto`} style={{backgroundImage: `url(${girl2})`}}/>*/}
-                    <div className={`RegistrationContainer`}>
+                     <div className={`RegistrationContainer`}>
                         <Link className="SignUpLogo" to='/'>
                             <img src={logo} alt={`logo`}/>
                         </Link>

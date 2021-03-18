@@ -57,7 +57,19 @@ export default function RegistrationForm() {
         });
     }
 
+    const [error, serError] = React.useState({
+            nameSurname: false,
+            selectOption: false,
+            region: false,
+            university: false,
+            faculty: false,
+            speciality: false,
+            course: false,
+        }
+    )
+
     function SubmitStates(event: any) {
+        let sumbitready = true;
         event.preventDefault();
         const dataPost = {
             nameSurname: nameSurname,
@@ -71,15 +83,20 @@ export default function RegistrationForm() {
             tg: state.tg,
             politic: state.politic
         }
-        Object.values(dataPost).map(el => {
-            if (el === undefined || el === false || el.toString().length === 0 ) {
-                console.log('Error');
-                return;
+        Object.entries(dataPost).map(([key, value]) => {
+            if ('aboutMyself' !== key) {
+                if (value == "" || value === undefined || value == false) {
+                    sumbitready = false;
+                    serError(prevUser => ({...prevUser, [key]: true}));
+                } else {
+                    serError(prevUser => ({...prevUser, [key]: false}));
+                }
             }
-            console.log("ready To send");
-
         });
 
+        if (sumbitready) {
+            console.log("ready To send ");
+        }
     }
 
     return (
@@ -88,7 +105,7 @@ export default function RegistrationForm() {
                 <div className={`flName`}>
                     <Input
                         value={nameSurname}
-                        error={onInputErrorHandler(nameSurname)}
+                        error={error.nameSurname}
                         placeholder="Ім’я, Прізвище"
                         onChangeHandler={(changedVal: string) => {
                             setNameSurname(changedVal);
@@ -104,7 +121,7 @@ export default function RegistrationForm() {
                     <DropDown<Region>
                         placeholder="Регіон"
                         value={region}
-                        inputError={onInputErrorHandler(region)}
+                        inputError={error.region}
                         onChange={setRegion}
                         request={useCallback(
                             (count, offset, query) =>
@@ -117,7 +134,7 @@ export default function RegistrationForm() {
                     <DropDown<University>
                         placeholder="Вищий навчальний заклад"
                         value={university}
-                        inputError={onInputErrorHandler(university)}
+                        inputError={error.university}
                         onChange={setUniversity}
                         request={useCallback(
                             (count, offset, query) =>
@@ -131,7 +148,7 @@ export default function RegistrationForm() {
                         <DropDown<Faculty>
                             placeholder="Факультет"
                             value={faculty}
-                            inputError={onInputErrorHandler(faculty)}
+                            inputError={error.faculty}
                             onChange={setFaculty}
                             request={useCallback(
                                 (count, offset, query) =>
@@ -145,7 +162,7 @@ export default function RegistrationForm() {
                     <DropDown<Speciality>
                         placeholder="Спеціальність"
                         value={speciality}
-                        inputError={onInputErrorHandler(speciality)}
+                        inputError={error.speciality}
                         onChange={setSpeciality}
                         request={useCallback(
                             (count, offset, query) =>
@@ -156,7 +173,7 @@ export default function RegistrationForm() {
                     <DropDown<CoursesType>
                         placeholder="Курс"
                         value={course}
-                        inputError={onInputErrorHandler(course)}
+                        inputError={error.course}
                         onChange={setCourse}
                         request={useCallback(
                             (count, offset, query) =>

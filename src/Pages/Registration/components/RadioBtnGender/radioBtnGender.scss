@@ -21,11 +21,11 @@
     border: 2px solid grey;
     border-radius: 100%;
     position: relative;
-    transition: border .2s;
+    transition: border .05s;
 
     &:hover {
       border: 2px solid #2653af;
-      transition: border .2s;
+      transition: border .05s;
     }
   }
 
@@ -54,6 +54,7 @@
   }
 
   label {
+    cursor: pointer;
     display: flex;
     align-items: center;
   }

@@ -25,10 +25,13 @@
     margin-top: 19px;
     display: flex;
     align-items: center;
+    label {
+      cursor: pointer;
+    }
   }
 
   input {
-    @include checkBoxInput;
+     @include checkBoxInput;
   }
 
   a {
