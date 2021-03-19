@@ -1,9 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import tgPhoto from "./tgPhoto.svg";
 import './registrationForm.scss';
-import Checkbox from "../CheckBox/Checkbox";
-import MultiInput from "../MultiInput/MultiInput";
-import RadioBtnGender from "../RadioBtnGender/RadioBtnGender";
+
 import {
     getUniversities,
     getFaculties,
@@ -17,6 +15,9 @@ import {
 } from "../../../../Helpers/api";
 import DropDown from "../../../../Components/DropDown";
 import Input from "../../../../Components/Input";
+import RadioBtnGender from "../../../../Components/RadioBtnGender/RadioBtnGender";
+import MultiInput from "../../../../Components/MultiInput/MultiInput";
+import Checkbox from "../../../../Components/CheckBox/Checkbox";
 
 
 type FormProps = {};
@@ -36,30 +37,24 @@ export default function RegistrationForm() {
         };
     });
 
-    function onInputErrorHandler<T>(item: T): boolean {
-        console.log(item);
-        //    return !item && isSubmitted ? true : false;
-        return false
-    }
-
-    const [selectOption, setSelectOption] = useState('')
+    const [gender, setGender] = useState('')
     const [aboutMyself, setAboutMyself] = useState('');
-    const [state, setState] = React.useState({
+    const [checkBoxState, setCheckBoxState] = React.useState({
         tg: false,
         politic: false
     })
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const value = event.target.checked;
-        setState({
-            ...state,
+        setCheckBoxState({
+            ...checkBoxState,
             [event.target.name]: value
         });
     }
 
     const [error, serError] = React.useState({
             nameSurname: false,
-            selectOption: false,
+            gender: false,
             region: false,
             university: false,
             faculty: false,
@@ -69,32 +64,31 @@ export default function RegistrationForm() {
     )
 
     function SubmitStates(event: any) {
-        let sumbitready = true;
+        let readyToSubmit = true;
         event.preventDefault();
         const dataPost = {
             nameSurname: nameSurname,
-            selectOption: selectOption,
+            gender: gender,
             region: region,
             university: university,
             faculty: faculty,
             speciality: speciality,
             course: course,
             aboutMyself: aboutMyself,
-            tg: state.tg,
-            politic: state.politic
+            tg: checkBoxState.tg,
+            politic: checkBoxState.politic
         }
         Object.entries(dataPost).map(([key, value]) => {
-            if ('aboutMyself' !== key) {
+            if (key !== 'aboutMyself') {
                 if (value == "" || value === undefined || value == false) {
-                    sumbitready = false;
+                    readyToSubmit = false;
                     serError(prevUser => ({...prevUser, [key]: true}));
                 } else {
                     serError(prevUser => ({...prevUser, [key]: false}));
                 }
             }
         });
-
-        if (sumbitready) {
+        if (readyToSubmit) {
             console.log("ready To send ");
         }
     }
@@ -113,9 +107,9 @@ export default function RegistrationForm() {
                     />
                 </div>
                 <RadioBtnGender
-                    selectOption={selectOption}
+                    gender={gender}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setSelectOption(event.target.value);
+                        setGender(event.target.value);
                     }}/>
                 <div className={`regionBlock`}>
                     <DropDown<Region>
@@ -195,14 +189,14 @@ export default function RegistrationForm() {
                     <Checkbox
                         label="tg"
                         value={`Додати моє фото з Telegram`}
-                        checked={state.tg}
+                        checked={checkBoxState.tg}
                         onChange={handleChange}
                     />
                     <Checkbox
                         label="politic"
                         value={`Погоджуюся з`}
                         tag={<a href={`#`}>Політикою конфіденційності</a>}
-                        checked={state.politic}
+                        checked={checkBoxState.politic}
                         onChange={handleChange}
                     />
                 </div>
