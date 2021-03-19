@@ -9,7 +9,7 @@ import "./index.scss";
 
 import Input from "../Input";
 
-interface DropdownProp<T> {
+interface DropdownProps<T> {
   placeholder?: string;
   value: T | undefined;
   inputError: boolean;
@@ -26,7 +26,7 @@ type Item = {
   title?: string;
 };
 
-export default function DropDown<T extends Item>(props: DropdownProp<T>) {
+export default function DropDown<T extends Item>(props: DropdownProps<T>) {
   const { value, inputError, onChange, request, placeholder } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -35,19 +35,24 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
   const dropdownDiv = useRef<HTMLDivElement>(null);
   const uniqueId = Math.round(Math.random() * 1000).toString();
 
-  useEffect(() => {
-    window.addEventListener("click", onGlobalClick);
-    return () => {
-      window.removeEventListener("click", onGlobalClick);
-    };
-  });
-
   const { loading, error, hasMore, items, dispatch } = useLoadPagination(
     useCallback((count, offset) => request?.(count, offset, query), [
       request,
       query,
     ])
   );
+
+  const itemsAvailable = !!items.length;
+
+  useEffect(() => {
+    // if (!items) {
+
+    // }
+    window.addEventListener("click", onGlobalClick);
+    return () => {
+      window.removeEventListener("click", onGlobalClick);
+    };
+  });
 
   function onGlobalClick(e: MouseEvent) {
     if (!isOpen || e.target === null) return;
@@ -89,16 +94,15 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
       <div className="input-container">
         <Input
           value={isOpen ? query : value?.name ?? value?.title}
-          placeholder={value?.name ?? value?.title}
+          placeholder={itemsAvailable? value?.name ?? value?.title: "Заповніть дані вище"}
           error={inputError}
           title={placeholder}
-          enabled={isOpen}
+          enabled={itemsAvailable || isOpen}
           onFocusHandler={(focusStatus: boolean) => {
-            setIsOpen(focusStatus);
+            setIsOpen(itemsAvailable && focusStatus);
           }}
           onChange={(changedVal: string) => {
-            if (changedVal !== value?.name)
-              setQuery(changedVal);
+            if (changedVal !== value?.name) setQuery(changedVal);
           }}
         />
         <div
@@ -107,7 +111,7 @@ export default function DropDown<T extends Item>(props: DropdownProp<T>) {
             "arrow-hide": inputError,
           })}
           onClick={() => {
-            setIsOpen(!isOpen);
+            setIsOpen(itemsAvailable && !isOpen);
           }}
         />
       </div>

@@ -38,7 +38,10 @@ export default function Input(props: IInput): JSX.Element {
   //   setFocus(active ? active : false);
   // }, [active]);
 
-  const inputClass = classNames("input", { active: enabled && focus });
+  const inputClass = classNames("input", {
+    active: enabled && focus,
+    disabled: !enabled
+  });
   const inputBlockClass = classNames("input-block", { error });
 
   return (
