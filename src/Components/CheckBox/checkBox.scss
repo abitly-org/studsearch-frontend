@@ -1,4 +1,4 @@
-@import "src/palette";
+@import "../../palette";
 
 @mixin checkBox {
   font-family: Montserrat, sans-serif;
@@ -25,10 +25,13 @@
     margin-top: 19px;
     display: flex;
     align-items: center;
+    label {
+      cursor: pointer;
+    }
   }
 
   input {
-    @include checkBoxInput;
+     @include checkBoxInput;
   }
 
   a {

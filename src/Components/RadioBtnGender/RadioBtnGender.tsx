@@ -2,17 +2,17 @@ import React from "react";
 import './radioBtnGender.scss';
 
 interface IRadioBtnGender {
-    selectOption: string
+    gender: string
     onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
 }
 
 function RadioBtnGender(props: IRadioBtnGender) {
-    const {selectOption, onChange} = props;
+    const {gender, onChange} = props;
     return (
         <div className={`RadioBlock`}>
             <div className="radio">
                 <label htmlFor={`man`}>
-                    <input type="radio" id={`man`} value={`man`} checked={selectOption === 'man'}
+                    <input type="radio" id={`man`} value={`man`} checked={gender === 'man'}
                            onChange={onChange}/>
                     <div className={`designOval`}/>
                     <span>Чоловік</span>
@@ -20,7 +20,7 @@ function RadioBtnGender(props: IRadioBtnGender) {
             </div>
             <div className="radio">
                 <label htmlFor={`girl`}>
-                    <input type="radio" id={`girl`} value={`girl`} checked={selectOption === 'girl'}
+                    <input type="radio" id={`girl`} value={`girl`} checked={gender === 'girl'}
                            onChange={onChange}/>
                     <div className={`designOval`}/>
                     <span>Жінка</span>

@@ -1,0 +1,69 @@
+@import "src/palette";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap');
+
+@mixin style-text($fSize, $lHeight) {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: $fSize;
+  line-height: $lHeight;
+}
+
+.PersonalPage{
+  margin-top: 160px;
+
+  .UserPage {
+    h1 {
+      font-size: 30px;
+      line-height: 37px;
+      margin-bottom: 30px;
+    }
+
+    div {
+      a {
+        text-decoration-skip-ink: none;
+        color: $black;
+        &:hover {
+          color: #717177;
+        }
+      }
+
+      span {
+        padding-right: 5px;
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    .UserPage {
+      div {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.Footer {
+  max-width: 687px;
+  margin: 200px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  @include style-text(14px, 18px);
+  color: #3B3C44;
+
+  p {
+    margin-bottom: 18px;
+  }
+
+  span {
+    margin-bottom: 30px;
+  }
+
+  a {
+    text-decoration-line: underline;
+    color: #3B3C44;
+  }
+}
