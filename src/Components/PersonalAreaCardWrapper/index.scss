@@ -1,0 +1,45 @@
+.card-outer{
+ display: flex;
+ justify-content: center;
+
+>.card-wrapper {
+  padding: 40px;
+  max-width: 1110px;
+  margin: 0 10px;
+  box-shadow: -1px -2px 4px rgba(120, 122, 135, 0.5),
+    1px 2px 4px rgba(120, 122, 135, 0.5);
+  border-radius: 6px;
+  font-family: Montserrat Alternates;
+  color: #3b3c44;
+
+  > .card-header {
+    max-width: 385px;
+    display: flex;
+    justify-content: space-between;
+    > .title-block {
+      > .card-title {
+        font-family: Montserrat;
+        margin-left: 10px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 25px;
+        line-height: 30px;
+      }
+    }
+    > .edit-btn {
+      font-family: Montserrat;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 27px;
+      text-decoration-line: underline;
+      &:hover {
+        cursor: pointer;
+        color:#3b3c44be;
+      }
+    }
+  }
+
+  > .btn-group {
+  }
+}
+}

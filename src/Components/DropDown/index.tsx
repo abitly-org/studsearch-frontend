@@ -94,7 +94,7 @@ export default function DropDown<T extends Item>(props: DropdownProps<T>) {
       <div className="input-container">
         <Input
           value={isOpen ? query : value?.name ?? value?.title}
-          placeholder={itemsAvailable? value?.name ?? value?.title: "Заповніть дані вище"}
+          placeholder={value?.name ?? value?.title}
           error={inputError}
           title={placeholder}
           enabled={itemsAvailable || isOpen}

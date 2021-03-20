@@ -1,0 +1,58 @@
+.wrapper {
+  
+  max-width: 700px;
+  
+  .flName {
+    margin-top: 20px;
+  }
+
+  .regionBlock {
+    margin-top: 40px;
+  }
+
+  .universityBlock {
+    margin-top: 28px;
+  }
+
+  .facultyBlock {
+    margin-top: 30px;
+  }
+
+  .specialityCourseBlock {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 600px) {
+    .authTelegram {
+      width: 300px;
+    }
+  }
+}
+
+.specialityCourseBlock {
+  .dropdown {
+    width: 306px;
+    margin-right: 1px;
+  }
+}
+
+@media (max-width: 640px) {
+  .SignUpText {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .specialityCourseBlock {
+    margin-top: 28px;
+    flex-direction: column;
+
+    .dropdown {
+      width: auto;
+      margin-bottom: 10px;
+    }
+  }
+}
