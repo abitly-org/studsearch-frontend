@@ -13,7 +13,7 @@ function Checkbox(props: checkbox) {
     const {label, value, checked, onChange, tag} = props;
     return (
         <div>
-            <input type="checkbox" checked={checked} onChange={onChange} name={label} id={label}/>
+            <input  className={`custom-checkbox`} type="checkbox" checked={checked} onChange={onChange} name={label} id={label}/>
             <label htmlFor={label}>
                 {value}{tag}
             </label>
