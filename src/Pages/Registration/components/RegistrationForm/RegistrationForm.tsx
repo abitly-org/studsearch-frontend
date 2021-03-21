@@ -179,6 +179,7 @@ export default function RegistrationForm() {
                     onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
                         setAboutMyself(event.target.value);
                     }}
+                    field={true}
                 />
                 <div className="checkBoxBlock">
                     <Checkbox

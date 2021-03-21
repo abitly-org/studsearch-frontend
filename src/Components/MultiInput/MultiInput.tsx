@@ -6,11 +6,12 @@ interface textArea {
     name: string;
     value: string;
     onChange: ((event: React.ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
+    field: boolean;
 }
 
 function MultiInput(props: textArea) {
     const [focus, setFocus] = useState(false);
-    const {name, value, onChange} = props;
+    const {name, value, onChange, field} = props;
 
     function handleKeyDown(e: any) {
         e.target.style.height = 'inherit';
@@ -42,8 +43,9 @@ function MultiInput(props: textArea) {
                 />
             </div>
             <div className={`InputBoxText`}>
-                <p>Це поле не є обов’язковим. Проте ми будемо вдячні якщо ти скажеш декілька слів про своє навчання
-                    та студентське життя.</p>
+                {field? <p>Це поле не є обов’язковим. Проте ми будемо вдячні якщо ти скажеш декілька слів
+                    про своє навчання та студентське життя.</p>: null}
+
             </div>
         </div>
     )
