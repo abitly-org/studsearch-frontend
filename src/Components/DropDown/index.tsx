@@ -45,9 +45,6 @@ export default function DropDown<T extends Item>(props: DropdownProps<T>) {
   const itemsAvailable = !!items.length;
 
   useEffect(() => {
-    // if (!items) {
-
-    // }
     window.addEventListener("click", onGlobalClick);
     return () => {
       window.removeEventListener("click", onGlobalClick);
@@ -71,7 +68,8 @@ export default function DropDown<T extends Item>(props: DropdownProps<T>) {
   function onScroll() {
     if (dropdownDiv.current) {
       const { scrollTop, scrollHeight, clientHeight } = dropdownDiv.current;
-      if (scrollHeight - scrollTop === clientHeight) {
+      if (scrollHeight  - scrollTop < clientHeight) {
+        console.log("Hello here");
         dispatch();
       }
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../Components/Header";
 import UserPageInfo from "../../Components/UserPageInfo/UserPageInfo";
-import PersonalAreaCardWrapper from "../../Components/PersonalAreaCardWrapper";
+import PersonalAreaCardWrapper from "./components/PersonalAreaCardWrapper";
 import EducationCardEdited from "./components/EducationCardEdited";
 import EducationCardInfo from "./components/EducationCardInfo";
 import "./personalArea.scss";
