@@ -1,6 +1,6 @@
 import React from "react";
 import Item from "../Item";
-import "./index.scss"
+import "../PersonalAreaCardWrapper/itemsWrapper.scss"
 export default function EducationCardInfo() {
   return (
     <div className="wrapper">
