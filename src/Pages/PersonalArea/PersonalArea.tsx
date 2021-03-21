@@ -2,13 +2,13 @@ import React from "react";
 import Header from "../../Components/Header";
 import UserPageInfo from "../../Components/UserPageInfo/UserPageInfo";
 import PersonalAreaCardWrapper from "./components/PersonalAreaCardWrapper";
-import EducationCardEdited from "./components/EducationCardEdited";
+import EducationCardEdited from "./components/EducationCardEditing";
 import EducationCardInfo from "./components/EducationCardInfo";
 import "./personalArea.scss";
 import personalIco from "./presonalImg.svg";
 import universityImgSrc from "./universico.svg";
 import PersonalDataInfo from "./components/PersonalDataInfo/PersonalDataInfo";
-import PersonalDataEdited from "./components/PersonalDataEdited/PersonalDataEdited";
+import PersonalDataEdited from "./components/PersonalDataEditing/PersonalDataEdited";
 
 function PersonalArea() {
   return (

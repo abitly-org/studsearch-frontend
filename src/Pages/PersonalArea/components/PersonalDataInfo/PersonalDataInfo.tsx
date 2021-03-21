@@ -1,5 +1,5 @@
 import React from "react";
-import Item from "../EducationCardInfo/Item";
+import Item from "../Item";
 import "../EducationCardInfo/index.scss"
 export default function PersonalDataInfo() {
     return (
