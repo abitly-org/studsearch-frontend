@@ -39,6 +39,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
   });
   return (
     <>
+
       <div className="wrapper">
         <div className={`regionBlock`}>
           <DropDown<Region>

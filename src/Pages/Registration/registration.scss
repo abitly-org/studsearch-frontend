@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap');
 
 $width: 1440px;
-$height: 1136px;
+$height: 100%;
+
 
 @mixin style-text($fSize, $lHeight) {
   font-family: Montserrat, sans-serif;
@@ -23,7 +24,8 @@ $height: 1136px;
     justify-content: center;
     width: 100%;
     max-width: $width;
-    min-height: $height;
+    height: $height;
+    min-height: 1136px;
    }
 
   .secondPhoto {
@@ -122,7 +124,7 @@ $height: 1136px;
 .goBack {
   width: 75px;
   height: 28px;
-  margin: 21px 0 0 calc(50% - 40px);
+  margin: 21px 0 30px calc(50% - 40px);
 }
 
 .goBack-btn {

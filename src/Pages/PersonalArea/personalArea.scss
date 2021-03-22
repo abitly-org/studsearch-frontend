@@ -44,9 +44,37 @@
   }
 }
 
+.imgUploadBlock {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+  img{
+    position: absolute;
+    z-index: -1;
+   }
+
+  label{
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
+    margin-right: 4px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+  input {
+    display: none;
+   }
+}
+
 .Footer {
   max-width: 687px;
-  margin: 200px auto 0 auto;
+  margin: 100px auto 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,5 +93,6 @@
   a {
     text-decoration-line: underline;
     color: #3B3C44;
+    margin-bottom: 30px;
   }
 }
