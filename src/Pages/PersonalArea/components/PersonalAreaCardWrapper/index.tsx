@@ -1,15 +1,16 @@
 import React, { useState } from "react";
+import Button from "../../../../Components/Button";
 
 import "./index.scss";
 
 type ChildrenType = {
   title: string;
   imgSrc: string;
-  children: JSX.Element;
+  children: (editing: boolean) => {};
 };
 
 export default function CardWrapper(props: ChildrenType) {
-  const [state, setState] = useState({ edited: false });
+  const [state, setState] = useState({ editing: false });
 
   const { title, children, imgSrc: img } = props;
   return (
@@ -20,11 +21,11 @@ export default function CardWrapper(props: ChildrenType) {
             <img src={img} alt="ico" />
             <span className="card-title">{title}</span>
           </div>
-          {!state.edited ? (
+          {!state.editing ? (
             <span
               className="edit-btn"
               onClick={() => {
-                setState({ edited: true });
+                setState({ editing: true });
               }}
             >
               Редагувати
@@ -32,11 +33,17 @@ export default function CardWrapper(props: ChildrenType) {
           ) : null}
         </div>
 
-        {children}
-        {state.edited ? (
+        {children(state.editing)}
+        {state.editing ? (
           <div className="btn-group">
-            <button>Скасувати</button>
-            <button>Зберегти</button>
+            <Button
+              children="Скасувати"
+              outline={true}
+              onClick={() => {
+                setState({ editing: false });
+              }}
+            />
+            <Button children="Зберегти" onClick={() => {}} />
           </div>
         ) : null}
       </div>

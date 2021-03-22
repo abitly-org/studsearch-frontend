@@ -12,7 +12,8 @@ import {
   Speciality,
 } from "../../../../Helpers/api";
 
- import "./index.scss"
+import "./index.scss"
+ 
 
 type CoursesType = { id: number; title: string };
 type EducationCardProp = {
@@ -106,9 +107,6 @@ export default function EducationCardEdited(props: EducationCardProp) {
             )}
           />
         </div>
-
-
-        
       </div>
     </>
   );

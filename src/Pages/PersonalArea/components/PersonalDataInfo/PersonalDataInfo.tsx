@@ -1,9 +1,10 @@
 import React from "react";
 import Item from "../Item";
-import "../PersonalAreaCardWrapper/itemsWrapper.scss";
+
+import "./itemsWrapper.scss"
 export default function PersonalDataInfo() {
   return (
-    <div className="wrapper">
+    <div className="wrapper-info">
       <Item title="Ім’я, Прізвище" itemData="Катерина Малютіна" />
       <Item title="Стать" itemData="Жінка" />
       <Item

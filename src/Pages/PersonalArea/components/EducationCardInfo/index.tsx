@@ -1,9 +1,10 @@
 import React from "react";
 import Item from "../Item";
-import "../PersonalAreaCardWrapper/itemsWrapper.scss"
+import "./itemsWrapper.scss";
+
 export default function EducationCardInfo() {
   return (
-    <div className="wrapper">
+    <div className="wrapper-info">
       <Item title="Регіон" itemData="Харків" />
       <Item
         title="Вищій навчальний заклад"

@@ -2,15 +2,22 @@ import React from "react";
 import Header from "../../Components/Header";
 import UserPageInfo from "../../Components/UserPageInfo/UserPageInfo";
 import PersonalAreaCardWrapper from "./components/PersonalAreaCardWrapper";
-import EducationCardEdited from "./components/EducationCardEditing";
+import EducationCardEditing from "./components/EducationCardEditing";
 import EducationCardInfo from "./components/EducationCardInfo";
 import "./personalArea.scss";
 import personalIco from "./presonalImg.svg";
 import universityImgSrc from "./universico.svg";
 import PersonalDataInfo from "./components/PersonalDataInfo/PersonalDataInfo";
-import PersonalDataEdited from "./components/PersonalDataEditing/PersonalDataEdited";
+import PersonalDataEditing from "./components/PersonalDataEditing/PersonalDataEdited";
 
 function PersonalArea() {
+  function changingCard(
+    editing: boolean,
+    infoCard: JSX.Element,
+    editingCard: JSX.Element
+  ) {
+    return editing ? editingCard : infoCard;
+  }
   return (
     <>
       <Header />
@@ -22,18 +29,16 @@ function PersonalArea() {
           href={`#`}
         />
       </div>
-        <PersonalAreaCardWrapper title="Особисті дані" imgSrc={personalIco}>
-            <>
-                 {/*<PersonalDataEdited />*/}
-                <PersonalDataInfo />
-            </>
-        </PersonalAreaCardWrapper>
+      <PersonalAreaCardWrapper title="Особисті дані" imgSrc={personalIco}>
+        {(editing) =>
+          editing ? <PersonalDataEditing /> : <PersonalDataInfo />
+        }
+      </PersonalAreaCardWrapper>
 
       <PersonalAreaCardWrapper title="Освіта" imgSrc={universityImgSrc}>
-        <>
-          {/* <EducationCardEdited /> */}
-          <EducationCardInfo />
-        </>
+        {(editing) =>
+          editing ? <EducationCardEditing /> : <EducationCardInfo />
+        }
       </PersonalAreaCardWrapper>
 
       <footer className={`Footer`}>
