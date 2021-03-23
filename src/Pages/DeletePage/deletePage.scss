@@ -1,0 +1,96 @@
+@import "src/palette";
+
+@mixin pageStyle() {
+  margin: 0 auto;
+  max-width: 1160px;
+  padding: 0 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin style-text($ff, $fs, $fw, $fSize, $lHeight) {
+  font-family: $ff, sans-serif;
+  font-style: $fs;
+  font-weight: $fw;
+  font-size: $fSize;
+  line-height: $lHeight;
+}
+
+
+.DeletePageContainer {
+  width: 100%;
+
+  .DeletePage {
+    @include pageStyle();
+
+    h2 {
+      max-width: 510px;
+      @include style-text(Montserrat, normal, 600, 30px, 37px);
+      color: #3B3C44;
+      margin-bottom: 40px;
+    }
+
+    p {
+      @include style-text(Montserrat, normal, normal, 18px, 22px);
+      color: $black;
+      margin-bottom: 22px;
+    }
+
+    span {
+      @include style-text(Montserrat, normal, 600, 18px, 22px);
+      color: #3B3C44;
+    }
+
+    .QuestionBlock {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    .ButtonBlock {
+      max-width: 425px;
+      margin: 45px 0 40px 0;
+
+      button {
+        background: $carrot;
+        color: $white;
+        border: 1px solid $carrot;
+
+        @include style-text(Roboto, normal, normal, 16px, 19px);
+        letter-spacing: 0.06em;
+
+        &:hover {
+          background: #fc8957;
+          border: 1px solid #fc8957;
+        }
+      }
+    }
+  }
+}
+
+
+.DeletePageDone {
+  @include pageStyle();
+
+  p {
+    @include style-text(Montserrat, normal, 600, 40px, 44px);
+    color: $grey;
+    margin-bottom: 40px;
+  }
+
+  > span {
+    max-width: 720px;
+    @include style-text(Montserrat, normal, 600, 25px, 30px);
+    color: $grey;
+  }
+
+  .Button {
+    margin-top: 40px;
+    @include style-text(Montserrat, normal, 500, 16px, 20px);
+    color: $black;
+  }
+}

@@ -9,6 +9,7 @@ import personalIco from "./presonalImg.svg";
 import universityImgSrc from "./universico.svg";
 import PersonalDataInfo from "./components/PersonalDataInfo/PersonalDataInfo";
 import PersonalDataEditing from "./components/PersonalDataEditing/PersonalDataEdited";
+import { Link } from "react-router-dom";
 
 function PersonalArea() {
   function changingCard(
@@ -47,7 +48,7 @@ function PersonalArea() {
           Ти можеш видалити свій обліковий запис StudSearch у будь-який момент.
           Це призведе до видалення твого профілю та пов'язаної з ним інформації.
         </span>
-        <a href={`#`}>Хочеш видалити обліковий запис?</a>
+      <Link to={`delete-page`}>  Хочеш видалити обліковий запис?</Link>
       </footer>
     </>
   );
