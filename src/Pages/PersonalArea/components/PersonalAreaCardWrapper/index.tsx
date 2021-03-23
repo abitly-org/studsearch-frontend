@@ -37,13 +37,13 @@ export default function CardWrapper(props: ChildrenType) {
         {state.editing ? (
           <div className="btn-group">
             <Button
-              children="Скасувати"
+              children={"Скасувати"}
               outline={true}
               onClick={() => {
                 setState({ editing: false });
               }}
             />
-            <Button children="Зберегти" onClick={() => {}} />
+            <Button children={"Зберегти"} onClick={() => {}} />
           </div>
         ) : null}
       </div>

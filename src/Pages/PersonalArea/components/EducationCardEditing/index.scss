@@ -1,13 +1,10 @@
 .wrapper {
   
   max-width: 700px;
+  margin: 50px 0;
   
   .flName {
     margin-top: 20px;
-  }
-
-  .regionBlock {
-    margin-top: 40px;
   }
 
   .universityBlock {
@@ -24,11 +21,6 @@
     justify-content: space-between;
   }
 
-  @media (max-width: 600px) {
-    .authTelegram {
-      width: 300px;
-    }
-  }
 }
 
 .specialityCourseBlock {

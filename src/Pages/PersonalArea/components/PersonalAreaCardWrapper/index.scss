@@ -1,8 +1,8 @@
-
 .card-outer {
   display: flex;
   justify-content: center;
   padding: 20px 20px 0 20px;
+
   > .card-wrapper {
     padding: 40px;
     max-width: 1030px;
@@ -45,6 +45,15 @@
     }
 
     > .btn-group {
+      display: flex;
+      justify-content: space-between;
+      width: 338px;
+      .Button {
+        padding: 14px 39px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 129.5%;
+      }
     }
   }
 }

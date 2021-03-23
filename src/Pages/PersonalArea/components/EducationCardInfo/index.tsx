@@ -1,6 +1,6 @@
 import React from "react";
 import Item from "../Item";
-import "./itemsWrapper.scss";
+import "../itemsWrapper.scss";
 
 export default function EducationCardInfo() {
   return (
