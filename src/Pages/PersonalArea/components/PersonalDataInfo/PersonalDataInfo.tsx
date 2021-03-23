@@ -16,13 +16,10 @@ export default function PersonalDataInfo() {
       />
       <Item title="Ім’я, Прізвище" itemData="Катерина Малютіна" />
       <Item title="Стать" itemData="Жінка" />
-
-      <div className="long-item">
-        <Item
-          title="Про себе"
-          itemData="З радістю допоможу абітурієнтам та розповім деталі про навчання на своєму факультеті"
-        />
-      </div>
+      <Item
+        title="Про себе"
+        itemData="З радістю допоможу абітурієнтам та розповім деталі про навчання на своєму факультеті"
+      />
     </div>
   );
 }

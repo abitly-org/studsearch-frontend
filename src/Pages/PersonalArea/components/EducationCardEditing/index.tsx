@@ -12,14 +12,12 @@ import {
   Speciality,
 } from "../../../../Helpers/api";
 
-import "./index.scss"
- 
+import CheckBox from "../../../../Components/CheckBox/Checkbox";
+
+import "./index.scss";
 
 type CoursesType = { id: number; title: string };
-type EducationCardProp = {
-  
-}
-
+type EducationCardProp = {};
 
 export default function EducationCardEdited(props: EducationCardProp) {
   const [region, setRegion] = useState<Region>();
@@ -27,7 +25,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
   const [faculty, setFaculty] = useState<Faculty>();
   const [speciality, setSpeciality] = useState<Speciality>();
   const [course, setCourse] = useState<CoursesType>();
-  
+
   const [error, serError] = React.useState({
     nameSurname: false,
     gender: false,
@@ -39,7 +37,6 @@ export default function EducationCardEdited(props: EducationCardProp) {
   });
   return (
     <>
-
       <div className="wrapper">
         <div className={`regionBlock`}>
           <DropDown<Region>
@@ -106,6 +103,15 @@ export default function EducationCardEdited(props: EducationCardProp) {
                 }),
               []
             )}
+          />
+        </div>
+
+        <div className="checkbox-wrapper">
+          <CheckBox
+            label=""
+            value={"Можу допомогти з питаннями про гуртожиток"}
+            onChange={() => {}}
+            checked={false}
           />
         </div>
       </div>

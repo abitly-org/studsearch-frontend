@@ -34,6 +34,8 @@ export default function CardWrapper(props: ChildrenType) {
         </div>
 
         {children(state.editing)}
+        
+
         {state.editing ? (
           <div className="btn-group">
             <Button
