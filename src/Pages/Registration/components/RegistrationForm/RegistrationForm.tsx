@@ -34,7 +34,7 @@ export default function RegistrationForm() {
     const [gender, setGender] = useState('')
     const [aboutMyself, setAboutMyself] = useState('');
     const [checkBoxState, setCheckBoxState] = React.useState({
-        tg: false,
+        tg: true,
         politic: false
     })
 

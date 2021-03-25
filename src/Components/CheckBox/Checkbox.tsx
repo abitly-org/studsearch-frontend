@@ -1,5 +1,6 @@
 import React from "react";
 import './checkBox.scss';
+import cx from "classnames";
 
 interface checkbox {
     label: string;
@@ -7,14 +8,24 @@ interface checkbox {
     checked: (boolean | undefined);
     onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
     tag?: JSX.Element;
+    disabled?: boolean;
 }
 
 function Checkbox(props: checkbox) {
-    const {label, value, checked, onChange, tag} = props;
+    const {label, value, checked, onChange, tag, disabled} = props;
     return (
-        <div>
-            <input  className={`custom-checkbox`} type="checkbox" checked={checked} onChange={onChange} name={label} id={label}/>
-            <label htmlFor={label}>
+        <div className={`checkBox`}>
+            <input className={cx('custom-checkbox', {
+                "disabled": disabled
+            })}
+                   type="checkbox"
+                   checked={checked}
+                   onChange={onChange}
+                   name={label}
+                   id={label}
+                   disabled={disabled == true}/>
+            <label htmlFor={label}
+                   className={cx({"disabled": disabled})}>
                 {value}{tag}
             </label>
         </div>

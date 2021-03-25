@@ -145,6 +145,17 @@ $height: 100%;
   }
 }
 
+.checkBoxBlock {
+  margin-top: 38px;
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  color: $black;
+}
+
 @media (max-width: 640px) {
   .SignUpText {
     div {
