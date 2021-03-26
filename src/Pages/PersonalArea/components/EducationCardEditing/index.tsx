@@ -25,6 +25,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
   const [faculty, setFaculty] = useState<Faculty>();
   const [speciality, setSpeciality] = useState<Speciality>();
   const [course, setCourse] = useState<CoursesType>();
+  const [checked, setChecked] = useState(false);
 
   const [error, serError] = React.useState({
     nameSurname: false,
@@ -106,12 +107,14 @@ export default function EducationCardEdited(props: EducationCardProp) {
           />
         </div>
 
-        <div className="checkbox-wrapper">
+        <div className="checkBoxBlock">
           <CheckBox
-            label=""
+            label="сheckbox"
             value={"Можу допомогти з питаннями про гуртожиток"}
-            onChange={() => {}}
-            checked={false}
+            onChange={() => {
+              setChecked(!checked);
+            }}
+            checked={checked}
           />
         </div>
       </div>

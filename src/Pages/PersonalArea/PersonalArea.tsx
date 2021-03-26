@@ -7,8 +7,10 @@ import EducationCardInfo from "./components/EducationCardInfo";
 import "./personalArea.scss";
 import personalIco from "./presonalImg.svg";
 import universityImgSrc from "./universico.svg";
+import socialsImgSRC from "./socials.svg"
 import PersonalDataInfo from "./components/PersonalDataInfo/PersonalDataInfo";
 import PersonalDataEditing from "./components/PersonalDataEditing/PersonalDataEdited";
+import SocialsCard from "./components/SosialsCard";
 import { Link } from "react-router-dom";
 
 function PersonalArea() {
@@ -36,6 +38,14 @@ function PersonalArea() {
         }
       </PersonalAreaCardWrapper>
 
+      <PersonalAreaCardWrapper
+        title="Контакти"
+        imgSrc={socialsImgSRC}
+        edited={false}
+      >
+        {() => <SocialsCard />}
+      </PersonalAreaCardWrapper>
+
       <PersonalAreaCardWrapper title="Освіта" imgSrc={universityImgSrc}>
         {(editing) =>
           editing ? <EducationCardEditing /> : <EducationCardInfo />
@@ -48,7 +58,7 @@ function PersonalArea() {
           Ти можеш видалити свій обліковий запис StudSearch у будь-який момент.
           Це призведе до видалення твого профілю та пов'язаної з ним інформації.
         </span>
-      <Link to={`delete-page`}>  Хочеш видалити обліковий запис?</Link>
+        <Link to={`delete-page`}> Хочеш видалити обліковий запис?</Link>
       </footer>
     </>
   );
