@@ -19,13 +19,12 @@ export default function Input(props: IInput): JSX.Element {
   console.log("Focus ", focus);
   useEffect(() => {
     onFocusHandler?.(focus);
-    // inputElement.current?.focus();
   }, [focus]);
 
   const inputClass = classNames("input", {
     active: focus,
   });
-  const inputBlockClass = classNames("input-block", { error });
+  const inputBlockClass = classNames("input-social-block", { error });
 
   return (
     <div className={inputBlockClass}>

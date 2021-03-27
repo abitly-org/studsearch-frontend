@@ -38,6 +38,7 @@ function PersonalArea() {
         edited={false}
       >
         {() => <SocialsCard />}
+        
       </PersonalAreaCardWrapper>
 
       <PersonalAreaCardWrapper title="Освіта" imgSrc={universityImgSrc}>

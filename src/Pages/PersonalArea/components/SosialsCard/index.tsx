@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
-import SocialsInput from "./SocialsInput";
+import SocialItem from "./SocialItem";
+import "./index.scss";
 
 export default function SocialCard() {
-  const [value, setValue] = useState("");
-
   return (
-    <>
-      <SocialsInput
-        value={value}
-        onChange={(changedVal: string) => {
-          setValue(changedVal);
-        }}
-        title="імя користувача у телеграм"
-        placeholder="katerin___a"
-      />
-    </>
+    <div className="social-card">
+      <SocialItem socialName="Telegram" socialValue={"Malyutina14"} />
+      <SocialItem socialName="Instagram" socialValue={null} />
+      <SocialItem socialName="Linkedin" socialValue={null} />
+      <SocialItem socialName="Facebook" socialValue={null} />
+      <SocialItem socialName="Viber" socialValue={null} />
+    </div>
   );
 }
