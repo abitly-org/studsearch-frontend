@@ -4,6 +4,7 @@ import Button from "../../../../Components/Button";
 import { getStudents } from "../../../../Helpers/api";
 
 import "./index.scss";
+import {useTranslation} from "react-i18next";
 
 type ChildrenType = {
   title: string;
@@ -13,6 +14,8 @@ type ChildrenType = {
 };
 
 export default function CardWrapper(props: ChildrenType) {
+  const { i18n, t } = useTranslation();
+
   const [state, setState] = useState({ editing: false });
 
   const { title, children, imgSrc: img, edited = true } = props;
@@ -31,7 +34,7 @@ export default function CardWrapper(props: ChildrenType) {
                 setState({ editing: true });
               }}
             >
-              Редагувати
+              {t('cabinet-edit')}
             </span>
           ) : null}
         </div>
@@ -41,13 +44,13 @@ export default function CardWrapper(props: ChildrenType) {
         {state.editing ? (
           <div className="btn-group">
             <Button
-              children={"Скасувати"}
+              children={t('cabinet-cancel')}
               outline={true}
               onClick={() => {
                 setState({ editing: false });
               }}
             />
-            <Button children={"Зберегти"} onClick={() => {}} />
+            <Button children={t('cabinet-save')} onClick={() => {}} />
           </div>
         ) : null}
       </div>

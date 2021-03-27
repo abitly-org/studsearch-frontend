@@ -15,11 +15,14 @@ import {
 import CheckBox from "../../../../Components/CheckBox/Checkbox";
 
 import "./index.scss";
+import {useTranslation} from "react-i18next";
 
 type CoursesType = { id: number; title: string };
 type EducationCardProp = {};
 
 export default function EducationCardEdited(props: EducationCardProp) {
+  const { i18n, t } = useTranslation();
+
   const [region, setRegion] = useState<Region>();
   const [university, setUniversity] = useState<University>();
   const [faculty, setFaculty] = useState<Faculty>();
@@ -41,7 +44,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
       <div className="wrapper">
         <div className={`regionBlock`}>
           <DropDown<Region>
-            placeholder="Регіон"
+            placeholder={t('cabinet-region')}
             value={region}
             inputError={error.region}
             onChange={setRegion}
@@ -54,7 +57,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         </div>
         <div className={`universityBlock`}>
           <DropDown<University>
-            placeholder="Вищий навчальний заклад"
+            placeholder={t('cabinet-university')}
             value={university}
             inputError={error.university}
             onChange={setUniversity}
@@ -68,7 +71,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         <div className={`facultyBlock`}>
           {
             <DropDown<Faculty>
-              placeholder="Факультет"
+              placeholder={t('cabinet-faculty')}
               value={faculty}
               inputError={error.faculty}
               onChange={setFaculty}
@@ -82,7 +85,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         </div>
         <div className={`specialityCourseBlock`}>
           <DropDown<Speciality>
-            placeholder="Спеціальність"
+            placeholder={t('cabinet-speciality')}
             value={speciality}
             inputError={error.speciality}
             onChange={setSpeciality}
@@ -93,7 +96,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
             )}
           />
           <DropDown<CoursesType>
-            placeholder="Курс"
+            placeholder={t('cabinet-course')}
             value={course}
             inputError={error.course}
             onChange={setCourse}

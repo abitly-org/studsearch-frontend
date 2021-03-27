@@ -12,48 +12,46 @@ import PersonalDataInfo from "./components/PersonalDataInfo/PersonalDataInfo";
 import PersonalDataEditing from "./components/PersonalDataEditing/PersonalDataEdited";
 import SocialsCard from "./components/SosialsCard";
 import { Link } from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 function PersonalArea() {
-  
-  return (
+    const { i18n, t } = useTranslation();
+
+    return (
     <>
       <Header />
       <div className={`PersonalPage`}>
         <UserPageInfo
-          h1={`Особистий профіль`}
-          span={`Профіль активний`}
-          a={`Вимкнути`}
+            h1={t('cabinet-main')}
+            span={t('cabinet-profile')}
+            a={t('cabinet-profile-active')}
           href={`#`}
         />
       </div>
-      <PersonalAreaCardWrapper title="Особисті дані" imgSrc={personalIco}>
+      <PersonalAreaCardWrapper title={t('cabinet-personal-data')} imgSrc={personalIco}>
         {(editing) =>
           editing ? <PersonalDataEditing /> : <PersonalDataInfo />
         }
       </PersonalAreaCardWrapper>
 
       <PersonalAreaCardWrapper
-        title="Контакти"
+        title={t('cabinet-contacts')}
         imgSrc={socialsImgSRC}
         edited={false}
       >
         {() => <SocialsCard />}
       </PersonalAreaCardWrapper>
 
-      <PersonalAreaCardWrapper title="Освіта" imgSrc={universityImgSrc}>
+      <PersonalAreaCardWrapper title={t('cabinet-education')} imgSrc={universityImgSrc}>
         {(editing) =>
           editing ? <EducationCardEditing /> : <EducationCardInfo />
         }
       </PersonalAreaCardWrapper>
-
-      <footer className={`Footer`}>
-        <p>Видалити профіль?</p>
-        <span>
-          Ти можеш видалити свій обліковий запис StudSearch у будь-який момент.
-          Це призведе до видалення твого профілю та пов'язаної з ним інформації.
-        </span>
-      <Link to={`delete-page`}>Хочеш видалити обліковий запис?</Link>
-      </footer>
+        <footer className={`Footer`}>
+            <p>{t('cabinet-delete-profile')}</p>
+            <span>{t('cabinet-delete-text')}</span>
+            <Link to={`delete-page`}>{t('cabinet-delete-link')}</Link>
+        </footer>
     </>
   );
 }
