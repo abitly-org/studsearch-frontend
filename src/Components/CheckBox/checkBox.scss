@@ -1,21 +1,15 @@
 @import "../../palette";
 
-.checkBoxBlock {
-  margin-top: 38px;
-  font-family: Montserrat, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 19px;
-  letter-spacing: 0.05em;
-  color: $black;
+.checkBox {
+  margin-top: 19px;
+  display: flex;
 
-  div {
-    margin-top: 19px;
-    display: flex;
-  }
   label {
     cursor: pointer;
+
+    &.disabled:hover {
+      cursor: not-allowed;
+    }
   }
 
   .custom-checkbox {
@@ -41,6 +35,10 @@
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
+  }
+
+  .disabled:hover::before {
+    cursor: not-allowed;
   }
 
   .custom-checkbox:checked + label::before {

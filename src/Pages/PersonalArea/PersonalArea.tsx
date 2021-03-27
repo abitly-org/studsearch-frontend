@@ -14,13 +14,7 @@ import SocialsCard from "./components/SosialsCard";
 import { Link } from "react-router-dom";
 
 function PersonalArea() {
-  function changingCard(
-    editing: boolean,
-    infoCard: JSX.Element,
-    editingCard: JSX.Element
-  ) {
-    return editing ? editingCard : infoCard;
-  }
+  
   return (
     <>
       <Header />
@@ -58,7 +52,7 @@ function PersonalArea() {
           Ти можеш видалити свій обліковий запис StudSearch у будь-який момент.
           Це призведе до видалення твого профілю та пов'язаної з ним інформації.
         </span>
-        <Link to={`delete-page`}> Хочеш видалити обліковий запис?</Link>
+      <Link to={`delete-page`}>Хочеш видалити обліковий запис?</Link>
       </footer>
     </>
   );
