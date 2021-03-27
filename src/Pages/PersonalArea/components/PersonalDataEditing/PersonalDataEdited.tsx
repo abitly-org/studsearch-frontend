@@ -3,10 +3,13 @@ import Input from "../../../../Components/Input";
 import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import InputImage from "../InputImage/InputImage";
 import "./personalDataEditing.scss";
+import {useTranslation} from "react-i18next";
 
 type EducationCardProp = {}
 
 export default function PersonalDataEdited(props: EducationCardProp) {
+    const { i18n, t } = useTranslation();
+
     const [img, setImg] = useState('')
     const [nameSurname, setNameSurname] = useState("Катерина Малютіна");
     const [gender, setGender] = useState("Жіноча");
@@ -27,7 +30,7 @@ export default function PersonalDataEdited(props: EducationCardProp) {
                         value={nameSurname}
                         error={error.nameSurname}
                         placeholder={nameSurname}
-                        title="Ім’я, Прізвище"
+                        title={t('cabinet-name')}
                         onChange={(changedVal: string) => {
                             setNameSurname(changedVal);
                         }}
@@ -36,7 +39,7 @@ export default function PersonalDataEdited(props: EducationCardProp) {
                         value={gender}
                         error={error.gender}
                         placeholder={gender}
-                        title="Стать"
+                        title={t('cabinet-gender')}
                         onChange={(changedVal: string) => {
                             setGender(changedVal);
                         }}
