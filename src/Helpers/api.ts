@@ -80,10 +80,30 @@ export class DataSource<T> extends UpdateEmitter<[]> {
         this.update();
         await this.load();
     }
-
-
 }
 
+const localesMap : Record<string, string> = {
+    'uk-UA': 'ua',
+    'ru-RU': 'ru',
+    'en-US': 'en'
+}
+export const takeString = (entry?: string | FieldEntry, lang?: string) => {
+    if (!entry)
+        return '';
+    if (typeof entry === 'string')
+        return entry;
+    // if (lang && lang.indexOf('_') >= 0)
+    //     lang = lang?.split?.('_')?.[0];
+    // console.log('lang=', lang)
+    if (lang && localesMap[lang])
+        lang = localesMap[lang];
+
+    return entry[lang ?? Object.keys(entry)?.[0]] ?? '';
+}
+
+export type FieldEntry<Value = string> = {
+    [lang: string]: Value;
+}
 
 export interface Region {
     id: number;
@@ -105,7 +125,7 @@ export const getRegions = async () : Promise<RegionsData> => {
 
 export interface University {
     id: number;
-    name: string;
+    name: FieldEntry;
     studentsCount: number;
 };
 export const getUniversities = (query: string = '', regionId?: number, count: number = 50, offset: number = 0) : Promise<University[]> => 
@@ -118,7 +138,7 @@ export const Universities = <T>(customizer: (university: University) => T, regio
 
 export interface Faculty {
     id: number;
-    name: string;
+    name: FieldEntry;
     studentsCount: number;
 };
 export const getFaculties = (query: string = '', universityId?: number, count: number = 50, offset: number = 0) : Promise<Faculty[]> => 
@@ -131,7 +151,7 @@ export const Faculties = <T>(customizer: (faculty: Faculty) => T, universityId?:
 
 export interface Speciality {
     id: number;
-    name: string;
+    name: FieldEntry;
     code: string;
     studentsCount: number;
 }
@@ -150,9 +170,9 @@ export interface Student {
     course: number;
     social: string[];
 
-    university: string;
-    faculty: string;
-    speciality: string;
+    university: FieldEntry;
+    faculty: FieldEntry;
+    speciality: FieldEntry;
 };
 export const getStudents = async (count: number, offset: number = 0, regionId?: number, universityId?: number, specialityId?: number, facultyId?: number) : Promise<Student[]> =>
   __reqjson("/students/", {regionId, universityId, specialityId, facultyId, count, offset});

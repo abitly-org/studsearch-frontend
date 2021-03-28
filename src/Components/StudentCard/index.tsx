@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Courses, Student, studentLink, studentPhoto } from '../../Helpers/api';
+import { Courses, Student, studentLink, studentPhoto, takeString } from '../../Helpers/api';
 import { P1, P2, P3 } from '../Text';
 
 import Button from '../Button';
@@ -32,7 +32,8 @@ const SocialIcons = {
 const StudentCard = ({ student }: {
   student: Student
 }) => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  
   const socials = [...student?.social];
   if (Math.random() > 0.5)
     socials.push('instagram')
@@ -70,11 +71,11 @@ const StudentCard = ({ student }: {
       </div>
       <div className="University">
         <img src={university} />
-        <P2>{ student?.university }</P2>
+        <P2>{ takeString(student?.university, i18n.language) }</P2>
       </div>
       <div className="Specialty">
         <img src={specialty} />
-        <P2>{ student?.speciality }</P2>
+        <P2>{ takeString(student?.speciality, i18n.language) }</P2>
       </div>
       { student?.about &&
         <div className="Bio">
