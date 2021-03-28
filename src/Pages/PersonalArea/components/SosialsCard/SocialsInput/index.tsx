@@ -12,14 +12,22 @@ export interface IInput {
 }
 
 export default function Input(props: IInput): JSX.Element {
-  const { value, onChange, error, title, onFocusHandler, placeholder } = props;
+  const { value, onChange, error, title, placeholder } = props;
   const [focus, setFocus] = useState(true);
   const inputElement = useRef<HTMLInputElement>(null);
+  const clearClicked = useRef(false);
 
-  console.log("Focus ", focus);
+  // useEffect(() => {
+  //   console.log("Clear", clearClicked.current);
+  //   if (clearClicked.current) {
+  //     setFocus(true);
+  //     clearClicked.current = false
+  //   }
+  // }, [focus]);
+
   useEffect(() => {
-    onFocusHandler?.(focus);
-  }, [focus]);
+    console.log("Effect")
+  })
 
   const inputClass = classNames("input", {
     active: focus,
@@ -39,9 +47,16 @@ export default function Input(props: IInput): JSX.Element {
           setFocus(true);
         }}
         onBlur={() => {
-          setTimeout(() => {
-            setFocus(false);
-          }, 200);
+          
+          if (clearClicked.current) {
+            console.log("Blur")
+            inputElement.current?.focus();
+            clearClicked.current = false;
+          } else {
+            setTimeout(() => {
+              setFocus(false);
+            }, 200);
+          }
         }}
         onChange={(event) => {
           onChange(event.target.value);
@@ -53,22 +68,27 @@ export default function Input(props: IInput): JSX.Element {
         <div
           className="clear-icon"
           onClick={() => {
-            setFocus(true);
+            console.log("CLEAR")
             onChange("");
+            clearClicked.current = true;
+            
           }}
         />
       ) : (
         <div className="icon-group">
-            <div className="pen-icon"
-              onClick={() => {
-                inputElement.current?.focus();
-                setFocus(true);
-              }}/>
-            <div className="bin-icon"
+          <div
+            className="pen-icon"
+            onClick={() => {
+              inputElement.current?.focus();
+            }}
+          />
+          <div
+            className="bin-icon"
             onClick={() => {
               inputElement.current?.focus();
               onChange("");
-            }}/>
+            }}
+          />
         </div>
       )}
 
