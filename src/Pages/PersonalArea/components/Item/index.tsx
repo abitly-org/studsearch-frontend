@@ -1,8 +1,8 @@
 import React from "react";
 import "./index.scss"
 type ItemProps = {
-  title: string;
-  itemData: string;
+  title: string|undefined;
+  itemData: string|undefined;
 };
 export default function Item(props: ItemProps) {
   return (

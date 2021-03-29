@@ -57,7 +57,6 @@ export default function RegistrationForm() {
   const [speciality, setSpeciality] = useState<Speciality>();
   const [course, setCourse] = useState<CoursesType>();
   const [nameSurname, setNameSurname] = useState("");
-
   const [gender, setGender] = useState("");
   const [aboutMyself, setAboutMyself] = useState("");
   const [checkBoxState, setCheckBoxState] = React.useState({

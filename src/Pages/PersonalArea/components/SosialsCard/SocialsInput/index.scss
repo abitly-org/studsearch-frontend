@@ -25,9 +25,6 @@
       outline-offset: 0;
     }
 
-    &.disabled:hover {
-      cursor: not-allowed;
-    }
   }
   .title {
     font-family: Montserrat;
@@ -42,39 +39,34 @@
     left: 2px;
   }
 
-  &.error .input {
-    border-bottom: 2px solid #ff4255;
-  }
-
-  .text-error {
-    display: none;
-  }
-
-  &.error .text-error {
-    display: unset;
+   .text-error {
     margin-top: 5px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 10px;
     line-height: 20px;
     color: #ff4255;
   }
 
-  .error-icon {
-    display: none;
+  .error{
+    background-color: #ff425525;
+    border-radius: 4px;
+    animation: shake 150ms 2 linear;
   }
 
-  &.error .error-icon {
-    // display: block;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    right: 10px;
-    top: 20px;
-    background: url("./error.svg");
-    border-radius: 1px;
+  @keyframes shake {
+    0% {
+      transform: translate(3px, 0);
+    }
+    50% {
+      transform: translate(-3px, 0);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
   }
+
   .clear-icon {
     position: absolute;
     width: 22px;

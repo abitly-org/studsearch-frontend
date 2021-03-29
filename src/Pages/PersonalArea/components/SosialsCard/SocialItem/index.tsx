@@ -16,6 +16,7 @@ export default function SocialInput(props: SocialItemProps) {
 
   const [Value, setValue] = useState("");
   const [editing, setEditing] = useState(false);
+  
 
     if (socialValue) {
       console.log(socialValue)
@@ -27,11 +28,12 @@ export default function SocialInput(props: SocialItemProps) {
       {editing ? (
         <SocialsInput
           value={Value}
+          editingHandler = {setEditing}
           onChange={(changedVal: string) => {
             setValue(changedVal);
           }}
           title={title}
-          placeholder="katerin___a"
+          placeholder={`${socialName}` }
         />
       ) : (
         <div

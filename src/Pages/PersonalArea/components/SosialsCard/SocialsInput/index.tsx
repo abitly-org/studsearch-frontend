@@ -4,6 +4,7 @@ import "./index.scss";
 
 export interface IInput {
   value?: string;
+  editingHandler: Function;
   onChange: (newValue: string) => void;
   error?: boolean;
   title?: string;
@@ -12,16 +13,25 @@ export interface IInput {
 }
 
 export default function Input(props: IInput): JSX.Element {
-  const { value, onChange, error, title, placeholder } = props;
+  const { value, onChange, title, placeholder, editingHandler } = props;
   const [focus, setFocus] = useState(true);
+  const [emptyValue, setEmptyValue] = useState(false);
   const inputElement = useRef<HTMLInputElement>(null);
-  const clearClicked = useRef(false);
 
-  const inputClass = classNames("input", { active: focus });
-  const inputBlockClass = classNames("input-social-block", { error });
+  const inputClass = classNames("input", {
+    active: focus,
+     error: emptyValue,
+  });
+
+  
+  function setDisabled(input: HTMLInputElement | null, disabled: boolean) {
+    if (input) {
+      input.disabled = disabled;
+    }
+  }
 
   return (
-    <div className={inputBlockClass}>
+    <div className={"input-social-block"}>
       <input
         ref={inputElement}
         autoFocus={true}
@@ -30,68 +40,44 @@ export default function Input(props: IInput): JSX.Element {
         placeholder={placeholder}
         value={value ?? ""}
         onFocus={() => {
+          setEmptyValue(false);
           setFocus(true);
         }}
-        // disabled={!focus}
         onBlur={() => {
-<<<<<<< HEAD
-          if (clearClicked.current) {
-            inputElement.current?.focus();
-            clearClicked.current = false;
-          } else {
-            setTimeout(() => {
-              setFocus(false);
-            }, 200);
+          setFocus(false);
+          setDisabled(inputElement.current, true);
+          if (value?.length === 0) {
+            setEmptyValue(true);
           }
-=======
-          
-          // if (clearClicked.current) {
-          //   console.log("Blur")
-          //   inputElement.current?.focus();
-          //   clearClicked.current = false;
-          // } else {
-          //   setTimeout(() => {
-          //     if (!clearClicked.current)
-                setFocus(false);
-            // }, 200);
-          // }
->>>>>>> 391160002550bd921b290e26c6d7049a1bfa12b8
         }}
         onChange={(event) => {
-          if (focus)
+          if (focus) {
             onChange(event.target.value);
+           
+          }
         }}
       />
       <div className={"error-icon"} />
       <span className={"title"}>{title}</span>
-      {/* {focus ? (
-        <div
-          className="clear-icon"
-          onClick={() => {
-            onChange("");
-            clearClicked.current = true;
-          }}
-        />
-      ) :  */}
+
       {!focus && (
         <div className="icon-group">
           <div
             className="pen-icon"
             onClick={() => {
+              setDisabled(inputElement.current, false);
               inputElement.current?.focus();
             }}
           />
           <div
             className="bin-icon"
             onClick={() => {
-              inputElement.current?.focus();
-              onChange("");
+              editingHandler()
             }}
           />
         </div>
       )}
-
-      <span className={"text-error"}>{`Введіть ${title}`}</span>
+      {emptyValue&&<span className={"text-error"}>{`Введіть ${title}`}</span>}
     </div>
   );
 }
