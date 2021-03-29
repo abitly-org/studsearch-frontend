@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import tgPhoto from "./tgPhoto.svg";
-import './registrationForm.scss';
+import "./registrationForm.scss";
 
 import {
   getUniversities,
@@ -23,190 +23,223 @@ type FormProps = {};
 type CoursesType = { id: number; title: string };
 
 export default function RegistrationForm() {
+  const token = useRef<string | undefined>();
+
+  type data = {
+    status: boolean;
+    studentUuid?: string;
+    token?: string;
+    verified?: boolean;
+  };
+
+  useEffect(() => {
+    const response = fetch("https://server.studsearch.org:2324/v2/session");
+    response
+      .then((response) => response.json())
+      .then((data: data) => {
+        console.log("session", data);
+        token.current = data.token;
+      });
+  }, []);
+
+  // const response1 = fetch(
+  //     "https://server.studsearch.org:2324/v2/register/?name=Vasja&gender=male&about=&universityID=1&facultyID=1&specialityID=1&course=1&hostel=false&telegramPhoto=false&token=MRNWYj5bAPosZyg4v6N3haSSoEYzfppP"
+  //   );
+  //   response1
+  //     .then((response) => response.json())
+  //     .then((data: data) => {
+  //       console.log("registor", data);
+  //     });
+
   const [region, setRegion] = useState<Region>();
   const [university, setUniversity] = useState<University>();
   const [faculty, setFaculty] = useState<Faculty>();
   const [speciality, setSpeciality] = useState<Speciality>();
   const [course, setCourse] = useState<CoursesType>();
   const [nameSurname, setNameSurname] = useState("");
-  
 
-    const [gender, setGender] = useState('')
-    const [aboutMyself, setAboutMyself] = useState('');
-    const [checkBoxState, setCheckBoxState] = React.useState({
-        tg: true,
-        politic: false
-    })
+  const [gender, setGender] = useState("");
+  const [aboutMyself, setAboutMyself] = useState("");
+  const [checkBoxState, setCheckBoxState] = React.useState({
+    tg: true,
+    politic: false,
+  });
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const value = event.target.checked;
-        setCheckBoxState({
-            ...checkBoxState,
-            [event.target.name]: value
-        });
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.checked;
+    setCheckBoxState({
+      ...checkBoxState,
+      [event.target.name]: value,
+    });
+  }
+
+  const [error, serError] = React.useState({
+    nameSurname: false,
+    gender: false,
+    region: false,
+    university: false,
+    faculty: false,
+    speciality: false,
+    course: false,
+  });
+
+  function SubmitStates(event: any) {
+    let readyToSubmit = true;
+    event.preventDefault();
+    const dataPost = {
+      nameSurname: nameSurname,
+      gender: gender,
+      region: region,
+      university: university,
+      faculty: faculty,
+      speciality: speciality,
+      course: course,
+      aboutMyself: aboutMyself,
+      tg: checkBoxState.tg,
+      politic: checkBoxState.politic,
+    };
+    Object.entries(dataPost).map(([key, value]) => {
+      if (key !== "aboutMyself") {
+        if (value == "" || value === undefined || value == false) {
+          readyToSubmit = false;
+          serError((prevUser) => ({ ...prevUser, [key]: true }));
+        } else {
+          serError((prevUser) => ({ ...prevUser, [key]: false }));
+        }
+      }
+    });
+    if (readyToSubmit) {
+      console.log("ready To send ");
     }
+  }
 
-    const [error, serError] = React.useState({
-            nameSurname: false,
-            gender: false,
-            region: false,
-            university: false,
-            faculty: false,
-            speciality: false,
-            course: false,
-        }
-    )
-
-    function SubmitStates(event: any) {
-        let readyToSubmit = true;
-        event.preventDefault();
-        const dataPost = {
-            nameSurname: nameSurname,
-            gender: gender,
-            region: region,
-            university: university,
-            faculty: faculty,
-            speciality: speciality,
-            course: course,
-            aboutMyself: aboutMyself,
-            tg: checkBoxState.tg,
-            politic: checkBoxState.politic
-        }
-        Object.entries(dataPost).map(([key, value]) => {
-            if (key !== 'aboutMyself') {
-                if (value == "" || value === undefined || value == false) {
-                    readyToSubmit = false;
-                    serError(prevUser => ({...prevUser, [key]: true}));
-                } else {
-                    serError(prevUser => ({...prevUser, [key]: false}));
-                }
-            }
-        });
-        if (readyToSubmit) {
-            console.log("ready To send ");
-        }
-    }
-
-    return (
-        <div className={`SignForm`}>
-            <form>
-                <div className={`flName`}>
-                    <Input
-                        value={nameSurname}
-                        error={error.nameSurname}
-                        placeholder="Олександр Забудько"
-                        title="Ім’я, Прізвище"
-                        onChange={(changedVal: string) => {
-                            setNameSurname(changedVal);
-                        }}
-                    />
-                </div>
-                <RadioBtnGender
-                    gender={gender}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setGender(event.target.value);
-                    }}/>
-                <div className={`regionBlock`}>
-                    <DropDown<Region>
-                        placeholder="Регіон"
-                        value={region}
-                        inputError={error.region}
-                        onChange={setRegion}
-                        request={useCallback(
-                            (count, offset, query) =>
-                                getRegions().then((res: any) => res?.regions),
-                            []
-                        )}
-                    />
-                </div>
-                <div className={`universityBlock`}>
-                    <DropDown<University>
-                        placeholder="Вищий навчальний заклад"
-                        value={university}
-                        inputError={error.university}
-                        onChange={setUniversity}
-                        request={useCallback(
-                            (count, offset, query) =>
-                                getUniversities(query, region?.id, count, offset),
-                            [region]
-                        )}
-                    />
-                </div>
-                <div className={`facultyBlock`}>
-                    {
-                        <DropDown<Faculty>
-                            placeholder="Факультет"
-                            value={faculty}
-                            inputError={error.faculty}
-                            onChange={setFaculty}
-                            request={useCallback(
-                                (count, offset, query) =>
-                                    getFaculties(query, university?.id, count, offset),
-                                [university]
-                            )}
-                        />
-                    }
-                </div>
-                <div className={`specialityCourseBlock`}>
-                    <DropDown<Speciality>
-                        placeholder="Спеціальність"
-                        value={speciality}
-                        inputError={error.speciality}
-                        onChange={setSpeciality}
-                        request={useCallback(
-                            (count, offset, query) =>
-                                getSpecialities(query, university?.id, count, offset),
-                            [university]
-                        )}
-                    />
-                    <DropDown<CoursesType>
-                        placeholder="Курс"
-                        value={course}
-                        inputError={error.course}
-                        onChange={setCourse}
-                        request={useCallback(
-                            (count, offset, query) =>
-                                new Promise<CoursesType[]>((resolve, reject) => {
-                                    resolve(Courses);
-                                }),
-                            []
-                        )}
-                    />
-                </div>
-                <MultiInput
-                    name={`textValue`}
-                    value={aboutMyself}
-                    onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                        setAboutMyself(event.target.value);
-                    }}
-                    field={true}
-                />
-                <div className="checkBoxBlock">
-                    <Checkbox
-                        label="tg"
-                        value={`Додати моє фото з Telegram`}
-                        checked={checkBoxState.tg}
-                        onChange={handleChange}
-                    />
-                    <Checkbox
-                        label="politic"
-                        value={`Погоджуюся з`}
-                        tag={<a href={`#`}>Політикою конфіденційності</a>}
-                        checked={checkBoxState.politic}
-                        onChange={handleChange}
-                    />
-                </div>
-                <p className={`useTelegram`}>
-                    Ми використовуем Telegram для зв’язку між абітурієнтом та студентом,
-                    тому просимо тебе підтвердити свій аккаунт через Telegram-бота
-                </p>
-                <div className="authTelegram">
-                    <button onClick={SubmitStates}>
-                        <img src={tgPhoto} alt="tgPhoto"/>
-                        <span>Підтвердити Telegram та зареєструватись</span>
-                    </button>
-                </div>
-            </form>
+  return (
+    <div className={`SignForm`}>
+      <form>
+        <div className={`flName`}>
+          <Input
+            value={nameSurname}
+            error={error.nameSurname}
+            placeholder="Олександр Забудько"
+            title="Ім’я, Прізвище"
+            onChange={(changedVal: string) => {
+              setNameSurname(changedVal);
+            }}
+          />
         </div>
+        <RadioBtnGender
+          gender={gender}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setGender(event.target.value);
+          }}
+        />
+        <div className={`regionBlock`}>
+          <DropDown<Region>
+            placeholder="Регіон"
+            value={region}
+            inputError={error.region}
+            onChange={setRegion}
+            request={useCallback(
+              (count, offset, query) =>
+                getRegions().then((res: any) => res?.regions),
+              []
+            )}
+          />
+        </div>
+        <div className={`universityBlock`}>
+          <DropDown<University>
+            placeholder="Вищий навчальний заклад"
+            value={university}
+            inputError={error.university}
+            onChange={setUniversity}
+            request={useCallback(
+              (count, offset, query) =>
+                getUniversities(query, region?.id, count, offset),
+              [region]
+            )}
+          />
+        </div>
+        <div className={`facultyBlock`}>
+          {
+            <DropDown<Faculty>
+              placeholder="Факультет"
+              value={faculty}
+              inputError={error.faculty}
+              onChange={setFaculty}
+              request={useCallback(
+                (count, offset, query) =>
+                  getFaculties(query, university?.id, count, offset),
+                [university]
+              )}
+            />
+          }
+        </div>
+        <div className={`specialityCourseBlock`}>
+          <DropDown<Speciality>
+            placeholder="Спеціальність"
+            value={speciality}
+            inputError={error.speciality}
+            onChange={setSpeciality}
+            request={useCallback(
+              (count, offset, query) =>
+                getSpecialities(query, university?.id, count, offset),
+              [university]
+            )}
+          />
+          <DropDown<CoursesType>
+            placeholder="Курс"
+            value={course}
+            inputError={error.course}
+            onChange={setCourse}
+            request={useCallback(
+              (count, offset, query) =>
+                new Promise<CoursesType[]>((resolve, reject) => {
+                  resolve(Courses);
+                }),
+              []
+            )}
+          />
+        </div>
+        <MultiInput
+          name={`textValue`}
+          value={aboutMyself}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setAboutMyself(event.target.value);
+          }}
+          field={true}
+        />
+        <div className="checkBoxBlock">
+          <Checkbox
+            label="tg"
+            value={`Додати моє фото з Telegram`}
+            checked={checkBoxState.tg}
+            onChange={handleChange}
+          />
+          <Checkbox
+            label="politic"
+            value={`Погоджуюся з`}
+            tag={<a href={`#`}>Політикою конфіденційності</a>}
+            checked={checkBoxState.politic}
+            onChange={handleChange}
+          />
+        </div>
+        <p className={`useTelegram`}>
+          Ми використовуем Telegram для зв’язку між абітурієнтом та студентом,
+          тому просимо тебе підтвердити свій аккаунт через Telegram-бота
+        </p>
+        <a
+          href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=male&about=&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false&token=${token.current}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div className="authTelegram">
+            <button onClick={SubmitStates}>
+              <img src={tgPhoto} alt="tgPhoto" />
+              <span>Підтвердити Telegram та зареєструватись</span>
+            </button>
+          </div>
+        </a>
+      </form>
+    </div>
   );
 }

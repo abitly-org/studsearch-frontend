@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import classNames from "classnames";
 import "./index.scss";
 
@@ -17,21 +17,7 @@ export default function Input(props: IInput): JSX.Element {
   const inputElement = useRef<HTMLInputElement>(null);
   const clearClicked = useRef(false);
 
-  // useEffect(() => {
-  //   console.log("Clear", clearClicked.current);
-  //   if (clearClicked.current) {
-  //     setFocus(true);
-  //     clearClicked.current = false
-  //   }
-  // }, [focus]);
-
-  useEffect(() => {
-    console.log("Effect")
-  })
-
-  const inputClass = classNames("input", {
-    active: focus,
-  });
+  const inputClass = classNames("input", { active: focus });
   const inputBlockClass = classNames("input-social-block", { error });
 
   return (
@@ -47,9 +33,7 @@ export default function Input(props: IInput): JSX.Element {
           setFocus(true);
         }}
         onBlur={() => {
-          
           if (clearClicked.current) {
-            console.log("Blur")
             inputElement.current?.focus();
             clearClicked.current = false;
           } else {
@@ -68,10 +52,8 @@ export default function Input(props: IInput): JSX.Element {
         <div
           className="clear-icon"
           onClick={() => {
-            console.log("CLEAR")
             onChange("");
             clearClicked.current = true;
-            
           }}
         />
       ) : (
