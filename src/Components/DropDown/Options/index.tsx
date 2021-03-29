@@ -1,11 +1,14 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
+import { FieldEntry, takeString } from "../../../Helpers/api";
 import "./index.scss";
 
 import studImg from "./studico.svg";
 import universImg from "./universico.svg";
 
 type OptionProps = {
-  name?: string;
+  name?: string | FieldEntry;
   universitiesCount?: number | string;
   studentsCount?: number | string;
   code?: string;
@@ -23,11 +26,11 @@ export default function OptionItem(props: OptionProps) {
     title,
   } = props;
 
-  const optionTitle: string|undefined = code
-    ? `${code} ${name}`
-    : title
-    ? title
-    : name;
+  const { i18n } = useTranslation();
+
+  const optionTitle = code
+    ? `${code} ${takeString(name, i18n.language)}`
+    : (title ?? name);
 
   return (
     <div

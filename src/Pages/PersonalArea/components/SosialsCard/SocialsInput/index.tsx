@@ -32,7 +32,9 @@ export default function Input(props: IInput): JSX.Element {
         onFocus={() => {
           setFocus(true);
         }}
+        // disabled={!focus}
         onBlur={() => {
+<<<<<<< HEAD
           if (clearClicked.current) {
             inputElement.current?.focus();
             clearClicked.current = false;
@@ -41,14 +43,28 @@ export default function Input(props: IInput): JSX.Element {
               setFocus(false);
             }, 200);
           }
+=======
+          
+          // if (clearClicked.current) {
+          //   console.log("Blur")
+          //   inputElement.current?.focus();
+          //   clearClicked.current = false;
+          // } else {
+          //   setTimeout(() => {
+          //     if (!clearClicked.current)
+                setFocus(false);
+            // }, 200);
+          // }
+>>>>>>> 391160002550bd921b290e26c6d7049a1bfa12b8
         }}
         onChange={(event) => {
-          onChange(event.target.value);
+          if (focus)
+            onChange(event.target.value);
         }}
       />
       <div className={"error-icon"} />
       <span className={"title"}>{title}</span>
-      {focus ? (
+      {/* {focus ? (
         <div
           className="clear-icon"
           onClick={() => {
@@ -56,7 +72,8 @@ export default function Input(props: IInput): JSX.Element {
             clearClicked.current = true;
           }}
         />
-      ) : (
+      ) :  */}
+      {!focus && (
         <div className="icon-group">
           <div
             className="pen-icon"

@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import cx from "classnames";
+import { useTranslation } from "react-i18next";
 
 import OptionItem from "./Options";
 import useLoadPagination from "../LoadPagination/useLoadPagination";
 import LoadingSpinner from "../LoadingSpinner";
+import { FieldEntry, takeString } from "../../Helpers/api";
 
 import "./index.scss";
 
@@ -19,15 +21,23 @@ interface DropdownProps<T> {
 
 type Item = {
   id: number;
-  name?: string;
+  name?: string | FieldEntry;
   universitiesCount?: number | string;
   studentsCount?: number | string;
   code?: string;
   title?: string;
 };
 
-export default function DropDown<T extends Item>(props: DropdownProps<T>) {
-  const { value, inputError, onChange, request, placeholder } = props;
+export default function DropDown<T extends Item>({
+  placeholder,
+  request,
+  value,
+  onChange,
+
+  inputError
+}: DropdownProps<T>) {
+
+  const { i18n } = useTranslation();
 
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -91,8 +101,8 @@ export default function DropDown<T extends Item>(props: DropdownProps<T>) {
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : value?.name ?? value?.title}
-          placeholder={value?.name ?? value?.title}
+          value={isOpen ? query : takeString(value?.name, i18n.language) ?? value?.title}
+          placeholder={takeString(value?.name, i18n.language) ?? value?.title}
           error={inputError}
           title={placeholder}
           enabled={itemsAvailable || isOpen}
