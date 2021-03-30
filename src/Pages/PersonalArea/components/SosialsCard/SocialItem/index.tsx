@@ -14,20 +14,14 @@ export default function SocialInput(props: SocialItemProps) {
 
   const title = `імя користувача у ${socialName}`;
 
-  const [Value, setValue] = useState("");
+  const [value, setValue] = useState("");
   const [editing, setEditing] = useState(false);
   
-
-    if (socialValue) {
-      console.log(socialValue)
-    return <Item title={title} itemData={socialValue} />;
-  }
-
   return (
     <div className="social-item">
       {editing ? (
         <SocialsInput
-          value={Value}
+          value={value}
           editingHandler = {setEditing}
           onChange={(changedVal: string) => {
             setValue(changedVal);

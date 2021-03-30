@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 
 import SocialItem from "./SocialItem";
+import Item from "../Item";
 import "./index.scss";
 
-export default function SocialCard() {
+interface SocialCardProps{
+  telegramValue: string;
+}
+
+export default function SocialCard(props: SocialCardProps) {
   
   
-  const [telegram, setTelegram] = useState(null);
+  
   const [instagram, setInstagram] = useState(null);
   const [linkedin, setLinkedin] = useState(null);
   const [facebook, setFacebook] = useState(null)
@@ -14,7 +19,7 @@ export default function SocialCard() {
 
   return (
     <div className="social-card">
-      <SocialItem socialName="Telegram" socialValue={"Malyutina14"} />
+      <Item title="імя користувача у Telegram" itemData={props.telegramValue} />
       <SocialItem socialName="Instagram" socialValue={instagram} />
       <SocialItem socialName="Linkedin" socialValue={linkedin} />
       <SocialItem socialName="Facebook" socialValue={facebook} />

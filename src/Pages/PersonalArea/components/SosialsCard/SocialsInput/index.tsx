@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
+import Item from "../../Item";
 import "./index.scss";
 
 export interface IInput {
@@ -12,6 +13,8 @@ export interface IInput {
   onFocusHandler?: Function;
 }
 
+
+
 export default function Input(props: IInput): JSX.Element {
   const { value, onChange, title, placeholder, editingHandler } = props;
   const [focus, setFocus] = useState(true);
@@ -20,15 +23,20 @@ export default function Input(props: IInput): JSX.Element {
 
   const inputClass = classNames("input", {
     active: focus,
-     error: emptyValue,
+    error: emptyValue,
   });
 
-  
   function setDisabled(input: HTMLInputElement | null, disabled: boolean) {
     if (input) {
       input.disabled = disabled;
     }
   }
+
+  useEffect(() => {
+    if (!focus && !emptyValue) {
+      setDisabled(inputElement.current, true)
+    }
+  })
 
   return (
     <div className={"input-social-block"}>
@@ -45,39 +53,45 @@ export default function Input(props: IInput): JSX.Element {
         }}
         onBlur={() => {
           setFocus(false);
-          setDisabled(inputElement.current, true);
           if (value?.length === 0) {
             setEmptyValue(true);
           }
         }}
         onChange={(event) => {
-          if (focus) {
-            onChange(event.target.value);
-           
-          }
+          if (focus) onChange(event.target.value);
         }}
       />
-      <div className={"error-icon"} />
       <span className={"title"}>{title}</span>
 
-      {!focus && (
+      {value?.length !== 0 && !focus && (
         <div className="icon-group">
           <div
             className="pen-icon"
             onClick={() => {
-              setDisabled(inputElement.current, false);
+              setDisabled(inputElement.current, false)
               inputElement.current?.focus();
             }}
           />
           <div
             className="bin-icon"
             onClick={() => {
-              editingHandler()
+              editingHandler();
             }}
           />
         </div>
       )}
-      {emptyValue&&<span className={"text-error"}>{`Введіть ${title}`}</span>}
+      {emptyValue && (
+        <div className="icon-group">
+          <div
+            className="bin-icon"
+            onClick={() => {
+              editingHandler();
+            }}
+          />
+        </div>
+      )}
+
+      {emptyValue && <span className={"text-error"}>{`Введіть ${title}`}</span>}
     </div>
   );
 }

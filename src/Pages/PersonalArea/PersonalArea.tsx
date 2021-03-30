@@ -42,7 +42,7 @@ function PersonalArea() {
         imgSrc={socialsImgSRC}
         edited={false}
       >
-        {() => <SocialsCard />}
+        {() => <SocialsCard telegramValue="Malyutina14"/>}
       </PersonalAreaCardWrapper>
 
       <PersonalAreaCardWrapper
