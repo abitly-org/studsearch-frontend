@@ -78,8 +78,7 @@ export default function DropDown<T extends Item>({
   function onScroll() {
     if (dropdownDiv.current) {
       const { scrollTop, scrollHeight, clientHeight } = dropdownDiv.current;
-      if (scrollHeight  - scrollTop < clientHeight) {
-        console.log("Hello here");
+      if (scrollHeight - scrollTop <= clientHeight) {
         dispatch();
       }
     }
