@@ -101,8 +101,8 @@ export default function DropDown<T extends Item>({
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : takeString(value?.name, i18n.language) ?? value?.title}
-          placeholder={takeString(value?.name, i18n.language) ?? value?.title}
+          value={isOpen ? query : takeString(value?.name, i18n.language)}
+          placeholder={takeString(value?.name, i18n.language)}
           error={inputError}
           title={placeholder}
           enabled={itemsAvailable || isOpen}

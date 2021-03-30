@@ -17,7 +17,7 @@ import CheckBox from "../../../../Components/CheckBox/Checkbox";
 import "./index.scss";
 import {useTranslation} from "react-i18next";
 
-type CoursesType = { id: number; title: string };
+type CoursesType = { id: number; name: string };
 type EducationCardProp = {};
 
 export default function EducationCardEdited(props: EducationCardProp) {
