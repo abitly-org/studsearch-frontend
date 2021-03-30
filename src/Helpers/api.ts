@@ -225,11 +225,11 @@ export const register = async (
 ) => await __reqjson("/register/", {name, about, universityID, facultyID, specialityID, course, tokens: tokens.join(',')});
 
 export const Courses = [
-    {id: 0, title: "1 курс"},
-    {id: 1, title: "2 курс"},
-    {id: 2, title: "3 курс"},
-    {id: 3, title: "4 курс"},
-    {id: 4, title: "5 курс"},
-    {id: 5, title: "6 курс"},
-    {id: 6, title: "Випускник"}
+    {id: 0, name: "1 курс"},
+    {id: 1, name: "2 курс"},
+    {id: 2, name: "3 курс"},
+    {id: 3, name: "4 курс"},
+    {id: 4, name: "5 курс"},
+    {id: 5, name: "6 курс"},
+    {id: 6, name: "Випускник"}
 ];

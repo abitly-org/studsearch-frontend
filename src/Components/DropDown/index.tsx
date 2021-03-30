@@ -78,8 +78,7 @@ export default function DropDown<T extends Item>({
   function onScroll() {
     if (dropdownDiv.current) {
       const { scrollTop, scrollHeight, clientHeight } = dropdownDiv.current;
-      if (scrollHeight  - scrollTop < clientHeight) {
-        console.log("Hello here");
+      if (scrollHeight - scrollTop <= clientHeight) {
         dispatch();
       }
     }
@@ -101,8 +100,8 @@ export default function DropDown<T extends Item>({
     <div className="dropdown" id={uniqueId}>
       <div className="input-container">
         <Input
-          value={isOpen ? query : takeString(value?.name, i18n.language) ?? value?.title}
-          placeholder={takeString(value?.name, i18n.language) ?? value?.title}
+          value={isOpen ? query : takeString(value?.name, i18n.language)}
+          placeholder={takeString(value?.name, i18n.language)}
           error={inputError}
           title={placeholder}
           enabled={itemsAvailable || isOpen}

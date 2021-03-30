@@ -20,7 +20,7 @@ import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import Checkbox from "../../../../Components/CheckBox/Checkbox";
 
 type FormProps = {};
-type CoursesType = { id: number; title: string };
+type CoursesType = { id: number; name: string };
 
 export default function RegistrationForm() {
   const token = useRef<string | undefined>();
