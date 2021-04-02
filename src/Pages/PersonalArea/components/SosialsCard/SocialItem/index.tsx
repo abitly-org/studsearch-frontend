@@ -3,6 +3,7 @@ import SocialsInput from "../SocialsInput";
 import Item from "../../Item";
 
 import "./index.scss";
+import {useTranslation} from "react-i18next";
 
 interface SocialItemProps {
   socialName: string;
@@ -10,9 +11,11 @@ interface SocialItemProps {
 }
 
 export default function SocialInput(props: SocialItemProps) {
+  const { t, i18n } = useTranslation();
+
   const { socialName, socialValue } = props;
 
-  const title = `імя користувача у ${socialName}`;
+  const title = `${t('cabinet-social-user-name')} ${socialName}`;
 
   const [value, setValue] = useState("");
   const [editing, setEditing] = useState(false);
@@ -37,7 +40,7 @@ export default function SocialInput(props: SocialItemProps) {
           }}
         >
           <div className="add-btn" />
-          {`Додати ${socialName}`}
+          {`${t('cabinet-social-user-name-add')} ${socialName}`}
         </div>
       )}
     </div>

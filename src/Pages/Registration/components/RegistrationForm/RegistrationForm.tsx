@@ -18,6 +18,7 @@ import Input from "../../../../Components/Input";
 import RadioBtnGender from "../../../../Components/RadioBtnGender/RadioBtnGender";
 import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import Checkbox from "../../../../Components/CheckBox/Checkbox";
+import {useTranslation} from "react-i18next";
 
 type FormProps = {};
 type CoursesType = { id: number; name: string };
@@ -57,7 +58,7 @@ export default function RegistrationForm() {
   const [speciality, setSpeciality] = useState<Speciality>();
   const [course, setCourse] = useState<CoursesType>();
   const [nameSurname, setNameSurname] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("male");
   const [aboutMyself, setAboutMyself] = useState("");
   const [checkBoxState, setCheckBoxState] = React.useState({
     tg: true,
@@ -82,9 +83,8 @@ export default function RegistrationForm() {
     course: false,
   });
 
-  function SubmitStates(event: any) {
+    function SubmitStates(event: any) {
     let readyToSubmit = true;
-    event.preventDefault();
     const dataPost = {
       nameSurname: nameSurname,
       gender: gender,
@@ -100,7 +100,8 @@ export default function RegistrationForm() {
     Object.entries(dataPost).map(([key, value]) => {
       if (key !== "aboutMyself") {
         if (value == "" || value === undefined || value == false) {
-          readyToSubmit = false;
+            event.preventDefault();
+            readyToSubmit = false;
           serError((prevUser) => ({ ...prevUser, [key]: true }));
         } else {
           serError((prevUser) => ({ ...prevUser, [key]: false }));
@@ -111,6 +112,7 @@ export default function RegistrationForm() {
       console.log("ready To send ");
     }
   }
+    const { t, i18n } = useTranslation();
 
   return (
     <div className={`SignForm`}>
@@ -120,7 +122,7 @@ export default function RegistrationForm() {
             value={nameSurname}
             error={error.nameSurname}
             placeholder="Олександр Забудько"
-            title="Ім’я, Прізвище"
+            title= {t('registration-name-placeholder')}
             onChange={(changedVal: string) => {
               setNameSurname(changedVal);
             }}
@@ -134,7 +136,7 @@ export default function RegistrationForm() {
         />
         <div className={`regionBlock`}>
           <DropDown<Region>
-            placeholder="Регіон"
+            placeholder={t('registration-region-placeholder')}
             value={region}
             inputError={error.region}
             onChange={setRegion}
@@ -147,7 +149,7 @@ export default function RegistrationForm() {
         </div>
         <div className={`universityBlock`}>
           <DropDown<University>
-            placeholder="Вищий навчальний заклад"
+            placeholder={t('registration-university-placeholder')}
             value={university}
             inputError={error.university}
             onChange={setUniversity}
@@ -161,7 +163,7 @@ export default function RegistrationForm() {
         <div className={`facultyBlock`}>
           {
             <DropDown<Faculty>
-              placeholder="Факультет"
+              placeholder={t('registration-faculty-placeholder')}
               value={faculty}
               inputError={error.faculty}
               onChange={setFaculty}
@@ -175,7 +177,7 @@ export default function RegistrationForm() {
         </div>
         <div className={`specialityCourseBlock`}>
           <DropDown<Speciality>
-            placeholder="Спеціальність"
+            placeholder={t('registration-speciality-placeholder')}
             value={speciality}
             inputError={error.speciality}
             onChange={setSpeciality}
@@ -186,7 +188,7 @@ export default function RegistrationForm() {
             )}
           />
           <DropDown<CoursesType>
-            placeholder="Курс"
+            placeholder={t('registration-course-placeholder')}
             value={course}
             inputError={error.course}
             onChange={setCourse}
@@ -210,34 +212,32 @@ export default function RegistrationForm() {
         <div className="checkBoxBlock">
           <Checkbox
             label="tg"
-            value={`Додати моє фото з Telegram`}
+            value={t('registration-checkBox-tg-photo')}
             checked={checkBoxState.tg}
             onChange={handleChange}
           />
           <Checkbox
             label="politic"
-            value={`Погоджуюся з`}
-            tag={<a href={`#`}>Політикою конфіденційності</a>}
+            value={t('registration-checkBox-confidential-part-1')}
+            tag={<a href={`#`}>{t('registration-checkBox-confidential-part-2')}</a>}
             checked={checkBoxState.politic}
             onChange={handleChange}
           />
         </div>
         <p className={`useTelegram`}>
-          Ми використовуем Telegram для зв’язку між абітурієнтом та студентом,
-          тому просимо тебе підтвердити свій аккаунт через Telegram-бота
+            {t('registration-checkBox-helper-text')}
         </p>
-        <a
-          href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=male&about=&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false&token=${token.current}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
           <div className="authTelegram">
-            <button onClick={SubmitStates}>
+                <a
+                className={`regButton`} onClick={SubmitStates}
+                href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=male&about=&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false&token=${token.current}`}
+                target="_blank"
+                rel="noopener noreferrer">
               <img src={tgPhoto} alt="tgPhoto" />
-              <span>Підтвердити Telegram та зареєструватись</span>
-            </button>
-          </div>
-        </a>
+              <span>{t('registration-confirm-telegram')}</span>
+            </a>
+           </div>
       </form>
     </div>
   );

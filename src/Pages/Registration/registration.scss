@@ -26,7 +26,7 @@ $height: 100%;
     max-width: $width;
     height: $height;
     min-height: 1136px;
-   }
+  }
 
   .secondPhoto {
     width: 100%;
@@ -76,17 +76,17 @@ $height: 100%;
 
   .authTelegram {
     margin: 51px auto 0 auto;
-    width: 478px;
+    max-width: 478px;
     height: 49px;
     display: flex;
     border-radius: 6px;
 
     &:hover {
-      box-shadow: 3px 5px 9px 0 $grey;
-      -webkit-box-shadow: 3px 5px 9px 0 $grey;
+      box-shadow: 2px 3px 4px rgba(120, 122, 135, 0.5);
+      -webkit-box-shadow: 2px 3px 4px rgba(120, 122, 135, 0.5);
     }
 
-    button {
+    .regButton {
       display: flex;
       align-items: center;
       width: 100%;
@@ -97,9 +97,18 @@ $height: 100%;
       background: #68A8E5;;
       border-radius: 6px;
       cursor: pointer;
-
+      text-decoration: none;
       &:focus {
         outline: none;
+      }
+
+      &:hover {
+        background-color: mix(#68A8E5, $white, 90%);
+      }
+
+      &:active {
+        background-color:  #68A8E5 ;
+        opacity: .8;
       }
     }
 
@@ -112,22 +121,22 @@ $height: 100%;
       letter-spacing: 0.006em;
       color: $white;
     }
-  }
 
-  @media (max-width: 600px) {
-    .authTelegram {
-      width: 300px;
+    @media (max-width: 600px) {
+      .authTelegram {
+        width: 300px;
+      }
     }
   }
 }
 
-.goBack {
+.GoBack {
   width: 75px;
   height: 28px;
   margin: 21px 0 30px calc(50% - 40px);
 }
 
-.goBack-btn {
+.GoBack-btn {
   @include style-text(22px, 28px);
   letter-spacing: 0.05em;
   text-decoration-skip-ink: none;
@@ -164,6 +173,11 @@ $height: 100%;
       align-items: center;
     }
   }
+
+  //.RadioBlock {
+  //  display: flex;
+  //  justify-content: space-between;
+  //}
   .specialityCourseBlock {
     margin-top: 28px;
     flex-direction: column;
@@ -172,7 +186,7 @@ $height: 100%;
       width: auto;
       margin-bottom: 10px;
     }
-      }
+  }
   .Input {
     margin-top: 21px;
   }

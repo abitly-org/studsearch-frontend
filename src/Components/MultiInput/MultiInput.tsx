@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import './multiInput.scss';
 import cx from "classnames";
+import {useTranslation} from "react-i18next";
 
 interface textArea {
     name: string;
@@ -17,10 +18,11 @@ function MultiInput(props: textArea) {
         e.target.style.height = 'inherit';
         e.target.style.height = Math.min(e.target.scrollHeight, 300) + "px";
     }
+    const { t } = useTranslation();
 
     return (
         <div className="Input">
-            <span>Про себе</span>
+            <span>{t('registration-about')}</span>
             <div className={`areaBlock`}>
               <textarea
                   rows={1}
@@ -43,9 +45,7 @@ function MultiInput(props: textArea) {
                 />
             </div>
             <div className={`InputBoxText`}>
-                {field? <p>Це поле не є обов’язковим. Проте ми будемо вдячні якщо ти скажеш декілька слів
-                    про своє навчання та студентське життя.</p>: null}
-
+                {field? <p>{t('registration-about-helper-text')}</p>: null}
             </div>
         </div>
     )
