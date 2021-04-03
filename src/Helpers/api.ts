@@ -3,7 +3,7 @@ import UpdateEmitter from './updateemitter';
 export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const baseURL = DEV ? "https://localhost.test" : "https://studsearch.org";
-export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://server.studsearch.org:2323";
+export const endpoint = DEV ? "https://server.studsearch.org:2324": "https://server.studsearch.org:2323";
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 

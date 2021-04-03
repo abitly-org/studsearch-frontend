@@ -21,35 +21,25 @@ import Checkbox from "../../../../Components/CheckBox/Checkbox";
 
 type FormProps = {};
 type CoursesType = { id: number; name: string };
+type data = {
+  status: boolean;
+  studentUuid?: string;
+  token?: string;
+  verified?: boolean;
+};
 
 export default function RegistrationForm() {
-  const token = useRef<string | undefined>();
-
-  type data = {
-    status: boolean;
-    studentUuid?: string;
-    token?: string;
-    verified?: boolean;
-  };
-
+  
   useEffect(() => {
-    const response = fetch("https://server.studsearch.org:2324/v2/session");
-    response
-      .then((response) => response.json())
-      .then((data: data) => {
-        console.log("session", data);
-        token.current = data.token;
+    const response = fetch("https://server.studsearch.org:2324/v2/session", {
+      credentials: 'include',
       });
+      response
+        .then((response) => response.json())
+        .then((data: data) => {
+          console.log("session", data);
+        });  
   }, []);
-
-  // const response1 = fetch(
-  //     "https://server.studsearch.org:2324/v2/register/?name=Vasja&gender=male&about=&universityID=1&facultyID=1&specialityID=1&course=1&hostel=false&telegramPhoto=false&token=MRNWYj5bAPosZyg4v6N3haSSoEYzfppP"
-  //   );
-  //   response1
-  //     .then((response) => response.json())
-  //     .then((data: data) => {
-  //       console.log("registor", data);
-  //     });
 
   const [region, setRegion] = useState<Region>();
   const [university, setUniversity] = useState<University>();
@@ -64,6 +54,7 @@ export default function RegistrationForm() {
     politic: false,
   });
 
+  
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.checked;
     setCheckBoxState({
@@ -226,11 +217,8 @@ export default function RegistrationForm() {
           Ми використовуем Telegram для зв’язку між абітурієнтом та студентом,
           тому просимо тебе підтвердити свій аккаунт через Telegram-бота
         </p>
-        <a
-          href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=male&about=&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false&token=${token.current}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        <a href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=male&about=&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false`} target="_blank" rel="noopener noreferrer">
           <div className="authTelegram">
             <button onClick={SubmitStates}>
               <img src={tgPhoto} alt="tgPhoto" />
