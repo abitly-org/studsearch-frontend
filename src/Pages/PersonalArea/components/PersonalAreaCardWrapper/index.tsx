@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import Button from "../../../../Components/Button";
-
-import { getStudents } from "../../../../Helpers/api";
-
 import "./index.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-type ChildrenType = {
+type CardWrapperType = {
   title: string;
   imgSrc: string;
   edited?: boolean;
-  children: (editing: boolean) => {};
+  children: (editing: [boolean, React.Dispatch<React.SetStateAction<boolean>>]) => JSX.Element;
 };
 
-export default function CardWrapper(props: ChildrenType) {
+export default function CardWrapper(props: CardWrapperType) {
+  const { title, children, imgSrc: img, edited = true } = props;
+
   const { i18n, t } = useTranslation();
 
-  const [state, setState] = useState({ editing: false });
+  const useEditors = useState(false);
+  const [editing, setEditing] = useEditors;
 
-  const { title, children, imgSrc: img, edited = true } = props;
   return (
     <div className="card-outer">
       <div className="card-wrapper">
@@ -27,32 +25,32 @@ export default function CardWrapper(props: ChildrenType) {
             <img src={img} alt="ico" />
             <span className="card-title">{title}</span>
           </div>
-          {!state.editing && edited ? (
+          {!editing && edited ? (
             <span
               className="edit-btn"
               onClick={() => {
-                setState({ editing: true });
+                setEditing(true);
               }}
             >
-              {t('cabinet-edit')}
+              {t("cabinet-edit")}
             </span>
           ) : null}
         </div>
 
-        {children(state.editing)}
+        {children(useEditors)}
 
-        {state.editing ? (
+        {/* {editing ? (
           <div className="btn-group">
             <Button
               children={t('cabinet-cancel')}
               outline={true}
               onClick={() => {
-                setState({ editing: false });
+                setEditing(false );
               }}
             />
             <Button children={t('cabinet-save')} onClick={() => {}} />
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   );

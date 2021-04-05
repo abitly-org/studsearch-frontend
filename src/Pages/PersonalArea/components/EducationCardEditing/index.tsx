@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from "react";
-import DropDown from "../../../../Components/DropDown";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import {
   getUniversities,
   getFaculties,
@@ -11,26 +10,106 @@ import {
   Faculty,
   Speciality,
 } from "../../../../Helpers/api";
+import { useTranslation } from "react-i18next";
 
+import { EditingButtonsProps } from "../EditingButtons";
+
+import DropDown from "../../../../Components/DropDown";
 import CheckBox from "../../../../Components/CheckBox/Checkbox";
 
+import { CabinetData } from "../../PersonalArea";
+
 import "./index.scss";
-import {useTranslation} from "react-i18next";
 
 type CoursesType = { id: number; name: string };
-type EducationCardProp = {};
+
+type EducationCardProp = {
+  children: JSX.Element;
+  changesHandler: Function;
+  serverData: CabinetData | undefined;
+  // error: boolean
+};
 
 export default function EducationCardEdited(props: EducationCardProp) {
   const { i18n, t } = useTranslation();
+  const { children, changesHandler, serverData } = props;
 
-  const [region, setRegion] = useState<Region>();
-  const [university, setUniversity] = useState<University>();
-  const [faculty, setFaculty] = useState<Faculty>();
-  const [speciality, setSpeciality] = useState<Speciality>();
-  const [course, setCourse] = useState<CoursesType>();
+  const defaultRegionValue = {
+    id: serverData?.region.id,
+    name: serverData?.region.name.ua,
+    universitiesCount: 0,
+    studentsCount: 0,
+  };
+
+  const defaultUniversityValue = {
+    id: serverData?.university.id,
+    name: serverData?.university.name,
+    studentsCount: 0,
+  };
+
+  const defaultFacultyValue = {
+    id: serverData?.faculty.id,
+    name: serverData?.faculty.name,
+    studentsCount: 0,
+  };
+
+  const defaultSpecialityValue = {
+    id: serverData?.speciality.id,
+    name: serverData?.speciality.name,
+    code: serverData?.speciality.code,
+    studentsCount: 0,
+  };
+
+  const defaultCourseValue = {
+    id: serverData?.course,
+    name: Courses[serverData?.course as number].name,
+  };
+
+  const [region, setRegion] = useState<Region>(defaultRegionValue as Region);
+  const [university, setUniversity] = useState<University>(
+    defaultUniversityValue as University
+  );
+  const [faculty, setFaculty] = useState<Faculty>(
+    defaultFacultyValue as Faculty
+  );
+  const [speciality, setSpeciality] = useState<Speciality>(
+    defaultSpecialityValue as Speciality
+  );
+  const [course, setCourse] = useState<CoursesType>(
+    defaultCourseValue as CoursesType
+  );
   const [checked, setChecked] = useState(false);
 
-  const [error, serError] = React.useState({
+  const postData = useRef({
+    region: region?.id,
+    universityId: university?.id,
+    facultyId: faculty?.id,
+    specialityId: speciality?.id,
+    hostel: checked,
+    course: course?.id,
+  });
+
+  useEffect(() => {
+    postData.current = {
+      region: region?.id,
+      universityId: university?.id,
+      facultyId: faculty?.id,
+      specialityId: speciality?.id,
+      hostel: checked,
+      course: course?.id,
+    };
+    changesHandler(postData.current);
+  }, [
+    checked,
+    speciality,
+    faculty,
+    university,
+    region,
+    course,
+    changesHandler,
+  ]);
+
+  const [error, setError] = React.useState({
     nameSurname: false,
     gender: false,
     region: false,
@@ -39,12 +118,13 @@ export default function EducationCardEdited(props: EducationCardProp) {
     speciality: false,
     course: false,
   });
+
   return (
     <>
       <div className="wrapper">
         <div className={`regionBlock`}>
           <DropDown<Region>
-            placeholder={t('cabinet-region')}
+            placeholder={t("cabinet-region")}
             value={region}
             inputError={error.region}
             onChange={setRegion}
@@ -57,7 +137,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         </div>
         <div className={`universityBlock`}>
           <DropDown<University>
-            placeholder={t('cabinet-university')}
+            placeholder={t("cabinet-university")}
             value={university}
             inputError={error.university}
             onChange={setUniversity}
@@ -71,7 +151,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         <div className={`facultyBlock`}>
           {
             <DropDown<Faculty>
-              placeholder={t('cabinet-faculty')}
+              placeholder={t("cabinet-faculty")}
               value={faculty}
               inputError={error.faculty}
               onChange={setFaculty}
@@ -85,7 +165,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         </div>
         <div className={`specialityCourseBlock`}>
           <DropDown<Speciality>
-            placeholder={t('cabinet-speciality')}
+            placeholder={t("cabinet-speciality")}
             value={speciality}
             inputError={error.speciality}
             onChange={setSpeciality}
@@ -96,7 +176,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
             )}
           />
           <DropDown<CoursesType>
-            placeholder={t('cabinet-course')}
+            placeholder={t("cabinet-course")}
             value={course}
             inputError={error.course}
             onChange={setCourse}
@@ -121,6 +201,8 @@ export default function EducationCardEdited(props: EducationCardProp) {
           />
         </div>
       </div>
+
+      {children}
     </>
   );
 }

@@ -1,28 +1,31 @@
 import React from "react";
 import Item from "../Item";
 import "../itemsWrapper.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { CabinetData } from "../../PersonalArea";
+import Spinner from "../../../../Components/LoadingSpinner";
 
-interface EducationCardInfo{
-  cabinetRegion: { id: number, name: { en?: string, ru?: string, ua: string } }|undefined,
-  cabinetUniversity: { id: number, name: { en?: string, ru?: string, ua: string } }|undefined,
-  cabinetFaculty: { id: number, name: { en?: string, ru?: string, ua: string } }|undefined,
-  cabinetSpeciality: { id: number, name: { en?: string, ru?: string, ua: string }, code?: string }|undefined,
+interface EducationCardInfoProps {
+  data: CabinetData | undefined;
 }
 
-export default function EducationCardInfo(props:EducationCardInfo) {
+export default function EducationCardInfo(props: EducationCardInfoProps) {
   const { i18n, t } = useTranslation();
- 
-  const { cabinetRegion, cabinetUniversity, cabinetFaculty, cabinetSpeciality} = props;
+  if (props.data) {
+    const { region, university, faculty, speciality, course } = props.data;
     return (
-    <div className="wrapper-info">
-      <Item title={t('cabinet-region')} itemData={cabinetRegion?.name.ua} />
-      <Item
-        title={t('cabinet-university')}
-        itemData={cabinetUniversity?.name.ua}/>
-      <Item title={t('cabinet-faculty')} itemData={cabinetFaculty?.name.ua} />
-      <Item title={t('cabinet-speciality')} itemData={`${cabinetSpeciality?.code} ${cabinetSpeciality?.name.ua}`} />
-      <Item title={t('cabinet-course')} itemData="5" />
-    </div>
-  );
+      <div className="wrapper-info">
+        <Item title={t("cabinet-region")} itemData={region?.name.ua} />
+        <Item title={t("cabinet-university")} itemData={university?.name.ua} />
+        <Item title={t("cabinet-faculty")} itemData={faculty?.name.ua} />
+        <Item
+          title={t("cabinet-speciality")}
+          itemData={speciality && `${speciality?.code} ${speciality?.name.ua}`}
+        />
+        <Item title={t("cabinet-course")} itemData={course?.toString()} />
+      </div>
+    );
+  } else {
+    return <Spinner center-x center-y />;
+  }
 }

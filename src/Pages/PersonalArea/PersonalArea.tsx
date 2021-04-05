@@ -11,10 +11,12 @@ import socialsImgSRC from "./socials.svg";
 import PersonalDataInfo from "./components/PersonalDataInfo/PersonalDataInfo";
 import PersonalDataEditing from "./components/PersonalDataEditing/PersonalDataEdited";
 import SocialsCard from "./components/SosialsCard";
+import EditingButtons from "./components/EditingButtons";
+
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-interface CabinetData {
+export interface CabinetData {
   name: string;
   gender: "male" | "female";
   about: string;
@@ -26,30 +28,97 @@ interface CabinetData {
     name: { en?: string; ru?: string; ua: string };
     code?: string;
   };
+  course: number;
+  hostel: boolean;
+}
+
+interface PostCabinetData {
+  name: string;
+  about: string;
+  gender: "male" | "female";
+  universityId: number;
+  facultyId: number;
+  specialityId: number;
+  hostel: boolean;
+  course: number;
 }
 
 function PersonalArea() {
   const { i18n, t } = useTranslation();
 
-  const storage = window.localStorage;
-
-  console.log("storage data", storage);
-
   const [cabinetData, setCabinetData] = useState<CabinetData>();
+  const [
+    educationChangedData,
+    setEducationChangedData,
+  ] = useState<PostCabinetData>();
 
-  useEffect(() => {
+  const [update, setUpdate] = useState(false);
+
+   useEffect(() => {
+    fetchCabinetData(setCabinetData, setUpdate);
+    console.log("rendering");
+    return () => {
+      console.log("unmount");
+      
+    };
+  }, [update]);
+
+  function fetchCabinetData(setCabinetDataState: Function, setUpdateState: Function) {
     const response = fetch("https://server.studsearch.org:2324/v2/cabinet", {
-      credentials: 'include',
+      credentials: "include",
     });
     response
       .then((response) => response.json())
       .then((data: CabinetData) => {
-        console.log("Cab", data);
-        if (data) setCabinetData(data);
+        console.log("received")
+        setCabinetDataState(data);
+         setUpdateState(false);
       });
-  }, []);
+  }
 
-  console.log("DATA", cabinetData);
+  function postCabinetData(
+    url: string,
+    serverData: CabinetData | undefined,
+    newData: PostCabinetData | undefined,
+    setUpdate: Function
+  ) {
+    if (serverData) {
+      const {
+        name,
+        about,
+        gender,
+        university,
+        faculty,
+        speciality,
+        course,
+      } = serverData;
+
+      let data: PostCabinetData = {
+        name: name,
+        about: about,
+        gender: gender,
+        universityId: university.id,
+        facultyId: faculty.id,
+        specialityId: speciality.id,
+        hostel: true,
+        course: course,
+      };
+
+      data = { ...data, ...newData };
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      }).then((res) => {
+        setUpdate(true)
+        console.log("result posting", res);
+      });
+    }
+  }
 
   return (
     <>
@@ -66,8 +135,19 @@ function PersonalArea() {
         title={t("cabinet-personal-data")}
         imgSrc={personalIco}
       >
-        {(editing) =>
-          editing ? <PersonalDataEditing /> : <PersonalDataInfo />
+        {([editing, setEditing]) =>
+          editing ? (
+            <PersonalDataEditing>
+              <EditingButtons
+                editingHandler={() => {
+                  setEditing(false);
+                }}
+                saveChanges={() => {}}
+              />
+            </PersonalDataEditing>
+          ) : (
+            <PersonalDataInfo />
+          )
         }
       </PersonalAreaCardWrapper>
 
@@ -83,16 +163,30 @@ function PersonalArea() {
         title={t("cabinet-education")}
         imgSrc={universityImgSrc}
       >
-        {(editing) =>
+        {([editing, setEditing]) =>
           editing ? (
-            <EducationCardEditing />
+            <EducationCardEditing
+              changesHandler={setEducationChangedData}
+              serverData={cabinetData}
+            >
+              <EditingButtons
+                editingHandler={() => {
+                  setEditing(false);
+                }}
+                saveChanges={() => {
+                  postCabinetData(
+                    "https://server.studsearch.org:2324/v2/cabinet",
+                    cabinetData,
+                    educationChangedData,
+                    setUpdate
+                  );
+                  setEditing(false);
+                  setUpdate(true);
+                }}
+              />
+            </EducationCardEditing>
           ) : (
-            <EducationCardInfo
-              cabinetRegion={cabinetData?.region}
-              cabinetUniversity={cabinetData?.university}
-              cabinetFaculty={cabinetData?.faculty}
-              cabinetSpeciality={cabinetData?.speciality}
-            />
+            <EducationCardInfo data={cabinetData} />
           )
         }
       </PersonalAreaCardWrapper>
