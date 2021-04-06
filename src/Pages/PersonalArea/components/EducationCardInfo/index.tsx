@@ -4,6 +4,7 @@ import "../itemsWrapper.scss";
 import { useTranslation } from "react-i18next";
 import { CabinetData } from "../../PersonalArea";
 import Spinner from "../../../../Components/LoadingSpinner";
+import {Courses} from "../../../../Helpers/api"
 
 interface EducationCardInfoProps {
   data: CabinetData | undefined;
@@ -22,7 +23,12 @@ export default function EducationCardInfo(props: EducationCardInfoProps) {
           title={t("cabinet-speciality")}
           itemData={speciality && `${speciality?.code} ${speciality?.name.ua}`}
         />
-        <Item title={t("cabinet-course")} itemData={course?.toString()} />
+        <Item
+          title={t("cabinet-course")}
+          itemData={
+            Courses[course].name.split(" ")[0]
+            }
+        />
       </div>
     );
   } else {

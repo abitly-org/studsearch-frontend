@@ -54,25 +54,22 @@ function PersonalArea() {
 
   const [update, setUpdate] = useState(false);
 
-   useEffect(() => {
+  useEffect(() => {
     fetchCabinetData(setCabinetData, setUpdate);
-    console.log("rendering");
     return () => {
-      console.log("unmount");
-      
     };
   }, [update]);
 
-  function fetchCabinetData(setCabinetDataState: Function, setUpdateState: Function) {
+  function fetchCabinetData(setCabinetDataState: Function, updateState: Function) {
     const response = fetch("https://server.studsearch.org:2324/v2/cabinet", {
       credentials: "include",
     });
     response
       .then((response) => response.json())
       .then((data: CabinetData) => {
-        console.log("received")
+       
         setCabinetDataState(data);
-         setUpdateState(false);
+        updateState(false);
       });
   }
 
@@ -114,8 +111,12 @@ function PersonalArea() {
         credentials: "include",
         body: JSON.stringify(data),
       }).then((res) => {
-        setUpdate(true)
-        console.log("result posting", res);
+        if (res.ok) {
+          setUpdate(true)
+        } else {
+          // modal window of request error
+          console.log("data haven't add on server")
+        }
       });
     }
   }
@@ -178,10 +179,9 @@ function PersonalArea() {
                     "https://server.studsearch.org:2324/v2/cabinet",
                     cabinetData,
                     educationChangedData,
-                    setUpdate
+                     setUpdate
                   );
                   setEditing(false);
-                  setUpdate(true);
                 }}
               />
             </EducationCardEditing>
