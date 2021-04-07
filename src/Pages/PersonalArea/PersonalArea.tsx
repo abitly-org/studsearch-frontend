@@ -178,6 +178,7 @@ function PersonalArea() {
                 uploadImg={<InputImage
                     img={img}
                     onChange={postImg}
+                    upload={uploadImg}
                 />}
                 changesHandler={setPersonalChangedData}
                 serverData={cabinetData}>
@@ -203,6 +204,7 @@ function PersonalArea() {
                 uploadImg={<InputImage
                     img={img}
                     onChange={postImg}
+                    upload={uploadImg}
                 />}
                 data={cabinetData} />
           )
