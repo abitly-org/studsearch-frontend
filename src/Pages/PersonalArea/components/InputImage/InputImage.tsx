@@ -7,9 +7,10 @@ interface ImageProps{
 }
 export default function InputImage (props: ImageProps) {
     const { img, onChange } = props;
+    console.log("We hare ", img)
     return(
         <div className={`imgUploadBlock`}>
-            <img src={(img === '')? userPhoto: img}  alt={``}/>
+            {img && <img src={(img === '')? userPhoto: img}  alt={``}/>}
             <label htmlFor={`fileUpload`}><img src={editImg} alt={`uploadImg`}/>
             </label>
             <input type={`file`} id={`fileUpload`} value={``} onChange={onChange}/>

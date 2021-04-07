@@ -15,6 +15,7 @@ import EditingButtons from "./components/EditingButtons";
 
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import InputImage from "./components/InputImage/InputImage";
 
 export interface CabinetData {
   name: string;
@@ -52,6 +53,8 @@ function PersonalArea() {
     setEducationChangedData,
   ] = useState<PostCabinetData>();
 
+  const [personalChangedData, setPersonalChangedData,] = useState<PostCabinetData>();
+
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
@@ -67,7 +70,7 @@ function PersonalArea() {
     response
       .then((response) => response.json())
       .then((data: CabinetData) => {
-       
+
         setCabinetDataState(data);
         updateState(false);
       });
@@ -121,6 +124,39 @@ function PersonalArea() {
     }
   }
 
+    const [uploadImg, setUploadImg] = useState(false);
+    const [img, setImg] = useState("");
+
+  useEffect(() => {
+      console.log(" hello new img")
+      const response = fetch("https://server.studsearch.org:2324/v2/cabinet/photo", {
+          credentials: 'include',
+      });
+      response
+          .then((res) => {
+              setImg(res.url)
+              setUploadImg(false);
+          });
+      return () => {
+      };
+  }, [uploadImg]);
+
+    function postImg (e: any){
+        const response =  fetch("https://server.studsearch.org:2324/v2/cabinet/photo", {
+            method: 'POST',
+            credentials: 'include',
+            body: e.target.files[0],
+            headers: {
+                'content-type': e.target.files[0].type
+            }
+        });
+        response.then((res: any) => {
+            if (res.ok) {
+                setUploadImg(true)
+            }
+         });
+        }
+
   return (
     <>
       <Header />
@@ -138,16 +174,37 @@ function PersonalArea() {
       >
         {([editing, setEditing]) =>
           editing ? (
-            <PersonalDataEditing>
+            <PersonalDataEditing
+                uploadImg={<InputImage
+                    img={img}
+                    onChange={postImg}
+                />}
+                changesHandler={setPersonalChangedData}
+                serverData={cabinetData}>
               <EditingButtons
                 editingHandler={() => {
                   setEditing(false);
                 }}
-                saveChanges={() => {}}
+                saveChanges={() => {
+                  console.log(personalChangedData)
+                  postCabinetData(
+                      "https://server.studsearch.org:2324/v2/cabinet",
+                      cabinetData,
+                      personalChangedData,
+                      setUpdate
+                  );
+                  setEditing(false);
+                }}
               />
             </PersonalDataEditing>
           ) : (
-            <PersonalDataInfo />
+            <PersonalDataInfo
+
+                uploadImg={<InputImage
+                    img={img}
+                    onChange={postImg}
+                />}
+                data={cabinetData} />
           )
         }
       </PersonalAreaCardWrapper>

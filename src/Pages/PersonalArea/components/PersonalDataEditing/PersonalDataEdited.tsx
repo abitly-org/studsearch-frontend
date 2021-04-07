@@ -1,42 +1,63 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Input from "../../../../Components/Input";
 import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import InputImage from "../InputImage/InputImage";
 import "./personalDataEditing.scss";
 import { useTranslation } from "react-i18next";
+import {CabinetData} from "../../PersonalArea";
 
-type EducationCardProp = {
+type PersonalDataEditedProp = {
+  uploadImg: JSX.Element
   children: JSX.Element;
+  changesHandler: Function;
+  serverData: CabinetData | undefined;
+  // error: boolean
 };
 
-export default function PersonalDataEdited(props: EducationCardProp) {
-  const { children } = props;
+export default function PersonalDataEdited(props: PersonalDataEditedProp) {
+  const { children, changesHandler, serverData } = props;
 
   const { i18n, t } = useTranslation();
 
-  const [img, setImg] = useState("");
-  const [nameSurname, setNameSurname] = useState("Катерина Малютіна");
-  const [gender, setGender] = useState("Жіноча");
-  const [aboutMyself, setAboutMyself] = useState(
-    "З радістю допоможу абітурієнтам та " +
-      "розповім деталі про навчання на своєму"
-  );
+  const [img, setImg] = useState('')
+  const [nameSurname, setNameSurname] = useState(serverData?.name);
+  const [genderUser, setGender] = useState(serverData?.gender == 'male' ? `Чоловік` : `Жінка`);
+  const [aboutMyself, setAboutMyself] = useState(serverData?.about);
   const [error, serError] = React.useState({
     nameSurname: false,
     gender: false,
-    aboutMyself: false,
   });
+
+  const postData = useRef({
+    name: serverData?.name,
+    gender: serverData?.gender,
+    about: serverData?.about,
+  });
+
+  useEffect(() => {
+    console.log(nameSurname , genderUser, aboutMyself )
+        let genderUserTransl;
+    console.log(genderUser);
+    (genderUser == 'Чоловік')? genderUserTransl= 'male': genderUserTransl= 'female'
+     postData.current = {
+      name: nameSurname,
+       // @ts-ignore
+       gender:  genderUserTransl,
+      about: aboutMyself,
+    };
+    changesHandler(postData.current);
+  }, [
+      nameSurname,
+      genderUser,
+      aboutMyself,
+      changesHandler,
+  ]);
 
   return (
     <>
       <div className="wrapper">
         <div className={`userInfo`}>
-          <InputImage
-            img={img}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setImg(e.target.value);
-            }}
-          />
+          {props.uploadImg}
           <Input
             value={nameSurname}
             error={error.nameSurname}
@@ -47,9 +68,9 @@ export default function PersonalDataEdited(props: EducationCardProp) {
             }}
           />
           <Input
-            value={gender}
+            value={genderUser}
             error={error.gender}
-            placeholder={gender}
+            placeholder={genderUser}
             title={t("cabinet-gender")}
             onChange={(changedVal: string) => {
               setGender(changedVal);

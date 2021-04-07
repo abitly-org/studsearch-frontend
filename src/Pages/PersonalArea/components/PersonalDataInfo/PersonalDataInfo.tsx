@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import Item from "../Item";
 import "../itemsWrapper.scss";
-import InputImage from "../InputImage/InputImage";
 import {useTranslation} from "react-i18next";
+import {CabinetData} from "../../PersonalArea";
+import Spinner from "../../../../Components/LoadingSpinner";
 
-export default function PersonalDataInfo() {
+interface PersonalDataInfoProps {
+    uploadImg: JSX.Element
+    data: CabinetData | undefined;
+}
+export default function PersonalDataInfo(props: PersonalDataInfoProps) {
     const { i18n, t } = useTranslation();
-    const [img, setImg] = useState("");
-
-  return (
+    if (props.data) {
+        const { name, gender, about } = props.data;
+   return (
     <div className="wrapper-info">
-      <InputImage
-        img={img}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setImg(e.target.value);
-        }}
-      />
-      <Item title={t('cabinet-name')} itemData="Катерина Малютіна" />
-      <Item title={t('cabinet-gender')} itemData="Жінка" />
-      <Item
-        title={t('cabinet-about')}
-        itemData="З радістю допоможу абітурієнтам та розповім деталі про навчання на своєму факультеті"
-      />
+        {props.uploadImg}
+      <Item title={t('cabinet-name')} itemData={name} />
+      <Item title={t('cabinet-gender')} itemData={ gender == 'male' ? `Чоловік` : `Жінка`}/>
+      <Item title={t('cabinet-about')} itemData={about}/>
     </div>
+
   );
+    } else {
+        return <Spinner center-x center-y />;
+    }
 }
