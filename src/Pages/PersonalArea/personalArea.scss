@@ -47,13 +47,12 @@
 .imgUploadBlock {
   position: relative;
   display: flex;
-  justify-content: flex-end;
   align-items: flex-end;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
 
-  img{
+  >img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     position: absolute;
     z-index: -1;
    }
@@ -66,6 +65,7 @@
     border-radius: 50%;
     border: 2px solid white;
     cursor: pointer;
+    margin-left: 49px;
   }
   input {
     display: none;

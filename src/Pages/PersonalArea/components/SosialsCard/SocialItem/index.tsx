@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import SocialsInput from "../SocialsInput";
-import {SocialsData} from "../../../../../Helpers/api"
+import { SocialsData } from "../../../../../Helpers/api";
 import "./index.scss";
 
 interface SocialItemProps {
   socialName: string;
   socialValue: string | undefined;
-  onSubmit: (newValue: SocialsData)=>void
+  onSubmit: (newValue: SocialsData) => void;
 }
 
 export default function SocialInput(props: SocialItemProps) {
@@ -14,8 +14,6 @@ export default function SocialInput(props: SocialItemProps) {
 
   const [value, setValue] = useState(socialValue);
   const [editing, setEditing] = useState(socialValue !== undefined);
-  const [sosialValue, setSosialValue] = useState("");
-
   return (
     <div className="social-item">
       {editing ? (

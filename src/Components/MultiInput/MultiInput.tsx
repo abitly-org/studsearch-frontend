@@ -4,7 +4,7 @@ import cx from "classnames";
 
 interface textArea {
     name: string;
-    value: string;
+    value: string| undefined;
     onChange: ((event: React.ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
     field: boolean;
 }
