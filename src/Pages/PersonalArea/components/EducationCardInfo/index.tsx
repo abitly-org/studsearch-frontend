@@ -2,9 +2,8 @@ import React from "react";
 import Item from "../Item";
 import "../itemsWrapper.scss";
 import { useTranslation } from "react-i18next";
-import { CabinetData } from "../../PersonalArea";
 import Spinner from "../../../../Components/LoadingSpinner";
-import {Courses} from "../../../../Helpers/api"
+import { Courses, CabinetData } from "../../../../Helpers/api";
 
 interface EducationCardInfoProps {
   data: CabinetData | undefined;
@@ -25,9 +24,7 @@ export default function EducationCardInfo(props: EducationCardInfoProps) {
         />
         <Item
           title={t("cabinet-course")}
-          itemData={
-            Courses[course].name.split(" ")[0]
-            }
+          itemData={Courses[course].name.split(" ")[0]}
         />
       </div>
     );

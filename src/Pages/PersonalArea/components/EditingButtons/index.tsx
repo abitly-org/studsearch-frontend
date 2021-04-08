@@ -3,13 +3,13 @@ import Button from "../../../../Components/Button";
 import { useTranslation } from "react-i18next";
 
  export interface EditingButtonsProps {
-  editingHandler: Function;
-  saveChanges: Function;
+  onCancel: Function;
+  onSave: Function;
 }
 
 export default function EditingButtons(props: EditingButtonsProps) {
   const { i18n, t } = useTranslation();
-  const { editingHandler: setEditing, saveChanges } = props;
+  const { onCancel: setEditing, onSave: saveChanges } = props;
   return (
     <div className="btn-group">
       <Button

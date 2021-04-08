@@ -1,33 +1,33 @@
 import React, { useState } from "react";
 import SocialsInput from "../SocialsInput";
-import Item from "../../Item";
-
+import {SocialsData} from "../../../../../Helpers/api"
 import "./index.scss";
 
 interface SocialItemProps {
   socialName: string;
-  socialValue: string | null;
+  socialValue: string | undefined;
+  onSubmit: (newValue: SocialsData)=>void
 }
 
 export default function SocialInput(props: SocialItemProps) {
-  const { socialName, socialValue } = props;
+  const { socialName, socialValue, onSubmit } = props;
 
-  const title = `імя користувача у ${socialName}`;
+  const [value, setValue] = useState(socialValue);
+  const [editing, setEditing] = useState(socialValue !== undefined);
+  const [sosialValue, setSosialValue] = useState("");
 
-  const [value, setValue] = useState("");
-  const [editing, setEditing] = useState(false);
-  
   return (
     <div className="social-item">
       {editing ? (
         <SocialsInput
           value={value}
-          editingHandler = {setEditing}
+          editingHandler={setEditing}
           onChange={(changedVal: string) => {
             setValue(changedVal);
           }}
-          title={title}
-          placeholder={`${socialName}` }
+          title={socialName}
+          placeholder={`${socialName}`}
+          onSubmit={onSubmit}
         />
       ) : (
         <div

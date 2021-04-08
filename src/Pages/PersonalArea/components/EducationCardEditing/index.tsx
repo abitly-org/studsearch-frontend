@@ -9,6 +9,7 @@ import {
   Region,
   Faculty,
   Speciality,
+  CabinetData
 } from "../../../../Helpers/api";
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +18,7 @@ import { EditingButtonsProps } from "../EditingButtons";
 import DropDown from "../../../../Components/DropDown";
 import CheckBox from "../../../../Components/CheckBox/Checkbox";
 
-import { CabinetData } from "../../PersonalArea";
+
 
 import "./index.scss";
 
