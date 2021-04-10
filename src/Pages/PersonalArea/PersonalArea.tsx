@@ -33,10 +33,13 @@ function PersonalArea() {
     setEducationChangedData,
   ] = useState<PostCabinetData>();
 
-  const [personalChangedData, setPersonalChangedData,] = useState<PostCabinetData>();
+  const [
+    personalChangedData,
+    setPersonalChangedData,
+  ] = useState<PostCabinetData>();
   const [update, setUpdate] = useState(0);
-const [uploadImg, setUploadImg] = useState(false);
-    const [img, setImg] = useState("");
+  const [uploadImg, setUploadImg] = useState(false);
+  const [img, setImg] = useState("");
 
   useEffect(() => {
     fetchCabinetData(setCabinetData);
@@ -44,34 +47,38 @@ const [uploadImg, setUploadImg] = useState(false);
   }, [update]);
 
   useEffect(() => {
-      console.log(" hello new img")
-      const response = fetch("https://server.studsearch.org:2324/v2/cabinet/photo", {
-          credentials: 'include',
-      });
-      response
-          .then((res) => {
-              setImg(res.url)
-              setUploadImg(false);
-          });
-      return () => {
-      };
+    console.log(" hello new img");
+    const response = fetch(
+      "https://server.studsearch.org:2324/v2/cabinet/photo",
+      {
+        credentials: "include",
+      }
+    );
+    response.then((res) => {
+      setImg(res.url);
+      setUploadImg(false);
+    });
+    return () => {};
   }, [uploadImg]);
 
-    function postImg (e: any){
-        const response =  fetch("https://server.studsearch.org:2324/v2/cabinet/photo", {
-            method: 'POST',
-            credentials: 'include',
-            body: e.target.files[0],
-            headers: {
-                'content-type': e.target.files[0].type
-            }
-        });
-        response.then((res: any) => {
-            if (res.ok) {
-                setUploadImg(true)
-            }
-         });
-        }
+  function postImg(e: any) {
+    const response = fetch(
+      "https://server.studsearch.org:2324/v2/cabinet/photo",
+      {
+        method: "POST",
+        credentials: "include",
+        body: e.target.files[0],
+        headers: {
+          "content-type": e.target.files[0].type,
+        },
+      }
+    );
+    response.then((res: any) => {
+      if (res.ok) {
+        setUploadImg(true);
+      }
+    });
+  }
 
   return (
     <>
@@ -91,37 +98,30 @@ const [uploadImg, setUploadImg] = useState(false);
         {([editing, setEditing]) =>
           editing ? (
             <PersonalDataEditing
-                uploadImg={<InputImage
-                    img={img}
-                    onChange={postImg}
-                    upload={uploadImg}
-                />}
-                changesHandler={setPersonalChangedData}
-                serverData={cabinetData}>
+              uploadImg={
+                <InputImage img={img} onChange={postImg} upload={uploadImg} />
+              }
+              changesHandler={setPersonalChangedData}
+              serverData={cabinetData}
+            >
               <EditingButtons
                 onCancel={() => {
                   setEditing(false);
                 }}
                 onSave={() => {
-                  console.log(personalChangedData)
-                  postCabinetData(
-                      cabinetData,
-                      personalChangedData,
-                      setUpdate
-                  );
+                  console.log(personalChangedData);
+                  postCabinetData(cabinetData, personalChangedData, setUpdate);
                   setEditing(false);
                 }}
               />
             </PersonalDataEditing>
           ) : (
             <PersonalDataInfo
-
-                uploadImg={<InputImage
-                    img={img}
-                    onChange={postImg}
-                    upload={uploadImg}
-                />}
-                data={cabinetData} />
+              uploadImg={
+                <InputImage img={img} onChange={postImg} upload={uploadImg} />
+              }
+              data={cabinetData}
+            />
           )
         }
       </PersonalAreaCardWrapper>
@@ -131,7 +131,7 @@ const [uploadImg, setUploadImg] = useState(false);
         imgSrc={socialsImgSRC}
         edited={false}
       >
-        {() => <SocialsCard  />}
+        {() => <SocialsCard />}
       </PersonalAreaCardWrapper>
 
       <PersonalAreaCardWrapper

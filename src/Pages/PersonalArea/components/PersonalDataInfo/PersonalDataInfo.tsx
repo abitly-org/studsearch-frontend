@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Item from "../Item";
 import "../itemsWrapper.scss";
 import {useTranslation} from "react-i18next";
-import {CabinetData} from "../../PersonalArea";
+import {CabinetData} from "../../../../Helpers/api";
 import Spinner from "../../../../Components/LoadingSpinner";
 
 interface PersonalDataInfoProps {

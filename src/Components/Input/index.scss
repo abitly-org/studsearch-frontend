@@ -46,7 +46,7 @@
     left: 2px;
   }
 
-  &.error {
+  &.inputError {
     input {
       border-bottom: 2px solid #ff4255;
     }
@@ -78,7 +78,7 @@
     display: none;
   }
 
-  &.error .text-error {
+  &.inputError .text-error {
     display: unset;
     margin-top: 5px;
     font-family: Montserrat;
@@ -93,7 +93,7 @@
     display: none;
   }
 
-  &.error .error-icon {
+  &.inputError .error-icon {
     display: block;
     position: absolute;
     width: 30px;

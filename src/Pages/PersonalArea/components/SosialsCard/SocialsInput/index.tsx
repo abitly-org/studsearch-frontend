@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 import { SocialsData } from "../../../../../Helpers/api";
 import "./index.scss";
+import {useTranslation} from "react-i18next";
 
 export interface IInput {
   value?: string;
@@ -14,6 +15,7 @@ export interface IInput {
 }
 
 export default function Input(props: IInput): JSX.Element {
+  const { t, i18n } = useTranslation();
   const {
     value,
     onChange,
@@ -102,7 +104,7 @@ export default function Input(props: IInput): JSX.Element {
         </div>
       )}
 
-      {emptyValue && <span className={"text-error"}>{`Введіть ${title}`}</span>}
+      {emptyValue && <span className={"text-error"}>{`${t('cabinet-social-user-name-write')} ${title}`}</span>}
     </div>
   );
 }

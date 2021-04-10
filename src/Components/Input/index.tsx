@@ -26,7 +26,14 @@ export default function Input(props: IInput): JSX.Element {
 
   const [focus, setFocus] = useState(false);
   // const [query, setQuery] = useState<string | undefined>("");
-  // const [inputError, setInputError] = useState(error);
+   const [inputError, setInputError] = useState(error);
+
+   useEffect(() => {
+       setInputError(error);
+     if (value?.length !== 0) {
+       setInputError(false);
+     }
+   })
 
   useEffect(() => {
     // setInputError(error);
@@ -42,11 +49,12 @@ export default function Input(props: IInput): JSX.Element {
     active: enabled && focus,
     disabled: !enabled
   });
-  const inputBlockClass = classNames("input-block", { error });
+  const inputBlockClass = classNames("input-block", { inputError });
 
   return (
     <div className={inputBlockClass}>
       <input
+          disabled={!enabled}
         className={inputClass}
         type="text"
         placeholder={placeholder}
@@ -63,7 +71,7 @@ export default function Input(props: IInput): JSX.Element {
           onChange(event.target.value);
         }}
       />
-      <div className={"error-icon"}></div>
+      <div className={"error-icon"} />
       <span className={"title"}>{title}</span>
       <span className={"text-error"}>{`Введіть ${title}`}</span>
     </div>

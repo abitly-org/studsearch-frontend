@@ -194,7 +194,7 @@ export default function EducationCardEdited(props: EducationCardProp) {
         <div className="checkBoxBlock">
           <CheckBox
             label="сheckbox"
-            value={"Можу допомогти з питаннями про гуртожиток"}
+            value={t('cabinet-check-box-hostel')}
             onChange={() => {
               setChecked(!checked);
             }}

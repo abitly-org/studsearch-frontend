@@ -6,31 +6,32 @@ import {Link} from "react-router-dom";
 import logo from "./signLogo.svg";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import UserPageInfo from "../../Components/UserPageInfo/UserPageInfo";
+import {useTranslation} from "react-i18next";
+import Header from "../../Components/Header";
 
-export default class Registration extends React.Component {
+export default function Registration(): JSX.Element {
+    const { t } = useTranslation();
 
-    render(): JSX.Element {
-        return (
-            <div className="SignUpPage"  >
-                <div className={`secondPhoto`} style={{backgroundImage: `url(${splitGirl})`}}/>
-                <div className="Registration"  >
-                     <div className={`RegistrationContainer`}>
-                        <Link className="SignUpLogo" to='/'>
-                            <img src={logo} alt={`logo`}/>
-                        </Link>
-                         <UserPageInfo
-                             h1={`Реєстрація студента-волонтера`}
-                             span={`Вже є обліковий запис?`}
-                             a={`Увійти`}
-                             href={`#`}
-                         />
-                        <RegistrationForm/>
-                        <div className={`goBack`}>
-                            <a className="goBack-btn" href="/">Назад</a>
-                        </div>
+    return (
+        <div className="SignUpPage">
+             <div className={`secondPhoto`} style={{backgroundImage: `url(${splitGirl})`}}/>
+            <div className="Registration">
+                <div className={`RegistrationContainer`}>
+                    <Link className="SignUpLogo" to='/'>
+                        <img src={logo} alt={`logo`}/>
+                    </Link>
+                    <UserPageInfo
+                        h1={t('registration-header')}
+                        span={t('registration-login-text')}
+                        a={t('registration-login-link')}
+                        href={`#`}
+                    />
+                    <RegistrationForm/>
+                    <div className={`GoBack`}>
+                        <a className="GoBack-btn" href="/">{t('registration-back')}</a>
                     </div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }

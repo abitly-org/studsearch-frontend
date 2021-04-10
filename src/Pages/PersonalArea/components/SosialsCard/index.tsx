@@ -9,6 +9,7 @@ import {
 } from "../../../../Helpers/api";
 import Spinner from "../../../../Components/LoadingSpinner";
 import "./index.scss";
+import { useTranslation } from "react-i18next";
 
 interface SocialCardProps {}
 
@@ -58,3 +59,19 @@ export default function SocialCard(props: SocialCardProps) {
     </div>
   );
 }
+
+
+{/* const { t, i18n } = useTranslation();
+
+  
+
+  return (
+    <div className="social-card">
+      <Item title={`${t('cabinet-social-user-name')} Telegram`} itemData={props.telegramValue} />
+      <SocialItem socialName="Instagram" socialValue={instagram} />
+      <SocialItem socialName="Linkedin" socialValue={linkedin} />
+      <SocialItem socialName="Facebook" socialValue={facebook} />
+      <SocialItem socialName="Viber" socialValue={viber} />
+>>>>>>> origin/registration
+    </div>
+  ); */}

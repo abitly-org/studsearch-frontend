@@ -11,6 +11,9 @@
       cursor: not-allowed;
     }
   }
+  .checkBoxTitle {
+    display: flex;
+  }
 
   .custom-checkbox {
     position: absolute;
@@ -55,5 +58,15 @@
     &:hover {
       color: #137dcf;
     }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .checkBoxTitle {
+    display: flex;
+    flex-direction: column;
+  }
+  .checkBox a {
+    padding-left: 0;
   }
 }

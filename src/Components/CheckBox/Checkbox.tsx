@@ -26,7 +26,9 @@ function Checkbox(props: checkbox) {
                    disabled={disabled == true}/>
             <label htmlFor={label}
                    className={cx({"disabled": disabled})}>
-                {value}{tag}
+                <div className={`checkBoxTitle`}>
+                <div>{value}</div>{tag}
+                </div>
             </label>
         </div>
     )

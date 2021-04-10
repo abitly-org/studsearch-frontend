@@ -4,7 +4,7 @@ import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import InputImage from "../InputImage/InputImage";
 import "./personalDataEditing.scss";
 import { useTranslation } from "react-i18next";
-import {CabinetData} from "../../PersonalArea";
+import {CabinetData} from "../../../../Helpers/api";
 
 type PersonalDataEditedProp = {
   uploadImg: JSX.Element

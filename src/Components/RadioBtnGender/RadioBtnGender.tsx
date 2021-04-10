@@ -1,5 +1,6 @@
 import React from "react";
 import './radioBtnGender.scss';
+import {useTranslation} from "react-i18next";
 
 interface IRadioBtnGender {
     gender: string
@@ -7,23 +8,24 @@ interface IRadioBtnGender {
 }
 
 function RadioBtnGender(props: IRadioBtnGender) {
+    const { t, i18n } = useTranslation();
     const {gender, onChange} = props;
     return (
         <div className={`RadioBlock`}>
             <div className="radio">
-                <label htmlFor={`man`}>
-                    <input type="radio" id={`man`} value={`man`} checked={gender === 'man'}
+                <label htmlFor={`male`}>
+                    <input type="radio" id={`male`} value={`male`} checked={gender === 'male'}
                            onChange={onChange}/>
                     <div className={`designOval`}/>
-                    <span>Чоловік</span>
+                    <span>{t('registration-sex-male')}</span>
                 </label>
             </div>
             <div className="radio">
-                <label htmlFor={`girl`}>
-                    <input type="radio" id={`girl`} value={`girl`} checked={gender === 'girl'}
+                <label htmlFor={`female`}>
+                    <input type="radio" id={`female`} value={`female`} checked={gender === 'female'}
                            onChange={onChange}/>
                     <div className={`designOval`}/>
-                    <span>Жінка</span>
+                    <span>{t('registration-sex-female')}</span>
                 </label>
             </div>
         </div>
