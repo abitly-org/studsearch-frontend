@@ -79,10 +79,10 @@ const Header = (props: userPhoto) => {
                     <Link to={'/personal-area'}>
 
                       <div className= {cx( "HeaderStudentPhoto ",{
-                        "BackgroundColor":   !props.userImg,
+                        "BackgroundColor": props.userImg,
                        })}>
                         {img == undefined? null:
-                            ( props.userImg && img ?
+                            (!props.userImg && img ?
                                 <img src={img} alt={`photo`} /> :
                                 <PhotoPlaceholder />)
                         }
