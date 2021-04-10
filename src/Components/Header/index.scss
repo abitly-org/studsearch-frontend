@@ -116,20 +116,24 @@ div.Header {
           display: none;
         }
 
+        .BackgroundColor {
+          background-color: #CFE5FF!important;
+        }
+
         .HeaderStudentPhoto {
           width: 50px;
           height: 50px;
           border-radius: 50%;
           contain: size;
           overflow: hidden;
+          background-color: white;
           display: flex;
           justify-content: center;
           position: relative;
           align-items: center;
           cursor: pointer;
           >svg {
-            background-color: #CFE5FF;
-            fill: #2653AF;
+             fill: #2653AF;
             width: 35px;
             height: 35px;
           }

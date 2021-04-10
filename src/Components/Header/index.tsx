@@ -19,7 +19,11 @@ const languages = [
   { text: 'RU', code: 'ru-RU' }
 ];
 
-const Header = () => {
+interface userPhoto {
+  userImg?: boolean
+}
+
+const Header = (props: userPhoto) => {
   const { i18n, t } = useTranslation();
 
    const [verified, setVerified] = useState<boolean | undefined>(undefined)
@@ -73,11 +77,14 @@ const Header = () => {
                       </Button>
                     </>:
                     <Link to={'/personal-area'}>
-                      <div className="HeaderStudentPhoto">
+
+                      <div className= {cx( "HeaderStudentPhoto ",{
+                        "BackgroundColor":   !props.userImg,
+                       })}>
                         {img == undefined? null:
-                            img ?
+                            ( props.userImg && img ?
                                 <img src={img} alt={`photo`} /> :
-                                <PhotoPlaceholder />
+                                <PhotoPlaceholder />)
                         }
                       </div>
                     </Link>

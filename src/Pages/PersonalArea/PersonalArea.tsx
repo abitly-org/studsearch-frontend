@@ -56,7 +56,7 @@ function PersonalArea() {
 
   return (
     <>
-      <Header />
+      <Header userImg={uploadImg}/>
       <div className={`PersonalPage`}>
         <UserPageInfo
           h1={t("cabinet-main")}
