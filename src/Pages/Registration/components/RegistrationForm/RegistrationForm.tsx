@@ -11,7 +11,7 @@ import {
   University,
   Region,
   Faculty,
-  Speciality,
+  Speciality, fetchSession,
 } from "../../../../Helpers/api";
 import DropDown from "../../../../Components/DropDown";
 import Input from "../../../../Components/Input";
@@ -22,24 +22,13 @@ import {useTranslation} from "react-i18next";
 
 type FormProps = {};
 type CoursesType = { id: number; name: string };
-type data = {
-  status: boolean;
-  studentUuid?: string;
-  token?: string;
-  verified?: boolean;
-};
 
 export default function RegistrationForm() {
-  
+
+  const [verified, setVerified] = useState<boolean | undefined>(undefined)
   useEffect(() => {
-    const response = fetch("https://server.studsearch.org:2324/v2/session", {
-      credentials: 'include',
-      });
-      response
-        .then((response) => response.json())
-        .then((data: data) => {
-          console.log("session", data);
-        });  
+    fetchSession(setVerified);
+    return () => {};
   }, []);
 
   const [region, setRegion] = useState<Region>();
@@ -222,7 +211,7 @@ export default function RegistrationForm() {
           <div className="authTelegram">
                 <a
                 className={`regButton`} onClick={SubmitStates}
-                href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=${gender}&about=${aboutMyself}&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false`}
+                href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=${gender}&about=${aboutMyself}&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=${checkBoxState.tg}`}
                 target="_blank"
                 rel="noopener noreferrer">
               <img src={tgPhoto} alt="tgPhoto" />

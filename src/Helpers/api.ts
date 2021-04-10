@@ -324,6 +324,65 @@ export const Courses = [
 ];
 
 /////////////////////Cabinet api///////////////////////////////////
+export interface SessionData {
+  status: boolean;
+  studentUuid?: string;
+  token?: string;
+  verified?: boolean;
+}
+
+export function fetchSession (setVerified: React.Dispatch<React.SetStateAction<boolean | undefined>>) {
+  const response = fetch("https://server.studsearch.org:2324/v2/session", {
+    credentials: 'include',
+  });
+  response
+      .then((response) => response.json())
+      .then((data: SessionData) => {
+        setVerified(data.verified)
+        console.log("session", data);
+      });
+}
+
+
+export function fetchUserPhoto(
+    setImg:  React.Dispatch<React.SetStateAction<string | undefined>>,
+    setUploadImg?:  React.Dispatch<React.SetStateAction<boolean>>) {
+  const response = fetch("https://server.studsearch.org:2324/v2/cabinet/photo", {
+    credentials: 'include',
+  });
+  response
+      .then((res) => {
+        if (res.ok) {
+           setImg(res.url)
+          setUploadImg&& setUploadImg(false)
+        }
+        else {
+          setImg('')
+        }
+      });
+}
+
+export function postUserPhoto(
+    setUploadImg: React.Dispatch<React.SetStateAction<boolean>>,
+    e: any) {
+  const response = fetch(
+      "https://server.studsearch.org:2324/v2/cabinet/photo",
+      {
+        method: "POST",
+        credentials: "include",
+        body: e.target.files[0],
+        headers: {
+          "content-type": e.target.files[0].type,
+        },
+      }
+  );
+  response.then((res: Response) => {
+    if (res.ok) {
+      setUploadImg(true);
+    }
+  });
+}
+
 
 export interface CabinetData {
   name: string;

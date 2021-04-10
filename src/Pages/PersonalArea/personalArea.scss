@@ -45,13 +45,35 @@
 }
 
 .imgUploadBlock {
+  width: 80px;
+  height: 80px;
   position: relative;
   display: flex;
   align-items: flex-end;
 
+  .UserImgBlock {
+    position: absolute;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    contain: size;
+    overflow: hidden;
+    background-color: #CFE5FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+    svg {
+      fill: #2653AF;
+      width: 45px;
+      height: 45px;
+    }
+  }
+
   >img{
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     position: absolute;
     z-index: -1;

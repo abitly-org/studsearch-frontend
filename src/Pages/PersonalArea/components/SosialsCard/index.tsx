@@ -21,14 +21,15 @@ export default function SocialCard(props: SocialCardProps) {
     fetchSocials(setSocialsData);
     return () => {};
   }, [update]);
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="social-card">
       {socialsData ? (
         <>
           <Item
-            title="імя користувача у Telegram"
-            itemData={socialsData?.telegram}
+              title={`${t('cabinet-social-user-name')} Telegram`}
+              itemData={socialsData?.telegram}
           />
           <SocialItem
             socialName="Instagram"

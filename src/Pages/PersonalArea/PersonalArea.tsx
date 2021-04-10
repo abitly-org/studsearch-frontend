@@ -14,10 +14,10 @@ import SocialsCard from "./components/SosialsCard";
 import EditingButtons from "./components/EditingButtons";
 
 import {
-  fetchCabinetData,
-  postCabinetData,
-  CabinetData,
-  PostCabinetData,
+    fetchCabinetData,
+    postCabinetData,
+    CabinetData,
+    PostCabinetData, fetchUserPhoto, postUserPhoto,
 } from "../../Helpers/api";
 
 import { Link } from "react-router-dom";
@@ -39,46 +39,20 @@ function PersonalArea() {
   ] = useState<PostCabinetData>();
   const [update, setUpdate] = useState(0);
   const [uploadImg, setUploadImg] = useState(false);
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState<string| undefined>(undefined);
 
   useEffect(() => {
     fetchCabinetData(setCabinetData);
     return () => {};
   }, [update]);
 
-  useEffect(() => {
-    console.log(" hello new img");
-    const response = fetch(
-      "https://server.studsearch.org:2324/v2/cabinet/photo",
-      {
-        credentials: "include",
-      }
-    );
-    response.then((res) => {
-      setImg(res.url);
-      setUploadImg(false);
-    });
-    return () => {};
+    useEffect(() => {
+        fetchUserPhoto(setImg,setUploadImg)
   }, [uploadImg]);
 
-  function postImg(e: any) {
-    const response = fetch(
-      "https://server.studsearch.org:2324/v2/cabinet/photo",
-      {
-        method: "POST",
-        credentials: "include",
-        body: e.target.files[0],
-        headers: {
-          "content-type": e.target.files[0].type,
-        },
-      }
-    );
-    response.then((res: any) => {
-      if (res.ok) {
-        setUploadImg(true);
-      }
-    });
-  }
+  function postImg(e: React.ChangeEvent<HTMLInputElement>) {
+       postUserPhoto(setUploadImg, e);
+   }
 
   return (
     <>
@@ -99,7 +73,10 @@ function PersonalArea() {
           editing ? (
             <PersonalDataEditing
               uploadImg={
-                <InputImage img={img} onChange={postImg} upload={uploadImg} />
+                <InputImage
+                    img={img}
+                    onChange={postImg}
+                    upload={uploadImg} />
               }
               changesHandler={setPersonalChangedData}
               serverData={cabinetData}
@@ -118,7 +95,10 @@ function PersonalArea() {
           ) : (
             <PersonalDataInfo
               uploadImg={
-                <InputImage img={img} onChange={postImg} upload={uploadImg} />
+                <InputImage
+                    img={img}
+                    onChange={postImg}
+                    upload={uploadImg} />
               }
               data={cabinetData}
             />

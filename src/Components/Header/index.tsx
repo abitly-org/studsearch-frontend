@@ -9,6 +9,9 @@ import './index.scss';
 import Button from '../Button';
 import { P2 } from '../Text';
 import RippleEffect from '../Button/RippleEffect';
+import {useEffect, useState} from "react";
+import {ReactComponent as PhotoPlaceholder} from "../StudentCard/photoPlaceholder.svg";
+import {fetchSession, fetchUserPhoto} from "../../Helpers/api";
 
 const languages = [
   { text: 'UA', code: 'uk-UA' },
@@ -18,6 +21,16 @@ const languages = [
 
 const Header = () => {
   const { i18n, t } = useTranslation();
+
+   const [verified, setVerified] = useState<boolean | undefined>(undefined)
+  useEffect(() => {
+    fetchSession(setVerified);
+  }, [verified]);
+
+  const [img, setImg] = useState<string| undefined>(undefined);
+  useEffect(() => {
+    fetchUserPhoto(setImg)
+  }, []);
 
   const [atTop, setAtTop] = React.useState(true);
   React.useEffect(() => {
@@ -49,12 +62,26 @@ const Header = () => {
             <img src={logo} />
           </Link>
           <span className="Header_Buttons">
-            <Button to='/login' outline>
-              <P2>{t('header-login')}</P2>
-            </Button>
-            <Button className="Header_Buttons_Register" to='/sign-up'>
-              <P2>{t('header-register')}</P2>
-            </Button>
+            { (verified == undefined)? null :
+                !verified?
+                    <>
+                      <Button to='/login' outline>
+                        <P2>{t('header-login')}</P2>
+                      </Button>
+                      <Button className="Header_Buttons_Register" to='/sign-up'>
+                        <P2>{t('header-register')}</P2>
+                      </Button>
+                    </>:
+                    <Link to={'/personal-area'}>
+                      <div className="HeaderStudentPhoto">
+                        {img == undefined? null:
+                            img ?
+                                <img src={img} alt={`photo`} /> :
+                                <PhotoPlaceholder />
+                        }
+                      </div>
+                    </Link>
+            }
           </span>
         </div>
         <div className="Header_Bottom">
