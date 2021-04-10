@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 import { SocialsData } from "../../../../../Helpers/api";
 import "./index.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export interface IInput {
   value?: string;
@@ -24,7 +24,9 @@ export default function Input(props: IInput): JSX.Element {
     placeholder,
     editingHandler,
   } = props;
+
   const valueCheck = value ? value?.length === 0 : true;
+  const valueIconsCheck = value?.length !== 0 && value?.length !== undefined;
 
   const [focus, setFocus] = useState(valueCheck);
   const [emptyValue, setEmptyValue] = useState(false);
@@ -74,7 +76,7 @@ export default function Input(props: IInput): JSX.Element {
       />
       <span className={"title"}>{`імя користувача у ${title}`}</span>
 
-      {value?.length !== 0 && !focus && (
+      {valueIconsCheck && !focus && (
         <div className="icon-group">
           <div
             className="pen-icon"
@@ -88,7 +90,7 @@ export default function Input(props: IInput): JSX.Element {
             onClick={() => {
               editingHandler();
               title && onSubmit({ [title.toLowerCase()]: "" });
-              onChange("")
+              onChange("");
             }}
           />
         </div>
@@ -104,7 +106,11 @@ export default function Input(props: IInput): JSX.Element {
         </div>
       )}
 
-      {emptyValue && <span className={"text-error"}>{`${t('cabinet-social-user-name-write')} ${title}`}</span>}
+      {emptyValue && (
+        <span className={"text-error"}>{`${t(
+          "cabinet-social-user-name-write"
+        )} ${title}`}</span>
+      )}
     </div>
   );
 }
