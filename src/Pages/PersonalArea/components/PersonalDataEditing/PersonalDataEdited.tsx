@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import Input from "../../../../Components/Input";
 import MultiInput from "../../../../Components/MultiInput/MultiInput";
-import InputImage from "../InputImage/InputImage";
 import "./personalDataEditing.scss";
 import { useTranslation } from "react-i18next";
-import {CabinetData} from "../../../../Helpers/api";
+import {CabinetData, Genders} from "../../../../Helpers/api";
+import DropDown from "../../../../Components/DropDown";
 
 type PersonalDataEditedProp = {
   uploadImg: JSX.Element
@@ -16,12 +16,15 @@ type PersonalDataEditedProp = {
 
 export default function PersonalDataEdited(props: PersonalDataEditedProp) {
   const { children, changesHandler, serverData } = props;
-
   const { i18n, t } = useTranslation();
 
-  const [img, setImg] = useState('')
+  type GenderType = { name: 'Чоловік' | 'Жінка' };
+  const gender = {
+      name: (serverData?.gender == 'male'? 'Чоловік': 'Жінка')
+  }
+
   const [nameSurname, setNameSurname] = useState(serverData?.name);
-  const [genderUser, setGender] = useState(serverData?.gender == 'male' ? `Чоловік` : `Жінка`);
+  const [genderUser, setGender] = useState<GenderType>(gender as GenderType)
   const [aboutMyself, setAboutMyself] = useState(serverData?.about);
   const [error, serError] = React.useState({
     nameSurname: false,
@@ -35,15 +38,10 @@ export default function PersonalDataEdited(props: PersonalDataEditedProp) {
   });
 
   useEffect(() => {
-    console.log(nameSurname , genderUser, aboutMyself )
-        let genderUserTransl;
-    console.log(genderUser);
-    (genderUser == 'Чоловік')? genderUserTransl= 'male': genderUserTransl= 'female'
-     postData.current = {
-      name: nameSurname,
-       // @ts-ignore
-       gender:  genderUserTransl,
-      about: aboutMyself,
+    postData.current = {
+    name: nameSurname,
+    gender: genderUser.name == 'Чоловік'? 'male': 'female',
+    about: aboutMyself,
     };
     changesHandler(postData.current);
   }, [
@@ -67,15 +65,20 @@ export default function PersonalDataEdited(props: PersonalDataEditedProp) {
               setNameSurname(changedVal);
             }}
           />
-          <Input
-            value={genderUser}
-            error={error.gender}
-            placeholder={genderUser}
-            title={t("cabinet-gender")}
-            onChange={(changedVal: string) => {
-              setGender(changedVal);
-            }}
-          />
+            <DropDown<GenderType>
+                placeholder={t("cabinet-gender")}
+                value={genderUser}
+                inputError={error.gender}
+                onChange={setGender}
+                request={useCallback(
+                    (count, offset, query) =>
+                        new Promise<GenderType[]>((resolve, reject) => {
+                            // @ts-ignore
+                            resolve(Genders);
+                        }),
+                    []
+                )}
+            />
         </div>
         <MultiInput
           name={`textValue`}
@@ -86,8 +89,7 @@ export default function PersonalDataEdited(props: PersonalDataEditedProp) {
           field={false}
         />
           </div>
-          
-          { children }
+        { children }
     </>
   );
 }

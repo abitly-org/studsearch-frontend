@@ -20,7 +20,7 @@ interface DropdownProps<T> {
 }
 
 type Item = {
-  id: number;
+  id?: number;
   name?: string | FieldEntry;
   universitiesCount?: number | string;
   studentsCount?: number | string;

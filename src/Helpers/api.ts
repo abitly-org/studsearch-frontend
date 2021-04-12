@@ -323,6 +323,11 @@ export const Courses = [
   { id: 6, name: "Випускник" },
 ];
 
+export const Genders = [
+  { id: 0, name: "Чоловік" },
+  { id: 1, name: "Жінка" },
+];
+
 /////////////////////Cabinet api///////////////////////////////////
 export interface SessionData {
   status: boolean;
@@ -339,7 +344,6 @@ export function fetchSession (setVerified: React.Dispatch<React.SetStateAction<b
       .then((response) => response.json())
       .then((data: SessionData) => {
         setVerified(data.verified)
-        console.log("session", data);
       });
 }
 
