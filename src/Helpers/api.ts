@@ -8,13 +8,21 @@ export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
 export const makeQuery = (query?: {[key: string]: any}) => {
-    if (typeof query !== 'object')
+    if (typeof query !== 'object' || query === null)
         return '';
-    return '?' + Object.entries(query)
-                        .filter(([key, value]) => value !== undefined)
-                        .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
-                        .join('&');
+    if (Object.keys(query).length === 0)
+        return '';
+    return '?' + 
+        Object.entries(query)
+            .filter(([key, value]) => value !== undefined && !(typeof value === 'string' && value.length === 0))
+            .map(([key, value]) => {
+                if (Array.isArray(value))
+                    return value.map(val => encodeURIComponent(key) + '=' + encodeURIComponent(val)).join('&');
+                return encodeURIComponent(key) + '=' + encodeURIComponent(value)
+            })
+            .join('&');
 };
+
 export const getQuery = (name : string, url : string = window.location.href) => {
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),

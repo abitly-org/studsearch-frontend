@@ -1,6 +1,8 @@
 import { makeQuery } from "../../Helpers/api";
 
-const ENDPOINT = 'http://localhost:5000';
+// export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+const DEV = false;
+const ENDPOINT = DEV ? 'http://localhost:5000' : 'http://77.120.70.223:8989';
 
 export type Branch = {
   name: string;
@@ -8,40 +10,47 @@ export type Branch = {
 }
 export const getBranches = (count: number, offset: number, query?: string): Promise<Branch[]> =>
   fetch(`${ENDPOINT}/branches${makeQuery({ count, offset, q: query })}`)
-    .then(r => r?.json?.())
-    .then(r => r.map(([id, name]: any) => ({ id, name })));
+    .then(r => r?.json?.());
 
 export type Region = {
   name: string;
-  id: number
+  id: number;
 }
-export const getRegions = (count: number, offset: number, query?: string): Promise<Region[]> =>
+export const getRegions = (
+  count: number,
+  offset: number,
+  query?: string
+): Promise<Region[]> =>
   fetch(`${ENDPOINT}/regions${makeQuery({ count, offset, q: query })}`)
-    .then(r => r?.json?.())
-    .then(r => r.map(([id, name]: any) => ({ id, name })));
+    .then(r => r?.json?.());
 
 export type Stats = {
-  count: number;
-  zno: number;
+  place?: number;
+  count?: number;
+  zno?: number;
 }
 
 export type University = {
   id: number;
   
-  short?: string;
-  full: string;
+  short_name?: string;
+  full_name: string;
+
+  city?: string;
+  website?: string;
 } & Stats;
 
 export const getUniversities = (
   branchId: number | undefined,
   specialityId: number[],
   regionId: number[],
+  positionType: 'contract' | 'buget' = 'contract',
   count: number,
   offset: number
 ) : Promise<University[]> =>
-  fetch(`${ENDPOINT}/universities${makeQuery({ count, offset, branchId, specialityId, regionId, stats: true })}`)
-    .then(r => r?.json?.())
-    .then(r => r.map(([id, full]: any) => ({ id, full })));
+  fetch(`${ENDPOINT}/universities${makeQuery({ count, offset, branchId, specialityId, regionId, stats: true, positionType })}`)
+    .then(r => r?.json?.());
+    // .then(r => r.map(([id, full]: any) => ({ id, full })));
 
 export type Speciality = {
   id: number;
@@ -53,14 +62,14 @@ export type Speciality = {
 export const getSpecialities = (
   branchId: number | undefined,
   specialityId: number[],
-  universityId: number,
+  universityId: number | undefined,
   facultyId: number | undefined,
   count: number,
-  offset: number
+  offset: number,
+  query?: string
 ) : Promise<Speciality[]> =>
-  fetch(`${ENDPOINT}/specialities${makeQuery({ count, offset, branchId, specialityId, facultyId, universityId, stats: true })}`)
-    .then(r => r?.json?.())
-    .then(r => r.map(([id, full]: any) => ({ id, full })));
+  fetch(`${ENDPOINT}/specialities${makeQuery({ count, offset, branchId, specialityId, facultyId, universityId/*, stats: true*/, q: query })}`)
+    .then(r => r?.json?.());
 
 export type Faculty = {
   id: number;
@@ -74,6 +83,5 @@ export const getFaculties = (
   count: number,
   offset: number
 ) : Promise<Faculty[]> =>
-  fetch(`${ENDPOINT}/faculties${makeQuery({ count, offset, branchId, specialityId, universityId, stats: true })}`)
-    .then(r => r?.json?.())
-    .then(r => r.map(([id, full]: any) => ({ id, full })));
+  fetch(`${ENDPOINT}/faculties${makeQuery({ count, offset, branchId, specialityId, universityId/*, stats: true*/ })}`)
+    .then(r => r?.json?.());
