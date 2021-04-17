@@ -1,0 +1,32 @@
+$gap: 24px;
+
+.ui2_layout {
+    min-width: 0;
+    box-sizing: border-box;
+}
+.ui2_row {
+    flex-direction: row;
+}
+.ui2_column {
+    flex-direction: column;
+}
+
+@mixin applyGap($gap) {
+    .ui2_layout.ui2_row.ui2_layout_right_#{$gap} > * {
+        margin-right: #{$gap}px;
+        &:last-child { margin-right: 0; }
+    };
+    .ui2_layout.ui2_column.ui2_layout_bottom_#{$gap} > * {
+        margin-bottom: #{$gap}px;
+        &:last-child { margin-bottom: 0; }
+    };
+}
+
+@include applyGap(64);
+@include applyGap(32);
+@include applyGap(24);
+@include applyGap(16);
+@include applyGap(12);
+@include applyGap(8);
+@include applyGap(4);
+@include applyGap(0);

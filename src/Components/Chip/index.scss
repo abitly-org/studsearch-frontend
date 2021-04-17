@@ -1,0 +1,40 @@
+.Chip {
+  display: inline-block;
+  position: relative;
+  padding: 10px 12px;
+
+  background-color: #E3EDF9;
+  border-radius: 20px;
+
+  &.hasCloseButton {
+    padding-right: 40px;
+  }
+
+  > span.CloseButton {
+    display: flex;
+    position: absolute;
+    right: 12px;
+    top: 9px;
+
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+
+    background-color: #D3D3D3;
+
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.Chips {
+  > .Chip {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    // &:last-child {
+    //   margin-right: 0;
+    // }
+  }
+  display: inline-block;
+  margin-bottom: -10px;
+}

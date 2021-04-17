@@ -69,7 +69,8 @@ export default Header;
 
 const pages = [
   { textKey: 'header-tab-main', path: '/' },
-  { textKey: 'header-tab-about', path: '/about' },
+  // { textKey: 'header-tab-about', path: '/about' },
+  { textKey: 'header-tab-rating', path: '/rating' },
   { textKey: 'header-tab-students', path: '/students' }
 ];
 

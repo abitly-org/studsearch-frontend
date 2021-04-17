@@ -2,36 +2,38 @@ import React from "react";
 import './checkBox.scss';
 import cx from "classnames";
 
-interface checkbox {
-    label: string;
-    value: string;
+interface CheckboxProps {
+    label?: string;
+    value?: string;
     checked: (boolean | undefined);
     onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
     tag?: JSX.Element;
     disabled?: boolean;
 }
 
-function Checkbox(props: checkbox) {
-    const {label, value, checked, onChange, tag, disabled} = props;
-    return (
-        <div className={`checkBox`}>
-            <input className={cx('custom-checkbox', {
-                "disabled": disabled
-            })}
-                   type="checkbox"
-                   checked={checked}
-                   onChange={onChange}
-                   name={label}
-                   id={label}
-                   disabled={disabled == true}/>
+const Checkbox = ({
+    label, value, checked, onChange, tag, disabled
+}: CheckboxProps) => (
+    <div className={`checkBox`}>
+        <input
+            className={cx('custom-checkbox', { disabled })}
+            type="checkbox"
+            checked={checked}
+            onChange={onChange}
+            name={label}
+            id={label}
+            disabled={disabled == true}
+        />
+        { label && 
             <label htmlFor={label}
-                   className={cx({"disabled": disabled})}>
+                className={cx({"disabled": disabled})}>
                 <div className={`checkBoxTitle`}>
-                <div>{value}</div>{tag}
+                    <div>{value}</div>
+                    {tag}
                 </div>
             </label>
-        </div>
-    )
-}
+        }
+    </div>
+);
 
 export default Checkbox;

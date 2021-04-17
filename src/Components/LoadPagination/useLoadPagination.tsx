@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 const useLoadPagination = <T extends unknown>(
-  request: (count: number, offset: number) => Promise<T[]>
+  request?: (count: number, offset: number) => Promise<T[]>,
+  pageCount = 10
 ) => {
-  let count = 10;
   let unmounted = false;
   const [state, setState] = useState({
     offset: 0,
@@ -22,7 +22,7 @@ const useLoadPagination = <T extends unknown>(
       offset: 0,
       dispatchIndex: state.dispatchIndex + 1,
     });
-  }, [request]);
+  }, [request, pageCount]);
 
   useEffect(() => {
     if (!state.hasMore)
@@ -32,14 +32,14 @@ const useLoadPagination = <T extends unknown>(
       loading: true,
       error: null,
     });
-    request(count, state.offset)
+    request?.(pageCount, state.offset)
       .then((res) => {
         if (unmounted) return;
 
         setState({
           ...state,
           items: [...state.items, ...res],
-          hasMore: res.length === count,
+          hasMore: res.length === pageCount,
           loading: false,
           offset: state.offset + res.length,
         });
@@ -59,7 +59,6 @@ const useLoadPagination = <T extends unknown>(
     hasMore: state.hasMore,
     items: state.items,
     dispatch: () => {
-      console.log("dispatch(): loading=", state.loading);
       if (!state.loading && state.hasMore)
         setState({ ...state, dispatchIndex: state.dispatchIndex + 1 });
     },

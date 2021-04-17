@@ -20,6 +20,18 @@ h1 {
     line-height: 40px;
   }
 }
+h2 {
+  font-weight: 600;
+  font-size: 45px;
+  line-height: 54.86px;
+  color: $black;
+}
+h3 {
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 30.48px;
+  color: $black;
+}
 
 p.p1 {
   font-weight: 500;
@@ -42,6 +54,12 @@ p.p3 {
   font-size: 12px;
   color: $black;
   line-height: 20px;
+}
+
+p.p4 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17.07px;
 }
 
 ul {

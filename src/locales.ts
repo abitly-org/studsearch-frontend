@@ -5,6 +5,7 @@ const ua = {
     'header-tab-main': 'Головна',
     'header-tab-about': 'Про нас',
     'header-tab-students': 'Студенти',
+    'header-tab-rating': 'Рейтинг Університетів',
 
 
     'main-first-header': 'Дізнайся про ВНЗ від студентів, які там навчаються',
@@ -102,6 +103,7 @@ const ru = {
     'header-tab-main': 'Главная',
     'header-tab-about': 'Про нас',
     'header-tab-students': 'Студенты',
+    'header-tab-rating': 'Рейтинг Университетов',
 
     'main-first-header': 'Узнайте больше о ВУЗе от студентов',
     'main-first-question1': 'Какую специальность выбрать?',
@@ -196,6 +198,7 @@ const en = {
     'header-tab-main': 'Main',
     'header-tab-about': 'About us',
     'header-tab-students': 'Students',
+    'header-tab-rating': 'Universities rating',
 
     'main-first-header': 'Learn about the university from its students',
     'main-first-question1': 'Which specialty should you choose?',
