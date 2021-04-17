@@ -1,3 +1,4 @@
+@import '../../palette.scss';
 
 $width: 1100px;
 
@@ -26,6 +27,13 @@ $width: 1100px;
       }
       margin-bottom: 30px;
     }
+
+    padding-bottom: 280px;
+  }
+
+  .more-button {
+    display: block;
+    margin: 16px auto;
   }
 }
 
@@ -51,13 +59,13 @@ $tableTransitionDuration: 0.08s;
   width: 100%;
   box-sizing: border-box;
 
-  transition: all $tableTransitionDuration*2 ease-in-out;
-  max-height: 0;
-  opacity: 0;
-  &.shown {
-    max-height: 1500px;
-    opacity: 1;
-  }
+  transition: all $tableTransitionDuration ease-in-out;
+  // max-height: 0;
+  // opacity: 0;
+  // &.shown {
+  //   max-height: 1500px;
+  //   opacity: 1;
+  // }
 
   > .rating-tableitem {
     margin: 0;
@@ -72,13 +80,16 @@ $tableTransitionDuration: 0.08s;
         background-color: #F5F5F5;
       }
     }
+    background-color: white;
 
     > .Content {
       transition: all $tableTransitionDuration ease-in-out;
       padding: 0;
+      z-index: 5;
     }
     &.expanded {
       border-radius: 15px;
+      z-index: 5;
       > .Content {
         padding: 20px;
       }
@@ -88,6 +99,7 @@ $tableTransitionDuration: 0.08s;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 6;
 
       cursor: pointer;
 
@@ -107,20 +119,22 @@ $tableTransitionDuration: 0.08s;
         width: 24px;
         height: 24px;
         flex: 0 0 auto;
+        padding-left: 8px;
         > svg {
           width: 16px;
 
           stroke: #787A87;
           transition: stroke $tableTransitionDuration ease-in-out,
                       transform $tableTransitionDuration ease-in-out;
+          transform: rotate(180deg);
         }
       }
       > span.column.place {
-        flex: 0.08;
+        flex: 0.08 0 0;
         margin-left: 8px;
       }
       > span.column.name {
-        flex: 1;
+        flex: 1 1 0;
         transition: all $tableTransitionDuration ease-in-out;
         position: relative;
         min-height: 22px;
@@ -136,13 +150,13 @@ $tableTransitionDuration: 0.08s;
       }
 
       > span.column.num {
-        flex: 0.2 0;
+        flex: 0.2 0 0;
         text-align: right;
         margin-right: 16px;
         transition: all $tableTransitionDuration ease-in-out;
       }
       > span.column.zno {
-        flex: 2 0 auto;
+        flex: 2 0 0;
         transition: all $tableTransitionDuration / 4 ease-in-out;
         > .bar {
           display: block;
@@ -161,8 +175,24 @@ $tableTransitionDuration: 0.08s;
             justify-content: flex-end;
             padding: 0 8px;
             align-items: center;
+            p {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
           }
         }
+
+        z-index: 20;
+      }
+      > span.column.space {
+        width: 32px;
+        flex: 0 0 32px;
+      }
+      > span.column.city {
+        flex: 0 0 0;
+        text-align: right;
+        overflow: hidden;
       }
 
       transition: all $tableTransitionDuration ease-in-out;
@@ -170,26 +200,16 @@ $tableTransitionDuration: 0.08s;
       &.expanded {
         // margin: 0 !important;
         padding: 18px 20px;
-        margin: 10px 0 10px 0;
+        margin: 10px 0 0 0;
         z-index: 10;
         &:first-child {
           margin-top: 0;
-        }
-        &:last-child {
-          margin-bottom: 0 !important;
         }
     
         background-color: white;
         box-shadow: 0px 8px 10px rgba(120, 122, 135, 0.2),
                     0px -1px 8px rgba(120, 122, 135, 0.15);
         border-radius: 15px;
-
-        > span.ExpandButton {
-          > svg {
-            stroke: #2653AF;
-            transform: rotate(180deg);
-          }
-        }
 
         > span.column.zno { 
           flex: 0;
@@ -204,6 +224,131 @@ $tableTransitionDuration: 0.08s;
           flex: 0;
           opacity: 0;
         }
+        > span.column.city {
+          flex: 0.2;
+          padding-right: 16px;
+        }
+        > span.ExpandButton {
+          > svg {
+            stroke: #2653AF;
+            transform: rotate(0deg);
+          }
+        }
+      }
+    }
+  }
+
+  > .rating-tableheader {
+    display: flex;
+    padding: 0 20px;
+    > span.expandbutton {
+      flex: 0 0 24px;
+      padding-left: 8px;
+    }
+    > span.place {
+      flex: 0.08 0 0;
+      padding-left: 8px;
+    }
+    > span.space {
+      flex: 0 0 32px;
+    }
+    > span.name {
+      flex: 1 1 0;
+    }
+    > span.num {
+      flex: 0.2 0 0;
+      padding-right: 16px;
+
+      position: relative;
+      > p {
+        position: absolute;
+        right: 16px;
+        top: 0;
+        display: block;
+        left: -100%;
+        text-align: right;
+      }
+    }
+    > span.zno {
+      flex: 2 0 0;
+      display: flex;
+      flex-direction: column;
+
+      > span.scale {
+        display: flex;
+        justify-content: space-between;
+        > p {
+          width: 25px;
+          text-align: center;
+          // flex: 1 0 0;
+
+          > span {
+            display: block;
+            position: absolute;
+            top: 40px;
+            bottom: 20px;
+            width: 1px;
+            margin-left: 12.5px;
+            background: #D3D3D3;
+          }
+          &:first-child {
+            text-align: left;
+            > span {
+              margin-left: 0;
+            }
+          }
+          &:last-child {
+            text-align: right;
+            > span {
+              margin-left: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.university-content {
+  display: none;
+
+  max-height: 0;
+  transition: all 0.1s ease-in-out;
+  &.expanded {
+    display: block;
+    max-height: 1500px;
+  }
+  // overflow: auto;
+}
+
+.Tabs {
+  display: flex;
+  .tab {
+    cursor: pointer;
+
+    margin-right: 30px;
+    *:last-child {
+      margin-right: 0;
+    }
+
+    transition: all 0.1s ease-in-out;
+    color: $black;
+    p {
+      color: $black;
+      transition: all 0.1s ease-in-out;
+    }
+    &:hover p {
+      color: #2653AF;
+    }
+
+    border: 0px solid #2653AF;
+    border-radius: 0;
+    &.selected {
+      color: #2653AF;
+      border-bottom: 1px solid #2653AF;
+      border-radius: 5px;
+      p {
+        color: #2653AF;
       }
     }
   }

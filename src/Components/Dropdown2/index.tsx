@@ -34,8 +34,8 @@ export type Dropdown2State<T> = {
   onChange?: (newValue: T[]) => void;
 } | {
   multiple: false;
-  value?: T;
-  onChange?: (newValue?: T) => void;
+  value: T | null;
+  onChange?: (newValue: T | null) => void;
 }) & ({
   values: T[];
   pagination?: never;
@@ -85,12 +85,12 @@ const Dropdown2 = <T extends unknown>({
   const hasValue = (
     state.multiple ?
       (state.value?.length ?? 0) > 0 :
-      state.value !== undefined
+      state.value !== null
   )
   const isSelected = (value: T) => {
     if (state.multiple) {
       return !!state.value?.find?.(v => equals?.(v, value));
-    } else if (state.value !== undefined) {
+    } else if (state.value !== null) {
       return equals?.(value, state.value)
     }
     return false;
@@ -105,7 +105,7 @@ const Dropdown2 = <T extends unknown>({
       if (b)
         state.onChange?.(value);
       else
-        state.onChange?.(undefined);
+        state.onChange?.(null);
     }
   }
 
@@ -144,14 +144,14 @@ const Dropdown2 = <T extends unknown>({
               )
             }</Chips>
         }
-        { !state.multiple && state.value !== undefined && !open &&
+        { !state.multiple && state.value !== null && !open &&
           <P2 className="Value">{renderItem?.(state.value)}</P2>
         }
         <input
           ref={input}
           type='text'
           placeholder={
-            !state.multiple && state.value !== undefined ?
+            !state.multiple && state.value !== null ?
               renderItem?.(state.value) as string
               :
               undefined

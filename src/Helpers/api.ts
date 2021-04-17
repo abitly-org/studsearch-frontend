@@ -7,7 +7,7 @@ export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://se
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
-const makeQuery = (query?: {[key: string]: any}) => {
+export const makeQuery = (query?: {[key: string]: any}) => {
     if (typeof query !== 'object')
         return '';
     return '?' + Object.entries(query)
