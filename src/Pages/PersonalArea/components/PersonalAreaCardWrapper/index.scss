@@ -1,0 +1,59 @@
+.card-outer {
+  display: flex;
+  justify-content: center;
+  padding: 20px 20px 0 20px;
+
+  > .card-wrapper {
+    padding: 40px;
+    max-width: 1030px;
+    width: 100%;
+    box-shadow: -1px -2px 4px rgba(120, 122, 135, 0.5),
+      1px 2px 4px rgba(120, 122, 135, 0.5);
+    border-radius: 6px;
+    font-family: Montserrat Alternates, sans-serif;
+    color: #3b3c44;
+
+    > .card-header {
+      display: flex;
+      align-items: center;
+      .title-block {
+        display: flex;
+        margin-right: 70px;
+      }
+
+      > .title-block {
+        > .card-title {
+          margin-left: 10px;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 25px;
+          line-height: 30px;
+        }
+      }
+      > .edit-btn {
+        font-family: Montserrat, sans-serif;
+        font-weight: 500;
+        font-size: 22px;
+        line-height: 27px;
+        text-decoration-skip-ink: none;
+        text-decoration-line: underline;
+        &:hover {
+          cursor: pointer;
+          color: #3b3c44be;
+        }
+      }
+    }
+
+    > .btn-group {
+      display: flex;
+      justify-content: space-between;
+      width: 338px;
+      .Button {
+        padding: 14px 39px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 129.5%;
+      }
+    }
+  }
+}

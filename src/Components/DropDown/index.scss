@@ -1,0 +1,77 @@
+@import "../../palette.scss";
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  > .option-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100500;
+    width: 100%;
+
+    margin-top: 5px;
+    box-sizing: border-box;
+    max-width: 730px;
+    background: #ffffff;
+    overflow-y: scroll;
+  
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: $black;
+  }
+}
+
+.list-inactive {
+  height: 0;
+  border: none; //  box-shadow: none;
+  transition: all 0.1s ease-out;
+}
+
+.list-active {
+  height: 246px;
+  border: 2px solid #d6ccc4;  //box-shadow: 0 0 0 2px  #d6ccc4;
+  transition: all 0.1s ease-out;
+}
+
+.input-container {
+  position: relative;
+  max-width: 730px;
+
+  >.arrow {
+    position: absolute;
+    width: 16px;
+    height: 10px;
+    right: 10px;
+    top: 20px;
+    cursor: pointer;
+
+    transform: rotate(0);
+    transition: transform 0.1s ease-out;
+    -webkit-mask-image: url("./arrow.svg");
+    background-color: #d3d3d3;
+  }
+
+   >.arrow-rotate {
+    transform: rotate(0.5turn);
+    background-color: #2653af;
+    transition: all 0.1s ease-out;
+  }
+
+  >.arrow-hide{
+    display: none;
+  }
+
+  
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin: 100px;
+}

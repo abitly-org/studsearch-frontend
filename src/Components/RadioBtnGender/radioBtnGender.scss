@@ -1,0 +1,65 @@
+.RadioBlock {
+  height: 20px;
+  margin-top: 40px;
+  display: flex;
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #3B3C44;
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  .designOval {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    border: 2px solid grey;
+    border-radius: 100%;
+    position: relative;
+    transition: border .05s;
+
+    &:hover {
+      border: 2px solid #2653af;
+      transition: border .05s;
+    }
+  }
+
+  .designOval::before,
+  .designOval::after {
+    content: '';
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    position: absolute;
+    transform: scale(0);
+    transform-origin: center center;
+  }
+
+  .designOval:before {
+    box-shadow: 0 0 0 14px #2653af;
+    background: white;
+    opacity: 0;
+    transition: .1s;
+  }
+
+  /* checked state */
+  input:checked + .designOval::before {
+    opacity: 1;
+    transform: scale(.45);
+  }
+
+  label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .radio {
+    margin-right: 40px;
+  }
+}

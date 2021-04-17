@@ -1,0 +1,23 @@
+.item {
+  display: inline-block;
+  font-family: Montserrat;
+  //max-width: 420px;
+  > .title {
+    display: block;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    color: #787a87;
+    margin-bottom: 10px;
+  }
+
+  > .item-data {
+    display: block;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #3b3c44;
+  }
+}

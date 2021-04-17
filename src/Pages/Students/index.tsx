@@ -10,12 +10,14 @@ import AutoScrollable from '../../Components/AutoScrollable';
 import { Students } from '../../Helpers/api';
 import StudentCard from '../../Components/StudentCard';
 import StudentsBlock from '../../Components/Students';
+import Header from "../../Components/Header";
 
 const StudentsPage = () => {
   const { t } = useTranslation();
 
   return (
     <div className="StudentsPage">
+      <Header/>
       <div className="Brief" style={{ backgroundImage: `url(${bg})` }}>
         <div>
           <div className="Info">
@@ -51,7 +53,7 @@ const StudentsPage = () => {
       <StudentsBlock>
         <AutoScrollable
           data={React.useMemo(() => Students(), [])}
-          template={student => 
+          template={student =>
             <StudentCard
               key={student?.uuid}
               student={student}

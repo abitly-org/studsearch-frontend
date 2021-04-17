@@ -1,0 +1,21 @@
+.social-item {
+    margin: 30px 0;
+    .edit-item {
+        display: inline-block;
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        color: #2653af;
+        cursor: pointer;
+        
+        .add-btn {
+            margin-right: 12px;
+            display: inline-block;
+            background-image: url(./add.svg);
+            width: 16px;
+            height: 16px;
+        }
+      }
+}

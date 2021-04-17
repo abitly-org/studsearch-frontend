@@ -1,0 +1,23 @@
+@import "src/palette";
+
+@mixin style-text($fSize, $lHeight) {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: $fSize;
+  line-height: $lHeight;
+}
+
+.RegistrationContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+   background: $white;
+}
+
+.SignUpLogo {
+  width: 231px;
+  margin: 36px auto 0 auto;
+  display: flex;
+  justify-content: center;
+}

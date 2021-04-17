@@ -23,6 +23,7 @@ import useLoad from '../../Helpers/useLoad';
 import StudentsBlock from '../../Components/Students';
 import StudentCard from '../../Components/StudentCard';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import Header from "../../Components/Header";
 
 var plural = function(k : string, n : number){
   var postfix = '_other';
@@ -45,115 +46,116 @@ var plural = function(k : string, n : number){
 
 const MainPage = () => {
   const { i18n, t } = useTranslation();
-  
+
   const stat = useLoad(() => count());
   const firstStudents = useLoad(() => getStudents(3, 0));
 
   return (
-    <div className="MainPage">
-      <div className="First" style={{ backgroundImage: `url(${bg})` }}>
-        <div>
-          <div className="Info">
-            <H1>{t('main-first-header')}</H1>
-            <br />
-            <br />
-            <ul>
-              <li><P1>{t('main-first-question1')}</P1></li>
-              <li><P1>{t('main-first-question2')}</P1></li>
-              <li><P1>{t('main-first-question3')}</P1></li>
-              <li><P1>{t('main-first-question4')}</P1></li>
-            </ul>
-            <br />
-            <P1>{t('main-first-body1')}</P1>
-            <P1>{t('main-first-body2')}</P1>
-            <br />
-            <br />
-            <Button to="/students">
-              <P2>{t('main-first-button')}</P2>
-            </Button>
+      <div className="MainPage">
+        <Header/>
+        <div className="First" style={{ backgroundImage: `url(${bg})` }}>
+          <div>
+            <div className="Info">
+              <H1>{t('main-first-header')}</H1>
+              <br />
+              <br />
+              <ul>
+                <li><P1>{t('main-first-question1')}</P1></li>
+                <li><P1>{t('main-first-question2')}</P1></li>
+                <li><P1>{t('main-first-question3')}</P1></li>
+                <li><P1>{t('main-first-question4')}</P1></li>
+              </ul>
+              <br />
+              <P1>{t('main-first-body1')}</P1>
+              <P1>{t('main-first-body2')}</P1>
+              <br />
+              <br />
+              <Button to="/students">
+                <P2>{t('main-first-button')}</P2>
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="Second">
-        <H1>{t('main-second-header')}</H1>
-        <div className="Steps">
-          <div>
-            <img src={step1} />
-            <P2>{t('main-second-step1')}</P2>
-          </div>
-          <div>
-            <img src={step2} />
-            <P2>{t('main-second-step2')}</P2>
-          </div>
-          <div>
-            <img src={step3} />
-            <P2>{t('main-second-step3')}</P2>
-          </div>
-          <div>
-            <img src={step4} />
-            <P2>{t('main-second-step4')}</P2>
+        <div className="Second">
+          <H1>{t('main-second-header')}</H1>
+          <div className="Steps">
+            <div>
+              <img src={step1} />
+              <P2>{t('main-second-step1')}</P2>
+            </div>
+            <div>
+              <img src={step2} />
+              <P2>{t('main-second-step2')}</P2>
+            </div>
+            <div>
+              <img src={step3} />
+              <P2>{t('main-second-step3')}</P2>
+            </div>
+            <div>
+              <img src={step4} />
+              <P2>{t('main-second-step4')}</P2>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="Third">
-        <H1>{t('main-third-header')}</H1>
-        {firstStudents ?
-          <StudentsBlock>
-            {firstStudents?.map?.(student => <StudentCard key={student?.uuid} student={student} />)}
-          </StudentsBlock>
-          :
-          <LoadingSpinner center-x />
-        }
-        {stat &&
+        <div className="Third">
+          <H1>{t('main-third-header')}</H1>
+          {firstStudents ?
+              <StudentsBlock>
+                {firstStudents?.map?.(student => <StudentCard key={student?.uuid} student={student} />)}
+              </StudentsBlock>
+              :
+              <LoadingSpinner center-x />
+          }
+          {stat &&
           <Button to="/students/">
             <P2>{
               t(plural('main-third-button', stat?.studentsCount - 3), { count: stat?.studentsCount - 3 })
             }</P2>
           </Button>
-        }
-      </div>
-      <div className="Fourth">
-        <div className="Main">
-          <div>
+          }
+        </div>
+        <div className="Fourth">
+          <div className="Main">
             <div>
-              <H1>{stat ? stat?.studentsCount : <LoadingSpinner />}</H1>
-              <P1>{t('main-fourth-students')}</P1>
+              <div>
+                <H1>{stat ? stat?.studentsCount : <LoadingSpinner />}</H1>
+                <P1>{t('main-fourth-students')}</P1>
+              </div>
+              <div>
+                <H1>{stat ? stat?.universitiesCount : <LoadingSpinner />}</H1>
+                <P1>{t('main-fourth-universities')}</P1>
+              </div>
             </div>
-            <div>
-              <H1>{stat ? stat?.universitiesCount : <LoadingSpinner />}</H1>
-              <P1>{t('main-fourth-universities')}</P1>
-            </div>
+            <br />
+            <H1>{t('main-fourth-header')}</H1>
+            <br />
+            <br />
+            <P2>{t('main-fourth-text1')}</P2>
+            <br />
+            <P2>{t('main-fourth-text2')}</P2>
+            <br />
+            <br />
+            <Button to="/register">
+              <P2>{t('main-fourth-register')}</P2>
+            </Button>
           </div>
-          <br />
-          <H1>{t('main-fourth-header')}</H1>
-          <br />
-          <br />
-          <P2>{t('main-fourth-text1')}</P2>
-          <br />
-          <P2>{t('main-fourth-text2')}</P2>
-          <br />
-          <br />
-          <Button to="/register">
-            <P2>{t('main-fourth-register')}</P2>
-          </Button>
-        </div>
-        <div className="LeftBg">
-          <span></span>
-          <span><img src={student1}/></span>
-          <span></span>
-          <span><img src={student2} /></span>
-          <span><img src={student3} /></span>
-        </div>
-        <div className="RightBg">
-          <span></span>
-          <span><img src={student4}/></span>
-          <span></span>
-          <span><img src={student5} /></span>
-          <span></span>
-          <span><img src={student6} /></span>
+          <div className="LeftBg">
+            <span></span>
+            <span><img src={student1}/></span>
+            <span></span>
+            <span><img src={student2} /></span>
+            <span><img src={student3} /></span>
+          </div>
+          <div className="RightBg">
+            <span></span>
+            <span><img src={student4}/></span>
+            <span></span>
+            <span><img src={student5} /></span>
+            <span></span>
+            <span><img src={student6} /></span>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 

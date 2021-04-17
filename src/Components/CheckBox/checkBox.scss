@@ -1,0 +1,72 @@
+@import "../../palette";
+
+.checkBox {
+  margin-top: 19px;
+  display: flex;
+
+  label {
+    cursor: pointer;
+
+    &.disabled:hover {
+      cursor: not-allowed;
+    }
+  }
+  .checkBoxTitle {
+    display: flex;
+  }
+
+  .custom-checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .custom-checkbox + label {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-checkbox + label::before {
+    content: '';
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    border: 1px solid #3B3C44;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+  }
+
+  .disabled:hover::before {
+    cursor: not-allowed;
+  }
+
+  .custom-checkbox:checked + label::before {
+    border-color: $primary;
+    background-color: $primary;
+    background-image: url("check.svg");
+  }
+
+  a {
+    color: $primary;
+    padding-left: 5px;
+    text-decoration-skip-ink: none;
+
+    &:hover {
+      color: #137dcf;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .checkBoxTitle {
+    display: flex;
+    flex-direction: column;
+  }
+  .checkBox a {
+    padding-left: 0;
+  }
+}

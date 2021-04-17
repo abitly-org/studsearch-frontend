@@ -1,0 +1,193 @@
+@import "src/palette";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap');
+
+$width: 1440px;
+$height: 100%;
+
+
+@mixin style-text($fSize, $lHeight) {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: $fSize;
+  line-height: $lHeight;
+}
+
+.SignUpPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .Registration {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: $width;
+    height: $height;
+    min-height: 1136px;
+  }
+
+  .secondPhoto {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    top: 0;
+    z-index: -1;
+  }
+}
+
+//------------------------------------//
+.SignForm {
+  padding: 0 35px;
+
+  .flName {
+    margin-top: 20px;
+  }
+
+  .regionBlock {
+    margin-top: 40px;
+  }
+
+  .universityBlock {
+    margin-top: 28px;
+  }
+
+  .facultyBlock {
+    margin-top: 30px;
+  }
+
+  .specialityCourseBlock {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .useTelegram {
+    max-width: 605px;
+    margin-top: 21px;
+    padding-left: 2px;
+    @include style-text(15px, 18px);
+    color: $black;
+  }
+
+  .authTelegram {
+    margin: 51px auto 0 auto;
+    max-width: 478px;
+    height: 49px;
+    display: flex;
+    border-radius: 6px;
+
+    &:hover {
+      box-shadow: 2px 3px 4px rgba(120, 122, 135, 0.5);
+      -webkit-box-shadow: 2px 3px 4px rgba(120, 122, 135, 0.5);
+    }
+
+    .regButton {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      background: #68A8E5;;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        background-color: mix(#68A8E5, $white, 90%);
+      }
+
+      &:active {
+        background-color:  #68A8E5 ;
+        opacity: .8;
+      }
+    }
+
+    img {
+      padding: 0 22px 0 29px;
+    }
+
+    span {
+      @include style-text(15.5px, 18px);
+      letter-spacing: 0.006em;
+      color: $white;
+    }
+
+    @media (max-width: 600px) {
+      .authTelegram {
+        width: 300px;
+      }
+    }
+  }
+}
+
+.GoBack {
+  width: 75px;
+  height: 28px;
+  margin: 21px 0 30px calc(50% - 40px);
+}
+
+.GoBack-btn {
+  @include style-text(22px, 28px);
+  letter-spacing: 0.05em;
+  text-decoration-skip-ink: none;
+  color: $black;
+
+  &:hover {
+    color: #6a6a6a;
+  }
+}
+
+.specialityCourseBlock {
+  .dropdown {
+    width: 306px;
+    margin-right: 1px;
+  }
+}
+
+.checkBoxBlock {
+  margin-top: 38px;
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  color: $black;
+}
+
+@media (max-width: 640px) {
+  .SignUpText {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  //.RadioBlock {
+  //  display: flex;
+  //  justify-content: space-between;
+  //}
+  .specialityCourseBlock {
+    margin-top: 28px;
+    flex-direction: column;
+
+    .dropdown {
+      width: auto;
+      margin-bottom: 10px;
+    }
+  }
+  .Input {
+    margin-top: 21px;
+  }
+}
