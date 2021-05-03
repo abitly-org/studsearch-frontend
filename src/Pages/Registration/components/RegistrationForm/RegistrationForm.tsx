@@ -43,15 +43,7 @@ export default function RegistrationForm() {
       });
   }, []);
 
-  // const response1 = fetch(
-  //     "https://server.studsearch.org:2324/v2/register/?name=Vasja&gender=male&about=&universityID=1&facultyID=1&specialityID=1&course=1&hostel=false&telegramPhoto=false&token=MRNWYj5bAPosZyg4v6N3haSSoEYzfppP"
-  //   );
-  //   response1
-  //     .then((response) => response.json())
-  //     .then((data: data) => {
-  //       console.log("registor", data);
-  //     });
-
+  
   const [region, setRegion] = useState<Region>();
   const [university, setUniversity] = useState<University>();
   const [faculty, setFaculty] = useState<Faculty>();

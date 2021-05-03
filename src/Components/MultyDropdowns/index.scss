@@ -1,0 +1,17 @@
+.multy-dropdown-group{
+   margin-top: 80px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px 32px;
+    box-sizing: border-box;
+    .row {
+        display: flex;
+        > * {
+        //   margin-top: 30px;
+          &:nth-child(2n){
+              margin-left: 30px;
+          }
+        }
+       margin-bottom: 30px;
+      }
+}
