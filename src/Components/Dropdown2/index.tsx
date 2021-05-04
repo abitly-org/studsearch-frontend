@@ -72,7 +72,7 @@ const Dropdown2 = <T extends unknown>({
           return undefined;
         return (count, offset) => pagination?.(count, offset, searchQuery);
       },
-      [ searchQuery ]
+      [ pagination, searchQuery ]
     ),
     pageCount
   );

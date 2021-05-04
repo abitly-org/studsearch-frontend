@@ -37,7 +37,7 @@ const StatsPage = () => {
       (count, offset) => 
         getUniversities(
           branch?.id,
-          [], // specialities?.map?.(s => s?.id), 
+          specialities?.map?.(s => s?.id), 
           regions?.map?.(r => r?.id),
           positionType,
           count,
@@ -151,7 +151,7 @@ const StatsPage = () => {
             universities.loading ? 
               <LoadingSpinner center-x />
               :
-              (!universities?.hasMore &&
+              (universities?.hasMore &&
                 <Button
                   className='more-button' outline
                   onClick={() => universities.dispatch()}
@@ -269,7 +269,7 @@ const Faculties = ({
         faculties.loading ? 
           <LoadingSpinner center-x />
           :
-          (!faculties?.hasMore &&
+          (faculties?.hasMore &&
             <Button
               className='more-button' outline
               onClick={() => faculties.dispatch()}
@@ -318,7 +318,7 @@ const Specialities = ({
         specialities.loading ? 
           <LoadingSpinner center-x />
           :
-          (!specialities?.hasMore &&
+          (specialities?.hasMore &&
             <Button
               className='more-button' outline
               onClick={() => specialities.dispatch()}
