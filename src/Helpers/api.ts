@@ -3,26 +3,67 @@ import UpdateEmitter from './updateemitter';
 export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const baseURL = DEV ? "https://localhost.test" : "https://studsearch.org";
-export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://server.studsearch.org:2323";
+// export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://server.studsearch.org:2323";
+export const endpoint = DEV ? "http://localhost:2323" : "https://server.studsearch.org:2323";
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
-export const makeQuery = (query?: {[key: string]: any}) => {
+const arr = (v?: any | any[]) : string | undefined => 
+    v ? (Array.isArray(v) ? v.join(',') : String(v)) : undefined
+
+const getQueryString = (url = window.location.href) => {
+    const questionMarkIndex = url.indexOf('?');
+    if (questionMarkIndex < 0)
+        return '';
+    return url.substring(questionMarkIndex + 1);
+}
+export type QueryValue = undefined | string | number | boolean | (string | number | boolean)[];
+export const parseQuery = (query: string = getQueryString()) : {[key: string]: QueryValue } => {
+    if (!query)
+        return {};
+    if (query[0] === '?')
+        query = query.substring(1);
+    const result = {} as any;
+    const params = query.split('&')?.map?.(str => str.split('=')) || [];
+    for (const [keyStr, valueStr] of params) {
+        const key = decodeURIComponent(keyStr);
+        // empty string => empty value => only key mentioned
+        let value : QueryValue = !valueStr ? true : decodeURIComponent(valueStr);
+        if (value === 'true' || value === 'false')
+            value = value === 'true';
+        // if (typeof value === 'string' && /^[\d\.]+$/) {
+        //     const valueNum = parseFloat(value);
+        //     if (!isNaN(valueNum))
+        //         value = valueNum;
+        // }
+
+        if (result[key]) {
+            if (!Array.isArray(result[key]))
+                result[key] = [ result[key] ];
+            result[key].push(value);
+        } else {
+            result[key] = value;
+        }
+    }
+    return result;
+}
+export const makeQuery = (query?: {[key: string]: QueryValue}) => {
     if (typeof query !== 'object' || query === null)
         return '';
     if (Object.keys(query).length === 0)
         return '';
     return '?' + 
         Object.entries(query)
-            .filter(([key, value]) => value !== undefined && !(typeof value === 'string' && value.length === 0))
+            .filter(([key, value]) => value !== undefined && !((typeof value === 'string' || Array.isArray(value)) && value.length === 0))
             .map(([key, value]) => {
+                if (value === undefined)
+                    return '';
                 if (Array.isArray(value))
                     return value.map(val => encodeURIComponent(key) + '=' + encodeURIComponent(val)).join('&');
                 return encodeURIComponent(key) + '=' + encodeURIComponent(value)
             })
             .join('&');
 };
-
 export const getQuery = (name : string, url : string = window.location.href) => {
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -31,6 +72,22 @@ export const getQuery = (name : string, url : string = window.location.href) => 
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
+export const addQuery = (name: string, value: QueryValue, url = window.location.href, pathname = window.location.pathname) : string => {
+    const questionMarkIndex = url.indexOf('?');
+    if (questionMarkIndex < 0)
+        return pathname + makeQuery({[name]: value});
+    const path = pathname ?? url.substring(0, questionMarkIndex);
+    const queryString = url.substring(questionMarkIndex + 1);
+    const query = parseQuery(queryString);
+    return path + makeQuery({ ...query, [name]: value });
+}
+export const setQuery = (query: {[name: string]: QueryValue}, url = window.location.href, pathname = window.location.pathname) : string => {
+    const questionMarkIndex = url.indexOf('?');
+    if (questionMarkIndex < 0)
+        return pathname + makeQuery(query);
+    const path = pathname ?? url.substring(0, questionMarkIndex);
+    return path + makeQuery(query);
+}
 
 
 // const store : {[path: string]: any} = {};
@@ -106,18 +163,23 @@ export const takeString = (entry?: string | FieldEntry, lang?: string) => {
     if (lang && localesMap[lang])
         lang = localesMap[lang];
 
-    return entry[lang ?? Object.keys(entry)?.[0]] ?? '';
+    if (lang && entry[lang])
+        return entry[lang];
+    for (const lng in (entry ?? {}))
+        if (entry[lng]) 
+            return entry[lng];
+    return '';
 }
 
 export type FieldEntry<Value = string> = {
     [lang: string]: Value;
-}
+} | Value;
 
 export interface Region {
     id: number;
     name: string;
-    universitiesCount: number | string;
-    studentsCount: number | string;
+    universitiesCount?: number | string;
+    studentsCount?: number | string;
 };
 export interface RegionsData {
     regions: Region[];
@@ -134,10 +196,10 @@ export const getRegions = async () : Promise<RegionsData> => {
 export interface University {
     id: number;
     name: FieldEntry;
-    studentsCount: number;
+    studentsCount?: number;
 };
-export const getUniversities = (query: string = '', regionId?: number, count: number = 50, offset: number = 0) : Promise<University[]> => 
-    __reqjson("/universities/" + (regionId !== undefined ? regionId : ''), {count, offset, query});
+export const getUniversities = (query: string = '', regionId?: number | number[], count: number = 50, offset: number = 0) : Promise<University[]> => 
+    __reqjson("/universities/", {count, offset, query, regionId: arr(regionId)});
 export const Universities = <T>(customizer: (university: University) => T, regionId?: number) =>
     new DataSource<T>(async (query, count, offset) => {
         return (await getUniversities(query, regionId, count, offset))
@@ -149,8 +211,8 @@ export interface Faculty {
     name: FieldEntry;
     studentsCount: number;
 };
-export const getFaculties = (query: string = '', universityId?: number, count: number = 50, offset: number = 0) : Promise<Faculty[]> => 
-    __reqjson("/faculties/" + (universityId !== undefined ? universityId : ''), {count, offset, query});
+export const getFaculties = (query: string = '', universityId?: number | number[], count: number = 50, offset: number = 0) : Promise<Faculty[]> => 
+    __reqjson("/faculties/", {count, offset, query, universityId: arr(universityId)});
 export const Faculties = <T>(customizer: (faculty: Faculty) => T, universityId?: number) =>
     new DataSource<T>(async (query, count, offset) => {
         return (await getFaculties(query, universityId, count, offset))
@@ -161,10 +223,10 @@ export interface Speciality {
     id: number;
     name: FieldEntry;
     code: string;
-    studentsCount: number;
+    studentsCount?: number;
 }
-export const getSpecialities = (query: string = '', universityId?: number, count: number = 50, offset: number = 0) : Promise<Speciality[]> =>
-    __reqjson("/specialities/" + (universityId !== undefined ? universityId : ''), {count, offset, query});
+export const getSpecialities = (query: string = '', universityId?: number | number[], count: number = 50, offset: number = 0) : Promise<Speciality[]> =>
+    __reqjson("/specialities/", {count, offset, query, universityId: arr(universityId)});
 export const Specialities = <T>(customizer: (speciality: Speciality) => T, universityId?: number) =>
     new DataSource<T>(async (query, count, offset) => 
         (await getSpecialities(query, universityId, count, offset))
@@ -182,8 +244,23 @@ export interface Student {
     faculty: FieldEntry;
     speciality: FieldEntry;
 };
-export const getStudents = async (count: number, offset: number = 0, regionId?: number, universityId?: number, specialityId?: number, facultyId?: number) : Promise<Student[]> =>
-  __reqjson("/students/", {regionId, universityId, specialityId, facultyId, count, offset});
+export const getStudents = async (
+    count: number,
+    offset: number = 0,
+    regionId?: number | number[],
+    universityId?: number | number[],
+    specialityId?: number | number[],
+    facultyId?: number | number[],
+    courses?: number | number[]
+) : Promise<Student[]> =>
+  __reqjson("/students/", {
+      regionId: arr(regionId),
+      universityId: arr(universityId),
+      specialityId: arr(specialityId),
+      facultyId: arr(facultyId),
+      course: arr(courses),
+      count, offset
+  });
 // {
 //     await new Promise(resolve => setTimeout(resolve, 1000));
 //     return Array(count).fill(null).map((_, i) => ({

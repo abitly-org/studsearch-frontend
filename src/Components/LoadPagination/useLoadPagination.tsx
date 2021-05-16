@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const useLoadPagination = <T extends unknown>(
   request?: (count: number, offset: number) => Promise<T[]>,
-  pageCount = 10
+  pageCount = 10,
+  timeout?: number
 ) => {
-  let unmounted = false;
   const [state, setState] = useState({
     offset: 0,
     loading: false,
@@ -25,6 +25,7 @@ const useLoadPagination = <T extends unknown>(
   }, [request, pageCount]);
 
   useEffect(() => {
+    let unmounted = false;
     if (!state.hasMore)
       return;
     setState({
@@ -32,36 +33,45 @@ const useLoadPagination = <T extends unknown>(
       loading: true,
       error: null,
     });
-    request?.(pageCount, state.offset)
-      .then((res) => {
-        if (unmounted) return;
-
-        setState({
-          ...state,
-          items: [...state.items, ...res],
-          hasMore: res.length === pageCount,
-          loading: false,
-          offset: state.offset + res.length,
+    setTimeout(() => {
+      if (unmounted)
+        return;
+      request?.(pageCount, state.offset)
+        .then((res) => {
+          if (unmounted) return;
+          setState({
+            ...state,
+            items: [...state.items, ...res],
+            hasMore: res.length === pageCount,
+            loading: false,
+            offset: state.offset + res.length,
+          });
+        })
+        .catch((error) => {
+          if (unmounted) return;
+          setState({ ...state, error });
         });
-      })
-      .catch((error) => {
-        if (unmounted) return;
-        setState({ ...state, error });
-      });
+    }, timeout ?? 0);
     return () => {
       unmounted = true;
     };
   }, [state.dispatchIndex]);
+
+  const dispatch = useRef<Function | null>(null);
+  useEffect(() => {
+    dispatch.current = () => {
+      if (!state.loading && state.hasMore) {
+        setState({ ...state, dispatchIndex: state.dispatchIndex + 1 });
+      }
+    }
+  })
 
   return {
     loading: state.loading,
     error: state.error,
     hasMore: state.hasMore,
     items: state.items,
-    dispatch: () => {
-      if (!state.loading && state.hasMore)
-        setState({ ...state, dispatchIndex: state.dispatchIndex + 1 });
-    },
+    dispatch: () => dispatch?.current?.()
   };
 };
 

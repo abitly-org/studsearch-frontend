@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import deepCompareEquals from 'deep-equal';
 
-export function useDeepCompareMemoize(value: any) {
+export function useDeepCompareMemoize(value: any): any {
     const ref = React.useRef();
     if (!deepCompareEquals(value, ref.current))
         ref.current = value;

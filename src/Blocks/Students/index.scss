@@ -1,0 +1,67 @@
+@import '../../palette';
+$width: 1200px;
+
+.BlockStudents {
+  
+  position: relative;
+  
+  width: 100%;
+  max-width: $width;
+  padding: 20px 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  padding-bottom: 50%;
+
+
+  .Filters { 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 35px;
+
+    .Region {
+      grid-column: 1 / 3;
+    }
+    .University {
+      grid-column: 1 / 3;
+    }
+    .Bottom {
+      grid-column: 1 / 3;
+
+      display: flex;
+      .Course {
+        flex: 1;
+      }
+      .Stats {
+        flex: 0 0 auto;
+        margin-left: auto;
+        p {
+          text-align: center;
+          vertical-align: middle;
+        }
+        img.student {
+          height: 20px;
+          margin: 0 6px 0 0;
+          vertical-align: middle;
+        }
+        img.university {
+          height: 18px;
+          margin: 0 8px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .Students {
+    padding: 35px 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 35px;
+
+    .LoadingSpinner {
+      grid-column: 1 / 4;
+    }
+  }
+}

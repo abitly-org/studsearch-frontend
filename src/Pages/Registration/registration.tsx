@@ -3,7 +3,7 @@ import './registration.scss';
 import '../../Components/UserPageInfo/userPageinfo.scss'
 import splitGirl from "./spliteGirl.png";
 import {Link} from "react-router-dom";
-import logo from "./signLogo.svg";
+import logo from "../../Components/Header/logo.svg";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import UserPageInfo from "../../Components/UserPageInfo/UserPageInfo";
 import {useTranslation} from "react-i18next";

@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+type PositionType = 'buget' | 'contract';
 const StatsPage = () => {
   const { t, i18n } = useTranslation();
 
@@ -28,9 +29,11 @@ const StatsPage = () => {
   const [specialities, setSpecialities] = React.useState<Speciality[]>([]);
   const [regions, setRegions] = React.useState<Region[]>([]);
 
+  React.useEffect(() => setSpecialities([]), [ branch ]);
+
   const [expanded, setExpanded] = React.useState<number | null>(null);
 
-  const [positionType, setPositionType] = React.useState<'buget' | 'contract'>('buget');
+  const [positionType, setPositionType] = React.useState<PositionType>('buget');
 
   const universities = useLoadPagination(
     React.useCallback(
@@ -77,8 +80,8 @@ const StatsPage = () => {
             name='Спеціальність'
             // values={['1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь']}
             pagination={React.useCallback(
-              (count, offset, query) => getSpecialities(undefined, [], undefined, undefined, count, offset, query),
-              []
+              (count, offset, query) => getSpecialities(branch?.id, [], undefined, undefined, count, offset, query),
+              [ branch ]
             )}
             renderItem={v => v?.name}
             multiple={true}
@@ -140,26 +143,28 @@ const StatsPage = () => {
             { universities.items.map((university, i) => 
               <UniversityComponent
                 place={i + 1}
+                branchId={branch?.id}
+                positionType={positionType}
                 key={i}
                 expanded={expanded == university.id}
                 setExpanded={(v) => v ? setExpanded(university.id) : setExpanded(null)}
                 university={university}
               />    
             ) }
+            {
+              universities.loading ? 
+                <LoadingSpinner center-x />
+                :
+                (universities?.hasMore &&
+                  <Button
+                    className='more-button' outline
+                    onClick={() => universities.dispatch()}
+                  >
+                    Загрузити ще
+                  </Button>
+                )
+            }
           </Table>
-          {
-            universities.loading ? 
-              <LoadingSpinner center-x />
-              :
-              (universities?.hasMore &&
-                <Button
-                  className='more-button' outline
-                  onClick={() => universities.dispatch()}
-                >
-                  Загрузити ще
-                </Button>
-              )
-          }
         </div>
       </div>
     </div>
@@ -178,6 +183,7 @@ const Tabs = ({ tabs, index, setIndex } : { tabs: string[], index: number, setIn
 const zno = {} as any;
 const UniversityComponent = ({
   branchId,
+  positionType,
 
   expanded, setExpanded,
   place,
@@ -187,6 +193,7 @@ const UniversityComponent = ({
 
   expanded: boolean,
   setExpanded: (e: boolean) => void,
+  positionType?: PositionType,
 
   place: number,
   university: University
@@ -223,8 +230,18 @@ const UniversityComponent = ({
           <br />
           { expanded &&
             ([
-              <Faculties branchId={branchId} university={university} root={true} />,
-              <Specialities branchId={branchId} university={university} root={true} />
+              <Faculties
+                positionType={positionType}
+                branchId={branchId}
+                university={university}
+                root={true}
+              />,
+              <Specialities 
+                positionType={positionType}
+                branchId={branchId}
+                university={university}
+                root={true}
+              />
             ])[tab]
           }
         </div>
@@ -233,23 +250,25 @@ const UniversityComponent = ({
   );
 }
 const Faculties = ({
-  branchId, university, root, speciality
+  branchId, university, root, speciality, positionType
 }: {
   university: University,
   speciality?: Speciality,
   branchId?: number,
+  positionType?: PositionType,
   root?: boolean
 }) => {
   const faculties = useLoadPagination(
     React.useCallback(
       (count, offset) => 
-        getFaculties(branchId, university?.id, speciality?.id, count, offset)
+        getFaculties(branchId, university?.id, speciality?.id, count, offset, positionType, true)
           .then(faculties => 
             faculties.map((faculty, key) => 
               <FacultyComponent
                 key={key}
-                place={key + 1}
+                place={offset * count + key + 1}
                 branchId={branchId}
+                positionType={positionType}
                 university={university}
                 faculty={faculty}
                 root={root}
@@ -282,23 +301,26 @@ const Faculties = ({
   )
 }
 const Specialities = ({
-  branchId, university, root, faculty
+  branchId, university, root, faculty,
+  positionType
 }: {
   university: University,
   faculty?: Faculty,
   branchId?: number,
+  positionType?: PositionType,
   root?: boolean
 }) => {
   const specialities = useLoadPagination(
     React.useCallback(
       (count, offset) => 
-        getSpecialities(branchId, [], university?.id, faculty?.id, count, offset)
+        getSpecialities(branchId, [], university?.id, faculty?.id, count, offset, undefined, positionType, true)
           .then(faculties => 
             faculties.map((speciality, key) => 
               <SpecialityComponent
                 key={key}
-                place={key + 1}
+                place={offset * count + key + 1}
                 branchId={branchId}
+                positionType={positionType}
                 university={university}
                 speciality={speciality}
                 root={root}
@@ -333,11 +355,13 @@ const Specialities = ({
 
 const FacultyComponent = ({
   place,
+  positionType,
   faculty, university, branchId, root = true
 } : {
   place?: number,
   faculty: Faculty,
   university: University,
+  positionType?: PositionType,
   branchId?: number,
   root?: boolean
 }) => {
@@ -367,6 +391,7 @@ const FacultyComponent = ({
             <Specialities
               university={university}
               branchId={branchId}
+              positionType={positionType}
               faculty={faculty}
               root={false}
             />
@@ -378,12 +403,14 @@ const FacultyComponent = ({
 }
 const SpecialityComponent = ({
   place,
+  positionType,
   speciality, university, branchId, root = true
 } : {
   place?: number,
   speciality: Speciality,
   university: University,
   branchId?: number,
+  positionType?: PositionType,
   root?: boolean
 }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -412,6 +439,7 @@ const SpecialityComponent = ({
             <Faculties
               university={university}
               branchId={branchId}
+              positionType={positionType}
               speciality={speciality}
               root={false}
             />

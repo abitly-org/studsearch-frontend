@@ -40,7 +40,10 @@ const Header = () => {
                   key={code}
                   className={cx({ selected: i18n.language === code })}
                   children={<P2>{text}</P2>}
-                  onClick={() => i18n.changeLanguage(code)}
+                  onClick={() => {
+                    i18n.changeLanguage(code)
+                    localStorage.setItem('studsearch-lng', code);
+                  }}
                 />
               )
             }
@@ -71,7 +74,7 @@ const pages = [
   { textKey: 'header-tab-main', path: '/' },
   // { textKey: 'header-tab-about', path: '/about' },
   { textKey: 'header-tab-rating', path: '/rating' },
-  { textKey: 'header-tab-students', path: '/students' }
+  // { textKey: 'header-tab-students', path: '/students' }
 ];
 
 const HeaderTabs = () => {

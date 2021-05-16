@@ -8,13 +8,20 @@ import resources from './locales';
 import App from './App';
 import './index.scss';
 
+const languages = Object.keys(resources ?? {});
+
+const lng = (
+  localStorage.getItem('studsearch-lng') ?? 
+  languages.find(l => l.startsWith(window.navigator.language.substring(0, 2))) ??
+  'uk-UA'
+);
 i18next
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'uk-UA',
+    lng,
     keySeparator: false,
-    fallbackLng: 'en-US',
+    fallbackLng: ['en-US', 'uk-UA'],
     interpolation: {
       escapeValue: false
     }

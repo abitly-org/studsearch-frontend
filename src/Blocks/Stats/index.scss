@@ -1,0 +1,206 @@
+@import '../../palette';
+$width: 1200px;
+
+.BlockStats {
+  position: relative;
+  
+  width: 100%;
+  max-width: $width;
+  padding: 20px 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  > .Main {
+    display: block;
+    max-width: 550px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 140px 45px;
+    box-sizing: border-box;
+    // text-align: center;
+
+    @media (max-width: 820px) {
+      background: rgb(255,255,255);
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 10%, rgba(255,255,255,0.8) 90%, rgba(255,255,255,0) 100%);
+    }
+    @include mobile {
+      width: 100%;
+      max-width: 100%;
+      padding: 140px 8px;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      > div {
+        flex: 1 1 0;
+        &:first-child {
+          margin-right: 8px;
+        }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        > p {
+          margin-top: -8px;
+        }
+      }
+    }
+
+    > .p2 {
+      color: #787A87;
+      @include mobile {
+        color: $black;
+      }
+    }
+    text-align: center;
+    > h1, > button {
+      text-align: center;
+    }
+  }
+
+  > .LeftBg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 35%;
+    z-index: -1;
+    @include mobile {
+      left: -30%;
+      width: 40%;
+    }
+
+    > span {
+      position: absolute;
+      display: block;
+      border-radius: 50%;
+      > img {
+        // width: 100%;
+        // height: 100%;
+      }
+    }
+
+    > span:nth-child(1) {
+      border: 14px solid $accent;
+      width: 62px;
+      height: 62px;
+      filter: drop-shadow(2px 2px 4px rgba(120, 122, 135, 0.3));
+
+      top: 10%;
+      left: 15%;
+    }
+
+    > span:nth-child(2) {
+      width: 100px;
+      height: 100px;
+
+      top: 10%;
+      left: 60%;
+    }
+
+    > span:nth-child(3) {
+      border: 10px solid $sea;
+      width: 109px;
+      height: 109px;
+      filter: drop-shadow(2px 2px 4px rgba(120, 122, 135, 0.3));
+
+      top: 37%;
+      left: 45%;
+    }
+
+    > span:nth-child(4) {
+      width: 130px;
+      height: 130px;
+
+      top: 45%;
+      left: 4%;
+    }
+    > span:nth-child(5) {
+      width: 110px;
+      height: 110px;
+
+      top: 73%;
+      left: 47%;
+    }
+  }
+  > .RightBg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 35%;
+    z-index: -1;
+    @include mobile {
+      right: -30%;
+      width: 50%;
+    }
+
+    > span {
+      position: absolute;
+      display: block;
+      border-radius: 50%;
+      > img {
+        // width: 100%;
+        // height: 100%;
+      }
+    }
+
+    > span:nth-child(1) {
+      border: 8px solid $accent;
+      width: 68px;
+      height: 68px;
+      filter: drop-shadow(2px 2px 4px rgba(120, 122, 135, 0.3));
+
+      top: 5%;
+      right: 15%;
+    }
+
+    > span:nth-child(2) {
+      width: 110px;
+      height: 110px;
+
+      top: 17%;
+      right: 50%;
+    }
+
+    > span:nth-child(3) {
+      border: 8px solid $accent;
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(2px 2px 4px rgba(120, 122, 135, 0.3));
+
+      top: 43%;
+      right: 65%;
+    }
+
+    > span:nth-child(4) {
+      width: 110px;
+      height: 110px;
+
+      top: 48%;
+      right: 37%;
+    }
+
+    > span:nth-child(5) {
+      border: 18px solid $darkBlue;
+      width: 54px;
+      height: 54px;
+      filter: drop-shadow(2px 2px 4px rgba(120, 122, 135, 0.3));
+
+      top: 67%;
+      right: 7%;
+    }
+
+    > span:nth-child(6) {
+      width: 130px;
+      height: 130px;
+
+      top: 73%;
+      right: 65%;
+    }
+  }
+}

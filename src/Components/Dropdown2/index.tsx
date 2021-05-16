@@ -22,6 +22,8 @@ export type Dropdown2State<T> = {
   renderItem: (item: T) => React.ReactNode;
 
   loading?: boolean;
+  withShadow?: boolean;
+  disabled?: boolean;
 
   /**
    * Can put here a comparison by ids, f.ex
@@ -56,7 +58,9 @@ const Dropdown2 = <T extends unknown>({
   pagination,
   pageCount = 25,
   loading,
+  withShadow,
   equals = (a, b) => a === b,
+  disabled,
 
   ...state
 }: Dropdown2State<T>) => {
@@ -121,11 +125,17 @@ const Dropdown2 = <T extends unknown>({
   return (
     <div
       ref={ref}
-      className={cx('Dropdown2', className)}
+      className={cx('Dropdown2', className, { disabled, withShadow })}
       style={style}
-      onFocus={() => setOpen(true)}
+      onFocus={() => {
+        if (!disabled) 
+          setOpen(true)
+      }}
       // onBlur={() => setOpen(false)}
-      onClick={() => setOpen(true)}
+      onClick={() => {
+        if (!disabled)
+          setOpen(true)
+      }}
     >
       <div
         className={cx('Value', { focused: open })}
@@ -147,20 +157,26 @@ const Dropdown2 = <T extends unknown>({
         { !state.multiple && state.value !== null && !open &&
           <P2 className="Value">{renderItem?.(state.value)}</P2>
         }
-        <input
-          ref={input}
-          type='text'
-          placeholder={
-            !state.multiple && state.value !== null ?
-              renderItem?.(state.value) as string
-              :
-              undefined
-          }
-          value={searchQuery}
-          onFocus={() => setOpen(true)}
-          // onBlur={() => setOpen(false)}
-          onChange={e => setSearchQuery(e.target.value)}
-        />
+        { pagination && 
+          <input
+            ref={input}
+            type='text'
+            placeholder={
+              !state.multiple && state.value !== null ?
+                renderItem?.(state.value) as string
+                :
+                undefined
+            }
+            disabled={disabled}
+            value={searchQuery}
+            onFocus={() => {
+              if (!disabled)
+                setOpen(true)
+            }}
+            // onBlur={() => setOpen(false)}
+            onChange={e => setSearchQuery(e.target.value)}
+          />
+        }
         <span className='Arrow' children={<Arrow />} />
       </div>
       { open &&

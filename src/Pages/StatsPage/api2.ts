@@ -1,7 +1,7 @@
 import { makeQuery } from "../../Helpers/api";
 
 export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-const ENDPOINT = DEV ? 'http://localhost:5000' : 'https://studsearchback.herokuapp.com';
+const ENDPOINT = DEV ? 'https://studsearchback.herokuapp.com' : 'https://studsearchback.herokuapp.com';
 
 export type Branch = {
   name: string;
@@ -45,9 +45,10 @@ export const getUniversities = (
   regionId: number[],
   positionType: 'contract' | 'buget' = 'contract',
   count: number,
-  offset: number
+  offset: number,
+  stats?: boolean
 ) : Promise<University[]> =>
-  fetch(`${ENDPOINT}/universities${makeQuery({ count, offset, branchId, specialityId, regionId, stats: true, positionType })}`)
+  fetch(`${ENDPOINT}/universities${makeQuery({ count, offset, branchId, specialityId, regionId, stats, positionType })}`)
     .then(r => r?.json?.());
     // .then(r => r.map(([id, full]: any) => ({ id, full })));
 
@@ -65,9 +66,11 @@ export const getSpecialities = (
   facultyId: number | undefined,
   count: number,
   offset: number,
-  query?: string
+  query?: string,
+  positionType?: string,
+  stats?: boolean
 ) : Promise<Speciality[]> =>
-  fetch(`${ENDPOINT}/specialities${makeQuery({ count, offset, branchId, specialityId, facultyId, universityId/*, stats: true*/, q: query })}`)
+  fetch(`${ENDPOINT}/specialities${makeQuery({ count, offset, branchId, specialityId, facultyId, positionType, universityId, stats, q: query })}`)
     .then(r => r?.json?.());
 
 export type Faculty = {
@@ -80,7 +83,9 @@ export const getFaculties = (
   universityId: number,
   specialityId: number[] | number | undefined,
   count: number,
-  offset: number
+  offset: number,
+  positionType?: string,
+  stats?: boolean
 ) : Promise<Faculty[]> =>
-  fetch(`${ENDPOINT}/faculties${makeQuery({ count, offset, branchId, specialityId, universityId/*, stats: true*/ })}`)
+  fetch(`${ENDPOINT}/faculties${makeQuery({ count, offset, branchId, specialityId, positionType, universityId, stats })}`)
     .then(r => r?.json?.());

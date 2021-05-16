@@ -29,25 +29,32 @@ const SocialIcons = {
   viber: ViberIcon
 } as {[social: string]: React.ComponentType}
 
+const imagesCache : {[src: string]: HTMLImageElement} = {};
+
 const StudentCard = ({ student }: {
   student: Student
 }) => {
   const { i18n, t } = useTranslation();
   
   const socials = [...student?.social];
-  if (Math.random() > 0.5)
-    socials.push('instagram')
-  if (Math.random() > 0.5)
-    socials.push('viber')
-  if (Math.random() > 0.5)
-    socials.push('facebook')
+  // if (Math.random() > 0.5)
+  //   socials.push('instagram')
+  // if (Math.random() > 0.5)
+  //   socials.push('viber')
+  // if (Math.random() > 0.5)
+  //   socials.push('facebook')
 
   const photoSrc = studentPhoto(student?.uuid);
   const photo = useLoad(() =>
     new Promise<HTMLImageElement>((resolve) => {
+      if (imagesCache[photoSrc])
+        return resolve(imagesCache[photoSrc]);
       const image = new Image();
       image.src = photoSrc;
-      image.onload = () => resolve(image);
+      image.onload = () => {
+        imagesCache[photoSrc] = image;
+        resolve(image);
+      };
       return image;
     }),
     [ photoSrc ]
