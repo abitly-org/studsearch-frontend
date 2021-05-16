@@ -11,8 +11,40 @@ import specialty from '../../Components/StudentCard/specialty.svg';
 import university from '../../Components/StudentCard/university.svg';
 
 import './index.scss';
-import { P1 } from '../../Components/Text';
+import { P1, P4 } from '../../Components/Text';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+
+const Item = ({ children, studentsCount, universitiesCount, inDropdown }: {
+  children: React.ReactNode,
+  studentsCount?: number,
+  universitiesCount?: number,
+  inDropdown: boolean
+}) : JSX.Element =>
+  inDropdown ? 
+    <P4 className='DropdownItem'>
+      {children}
+      { (studentsCount || universitiesCount) &&
+        <span className="Stat">
+          { studentsCount && 
+            <span className='StudentsCount'>
+              <img src={specialty} />
+              <P4>{studentsCount}</P4>
+            </span>
+            || null
+          }
+          { universitiesCount && 
+            <span className='UniversitiesCount'>
+              <img src={university} />
+              <P4>{universitiesCount}</P4>
+            </span>
+            || null
+          }
+        </span>
+        || null
+      }
+    </P4>
+    :
+    <P4>{children}</P4>
 
 const useQueryState = <T extends unknown>(
   initialState: T,
@@ -140,7 +172,14 @@ const BlockStudents = () => {
           className='Region'
           name='Регіон'
           withShadow
-          renderItem={r => r?.name}
+          renderItem={(r, inDropdown) => 
+            <Item
+              children={r?.name}
+              studentsCount={Number(r?.studentsCount)}
+              universitiesCount={Number(r?.universitiesCount)}
+              inDropdown={inDropdown}
+            />
+          }
 
           values={allRegions ?? []}
           loading={allRegions === null}
@@ -153,7 +192,13 @@ const BlockStudents = () => {
           className='University'
           name='Вищій навчальний заклад'
           withShadow
-          renderItem={r => takeString(r?.name, lng)}
+          renderItem={(r, inDropdown) => 
+            <Item
+              children={takeString(r?.name, lng)}
+              studentsCount={Number(r?.studentsCount)}
+              inDropdown={inDropdown}
+            />
+          }
 
           pagination={React.useCallback((count, offset, query) => 
             getUniversities(query, regions?.map?.(r => r?.id), count, offset),
@@ -168,7 +213,13 @@ const BlockStudents = () => {
           className='Speciality'
           name='Спеціальність'
           withShadow
-          renderItem={s => takeString(s?.name, lng)}
+          renderItem={(s, inDropdown) => 
+            <Item
+              children={takeString(s?.name, lng)}
+              studentsCount={Number(s?.studentsCount)}
+              inDropdown={inDropdown} 
+            />
+          }
 
           pagination={React.useCallback(async (count, offset, query) => 
             universities?.length > 0 ? 
@@ -187,7 +238,13 @@ const BlockStudents = () => {
           className='Faculty'
           name='Факультет'
           withShadow
-          renderItem={s => takeString(s?.name, lng)}
+          renderItem={(s, inDropdown) => 
+            <Item
+              children={takeString(s?.name, lng)}
+              studentsCount={Number(s?.studentsCount)}
+              inDropdown={inDropdown}
+            />
+          }
 
           pagination={React.useCallback(async (count, offset, query) => 
             universities?.length > 0 ? 

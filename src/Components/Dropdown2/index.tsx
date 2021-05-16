@@ -19,7 +19,7 @@ export type Dropdown2State<T> = {
 
   name: string;
 
-  renderItem: (item: T) => React.ReactNode;
+  renderItem: (item: T, inDropdown: boolean) => React.ReactNode;
 
   loading?: boolean;
   withShadow?: boolean;
@@ -148,14 +148,20 @@ const Dropdown2 = <T extends unknown>({
               (state.value ?? []).map((v, key) => 
                 <Chip
                   key={key}
-                  children={renderItem?.(v)}
+                  children={renderItem?.(v, false)}
                   onClose={() => setSelected(v, false)}
                 />  
               )
             }</Chips>
         }
-        { !state.multiple && state.value !== null && !open &&
-          <P2 className="Value">{renderItem?.(state.value)}</P2>
+        { !state.multiple && state.value !== null && !open && (
+          () => {
+            const rendered = renderItem?.(state.value, false);
+            if (typeof rendered === 'string')
+              return <P2 className="Value">{rendered}</P2>;
+            return rendered;
+          }
+        )()
         }
         { pagination && 
           <input
@@ -163,7 +169,7 @@ const Dropdown2 = <T extends unknown>({
             type='text'
             placeholder={
               !state.multiple && state.value !== null ?
-                renderItem?.(state.value) as string
+                renderItem?.(state.value, false) as string
                 :
                 undefined
             }
@@ -210,7 +216,14 @@ const Dropdown2 = <T extends unknown>({
                     <Check />
                   </span>
                 }
-                <P4>{ renderItem?.(value) }</P4>
+                {
+                  (() => {
+                    const rendered = renderItem?.(value, true);
+                    if (typeof rendered === 'string')
+                      return <P4 children={rendered} />;
+                    return rendered;
+                  })()
+                }
               </div> 
             );
           }) }

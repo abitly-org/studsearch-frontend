@@ -64,4 +64,36 @@ $width: 1200px;
       grid-column: 1 / 4;
     }
   }
+
+
+  .DropdownItem {
+    flex: 1;
+    
+    display: flex;
+    align-items: center;
+
+    > .Stat {
+      flex: 0 0 auto;
+      margin-left: auto;
+
+      .StudentsCount {
+        img {
+          height: 16px;
+          vertical-align: middle;
+          margin-right: 4px;
+        }
+        margin-right: 16px;
+
+        vertical-align: middle;
+      }
+      .UniversitiesCount {
+        img {
+          height: 16px;
+          vertical-align: middle;
+          margin-right: 4px;
+        }
+        vertical-align: middle;
+      }
+    }
+  }
 }
