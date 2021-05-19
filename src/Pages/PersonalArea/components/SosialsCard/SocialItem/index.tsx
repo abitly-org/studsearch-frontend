@@ -6,31 +6,40 @@ import "./index.scss";
 import {useTranslation} from "react-i18next";
 
 interface SocialItemProps {
-  socialName: string;
-  socialValue: string | null;
+  name: string;
+  starter?: string;
+  value: string | null;
+  setValue?: (newValue: string) => void;
+  onSave?: () => void;
+  remove?: () => void;
 }
 
-export default function SocialInput(props: SocialItemProps) {
+export default function SocialInput({ name, starter, value, setValue, remove, onSave }: SocialItemProps) {
   const { t, i18n } = useTranslation();
 
-  const { socialName, socialValue } = props;
+  const title = `${t('cabinet-social-user-name')} ${name}`;
 
-  const title = `${t('cabinet-social-user-name')} ${socialName}`;
-
-  const [value, setValue] = useState("");
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(!!value);
+  React.useEffect(() => {
+    if (value)
+      setEditing(true)
+  }, [ value ]);
   
   return (
     <div className="social-item">
       {editing ? (
         <SocialsInput
-          value={value}
-          editingHandler = {setEditing}
-          onChange={(changedVal: string) => {
-            setValue(changedVal);
-          }}
+          value={value ?? ''}
+          editingHandler={setEditing}
+          onChange={setValue}
           title={title}
-          placeholder={`${socialName}` }
+          placeholder={name}
+          onSave={onSave}
+          starter={starter}
+          onRemove={() => {
+            remove?.();
+            setEditing(false);
+          }}
         />
       ) : (
         <div
@@ -40,7 +49,7 @@ export default function SocialInput(props: SocialItemProps) {
           }}
         >
           <div className="add-btn" />
-          {`${t('cabinet-social-user-name-add')} ${socialName}`}
+          {`${t('cabinet-social-user-name-add')} ${name}`}
         </div>
       )}
     </div>

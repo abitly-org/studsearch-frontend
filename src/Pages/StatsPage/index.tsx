@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-type PositionType = 'buget' | 'contract';
+type PositionType = 'budget' | 'contract';
 const StatsPage = () => {
   const { t, i18n } = useTranslation();
 
@@ -33,7 +33,7 @@ const StatsPage = () => {
 
   const [expanded, setExpanded] = React.useState<number | null>(null);
 
-  const [positionType, setPositionType] = React.useState<PositionType>('buget');
+  const [positionType, setPositionType] = React.useState<PositionType>('budget');
 
   const universities = useLoadPagination(
     React.useCallback(
@@ -44,16 +44,16 @@ const StatsPage = () => {
           regions?.map?.(r => r?.id),
           positionType,
           count,
-          offset
+          offset,
+          true
         ), 
       [ positionType, specialities, regions, branch ])
   );
 
   return (
     <div className='StatsPage'>
-      <Header />
       <div className='Content'>
-        <H2>Рейтинг Університетів</H2>
+        <H2>{t('stats-header')}</H2>
         <br />
         <br />
         <br />
@@ -61,7 +61,7 @@ const StatsPage = () => {
           <Dropdown2<Branch>
             className='DropdownShadow'
             style={{ flex: 1 }}
-            name='Галузь'
+            name={t('stats-branch')}
             // values={['1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь']}
             pagination={React.useCallback(
               (count, offset, query) => getBranches(count, offset, query),
@@ -77,7 +77,7 @@ const StatsPage = () => {
           <Dropdown2
             className='DropdownShadow'
             style={{ flex: 1 }}
-            name='Спеціальність'
+            name={t('stats-specialty')}
             // values={['1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь']}
             pagination={React.useCallback(
               (count, offset, query) => getSpecialities(branch?.id, [], undefined, undefined, count, offset, query),
@@ -95,7 +95,7 @@ const StatsPage = () => {
           <Dropdown2
             className='DropdownShadow'
             style={{ flex: 1 }}
-            name='Регіон'
+            name={t('stats-region')}
             // values={regions ?? []}
             pagination={React.useCallback(
               (count, offset, query) => getRegions(count, offset, query),
@@ -117,9 +117,12 @@ const StatsPage = () => {
         >
           <H3 style={{ marginRight: 16 }}>
             {
-              branch ?
-               `Вищі навчальні заклади за галузю: ${branch?.name}` :
-               `Вищі навчальні заклади`
+              i18n.language?.startsWith?.('uk') &&
+              (
+                branch ?
+                `Вищі навчальні заклади за галузю: ${branch?.name}` :
+                `Вищі навчальні заклади`
+              )
             }
           </H3>
           {/* <Button
@@ -132,9 +135,9 @@ const StatsPage = () => {
         </div>
         <br />
         <Tabs
-          tabs={['Бюджет', 'Контракт']}
-          index={positionType === 'buget' ? 0 : 1}
-          setIndex={i => setPositionType((['buget', 'contract'])[i] as 'buget' | 'contract')}
+          tabs={[t('stats-budget'), t('stats-contract')]}
+          index={positionType === 'budget' ? 0 : 1}
+          setIndex={i => setPositionType((['budget', 'contract'])[i] as 'budget' | 'contract')}
         />
         <br />
         <div>
@@ -147,7 +150,7 @@ const StatsPage = () => {
                 positionType={positionType}
                 key={i}
                 expanded={expanded == university.id}
-                setExpanded={(v) => v ? setExpanded(university.id) : setExpanded(null)}
+                setExpanded={(v) => setExpanded(v ? university.id : null)}
                 university={university}
               />    
             ) }
@@ -160,7 +163,7 @@ const StatsPage = () => {
                     className='more-button' outline
                     onClick={() => universities.dispatch()}
                   >
-                    Загрузити ще
+                    {t('stats-load-more')}
                   </Button>
                 )
             }
@@ -198,10 +201,9 @@ const UniversityComponent = ({
   place: number,
   university: University
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const [tab, setTab] = React.useState(0); // 0 — факультеты, 1 — специальности
-
 
   return (
     <TableItem
@@ -222,7 +224,7 @@ const UniversityComponent = ({
       children={expanded => 
         <div className={cx('university-content', { expanded })}>
           <Tabs
-            tabs={['Факультети', 'Спеціальності']}
+            tabs={[t('stats-faculties'), t('stats-specialties')]}
             index={tab}
             setIndex={setTab}
           />
@@ -258,6 +260,7 @@ const Faculties = ({
   positionType?: PositionType,
   root?: boolean
 }) => {
+  const { t } = useTranslation();
   const faculties = useLoadPagination(
     React.useCallback(
       (count, offset) => 
@@ -266,7 +269,7 @@ const Faculties = ({
             faculties.map((faculty, key) => 
               <FacultyComponent
                 key={key}
-                place={offset * count + key + 1}
+                place={Number(offset) + Number(key) + 1}
                 branchId={branchId}
                 positionType={positionType}
                 university={university}
@@ -293,7 +296,7 @@ const Faculties = ({
               className='more-button' outline
               onClick={() => faculties.dispatch()}
             >
-              Загрузити ще
+              {t('stats-load-more')}
             </Button>
           )
       }
@@ -310,6 +313,7 @@ const Specialities = ({
   positionType?: PositionType,
   root?: boolean
 }) => {
+  const { t } = useTranslation();
   const specialities = useLoadPagination(
     React.useCallback(
       (count, offset) => 
@@ -318,7 +322,7 @@ const Specialities = ({
             faculties.map((speciality, key) => 
               <SpecialityComponent
                 key={key}
-                place={offset * count + key + 1}
+                place={Number(offset) + Number(key) + 1}
                 branchId={branchId}
                 positionType={positionType}
                 university={university}
@@ -345,7 +349,7 @@ const Specialities = ({
               className='more-button' outline
               onClick={() => specialities.dispatch()}
             >
-              Загрузити ще
+              {t('stats-load-more')}
             </Button>
           )
       }
@@ -454,34 +458,38 @@ const SpecialityComponent = ({
 const Table = ({ children, shown = true }: { children: React.ReactNode, shown?: boolean }) => 
   <div className={cx("Table", { shown })}>{ children }</div>;
 
-const TableHeaders = () =>
-  <div className='rating-tableheader'>
-    <span className='expandbutton'>
-      
-    </span>
-    <span className='column space'></span>
-    <span className='place'>
-      
-    </span>
-    <span className='name'>
-      
-    </span>
-    <span className='num'>
-      <P3>Кількість заяв</P3>
-    </span>
-    <span className='zno'>
-      <span>
-        <P3>Сердньозваженний бал</P3>
+const TableHeaders = () => {
+  const { t } = useTranslation();
+  return (
+    <div className='rating-tableheader'>
+      <span className='expandbutton'>
+        
       </span>
-      <span className='scale'>
-        <P3><span></span>0</P3>
-        <P3><span></span>50</P3>
-        <P3><span></span>100</P3>
-        <P3><span></span>150</P3>
-        <P3><span></span>200</P3>
+      <span className='column space'></span>
+      <span className='place'>
+        
       </span>
-    </span>
-  </div>
+      <span className='name'>
+        
+      </span>
+      <span className='num'>
+        <P3>{t('stats-table-header-num')}</P3>
+      </span>
+      <span className='zno'>
+        <span>
+          <P3>{t('stats-table-header-zno')}</P3>
+        </span>
+        <span className='scale'>
+          <P3><span></span>0</P3>
+          <P3><span></span>50</P3>
+          <P3><span></span>100</P3>
+          <P3><span></span>150</P3>
+          <P3><span></span>200</P3>
+        </span>
+      </span>
+    </div>
+  );
+}
 
 const TableItem = ({
   expanded, onExpandedChange,

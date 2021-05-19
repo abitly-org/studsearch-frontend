@@ -4,7 +4,7 @@ export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'developmen
 
 export const baseURL = DEV ? "https://localhost.test" : "https://studsearch.org";
 // export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://server.studsearch.org:2323";
-export const endpoint = DEV ? "http://localhost:2323" : "https://server.studsearch.org:2323";
+export const endpoint = DEV ? "https://06dc153833d2.ngrok.io" : "https://server.studsearch.org:2323";
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
@@ -17,7 +17,7 @@ const getQueryString = (url = window.location.href) => {
         return '';
     return url.substring(questionMarkIndex + 1);
 }
-export type QueryValue = undefined | string | number | boolean | (string | number | boolean)[];
+export type QueryValue = undefined | null | string | number | boolean | (string | number | boolean)[];
 export const parseQuery = (query: string = getQueryString()) : {[key: string]: QueryValue } => {
     if (!query)
         return {};
@@ -54,9 +54,9 @@ export const makeQuery = (query?: {[key: string]: QueryValue}) => {
         return '';
     return '?' + 
         Object.entries(query)
-            .filter(([key, value]) => value !== undefined && !((typeof value === 'string' || Array.isArray(value)) && value.length === 0))
+            .filter(([key, value]) => value !== undefined && value !== null && !((typeof value === 'string' || Array.isArray(value)) && value.length === 0))
             .map(([key, value]) => {
-                if (value === undefined)
+                if (value === undefined || value === null)
                     return '';
                 if (Array.isArray(value))
                     return value.map(val => encodeURIComponent(key) + '=' + encodeURIComponent(val)).join('&');

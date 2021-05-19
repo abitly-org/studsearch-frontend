@@ -5,7 +5,6 @@ import {
   getFaculties,
   getSpecialities,
   getRegions,
-  Courses,
   University,
   Region,
   Faculty,
@@ -16,21 +15,43 @@ import CheckBox from "../../../../Components/CheckBox/Checkbox";
 
 import "./index.scss";
 import {useTranslation} from "react-i18next";
+import Dropdown2 from "../../../../Components/Dropdown2";
+import useLoad from "../../../../Helpers/useLoad";
+import { CourseDropdown, Courses, FacultyDropdown, RegionDropdown, SpecialityDropdown, UniversityDropdown } from "../../../../Components/Dropdown2/custom";
+import { Cabinet } from "../../PersonalArea";
 
-type CoursesType = { id: number; name: string };
+type CoursesType = { id?: number; name?: string };
 type EducationCardProp = {};
 
-export default function EducationCardEdited(props: EducationCardProp) {
+export default function EducationCardEdited({
+  cabinet, setCabinet
+}: {
+  cabinet: Cabinet,
+  setCabinet: (newCabinet: Cabinet) => void
+}) {
   const { i18n, t } = useTranslation();
 
-  const [region, setRegion] = useState<Region>();
-  const [university, setUniversity] = useState<University>();
-  const [faculty, setFaculty] = useState<Faculty>();
-  const [speciality, setSpeciality] = useState<Speciality>();
-  const [course, setCourse] = useState<CoursesType>();
-  const [checked, setChecked] = useState(false);
+  const allRegions = useLoad(() => getRegions().then(r => r?.regions), []);
 
-  const [error, serError] = React.useState({
+  // const [region, setRegion] = useState<Region | null>(cabinet?.region ?? null);
+  // const [university, setUniversity] = useState<University | null>(cabinet?.university ?? null);
+  // const [faculty, setFaculty] = useState<Faculty | null>(cabinet?.faculty ?? null);
+  // const [speciality, setSpeciality] = useState<Speciality | null>(cabinet?.speciality ?? null);
+  // const [course, setCourse] = useState<CoursesType | null>(Courses(t)?.find?.(c => c?.id === cabinet?.course) ?? null);
+  // const [checked, setChecked] = useState(false);
+
+  // React.useEffect(() => {
+  //   setRegion(cabinet?.region ?? null);
+  //   setUniversity(cabinet?.university ?? null);
+  //   setFaculty(cabinet?.faculty ?? null);
+  //   setSpeciality(cabinet?.speciality ?? null);
+  //   setCourse(Courses(t)?.find?.(c => c?.id === cabinet?.course) ?? null);
+  // }, [ cabinet ]);
+
+  const regions = React.useMemo(() => cabinet?.region ? [ cabinet?.region ] : [], [ cabinet?.region ]);
+  const universities = React.useMemo(() => cabinet?.university ? [ cabinet?.university ] : [], [ cabinet?.university ]);
+
+  const [error, setError] = React.useState({
     nameSurname: false,
     gender: false,
     region: false,
@@ -43,70 +64,66 @@ export default function EducationCardEdited(props: EducationCardProp) {
     <>
       <div className="wrapper">
         <div className={`regionBlock`}>
-          <DropDown<Region>
-            placeholder={t('cabinet-region')}
-            value={region}
-            inputError={error.region}
-            onChange={setRegion}
-            request={useCallback(
-              (count, offset, query) =>
-                getRegions().then((res: any) => res?.regions),
-              []
-            )}
+          <RegionDropdown
+            name={t('cabinet-region')}
+            error={error.region}
+            singleBorder
+            
+            multiple={false}
+            value={cabinet?.region ?? null}
+            onChange={region => setCabinet({ ...cabinet, region: region ?? undefined })}
           />
         </div>
         <div className={`universityBlock`}>
-          <DropDown<University>
-            placeholder={t('cabinet-university')}
-            value={university}
-            inputError={error.university}
-            onChange={setUniversity}
-            request={useCallback(
-              (count, offset, query) =>
-                getUniversities(query, region?.id, count, offset),
-              [region]
-            )}
+          <UniversityDropdown
+            name={t('cabinet-university')}
+            error={error.university}
+            singleBorder
+
+            regions={regions}
+
+            multiple={false}
+            value={cabinet?.university ?? null}
+            onChange={university => setCabinet({ ...cabinet, university: university ?? undefined })}
           />
         </div>
         <div className={`facultyBlock`}>
-          {
-            <DropDown<Faculty>
-              placeholder={t('cabinet-faculty')}
-              value={faculty}
-              inputError={error.faculty}
-              onChange={setFaculty}
-              request={useCallback(
-                (count, offset, query) =>
-                  getFaculties(query, university?.id, count, offset),
-                [university]
-              )}
-            />
-          }
+          <FacultyDropdown
+            name={t('cabinet-faculty')}
+            error={error.faculty}
+            singleBorder
+
+            universities={universities}
+            
+            multiple={false}
+            value={cabinet?.faculty ?? null}
+            onChange={faculty => setCabinet({ ...cabinet, faculty: faculty ?? undefined })}
+          />
         </div>
         <div className={`specialityCourseBlock`}>
-          <DropDown<Speciality>
-            placeholder={t('cabinet-speciality')}
-            value={speciality}
-            inputError={error.speciality}
-            onChange={setSpeciality}
-            request={useCallback(
-              (count, offset, query) =>
-                getSpecialities(query, university?.id, count, offset),
-              [university]
-            )}
+          <SpecialityDropdown
+            name={t('cabinet-speciality')}
+            error={error.speciality}
+            singleBorder
+            style={{ flex: 1 }}
+
+            universities={universities}
+            
+            multiple={false}
+            value={cabinet?.speciality ?? null}
+            onChange={speciality => setCabinet({ ...cabinet, speciality: speciality ?? undefined })}
           />
-          <DropDown<CoursesType>
-            placeholder={t('cabinet-course')}
-            value={course}
-            inputError={error.course}
-            onChange={setCourse}
-            request={useCallback(
-              (count, offset, query) =>
-                new Promise<CoursesType[]>((resolve, reject) => {
-                  resolve(Courses);
-                }),
-              []
-            )}
+          <CourseDropdown
+            name={t('cabinet-course')}
+            error={error.course}
+            singleBorder
+            style={{ flex: 1 }}
+
+            multiple={false}
+            value={
+              Courses(t)?.find?.(c => c?.id === cabinet?.course) ?? null
+            }
+            onChange={course => setCabinet({ ...cabinet, course: course?.id ?? undefined })}
           />
         </div>
 
@@ -114,10 +131,9 @@ export default function EducationCardEdited(props: EducationCardProp) {
           <CheckBox
             label="сheckbox"
             value={t('cabinet-check-box-hostel')}
-            onChange={() => {
-              setChecked(!checked);
-            }}
-            checked={checked}
+
+            checked={cabinet?.hostel}
+            onChange={e => setCabinet({ ...cabinet, hostel: e?.target?.checked ?? false })}
           />
         </div>
       </div>

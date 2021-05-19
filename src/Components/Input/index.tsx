@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import "./index.scss";
+import { useTranslation } from "react-i18next";
 
 export interface IInput {
   value?: string;
@@ -23,7 +24,8 @@ export default function Input(props: IInput): JSX.Element {
     enabled = true,
     onFocusHandler
   } = props;
-
+  const { t } = useTranslation();
+  
   const [focus, setFocus] = useState(false);
   // const [query, setQuery] = useState<string | undefined>("");
    const [inputError, setInputError] = useState(error);
@@ -73,7 +75,7 @@ export default function Input(props: IInput): JSX.Element {
       />
       <div className={"error-icon"} />
       <span className={"title"}>{title}</span>
-      <span className={"text-error"}>{`Введіть ${title}`}</span>
+      <span className={"text-error"}>{t('error-required')}</span>
     </div>
   );
 }

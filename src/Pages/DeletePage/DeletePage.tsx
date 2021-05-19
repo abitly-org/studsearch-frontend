@@ -11,7 +11,7 @@ function DeletePage() {
     const DeletedPage = <div className={`DeletePageDone`}>
         <p>Твій обліковий запис успішно видаленний</p>
         <span>Якщо ти видалив свій обліковий запис випадково, ти можешь зареєструватись знову прямо зараз!</span>
-        <Button to='/sign-up' children={`Зареєструватись`}/>
+        <Button to='/register' children={`Зареєструватись`}/>
     </div>
 
     return (

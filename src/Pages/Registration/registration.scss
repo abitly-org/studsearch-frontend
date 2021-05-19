@@ -16,8 +16,11 @@ $height: 100%;
 .SignUpPage {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: stretch;
   align-items: center;
+
+  min-height: 100%;
+  min-height: 100vh;
 
   .Registration {
     display: flex;
@@ -38,6 +41,8 @@ $height: 100%;
     top: 0;
     z-index: -1;
   }
+
+  overflow: hidden;
 }
 
 //------------------------------------//
@@ -63,7 +68,14 @@ $height: 100%;
   .specialityCourseBlock {
     margin-top: 28px;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
+    > .Dropdown2 {
+      flex: 1;
+      margin-right: 28px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   .useTelegram {
@@ -182,9 +194,10 @@ $height: 100%;
     margin-top: 28px;
     flex-direction: column;
 
-    .dropdown {
+    .Dropdown2 {
       width: auto;
-      margin-bottom: 10px;
+      margin-bottom: 28px;
+      margin-right: 0 !important;
     }
   }
   .Input {

@@ -45,7 +45,8 @@ $width: 1200px;
     > .Info {
       padding: 225px 32px 32px 32px;
       @include mobile {
-        padding-top: 225px;
+        padding-top: 150px;
+        min-height: 720px;
       }
       max-width: 55%;
       height: 100%;
@@ -54,7 +55,7 @@ $width: 1200px;
 
       @media (max-width: $width * 0.7) {
         max-width: 100%;
-        background: linear-gradient(90deg, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%);
+        background: linear-gradient(90deg, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.2) 100%);
       }
 
       background: linear-gradient(90deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%);

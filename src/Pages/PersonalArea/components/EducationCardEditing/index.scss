@@ -18,7 +18,14 @@
   .specialityCourseBlock {
     margin-top: 28px;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
+    > .Dropdown2 {
+      flex: 1;
+      margin-right: 28px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   .checkbox-wrapper{
@@ -46,9 +53,10 @@
     margin-top: 28px;
     flex-direction: column;
 
-    .dropdown {
+    .Dropdown2 {
       width: auto;
-      margin-bottom: 10px;
+      margin-bottom: 28px;
+      margin-right: 0 !important;
     }
   }
 }

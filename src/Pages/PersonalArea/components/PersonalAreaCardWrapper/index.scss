@@ -1,3 +1,5 @@
+@import '../../../../palette.scss';
+
 .card-outer {
   display: flex;
   justify-content: center;
@@ -12,16 +14,22 @@
     border-radius: 6px;
     font-family: Montserrat Alternates, sans-serif;
     color: #3b3c44;
+    min-width: 0;
+    overflow: hidden;
 
     > .card-header {
       display: flex;
       align-items: center;
-      .title-block {
-        display: flex;
-        margin-right: 70px;
+      @include mobile {
+        flex-direction: column;
       }
 
       > .title-block {
+        display: flex;
+        margin-right: 70px;
+        @include mobile {
+          margin-right: 0;
+        }
         > .card-title {
           margin-left: 10px;
           font-style: normal;
@@ -46,13 +54,17 @@
 
     > .btn-group {
       display: flex;
-      justify-content: space-between;
       width: 338px;
+      max-width: 100%;
       .Button {
         padding: 14px 39px;
         font-weight: 500;
         font-size: 16px;
         line-height: 129.5%;
+        margin-right: 8px;
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
   }

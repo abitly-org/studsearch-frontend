@@ -2,16 +2,29 @@ import React from "react";
 import userPhoto from "../PersonalDataInfo/userPhoto.svg";
 import editImg from "../PersonalDataInfo/editImg.svg";
 interface ImageProps{
-    img: string,
-    onChange:((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
+    img?: string | React.ReactNode,
+    onChange?: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
 }
 export default function InputImage (props: ImageProps) {
     const { img, onChange } = props;
-    return(
+    return (
         <div className={`imgUploadBlock`}>
-            <img src={(img === '')? userPhoto: img}  alt={``}/>
-            <label htmlFor={`fileUpload`}><img src={editImg} alt={`uploadImg`}/>
+            {
+                typeof img === 'string' ? 
+                    <img src={img === '' ? userPhoto : img}  alt={``}/>
+                    :   
+                    img
+            }
+            <label htmlFor={`fileUpload`}>
+                <img src={editImg} alt={`uploadImg`} />
             </label>
-            <input type={`file`} id={`fileUpload`} value={``} onChange={onChange}/>
-        </div>)
+            <input
+                accept='image/png, image/jpeg'
+                multiple={false}
+                type={`file`}
+                id={`fileUpload`}
+                onChange={onChange}
+            />
+        </div>
+    );
 }

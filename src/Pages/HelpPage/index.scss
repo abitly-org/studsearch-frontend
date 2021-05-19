@@ -1,0 +1,103 @@
+@import '../../palette.scss';
+
+$width: 1000px;
+
+.HelpPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 147px;
+  @include mobile {
+    padding-top: 125px;
+  }
+
+  .Content {
+    position: relative;
+
+    width: 100%;
+    max-width: $width;
+
+    padding: 0 32px;
+    box-sizing: border-box;
+    
+    text-align: center;
+
+    .HelpBlocks {
+      display: flex;
+
+      > .HelpBlock {
+        flex: 1 0 0;
+        min-width: 0;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+
+        margin: 16px 0;
+
+        padding: 8px;
+        border-radius: 4px;
+
+        &.students {
+          background-color: rgba(255,215,0,.5);
+        }
+        &.volunteers {
+          background-color: rgba(30,145,233,.5);
+          .Button {
+            border-color: #86BAE8;
+            background-color: #86BAE8;
+          }
+        }
+        &.money {
+          background-color: rgba(39,174,96,.5);
+          .Button {
+            border-color: #00D659;
+            background-color: #00D659;
+          }
+        }
+        &.ad {
+          background-color: rgba(255,215,0,.5);
+        }
+
+        margin-right: 8px;
+        &:last-child {
+          margin-right: 0;
+        }
+
+
+        text-align: left;
+        h1, h2, h3, h4 {
+          text-align: center;
+          width: 100%;
+          max-width: 100%;
+          min-height: 40px;
+          margin-top: 8px;
+
+          text-overflow: clip;
+          overflow: hidden;
+          vertical-align: middle;
+        }
+        .Button {
+          align-self: center;
+          justify-self: flex-end;
+          margin-top: auto;
+        }
+      }
+
+      @include mobile {
+        flex-direction: column;
+        align-items: center;
+        > .HelpBlock {
+          flex: 0 0 auto;
+          margin-right: 0 !important;
+          margin-bottom: 8px;
+          max-width: 1;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

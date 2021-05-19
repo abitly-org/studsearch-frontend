@@ -17,7 +17,7 @@ const BlockDiscover = () => {
           <H1>{t('block-discover-header')}</H1>
           <br />
           <br />
-          <ul>
+          <ul className='ul'>
             <li><P1>{t('block-discover-question1')}</P1></li>
             <li><P1>{t('block-discover-question2')}</P1></li>
             <li><P1>{t('block-discover-question3')}</P1></li>
@@ -28,8 +28,11 @@ const BlockDiscover = () => {
           <P1>{t('block-discover-body2')}</P1>
           <br />
           <br />
-          <Button to="/students">
+          {/* <Button to="/students">
             <P2>{t('block-discover-button')}</P2>
+          </Button> */}
+          <Button to="/register">
+            <P2>{t('block-discover-button-register')}</P2>
           </Button>
         </div>
       </div>

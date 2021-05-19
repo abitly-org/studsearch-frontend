@@ -1,17 +1,39 @@
 import * as React from 'react';
 import cx from 'classnames';
 import { useClickAway } from 'react-use';
+import { useTranslation } from 'react-i18next';
 
 import useLoadPagination from '../LoadPagination/useLoadPagination';
 import Checkbox from '../CheckBox/Checkbox';
-import { P2, P4 } from '../Text';
+import { P2, P3, P4 } from '../Text';
 import { ReactComponent as Arrow } from './Arrow.svg';
 import { ReactComponent as Check } from '../CheckBox/check.svg';
-
-import './index.scss';
 import Chip, { Chips } from '../Chip';
 import LoadingSpinner from '../LoadingSpinner';
 import hierarchyContains from '../../Helpers/hierarchyContains';
+
+import './index.scss';
+import isMobile from '../../Helpers/isMobile';
+
+const dropdowns = {} as {[id: string]: Function};
+const useOtherClicked = (
+  myOpen: boolean,
+  onOtherOpened: () => void
+) => {
+  const id = React.useMemo(() => String(~~(Math.random()*999999)), []);
+
+  React.useEffect(() => {
+    dropdowns[id] = onOtherOpened;
+  }, [ onOtherOpened ]);
+
+  React.useEffect(() => {
+    if (myOpen) {
+      for (const oid in dropdowns)
+        if (oid !== id)
+          dropdowns?.[oid]?.();
+    }
+  }, [ myOpen ]);
+}
 
 export type Dropdown2State<T> = {
   className?: string;
@@ -23,7 +45,9 @@ export type Dropdown2State<T> = {
 
   loading?: boolean;
   withShadow?: boolean;
+  singleBorder?: boolean;
   disabled?: boolean;
+  error?: boolean;
 
   /**
    * Can put here a comparison by ids, f.ex
@@ -59,11 +83,15 @@ const Dropdown2 = <T extends unknown>({
   pageCount = 25,
   loading,
   withShadow,
+  singleBorder,
   equals = (a, b) => a === b,
   disabled,
+  error,
 
   ...state
 }: Dropdown2State<T>) => {
+
+  const { t } = useTranslation();
 
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -114,7 +142,20 @@ const Dropdown2 = <T extends unknown>({
   }
 
   const ref = React.useRef<HTMLDivElement>(null);
-  useClickAway(ref, e => setOpen(false));
+  const touchstart = React.useRef<TouchEvent>();
+  useClickAway(ref, e => {
+    if (e.type === 'touchstart')  
+      touchstart.current = e as any;
+    else if (e.type === 'touchend') {
+      if (Math.sqrt(
+        Math.pow((touchstart.current?.touches?.[0]?.pageX ?? 0) - (e as TouchEvent)?.touches?.[0]?.pageX, 2) + 
+        Math.pow((touchstart.current?.touches?.[0]?.pageY ?? 0) - (e as TouchEvent)?.touches?.[0]?.pageY, 2)
+      ) < 10)
+        setOpen(false);
+    } else {
+      setOpen(false);
+    }
+  }, [ 'mousedown', 'touchstart', 'touchend' ]);
 
   const input = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
@@ -122,19 +163,30 @@ const Dropdown2 = <T extends unknown>({
       input?.current?.focus?.();
   }, [ open ]);
 
+
+  React.useEffect(() => {
+    if (error)
+      ref?.current?.scrollIntoView?.();
+  }, [ error ]);
+
   return (
     <div
       ref={ref}
-      className={cx('Dropdown2', className, { disabled, withShadow })}
+      className={cx('Dropdown2', className, { disabled, withShadow, singleBorder, error })}
       style={style}
-      onFocus={() => {
-        if (!disabled) 
-          setOpen(true)
-      }}
+      // onFocus={e => {
+      //   console.log('div.onFocus (open=', open, ')')
+      //   if (!disabled) {
+      //     setOpen(true);
+      //     e?.stopPropagation?.();
+      //   }
+      // }}
       // onBlur={() => setOpen(false)}
-      onClick={() => {
-        if (!disabled)
-          setOpen(true)
+      onClick={e => {
+        if (!disabled) {
+          setOpen(o => !o)
+          e?.stopPropagation?.();
+        }
       }}
     >
       <div
@@ -154,7 +206,7 @@ const Dropdown2 = <T extends unknown>({
               )
             }</Chips>
         }
-        { !state.multiple && state.value !== null && !open && (
+        { !state.multiple && state.value !== null && (!open || !pagination) && (
           () => {
             const rendered = renderItem?.(state.value, false);
             if (typeof rendered === 'string')
@@ -175,15 +227,21 @@ const Dropdown2 = <T extends unknown>({
             }
             disabled={disabled}
             value={searchQuery}
-            onFocus={() => {
-              if (!disabled)
-                setOpen(true)
-            }}
+            // onFocus={e => {
+            //   console.log('input.onFocus (open=', open, ')')
+            //   if (!disabled) {
+            //     e?.stopPropagation?.();
+            //     setOpen(true)
+            //   }
+            // }}
             // onBlur={() => setOpen(false)}
             onChange={e => setSearchQuery(e.target.value)}
           />
         }
         <span className='Arrow' children={<Arrow />} />
+        { error &&
+          <P3 className='Error' children={t('error-required')} />
+        }
       </div>
       { open &&
         <div

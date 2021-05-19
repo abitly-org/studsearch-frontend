@@ -12,6 +12,8 @@ import {
   Region,
   Faculty,
   Speciality,
+  endpoint,
+  makeQuery,
 } from "../../../../Helpers/api";
 import DropDown from "../../../../Components/DropDown";
 import Input from "../../../../Components/Input";
@@ -19,29 +21,38 @@ import RadioBtnGender from "../../../../Components/RadioBtnGender/RadioBtnGender
 import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import Checkbox from "../../../../Components/CheckBox/Checkbox";
 import {useTranslation} from "react-i18next";
+import useLoad from "../../../../Helpers/useLoad";
+import Dropdown2 from "../../../../Components/Dropdown2";
+import { CourseDropdown, FacultyDropdown, RegionDropdown, SpecialityDropdown, UniversityDropdown } from "../../../../Components/Dropdown2/custom";
+import useSession from "../../../../Helpers/session";
+import { Redirect } from "react-router-dom";
 
 type FormProps = {};
-type CoursesType = { id: number; name: string };
+type CoursesType = { id?: number; name?: string };
+
+const useCachedState = <T extends unknown>(cache: string, initialState: T) => {
+  const fromCache = React.useMemo(() => {
+    const str = localStorage.getItem('studsearch-reg-' + cache);
+    if (!str)
+      return null;
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      return null;
+    }
+  }, []);
+  const [state, setState] = React.useState<T>(fromCache ?? initialState);
+  return [
+    state,
+    (newState: T) => {
+      localStorage.setItem('studsearch-reg-' + cache, JSON.stringify(newState));
+      setState(newState);
+    }
+  ] as const;
+}
 
 export default function RegistrationForm() {
-  const token = useRef<string | undefined>();
-
-  type data = {
-    status: boolean;
-    studentUuid?: string;
-    token?: string;
-    verified?: boolean;
-  };
-
-  useEffect(() => {
-    const response = fetch("https://server.studsearch.org:2324/v2/session");
-    response
-      .then((response) => response.json())
-      .then((data: data) => {
-        console.log("session", data);
-        token.current = data.token;
-      });
-  }, []);
+  const session = useSession();
 
   // const response1 = fetch(
   //     "https://server.studsearch.org:2324/v2/register/?name=Vasja&gender=male&about=&universityID=1&facultyID=1&specialityID=1&course=1&hostel=false&telegramPhoto=false&token=MRNWYj5bAPosZyg4v6N3haSSoEYzfppP"
@@ -52,18 +63,22 @@ export default function RegistrationForm() {
   //       console.log("registor", data);
   //     });
 
-  const [region, setRegion] = useState<Region>();
-  const [university, setUniversity] = useState<University>();
-  const [faculty, setFaculty] = useState<Faculty>();
-  const [speciality, setSpeciality] = useState<Speciality>();
-  const [course, setCourse] = useState<CoursesType>();
-  const [nameSurname, setNameSurname] = useState("");
-  const [gender, setGender] = useState("male");
-  const [aboutMyself, setAboutMyself] = useState("");
-  const [checkBoxState, setCheckBoxState] = React.useState({
+  const [region, setRegion] = useCachedState<Region | null>('region', null);
+  const [university, setUniversity] = useCachedState<University | null>('university', null);
+  const [faculty, setFaculty] = useCachedState<Faculty | null>('faculty', null);
+  const [speciality, setSpeciality] = useCachedState<Speciality | null>('specialty', null);
+  const [course, setCourse] = useCachedState<CoursesType | null>('course', null);
+  const [nameSurname, setNameSurname] = useCachedState('name', "");
+  const [gender, setGender] = useCachedState('gender', "male");
+  const [aboutMyself, setAboutMyself] = useCachedState('about', "");
+  const [checkBoxState, setCheckBoxState] = useCachedState('checkboxes', {
     tg: true,
     politic: false,
   });
+
+  const regions = React.useMemo(() => region ? [ region ] : [], [ region ]);
+  const universities = React.useMemo(() => university ? [ university ] : [], [ university ])
+
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.checked;
@@ -71,9 +86,10 @@ export default function RegistrationForm() {
       ...checkBoxState,
       [event.target.name]: value,
     });
+    fixError(event.target.name as 'politic');
   }
 
-  const [error, serError] = React.useState({
+  const [error, setError] = React.useState({
     nameSurname: false,
     gender: false,
     region: false,
@@ -81,38 +97,50 @@ export default function RegistrationForm() {
     faculty: false,
     speciality: false,
     course: false,
+    politic: false
   });
 
-    function SubmitStates(event: any) {
-    let readyToSubmit = true;
+  const fixError = (key: keyof typeof error) => 
+    setError({ ...error, [key]: false });
+
+  function SubmitStates(event: any) {
+    let hasError = false;
     const dataPost = {
-      nameSurname: nameSurname,
-      gender: gender,
-      region: region,
-      university: university,
-      faculty: faculty,
-      speciality: speciality,
-      course: course,
-      aboutMyself: aboutMyself,
-      tg: checkBoxState.tg,
+      nameSurname,
+      gender,
+      region,
+      university,
+      faculty,
+      speciality,
+      course,
+      aboutMyself,
       politic: checkBoxState.politic,
     };
-    Object.entries(dataPost).map(([key, value]) => {
+    for (const [key, value] of (Object.entries(dataPost) ?? [])) {
       if (key !== "aboutMyself") {
-        if (value == "" || value === undefined || value == false) {
-            event.preventDefault();
-            readyToSubmit = false;
-          serError((prevUser) => ({ ...prevUser, [key]: true }));
+        if (value == "" || value === undefined || value === null || (
+          key === 'politic' &&
+          value == false
+        )) {
+          event?.preventDefault?.();
+          setError((prevUser) => ({ ...prevUser, [key]: true }));
+          hasError = true;
         } else {
-          serError((prevUser) => ({ ...prevUser, [key]: false }));
+          setError((prevUser) => ({ ...prevUser, [key]: false }));
         }
       }
-    });
-    if (readyToSubmit) {
-      console.log("ready To send ");
+    }
+
+    if (!hasError) {
+      setTimeout(() => {
+        window.open('/', '_self');
+      }, 1000);
     }
   }
-    const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  if (session?.verified)
+    return <Redirect to='/' />;
 
   return (
     <div className={`SignForm`}>
@@ -125,6 +153,8 @@ export default function RegistrationForm() {
             title= {t('registration-name-placeholder')}
             onChange={(changedVal: string) => {
               setNameSurname(changedVal);
+              if (changedVal)
+                fixError('nameSurname');
             }}
           />
         </div>
@@ -135,70 +165,79 @@ export default function RegistrationForm() {
           }}
         />
         <div className={`regionBlock`}>
-          <DropDown<Region>
-            placeholder={t('registration-region-placeholder')}
+          <RegionDropdown
+            name={t('registration-region-placeholder')}
+            singleBorder
+            error={error.region}
+
+            multiple={false}
             value={region}
-            inputError={error.region}
-            onChange={setRegion}
-            request={useCallback(
-              (count, offset, query) =>
-                getRegions().then((res: any) => res?.regions),
-              []
-            )}
+            onChange={r => {
+              if (r)
+                fixError('region');
+              setRegion(r);
+            }}
           />
         </div>
         <div className={`universityBlock`}>
-          <DropDown<University>
-            placeholder={t('registration-university-placeholder')}
+          <UniversityDropdown
+            name={t('registration-university-placeholder')}
+            singleBorder
+            error={error.university}
+
+            regions={regions}
+
+            multiple={false}
             value={university}
-            inputError={error.university}
-            onChange={setUniversity}
-            request={useCallback(
-              (count, offset, query) =>
-                getUniversities(query, region?.id, count, offset),
-              [region]
-            )}
+            onChange={u => {
+              if (u)
+                fixError('university');
+              setUniversity(u);
+            }}
           />
         </div>
         <div className={`facultyBlock`}>
-          {
-            <DropDown<Faculty>
-              placeholder={t('registration-faculty-placeholder')}
-              value={faculty}
-              inputError={error.faculty}
-              onChange={setFaculty}
-              request={useCallback(
-                (count, offset, query) =>
-                  getFaculties(query, university?.id, count, offset),
-                [university]
-              )}
-            />
-          }
+          <FacultyDropdown
+            name={t('registration-faculty-placeholder')}
+            singleBorder
+            error={error.faculty}
+
+            universities={universities}
+
+            multiple={false}
+            value={faculty}
+            onChange={f => {
+              if (f)
+                fixError('faculty');
+              setFaculty(f);
+            }}
+          />
         </div>
         <div className={`specialityCourseBlock`}>
-          <DropDown<Speciality>
-            placeholder={t('registration-speciality-placeholder')}
+          <SpecialityDropdown
+            name={t('registration-speciality-placeholder')}
+            singleBorder
+            error={error.speciality}
+            universities={universities}
+            multiple={false}
             value={speciality}
-            inputError={error.speciality}
-            onChange={setSpeciality}
-            request={useCallback(
-              (count, offset, query) =>
-                getSpecialities(query, university?.id, count, offset),
-              [university]
-            )}
+            onChange={s => {
+              if (s)
+                fixError('speciality');
+              setSpeciality(s);
+            }}
           />
-          <DropDown<CoursesType>
-            placeholder={t('registration-course-placeholder')}
+          <CourseDropdown
+            name={t('registration-course-placeholder')}
+            error={error.course}
+            singleBorder
+            multiple={false}
             value={course}
-            inputError={error.course}
-            onChange={setCourse}
-            request={useCallback(
-              (count, offset, query) =>
-                new Promise<CoursesType[]>((resolve, reject) => {
-                  resolve(Courses);
-                }),
-              []
-            )}
+            onChange={c => {
+              if (c)
+                fixError('course');
+              setCourse(c);
+            }}
           />
         </div>
         <MultiInput
@@ -219,9 +258,10 @@ export default function RegistrationForm() {
           <Checkbox
             label="politic"
             value={t('registration-checkBox-confidential-part-1')}
-            tag={<a href={`#`}>{t('registration-checkBox-confidential-part-2')}</a>}
+            tag={<a href={`/privacy-policy`}>{t('registration-checkBox-confidential-part-2')}</a>}
             checked={checkBoxState.politic}
             onChange={handleChange}
+            error={error?.politic}
           />
         </div>
         <p className={`useTelegram`}>
@@ -229,11 +269,24 @@ export default function RegistrationForm() {
         </p>
 
           <div className="authTelegram">
-                <a
-                className={`regButton`} onClick={SubmitStates}
-                href={`https://server.studsearch.org:2324/v2/register/?name=${nameSurname}&gender=male&about=&universityID=${university?.id}&facultyID=${faculty?.id}&specialityID=${speciality?.id}&course=${course?.id}&hostel=false&telegramPhoto=false&token=${token.current}`}
-                target="_blank"
-                rel="noopener noreferrer">
+            <a
+              className={`regButton`}
+              onClick={SubmitStates}
+              href={`${endpoint}/v2/register/${makeQuery({
+                name: nameSurname,
+                gender,
+                about: aboutMyself,
+                universityID: university?.id,
+                facultyID: faculty?.id,
+                specialityID: speciality?.id,
+                course: course?.id,
+                hostel: false,
+                telegramPhoto: checkBoxState?.tg,
+                token: session?.token
+              })}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={tgPhoto} alt="tgPhoto" />
               <span>{t('registration-confirm-telegram')}</span>
             </a>

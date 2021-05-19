@@ -10,7 +10,9 @@ type ChildrenType = {
   title: string;
   imgSrc: string;
   edited?: boolean;
-  children: (editing: boolean) => {};
+  children: ((editing: boolean) => React.ReactNode) | React.ReactNode;
+
+  onSave?: () => void | Promise<void>;
 };
 
 export default function CardWrapper(props: ChildrenType) {
@@ -18,7 +20,7 @@ export default function CardWrapper(props: ChildrenType) {
 
   const [state, setState] = useState({ editing: false });
 
-  const { title, children, imgSrc: img, edited = true } = props;
+  const { title, children, imgSrc: img, onSave, edited = true } = props;
   return (
     <div className="card-outer">
       <div className="card-wrapper">
@@ -38,19 +40,28 @@ export default function CardWrapper(props: ChildrenType) {
             </span>
           ) : null}
         </div>
-
-        {children(state.editing)}
-
-        {state.editing ? (
+        { typeof children === 'function' ?
+            children?.(state.editing) :
+            children
+        }
+        { state.editing ? (
           <div className="btn-group">
             <Button
               children={t('cabinet-cancel')}
               outline={true}
-              onClick={() => {
+              onClick={async () => {
                 setState({ editing: false });
               }}
             />
-            <Button children={t('cabinet-save')} onClick={() => {}} />
+            <Button
+              children={t('cabinet-save')}
+              onClick={async () => {
+                const p = onSave?.();
+                if (p instanceof Promise)
+                  await p;
+                setState({ editing: false });
+              }}
+            />
           </div>
         ) : null}
       </div>

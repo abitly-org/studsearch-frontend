@@ -12,7 +12,14 @@
   display: flex;
   flex-direction: column;
   max-width: 800px;
-   background: $white;
+  background: $white;
+
+  .UserPage h1 {
+    @include mobile {
+      font-size: 24px;  
+      line-height: 26px;
+    }
+  }
 }
 
 .SignUpLogo {
@@ -20,4 +27,22 @@
   margin: 36px auto 0 auto;
   display: flex;
   justify-content: center;
+}
+
+
+@media (min-height: 1136px) {
+  .SignUpPage {
+    background: #FAFAFA;
+    .RegistrationContainer {
+      box-shadow: 2px 2px 4px rgba(120, 122, 135, 0.5);
+    }
+  }
+}
+@media (min-width: 2000px) {
+  .SignUpPage {
+    background: #FAFAFA;
+    .RegistrationContainer {
+      box-shadow: 2px 2px 4px rgba(120, 122, 135, 0.5);
+    }
+  }
 }

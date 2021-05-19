@@ -51,40 +51,30 @@
       border-bottom: 2px solid #ff4255;
     }
 
-    animation: shakeX 0.82s cubic-bezier(.35, .08, .2, .95) both;
+    animation: inputShakeX 0.2s ease-in-out both;
     transform: translateX(0);
   }
 
-  @keyframes shakeX {
-    10%, 90% {
-      transform: translateX(-1px);
-    }
-
-    20%, 80% {
-      transform: translateX(2px);
-    }
-
-    30%, 50%, 70% {
-      transform: translateX(-4px);
-    }
-
-    40%, 60% {
-      transform: translateX(4px);
-    }
+  @keyframes inputShakeX {
+    0% { transform: translateX(0px); }
+    20% { transform: translateX(-2px); }
+    40% { transform: translateX(3px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+    100% { transform: translateX(0px); }
   }
-
 
   .text-error {
     display: none;
   }
 
   &.inputError .text-error {
-    display: unset;
-    margin-top: 5px;
+    display: block;
+    margin-top: 4px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     color: #ff4255;
   }

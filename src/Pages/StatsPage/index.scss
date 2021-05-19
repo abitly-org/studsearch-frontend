@@ -23,9 +23,23 @@ $width: 1100px;
       display: flex;
       align-items: flex-start;
       > * {
+        @include mobile {
+          margin-right: 0;
+          margin-bottom: 30px;
+        }
         margin-right: 30px;
+        &:last-child {
+          margin-right: 0 !important;
+          margin-bottom: 0 !important;
+        }
       }
       margin-bottom: 30px;
+
+      @include mobile {
+        flex-direction: column;
+        justify-content: stretch;
+        align-items: stretch;
+      }
     }
 
     padding-bottom: 280px;
@@ -37,9 +51,6 @@ $width: 1100px;
   }
 }
 
-.StatsPage > .Content > .row > *:last-child {
-  margin-right: 0 !important;
-}
 
 .DropdownShadow {
   > .Value {
@@ -104,12 +115,14 @@ $tableTransitionDuration: 0.08s;
       cursor: pointer;
 
       min-height: 45px;
-      margin: 0 20px;
+      margin: 0;
 
       background-color: white;
 
       > span.column {
         flex: 1;
+        min-width: 0;
+        overflow: hidden;
       }
       > span.ExpandButton {
         cursor: pointer;
@@ -130,7 +143,10 @@ $tableTransitionDuration: 0.08s;
         }
       }
       > span.column.place {
-        flex: 0.08 0 0;
+        flex: 0.1 0 0;
+        @include mobile {
+          flex: 0.25 0 0;
+        }
         margin: 0 8px;
       }
       > span.column.name {
@@ -149,16 +165,36 @@ $tableTransitionDuration: 0.08s;
         }
         .full  { opacity: 0; display: none; }
         .short { opacity: 1; display: inline-block; }
+
+        display: flex;
+        align-items: center;
+        transform: translateY(2px);
+
+        > p, 
+        > p > span {
+          max-width: 100%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       }
 
       > span.column.num {
         flex: 0.2 0 0;
         text-align: right;
         margin-right: 16px;
+        @include mobile {
+          margin-right: 8px;
+          flex: 0.35 0 0;
+        }
         transition: all $tableTransitionDuration ease-in-out;
       }
       > span.column.zno {
         flex: 2 0 0;
+        @media (max-width: 800px) {
+          flex: 1.5 0 0;
+        }
+        padding-left: 5px;
+        margin-right: 5px;
         transition: all $tableTransitionDuration ease-in-out;
         > .bar {
           display: block;
@@ -188,8 +224,8 @@ $tableTransitionDuration: 0.08s;
         z-index: 20;
       }
       > span.column.space {
-        width: 32px;
-        flex: 0 0 32px;
+        width: 8px;
+        flex: 0 0 8px;
       }
       > span.column.city {
         flex: 0 0 0;
@@ -233,7 +269,7 @@ $tableTransitionDuration: 0.08s;
           opacity: 0;
         }
         > span.column.city {
-          flex: 0.2 0 0;
+          flex: 0.4 0 0;
           padding-right: 16px;
         }
         > span.column.website {
@@ -254,17 +290,21 @@ $tableTransitionDuration: 0.08s;
 
   > .rating-tableheader {
     display: flex;
-    padding: 0 20px;
+    padding: 0 0px;
+    min-height: 32px;
     > span.expandbutton {
       flex: 0 0 24px;
       padding-left: 8px;
     }
     > span.place {
-      flex: 0.08 0 0;
+      flex: 0.1 0 0;
+      @include mobile {
+        flex: 0.25 0 0;
+      }
       padding: 0 8px;
     }
     > span.space {
-      flex: 0 0 32px;
+      flex: 0 0 8px;
     }
     > span.name {
       flex: 1 1 0;
@@ -282,19 +322,31 @@ $tableTransitionDuration: 0.08s;
         left: -100%;
         text-align: right;
       }
+
+      @include mobile {
+        padding-right: 8px;
+        flex: 0.35 0 0;
+      }
     }
     > span.zno {
       flex: 2 0 0;
+      @media (max-width: 800px) {
+        flex: 1.5 0 0;
+      }
       display: flex;
       flex-direction: column;
 
       > span.scale {
         display: flex;
         justify-content: space-between;
+        margin-right: 5px;
         > p {
           width: 25px;
           text-align: center;
           // flex: 1 0 0;
+          @include mobile {
+            display: none;
+          }
 
           > span {
             display: block;

@@ -4,53 +4,78 @@ import MultiInput from "../../../../Components/MultiInput/MultiInput";
 import InputImage from "../InputImage/InputImage";
 import "./personalDataEditing.scss";
 import {useTranslation} from "react-i18next";
+import { Cabinet } from "../../PersonalArea";
+import Dropdown2 from "../../../../Components/Dropdown2";
+import { StudentPhoto } from "../../../../Components/StudentCard";
 
 type EducationCardProp = {}
 
-export default function PersonalDataEdited(props: EducationCardProp) {
+export default function PersonalDataEdited({
+    refreshPhotoId,
+    cabinet, setCabinet,
+    uuid, setPhoto
+}: {
+    refreshPhotoId?: number,
+    
+    cabinet: Cabinet,
+    setCabinet: (newCabinet: Cabinet) => void,
+
+    uuid?: string,
+    setPhoto: (newPhoto: Blob | null) => void
+}) {
     const { i18n, t } = useTranslation();
 
-    const [img, setImg] = useState('')
-    const [nameSurname, setNameSurname] = useState("Катерина Малютіна");
-    const [gender, setGender] = useState("Жіноча");
-    const [aboutMyself, setAboutMyself] = useState('З радістю допоможу абітурієнтам та ' +
-        'розповім деталі про навчання на своєму');
-     const [error, serError] = React.useState({
+    // const [img, setImg] = useState('')
+    // const [nameSurname, setNameSurname] = useState("Катерина Малютіна");
+    // const [gender, setGender] = useState("Жіноча");
+    // const [aboutMyself, setAboutMyself] = useState('З радістю допоможу абітурієнтам та ' +
+    //     'розповім деталі про навчання на своєму');
+    const [error, serError] = React.useState({
         nameSurname: false,
         gender: false,
         aboutMyself: false,
     });
 
+    // const url = React.useMemo(() => photo ? URL.createObjectURL(photo) : undefined, [ photo ]);
+
     return (
         <>
             <div className="wrapper">
                 <div className={`userInfo`}>
-                <InputImage img={img} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setImg(e.target.value)}} />
-                     <Input
-                        value={nameSurname}
+                    <InputImage
+                        img={uuid && <StudentPhoto key={refreshPhotoId} size={80} uuid={uuid} />}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const file = e?.target?.files?.[0];
+                            setPhoto?.(file ?? null);
+                        }}
+                    />
+                    <Input
+                        value={cabinet?.name}
                         error={error.nameSurname}
-                        placeholder={nameSurname}
                         title={t('cabinet-name')}
-                        onChange={(changedVal: string) => {
-                            setNameSurname(changedVal);
-                        }}
+                        onChange={name => setCabinet({ ...cabinet, name })}
                     />
-                     <Input
-                        value={gender}
+                    <Dropdown2<'male' | 'female'>
+                        values={['male', 'female']}
+                        value={cabinet?.gender ?? null}
+
+                        multiple={false}
+
                         error={error.gender}
-                        placeholder={gender}
-                        title={t('cabinet-gender')}
-                        onChange={(changedVal: string) => {
-                            setGender(changedVal);
-                        }}
+                        name={t('cabinet-gender')}
+                        style={{ minWidth: 150 }}
+                        singleBorder
+
+                        renderItem={item => t(`cabinet-gender-${item}`)}
+
+                        onChange={(gender: 'male' | 'female' | null) => 
+                            setCabinet({ ...cabinet, gender: gender ?? undefined })
+                        }
                     />
-                 </div>
+                </div>
                 <MultiInput
-                    name={`textValue`}
-                    value={aboutMyself}
-                    onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                        setAboutMyself(event.target.value);
-                    }}
+                    value={cabinet?.about ?? ''}
+                    onChange={e => setCabinet({ ...cabinet, about: e?.target?.value })}
                     field={false}
                 />
             </div>

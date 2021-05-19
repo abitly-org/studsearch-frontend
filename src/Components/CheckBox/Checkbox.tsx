@@ -9,12 +9,13 @@ interface CheckboxProps {
     onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
     tag?: JSX.Element;
     disabled?: boolean;
+    error?: boolean;
 }
 
 const Checkbox = ({
-    label, value, checked, onChange, tag, disabled
+    label, value, checked, onChange, tag, disabled, error
 }: CheckboxProps) => (
-    <div className={`checkBox`}>
+    <div className={cx(`checkBox`, { error })}>
         <input
             className={cx('custom-checkbox', { disabled })}
             type="checkbox"

@@ -1,5 +1,6 @@
 import * as React  from 'react';
-import { useTranslation } from 'react-i18next/*';
+import { useTranslation } from 'react-i18next';
+
 import Button from '../../Components/Button';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import { H1, P1, P2 } from '../../Components/Text';

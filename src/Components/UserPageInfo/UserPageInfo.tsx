@@ -12,10 +12,10 @@ function UserPageInfo(props: PageInfo) {
     return (
         <div className="UserPage">
             <h1>{h1}</h1>
-            <div>
+            {/* <div>
                 <span>{span}</span>
                 <a href={href}>{a}</a>
-            </div>
+            </div> */}
         </div>
     )
 }

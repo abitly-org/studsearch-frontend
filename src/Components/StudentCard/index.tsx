@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
+import cx from 'classnames';
 
 import { Courses, Student, studentLink, studentPhoto, takeString } from '../../Helpers/api';
 import { P1, P2, P3 } from '../Text';
@@ -31,20 +32,8 @@ const SocialIcons = {
 
 const imagesCache : {[src: string]: HTMLImageElement} = {};
 
-const StudentCard = ({ student }: {
-  student: Student
-}) => {
-  const { i18n, t } = useTranslation();
-  
-  const socials = [...student?.social];
-  // if (Math.random() > 0.5)
-  //   socials.push('instagram')
-  // if (Math.random() > 0.5)
-  //   socials.push('viber')
-  // if (Math.random() > 0.5)
-  //   socials.push('facebook')
-
-  const photoSrc = studentPhoto(student?.uuid);
+export const StudentPhoto = ({ uuid, size = 100 } : { uuid: string, size?: number }) => {
+  const photoSrc = studentPhoto(uuid);
   const photo = useLoad(() =>
     new Promise<HTMLImageElement>((resolve) => {
       if (imagesCache[photoSrc])
@@ -61,14 +50,33 @@ const StudentCard = ({ student }: {
   );
 
   return (
+    <span className={cx("StudentPhoto", {small: size < 50})} style={{ width: size, height: size }}>
+      {
+        photo ?
+          <img src={photoSrc} /> :
+          <PhotoPlaceholder />
+      }
+    </span>
+  );
+}
+
+const StudentCard = ({ student }: {
+  student: Student
+}) => {
+  const { i18n, t } = useTranslation();
+  
+  const socials = [...(student?.social ?? [])];
+  // if (Math.random() > 0.5)
+  //   socials.push('instagram')
+  // if (Math.random() > 0.5)
+  //   socials.push('viber')
+  // if (Math.random() > 0.5)
+  //   socials.push('facebook')
+
+  return (
     <div className="StudentCard">
       <div className="Top">
-        <span className="StudentPhoto">
-          { photo ?
-            <img src={photoSrc} /> :
-            <PhotoPlaceholder />
-          }
-        </span>
+        <StudentPhoto uuid={student?.uuid} />
         <div>
           <P1>{student?.name}</P1>
           <span className="Course">

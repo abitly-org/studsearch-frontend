@@ -4,6 +4,23 @@
   margin-top: 19px;
   display: flex;
 
+  &.error {
+    color: #ff4255;
+    .custom-checkbox + label::before {
+      border-color: #ff4255;
+    }
+    animation: checkboxShakeX 0.2s ease-in-out both;
+    transform: translateX(0);
+  }
+
+  @keyframes checkboxShakeX {
+    0% { transform: translateX(0px); }
+    20% { transform: translateX(-2px); }
+    40% { transform: translateX(3px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+    100% { transform: translateX(0px); }
+  }
   label {
     cursor: pointer;
 
@@ -27,6 +44,7 @@
   }
 
   .custom-checkbox + label::before {
+    flex: 0 0 auto;
     content: '';
     display: inline-block;
     width: 21px;
@@ -45,6 +63,7 @@
   }
 
   .custom-checkbox:checked + label::before {
+    flex: 0 0 auto;
     border-color: $primary;
     background-color: $primary;
     background-image: url("check.svg");

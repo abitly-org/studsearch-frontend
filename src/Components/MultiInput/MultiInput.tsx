@@ -4,10 +4,10 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 
 interface textArea {
-    name: string;
+    name?: string;
     value: string;
     onChange: ((event: React.ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
-    field: boolean;
+    field?: boolean;
 }
 
 function MultiInput(props: textArea) {

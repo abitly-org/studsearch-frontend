@@ -11,7 +11,6 @@ import './index.scss';
 const MainPage = () => {
   return (
     <div className="MainPage">
-      <Header />
       <BlockDiscover />
       <BlockHowItWorks />
       <BlockStudents />

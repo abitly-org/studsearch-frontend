@@ -13,38 +13,8 @@ import university from '../../Components/StudentCard/university.svg';
 import './index.scss';
 import { P1, P4 } from '../../Components/Text';
 import LoadingSpinner from '../../Components/LoadingSpinner';
-
-const Item = ({ children, studentsCount, universitiesCount, inDropdown }: {
-  children: React.ReactNode,
-  studentsCount?: number,
-  universitiesCount?: number,
-  inDropdown: boolean
-}) : JSX.Element =>
-  inDropdown ? 
-    <P4 className='DropdownItem'>
-      {children}
-      { (studentsCount || universitiesCount) &&
-        <span className="Stat">
-          { studentsCount && 
-            <span className='StudentsCount'>
-              <img src={specialty} />
-              <P4>{studentsCount}</P4>
-            </span>
-            || null
-          }
-          { universitiesCount && 
-            <span className='UniversitiesCount'>
-              <img src={university} />
-              <P4>{universitiesCount}</P4>
-            </span>
-            || null
-          }
-        </span>
-        || null
-      }
-    </P4>
-    :
-    <P4>{children}</P4>
+import Button from '../../Components/Button';
+import { FacultyDropdown, RegionDropdown, SpecialityDropdown, UniversityDropdown } from '../../Components/Dropdown2/custom';
 
 const useQueryState = <T extends unknown>(
   initialState: T,
@@ -151,7 +121,7 @@ const BlockStudents = () => {
   const lastDispatch = React.useRef(0);
   const loadMore = React.useRef<HTMLSpanElement>(null);
   useOnScroll?.(() => {
-    if (students.loading && Date.now() - lastRender.current < 1500)
+    if ((students.loading || students.error) && Date.now() - lastRender.current < 1500)
       return;
 
     const rect = loadMore.current?.getBoundingClientRect?.();
@@ -168,96 +138,42 @@ const BlockStudents = () => {
   return (
     <div className='BlockStudents'>
       <div className='Filters'>
-        <Dropdown2<Region>
+        <RegionDropdown
           className='Region'
-          name='Регіон'
-          withShadow
-          renderItem={(r, inDropdown) => 
-            <Item
-              children={r?.name}
-              studentsCount={Number(r?.studentsCount)}
-              universitiesCount={Number(r?.universitiesCount)}
-              inDropdown={inDropdown}
-            />
-          }
-
-          values={allRegions ?? []}
-          loading={allRegions === null}
+          name={t('block-students-region')}
 
           multiple
-          value={regions}
-          onChange={setRegions}
+          value={regions} onChange={setRegions}
         />
-        <Dropdown2<University>
+        <UniversityDropdown
           className='University'
-          name='Вищій навчальний заклад'
-          withShadow
-          renderItem={(r, inDropdown) => 
-            <Item
-              children={takeString(r?.name, lng)}
-              studentsCount={Number(r?.studentsCount)}
-              inDropdown={inDropdown}
-            />
-          }
+          name={t('block-students-university')}
 
-          pagination={React.useCallback((count, offset, query) => 
-            getUniversities(query, regions?.map?.(r => r?.id), count, offset),
-            [ regions ]
-          )}
+          regions={regions}
 
           multiple
           value={universities}
           onChange={setUniversities}
         />
-        <Dropdown2<Speciality>
-          className='Speciality'
-          name='Спеціальність'
-          withShadow
-          renderItem={(s, inDropdown) => 
-            <Item
-              children={takeString(s?.name, lng)}
-              studentsCount={Number(s?.studentsCount)}
-              inDropdown={inDropdown} 
-            />
-          }
-
-          pagination={React.useCallback(async (count, offset, query) => 
-            universities?.length > 0 ? 
-              getSpecialities(query, universities?.map?.(u => u?.id), count, offset)
-              :
-              [],
-            [ universities ]
-          )}
-          disabled={universities?.length === 0}
-
-          multiple
-          value={specialties}
-          onChange={setSpecialities}
-        />
-        <Dropdown2<Faculty>
+        <FacultyDropdown
           className='Faculty'
-          name='Факультет'
-          withShadow
-          renderItem={(s, inDropdown) => 
-            <Item
-              children={takeString(s?.name, lng)}
-              studentsCount={Number(s?.studentsCount)}
-              inDropdown={inDropdown}
-            />
-          }
+          name={t('block-students-faculty')}
 
-          pagination={React.useCallback(async (count, offset, query) => 
-            universities?.length > 0 ? 
-              getFaculties(query, universities?.map?.(u => u?.id), count, offset)
-              :
-              [],
-            [ universities ]
-          )}
-          disabled={universities?.length === 0}
+          universities={universities}
 
           multiple
           value={faculties}
           onChange={setFaculties}
+        />
+        <SpecialityDropdown
+          className='Speciality'
+          name={t('block-students-specialty')}
+          
+          universities={universities}
+          
+          multiple
+          value={specialties}
+          onChange={setSpecialities}
         />
         <div className='Bottom'>
           <TabFilter<{ id?: number, name: string }>
@@ -286,32 +202,68 @@ const BlockStudents = () => {
               }
             }}
           />
-          <div className='Stats'>
-            <P1>
-              {stats?.studentsCount}
-              {' '}
-              <img className='student' src={specialty} />
-              {t('from')}
-              {' '}
-              {stats?.universitiesCount}
-              <img className='university' src={university} />
-            </P1>
-          </div>
+          { stats &&
+            <div className='Stats'>
+              <P1>
+                {stats?.studentsCount}
+                {' '}
+                <img className='student' src={specialty} />
+                {t('from')}
+                {' '}
+                {stats?.universitiesCount}
+                <img className='university' src={university} />
+              </P1>
+            </div>
+          }
         </div>
       </div>
       <div className='Students'>
         {
-          students?.items?.map?.((student, key) => 
-            <StudentCard
-              key={key}
-              student={student}
+          students?.items
+            ?.filter?.((item, index, arr) => 
+              arr?.findIndex?.(e => e?.uuid === item?.uuid) === index
+            )
+            ?.map?.((student, key) => 
+              <StudentCard
+                key={key}
+                student={student}
+              />
+            )
+        }
+        { students?.loading && !students?.error &&
+          <LoadingSpinner className='loading fullrow' center-x />
+        }
+        { students?.error &&
+          <P1 className='fullrow' style={{ textAlign: 'center' }}>
+            {t('students-error')}
+          </P1>
+        }
+        <span ref={loadMore} className='fullrow load-more' />
+        { students.hasMore && 
+          <div className='fullrow space' />
+        }
+        { !students.hasMore && students.items.length > 0 && 
+          <P1 className='fullrow' style={{ textAlign: 'center' }}>
+            {t('students-end')}
+            <br />
+            <br />
+            <Button
+              children={t('block-stats-register')}
+              to='/register/'
             />
-          )
+          </P1>
         }
-        { students?.loading &&
-          <LoadingSpinner center-x />
+        { !students.hasMore && students.items.length === 0 && 
+          <P1 className='fullrow' style={{ textAlign: 'center' }}>
+            {t('students-empty')}
+            <br />
+            <br />
+            <Button
+              children={t('block-stats-register')}
+              to='/register/'
+            />
+          </P1>
         }
-        <span ref={loadMore} className='load-more' />
       </div>
     </div>
   );

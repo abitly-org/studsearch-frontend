@@ -24,7 +24,7 @@ const StudentsPage = () => {
             <H1>{t('students-first-header')}</H1>
             <br />
             <br />
-            <ul>
+            <ul className='ul'>
               <li><P1>{t('main-first-question1')}</P1></li>
               <li><P1>{t('main-first-question2')}</P1></li>
               <li><P1>{t('main-first-question3')}</P1></li>
@@ -40,7 +40,7 @@ const StudentsPage = () => {
         <H1>{t('students-first-header')}</H1>
         <br />
         <br />
-        <ul>
+        <ul className='ul'>
           <li><P1>{t('main-first-question1')}</P1></li>
           <li><P1>{t('main-first-question2')}</P1></li>
           <li><P1>{t('main-first-question3')}</P1></li>

@@ -1,6 +1,8 @@
 .TabFilter {
   
   > span {
+    display: inline-block;
+
     padding: 6px 10px;
     border-radius: 10px;
 
@@ -17,6 +19,7 @@
     transition: background-color 0.1s ease-in-out;
 
     margin-right: 15px;
+    margin-bottom: 2px;
     &:last-child {
       margin-right: 0;
     }

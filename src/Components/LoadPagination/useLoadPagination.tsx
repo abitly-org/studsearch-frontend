@@ -38,7 +38,8 @@ const useLoadPagination = <T extends unknown>(
         return;
       request?.(pageCount, state.offset)
         .then((res) => {
-          if (unmounted) return;
+          if (unmounted)
+            return;
           setState({
             ...state,
             items: [...state.items, ...res],
@@ -48,7 +49,8 @@ const useLoadPagination = <T extends unknown>(
           });
         })
         .catch((error) => {
-          if (unmounted) return;
+          if (unmounted)
+            return;
           setState({ ...state, error });
         });
     }, timeout ?? 0);

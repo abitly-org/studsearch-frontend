@@ -43,7 +43,7 @@ export const getUniversities = (
   branchId: number | undefined,
   specialityId: number[],
   regionId: number[],
-  positionType: 'contract' | 'buget' = 'contract',
+  positionType: 'contract' | 'budget' = 'contract',
   count: number,
   offset: number,
   stats?: boolean

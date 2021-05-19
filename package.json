@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "cors": "node cors.js 4344",
-    "build": "react-scripts build && cp build/index.html build/404.html",
+    "build": "react-scripts build && cp build/index.html build/404.html && echo new.studsearch.org > build/CNAME",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

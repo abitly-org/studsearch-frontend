@@ -32,6 +32,12 @@ h3 {
   line-height: 30.48px;
   color: $black;
 }
+h4 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: $black;
+}
 
 p.p1 {
   font-weight: 500;
@@ -62,7 +68,7 @@ p.p4 {
   line-height: 17.07px;
 }
 
-ul {
+ul.ul {
   list-style: none;
   position: relative;
   padding: 0;

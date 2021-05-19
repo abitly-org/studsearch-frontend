@@ -43,6 +43,14 @@ div.Header {
     @include mobile {
       padding: 8px;
       transition: padding-top 0.1s ease-in-out;
+      
+      padding-top: 16px;
+    }
+    .Header_Languages {
+      flex: 1 0 0;
+      @include mobile {
+        display: none;
+      }
     }
 
     > .Header_Top {
@@ -57,32 +65,6 @@ div.Header {
         // }
       }
 
-      > .Header_Languages {
-        flex: 1 0 0;
-        @include mobile {
-          display: none;
-        }
-
-        > span {
-          cursor: pointer;
-          transition: background-color 0.05s ease-in-out;
-          padding: 6px;
-          border-radius: 4px;
-          &:hover {
-            background-color: mix($sea, $white, 25%);
-          }
-          > p {
-            transition: color 0.05s ease-in-out;
-          }
-          &.selected {
-            background-color: $sea;
-            > p {
-              color: $white !important;
-            }
-          }
-          user-select: none;
-        }
-      }
       > .Header_Logo {
         flex: 1 0 0;
         display: flex;
@@ -91,12 +73,14 @@ div.Header {
         cursor: pointer;
 
         @include mobile {
-          // order: -1;
-          text-align: center;
-          transition: height 0.1s ease-in-out,
-                      opacity 0.1s ease-in-out;
-          height: 0;
-          opacity: 0;
+          height: 30px;
+          opacity: 1;
+          // // order: -1;
+          // text-align: center;
+          // transition: height 0.1s ease-in-out,
+          //             opacity 0.1s ease-in-out;
+          // height: 0;
+          // opacity: 0;
         }
       }
       > .Header_Buttons {
@@ -111,7 +95,45 @@ div.Header {
         }
 
         @include mobile {
+          flex: 0 0 auto;
+          margin: 0;
           display: none;
+          // > .Header_Buttons_Register {
+          //   display: none;
+          // }
+          // > .Header_Buttons_Login {
+          //   padding: 8px;
+          //   margin: 0;
+          // }
+        }
+
+        
+      }
+
+      > .Header_MenuButton {
+        display: none;
+        @include mobile {
+          display: flex;
+          position: absolute;
+          cursor: pointer;
+          right: 16px;
+
+          width: 36px;
+          height: 36px;
+          justify-content: center;
+          align-items: center;
+
+          > svg {
+            width: 24px;
+            height: 24px;
+          }
+
+          border-radius: 50%;
+          overflow: hidden;
+
+          .ripple {
+            background-color: rgba($sea, 0.25);
+          }
         }
       }
     }
@@ -120,8 +142,145 @@ div.Header {
       margin-top: 16px;
       transition: margin-top 0.1s ease-in-out;
       @include mobile {
-        margin-top: 0;
+        // margin-top: 0;
       }
+    }
+  }
+}
+.Header_Languages {
+  > span {
+    cursor: pointer;
+    transition: background-color 0.05s ease-in-out;
+    padding: 6px;
+    border-radius: 4px;
+    &:hover {
+      background-color: mix($sea, $white, 25%);
+    }
+    > p {
+      transition: color 0.05s ease-in-out;
+    }
+    &.selected {
+      background-color: $sea;
+      > p {
+        color: $white !important;
+      }
+    }
+    user-select: none;
+  }
+}
+.CabinetLink {
+  > .StudentPhoto {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+
+  padding: 2px;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  transition: border-color 0.1s ease-in-out;
+
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+
+  p {
+    margin: 0 6px;
+  }
+
+  &.selected { 
+    border-color: $sea;
+  }
+}
+
+.Header_Menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100500;
+  background-color: $white;
+
+  > .Header_Logo {
+    position: absolute;
+    top: 16px;
+    width: 100%;
+    text-align: center;
+    > img {
+      height: 30px;
+    }
+  }
+
+  > .Header_CloseButton {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
+
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+
+    > svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    .ripple {
+      background-color: rgba($sea, 0.25);
+    }
+  }
+
+  > .Buttons {
+    position: absolute;
+    top: 96px;
+    width: 100%;
+    // overflow: hidden;
+    box-sizing: border-box;
+
+    > .Page {
+      padding: 10px 48px;
+      cursor: pointer;
+      box-sizing: border-box;
+
+      position: relative;
+      overflow: hidden;
+
+      > h3 {
+        font-weight: normal;
+      }
+
+      &.selected {
+        background-color: #E3EDF9;
+        > h3 {
+          color: $primary;
+        }
+      }
+
+      .ripple {
+        background-color: rgba($primary, 0.2);
+      }
+    }
+
+    > .LoginButtons {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 32px 48px 8px 48px;
+
+      > .Header_Buttons_Login {
+        margin-top: 10px;
+      }
+    }
+
+    > .Header_Languages {
+      display: block;
+      margin: 32px 48px;
     }
   }
 }
@@ -130,14 +289,21 @@ div.Header {
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
+  justify-content: space-evenly;
 
   user-select: none;
 
   > span.HeaderTabs_Tab {
-    flex: 1 0 0;
+    // flex: 1 0 0;
 
     display: inline-flex;
     justify-content: center;
+
+    &.hideInMobile {
+      @include mobile {
+        display: none;
+      }
+    }
     
     > span {
       position: relative;
@@ -156,18 +322,18 @@ div.Header {
       cursor: pointer;
 
       &:hover {
-        background-color: mix($accent, $white, 15%);
+        background-color: mix($sea, $white, 15%);
       }
 
       .ripple {
-        background-color: rgba($accent, 0.2);
+        background-color: rgba($sea, 0.2);
       }
     }
 
     &.selected {
       > span {
         cursor: default;
-        border: 1px solid $accent;
+        border: 2px solid $sea;
         &:hover {
           background-color: $white;
         }
@@ -175,10 +341,4 @@ div.Header {
     }
   }
 
-}
-
-@media (max-width: 600px) {
-  .Header_Buttons_Register {
-    display: none !important;
-  }
 }
