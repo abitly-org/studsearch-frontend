@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.8d459c95.chunk.css",
-    "main.js": "/static/js/main.5807896b.chunk.js",
-    "main.js.map": "/static/js/main.5807896b.chunk.js.map",
+    "main.css": "/static/css/main.e0967bee.chunk.css",
+    "main.js": "/static/js/main.a4bc7961.chunk.js",
+    "main.js.map": "/static/js/main.a4bc7961.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.3e5c29b9.js",
     "runtime-main.js.map": "/static/js/runtime-main.3e5c29b9.js.map",
     "static/js/2.00a08938.chunk.js": "/static/js/2.00a08938.chunk.js",
     "static/js/2.00a08938.chunk.js.map": "/static/js/2.00a08938.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.8d459c95.chunk.css.map": "/static/css/main.8d459c95.chunk.css.map",
+    "static/css/main.e0967bee.chunk.css.map": "/static/css/main.e0967bee.chunk.css.map",
     "static/js/2.00a08938.chunk.js.LICENSE.txt": "/static/js/2.00a08938.chunk.js.LICENSE.txt",
     "static/media/Arrow.b3a7173b.svg": "/static/media/Arrow.b3a7173b.svg",
     "static/media/index.scss": "/static/media/pen.d7ccdbdf.svg",
@@ -51,7 +51,7 @@
   "entrypoints": [
     "static/js/runtime-main.3e5c29b9.js",
     "static/js/2.00a08938.chunk.js",
-    "static/css/main.8d459c95.chunk.css",
-    "static/js/main.5807896b.chunk.js"
+    "static/css/main.e0967bee.chunk.css",
+    "static/js/main.a4bc7961.chunk.js"
   ]
 }
