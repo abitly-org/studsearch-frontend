@@ -32,6 +32,42 @@
   }
 }
 
+.RegisterCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+
+  width: 100%;
+  min-height: 320px;
+
+  padding: 16px;
+  box-sizing: border-box;
+
+  border-radius: 15px;
+  box-shadow: -1px 0px 4px rgba(202, 201, 199, 0.4),
+              2px 2px 4px rgba(210, 207, 204, 0.4);
+              // inset 0px -2px 0px $accent;
+
+  > img {
+    width: 150px;
+    margin: 20px 0;
+  }
+  > h4 {
+    margin-bottom: 20px;
+  }
+  > p {
+    max-width: 350px;
+  }
+
+  > .Button {
+    align-self: stretch;
+    margin-top: auto;
+    justify-self: flex-end;
+  }
+}
+
 .StudentCard {
   display: flex;
   flex-direction: column;
@@ -42,7 +78,7 @@
   padding: 16px;
   box-sizing: border-box;
 
-  border-radius: 4px;
+  border-radius: 15px;
   box-shadow: -1px 0px 4px rgba(202, 201, 199, 0.4),
               2px 2px 4px rgba(210, 207, 204, 0.4);
               // inset 0px -2px 0px $accent;
@@ -74,13 +110,15 @@
 
     margin-bottom: 16px;
   }
-  > .Specialty, > .University {
+  > .Specialty,
+  > .University {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 8px;
     > img {
       flex: 0 0 auto;
+      align-self: flex-start;
     }
     > p {
       margin-top: 2px;
@@ -88,11 +126,11 @@
   }
   > .University > img {
     width: 24px;
-    margin: 8px 12px 0 4px;
+    margin: 8px 12px 8px 4px;
   }
   > .Specialty > img {
     width: 32px;
-    margin: 0 8px 0 0px;
+    margin: 0 8px 0 0;
   }
   > .Bio {
     position: relative;
@@ -139,6 +177,10 @@
           margin: 0 8px;
           transition: fill $duration ease-in-out;
         }
+        
+        @media (max-width: 375px) {
+          font-size: 16px;
+        }
       }
       &:hover {
         > p {
@@ -149,7 +191,7 @@
         }
       }
 
-      border-radius: 4px;
+      border-radius: 10px;
       &.telegram {
         &:before {
           content: '';

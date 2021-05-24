@@ -1,6 +1,46 @@
 const ua = {
+    'title': 'StudSearch',
+    'title-main': 'Дізнайся про навчання в університеті від студентів',
+    'title-main-region': 'Дізнайся про університети {{region}} від студентів',
+    'title-main-region-n': 'Дізнайся про університети {{region}} від {{n}} студентів',
+    'title-main-region-n_one': 'Дізнайся про університети {{region}} від {{n}} студента',
+    'title-main-region-n_two': 'Дізнайся про університети {{region}} від {{n}} студентів',
+    'title-main-region-n_few': 'Дізнайся про університети {{region}} від {{n}} студентів',
+    'title-main-region-n_many': 'Дізнайся про університети {{region}} від {{n}} студентів',
+    'title-main-region-n_other': 'Дізнайся про університети {{region}} від {{n}} студентів',
+    'title-main-university': 'Дізнайся про {{university}} від студентів',
+    'title-main-university-n': 'Дізнайся про {{university}} від {{n}} студентів',
+    'title-main-university-n_one': 'Дізнайся про {{university}} від {{n}} студента',
+    'title-main-university-n_two': 'Дізнайся про {{university}} від {{n}} студентів',
+    'title-main-university-n_few': 'Дізнайся про {{university}} від {{n}} студентів',
+    'title-main-university-n_many': 'Дізнайся про {{university}} від {{n}} студентів',
+    'title-main-university-n_other': 'Дізнайся про {{university}} від {{n}} студентів',
+    'block-students-header-region': 'Знайдено студентів {{region}}',
+    'block-students-header-region-n': 'Знайдено {{n}} студентів {{region}}',
+    'block-students-header-region-n_one': 'Знайден {{n}} студент {{region}}',
+    'block-students-header-region-n_two': 'Знайдено {{n}} студента {{region}}',
+    'block-students-header-region-n_few': 'Знайдено {{n}} студентів {{region}}',
+    'block-students-header-region-n_many': 'Знайдено {{n}} студентів {{region}}',
+    'block-students-header-region-n_other': 'Знайдено {{n}} студентів {{region}}',
+    'block-students-header-university': 'Знайдено студентів в {{university}}',
+    'block-students-header-university-n': 'Знайдено {{n}} студентів в {{university}}',
+    'block-students-header-university-n_one': 'Знайден {{n}} студент в {{university}}',
+    'block-students-header-university-n_two': 'Знайдено {{n}} студента в {{university}}',
+    'block-students-header-university-n_few': 'Знайдено {{n}} студентів в {{university}}',
+    'block-students-header-university-n_many': 'Знайдено {{n}} студентів в {{university}}',
+    'block-students-header-university-n_other': 'Знайдено {{n}} студентів в {{university}}',
+    'title-rating': 'Рейтинги університетів України',
+    'title-rating-region': 'Рейтинг університетів у {{region}}',
+    'title-rating-specialty': 'Рейтинг університетів на {{specialty}} спеціальності',
+    'title-rating-branch': 'Рейтинг університетів у галузі \'{{branch}}\'',
+    'about-title': 'Про нас',
+    'help-title': 'Як нам допомогти',
+    'register-title': 'Реєстрація',
+    'cabinet-title': 'Мій кабінет',
+    'privacy-policy-title': 'Політика конфіденційності',
+
     'header-login': 'Вхід',
-    'header-register': 'Зареєструватися',
+    'header-register': 'Зареєструватись',
 
     'header-tab-main': 'Студенти',
     'header-tab-about': 'Про нас',
@@ -11,7 +51,7 @@ const ua = {
     'header-cabinet': 'Мій кабінет',
 
 
-    'block-discover-header': 'Дізнайся про ВНЗ від студентів, які там навчаються',
+    'block-discover-header': 'Дізнайся про університет від студентів',
     'block-discover-question1': 'Яку спеціальність обрати?',
     'block-discover-question2': 'Як навчають в університеті?',
     'block-discover-question3': 'Які умови в гуртожитку?',
@@ -39,8 +79,9 @@ const ua = {
     'block-stats-students': 'Студентів',
     'block-stats-universities': 'Університетів',
     'block-stats-header': 'В одному місці',
-    'block-stats-text1': 'Обрати заклад вищої освіти — це надзвичайно важливо та складно! Тому ми прагнемо допомогти абітурієнтам.',
-    'block-stats-text2': 'Разом з StudSearch.org абітурієнтам більше не доведеться робити один з найважливіших виборів життя наосліп.',
+    // 'block-stats-text1': 'Обрати заклад вищої освіти — це надзвичайно важливо та складно! Тому ми прагнемо допомогти абітурієнтам.',
+    // 'block-stats-text2': 'Разом з StudSearch.org абітурієнтам більше не доведеться робити один з найважливіших виборів життя наосліп.',
+    'block-stats-text1': 'Готові розповісти про своє навчання',
     'block-stats-register': 'Стати волонтером',
 
 
@@ -54,9 +95,16 @@ const ua = {
     'student-course-4': "5 курс",
     'student-course-5': "6 курс",
     'student-course-6': "Випускник",
-    'students-end': 'Це всі волонтери. Стань волонтером і ти!',
-    'students-empty': 'Таких студентів в нас ще нема. Ти можеш це виправити!',
+    'students-end': 'Це всі волонтери. ',
+    'students-end-ad': 'Стань волонтером і ти!',
+    'students-empty': 'Таких студентів в нас ще нема. ',
+    'students-empty-ad': 'Ти можеш це виправити!',
     'students-error': 'Виникла помилка, спробуйте пізніше.',
+    'students-load-more': 'Завантажити ще студентів',
+
+    'register-header': 'Поділись досвідом',
+    'register-text': 'Розкажи про своє навчання\nта студенське життя абітурієнтам',
+    'register-button': 'Стати волонтером',
 
     'help-header': 'Як ви можете нам допомогти',
     'help-ad-header': 'Залиште посилання на StudSearch',
@@ -95,7 +143,7 @@ const ua = {
     'registration-checkBox-confidential-part-2': 'Політикою конфіденційності',
     'registration-checkBox-helper-text': 'Ми використовуемо Telegram для зв’язку між абітурієнтом та студентом, тому просимо тебе підтвердити свій аккаунт через Telegram-бота',
     'registration-confirm-telegram': 'Підтвердити Telegram та зареєструватись',
-    'registration-back': 'Назад',
+    'back': 'Назад',
     'error-required': 'Це поле обов\'язкове.',
 
 
@@ -118,7 +166,7 @@ const ua = {
     'cabinet-social-user-name-write': ' Введіть',
     'cabinet-education': 'Освіта',
     'cabinet-region': 'Регіон',
-    'cabinet-university': 'Вищій навчальний заклад',
+    'cabinet-university': 'Заклад вищої освіти',
     'cabinet-faculty': 'Факультет',
     'cabinet-speciality': 'Спеціальність',
     'cabinet-course': 'Курс',
@@ -130,7 +178,7 @@ const ua = {
     'cabinet-delete-link': 'Хочеш видалити обліковий запис?',
 
     'block-students-region': 'Регіон',
-    'block-students-university': 'Вищій навчальний заклад',
+    'block-students-university': 'Заклад вищої освіти',
     'block-students-faculty': 'Факультет',
     'block-students-specialty': 'Спеціальність',
 
@@ -152,7 +200,10 @@ const ua = {
     'stats-specialties': 'Спеціальності',
     'stats-load-more': 'Завантажити ще',
 
-    'from': 'з'
+    'from': 'з',
+
+    'footer-love': 'Зроблено з ❤️',
+    'footer-for': 'Абітурієнтами для абітурієнтів'
 };
 const ru = {
     'header-login': 'Войти',
@@ -191,8 +242,9 @@ const ru = {
     'block-stats-students': 'Студентов',
     'block-stats-universities': 'Университетов',
     'block-stats-header': 'В одном месте',
-    'block-stats-text1': 'Выбрать высшее учебное заведение — это очень важно и сложно! Поэтому мы стремимся помочь абитуриентам.',
-    'block-stats-text2': 'Вместе с StudSearch.org абитуриентам больше не придется делать один из важнейших выборов жизни вслепую.',
+    // 'block-stats-text1': 'Выбрать высшее учебное заведение — это очень важно и сложно! Поэтому мы стремимся помочь абитуриентам.',
+    // 'block-stats-text2': 'Вместе с StudSearch.org абитуриентам больше не придется делать один из важнейших выборов жизни вслепую.',
+    'block-stats-text1': 'Готовы поделиться своим опытом',
     'block-stats-register': 'Стать волонтёром',
 
     'block-team-header': 'Наша команда',
@@ -210,6 +262,11 @@ const ru = {
     'student-course-5': "6 курс",
     'student-course-6': "Выпускник",
     'students-error': 'Произошла ошибка, попробуйте позже.',
+    'students-end': 'Это все волонтёры. ',
+    'students-end-ad': 'Стань волонтёром и ты!',
+    'students-empty': 'Таких студентов у нас ещё нет. ',
+    'students-empty-ad': 'Ты можешь это исправить!',
+    'students-load-more': 'Загрузить ещё студентов',
 
     'help-header': 'Как вы можете нам помочь',
     'help-ad-header': 'Разместите ссылку на StudSearch',
@@ -248,7 +305,7 @@ const ru = {
     'registration-checkBox-confidential-part-2': 'Политикой конфиденциальности',
     'registration-checkBox-helper-text': 'Мы используем Telegram для связи между абитуриентом и студентом, поэтому просим тебя подтвердить свой аккаунт через Telegram-бота',
     'registration-confirm-telegram': 'Подтвердить Telegram и зарегистрироваться',
-    'registration-back': 'Назад',
+    'back': 'Назад',
     'error-required': 'Это обязательное поле.',
 
     'cabinet-main': 'Личный профиль',
@@ -303,7 +360,10 @@ const ru = {
     'stats-specialties': 'Специальности',
     'stats-load-more': 'Загрузить ещё',
 
-    'from': 'из'
+    'from': 'из',
+
+    'footer-love': 'Сделано с ❤️',
+    'footer-for': 'Абитуриентами для абитуриентов'
 };
 const en = {
     'header-login': 'Sign in',
@@ -342,8 +402,9 @@ const en = {
     'block-stats-students': 'Students',
     'block-stats-universities': 'Universities',
     'block-stats-header': 'In one place',
-    'block-stats-text1': 'Choosing university is very important and difficult! That\'s why we strive to help future students.',
-    'block-stats-text2': 'Together with StudSearch.org applicants do not need to make one of the most important choices blindly.',
+    // 'block-stats-text1': 'Choosing university is very important and difficult! That\'s why we strive to help future students.',
+    // 'block-stats-text2': 'Together with StudSearch.org applicants do not need to make one of the most important choices blindly.',
+    'block-stats-text1': 'Are ready to share their experience',
     'block-stats-register': 'Become a volunteer',
     'error-required': 'Mandatory field.',
 
@@ -382,6 +443,11 @@ const en = {
     'student-course-5': '6 course',
     'student-course-6': 'Graduate',
     'students-error': 'An error occured, try again later.',
+    'students-end': 'These are all volunteers. ',
+    'students-end-ad': 'Become a volunteer yourself!',
+    'students-empty': 'We do not have such students yet. ',
+    'students-empty-ad': 'You can fix it!',
+    'students-load-more': 'Load more students',
 
     'from': 'from',
 
@@ -407,7 +473,12 @@ const en = {
     'stats-specialties': 'Specialties',
     'stats-load-more': 'Load more',
 
+    'back': 'Back',
+
     'cabinet-logout': 'Logout',
+
+    'footer-love': 'Made with ❤️',
+    'footer-for': 'By applicants for applicants'
 };
 
 export default {

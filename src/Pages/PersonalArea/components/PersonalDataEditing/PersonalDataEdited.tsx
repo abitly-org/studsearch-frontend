@@ -75,8 +75,9 @@ export default function PersonalDataEdited({
                 </div>
                 <MultiInput
                     value={cabinet?.about ?? ''}
-                    onChange={e => setCabinet({ ...cabinet, about: e?.target?.value })}
+                    onChange={about => setCabinet({ ...cabinet, about })}
                     field={false}
+                    max={120}
                 />
             </div>
         </>

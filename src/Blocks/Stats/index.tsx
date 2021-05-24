@@ -6,6 +6,7 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import { H1, P1, P2 } from '../../Components/Text';
 import { count } from '../../Helpers/api';
 import useLoad from '../../Helpers/useLoad';
+import { useRegistered } from '../../Helpers/session';
 
 import student1 from './student1.png';
 import student2 from './student2.png';
@@ -18,6 +19,8 @@ import './index.scss';
 
 const BlockStats = () => {
   const { t } = useTranslation();
+  
+  const registered = useRegistered();
 
   const stat = useLoad(() => count());
 
@@ -39,13 +42,15 @@ const BlockStats = () => {
         <br />
         <br />
         <P2>{t('block-stats-text1')}</P2>
+        {/* <br />
+        <P2>{t('block-stats-text2')}</P2> */}
         <br />
-        <P2>{t('block-stats-text2')}</P2>
         <br />
-        <br />
-        <Button to="/register">
-          <P2>{t('block-stats-register')}</P2>
-        </Button>
+        { !registered &&
+          <Button to="/register">
+            <P2>{t('block-stats-register')}</P2>
+          </Button>
+        }
       </div>
       <div className="LeftBg">
         <span></span>

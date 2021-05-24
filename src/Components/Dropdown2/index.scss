@@ -27,7 +27,7 @@ $transitionDuration: 0.08s;
       border-color: #2653AF;
       > .Arrow {
         stroke: #2653AF;
-        transform: rotate(180deg);
+        transform: rotate(0deg);
       }
       > .Name.float {
         color: #2653AF;
@@ -68,8 +68,12 @@ $transitionDuration: 0.08s;
       transition-property: top, color, font-size, background-color;
       font-size: 16px;
       opacity: 1;
+      border-radius: 8px;
       &.float {
         top: -8px;
+      }
+      @media (max-width: 375px) {
+        font-size: 14px;
       }
     }
 
@@ -81,6 +85,7 @@ $transitionDuration: 0.08s;
 
       top: 17px;
       right: 19px;
+      transform: rotate(180deg);
     }
 
     > .Error {
@@ -184,7 +189,7 @@ $transitionDuration: 0.08s;
       border-left: none;
       border-right: none;
       border-radius: 0;
-      padding: 22px 0 8px 0;
+      padding: 22px 45px 8px 0;
 
       border-color: #D3D3D3;
 

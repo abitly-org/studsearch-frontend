@@ -6,14 +6,14 @@ import {useTranslation} from "react-i18next";
 interface textArea {
     name?: string;
     value: string;
-    onChange: ((event: React.ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
+    onChange?: ((str: string) => void);
     field?: boolean;
+
+    max?: number;
 }
 
-function MultiInput(props: textArea) {
+function MultiInput({name, value, onChange, field, max}: textArea) {
     const [focus, setFocus] = useState(false);
-    const {name, value, onChange, field} = props;
-
     function handleKeyDown(e: any) {
         e.target.style.height = 'inherit';
         e.target.style.height = Math.min(e.target.scrollHeight, 300) + "px";
@@ -29,7 +29,12 @@ function MultiInput(props: textArea) {
                   onInput={handleKeyDown}
                   name={name}
                   value={value}
-                  onChange={onChange}
+                  onChange={e => {
+                    let value = e?.target?.value;
+                    if (max)
+                        value = value.substring(0, max);
+                    onChange?.(value);
+                  }}
                   onMouseEnter={() => {
                       setFocus(!focus)
                   }}
@@ -46,6 +51,11 @@ function MultiInput(props: textArea) {
             </div>
             <div className={`InputBoxText`}>
                 {field? <p>{t('registration-about-helper-text')}</p>: null}
+                { max &&
+                    <span className={cx('count', { max: value?.length >= max })}>
+                        {value?.length}{' / '}{max}
+                    </span>
+                }
             </div>
         </div>
     )

@@ -59,6 +59,9 @@ export type CustomDropdownProps<I> = {
 export const RegionDropdown = (props: CustomDropdownProps<Region>) => {
   const { i18n } = useTranslation();
   const allRegions = useLoad(() => getRegions().then(r => r?.regions), []);
+  if (allRegions)
+    // @ts-ignore
+    window.regionIds = allRegions?.map?.(r => r?.id);
   return (
     <Dropdown2<Region>
       {...props}
@@ -93,12 +96,12 @@ export const UniversityDropdown = ({
       renderItem={(r, inDropdown) => 
         inDropdown ? 
           <Item
-            children={takeString(r?.name, i18n.language)}
+            children={(!inDropdown && r?.short) || takeString(r?.name, i18n.language)}
             studentsCount={Number(r?.studentsCount)}
             inDropdown={inDropdown}
           />
           :
-          takeString(r?.name, i18n.language)
+          (!inDropdown && r?.short) || takeString(r?.name, i18n.language)
       }
 
       pagination={React.useCallback((count, offset, query) => 
@@ -130,13 +133,10 @@ export const SpecialityDropdown = ({
       }
 
       pagination={React.useCallback(async (count, offset, query) => 
-        (universities && universities?.length > 0) ? 
-          getSpecialities(query, universities?.map?.(u => u?.id), count, offset)
-          :
-          [],
+        getSpecialities(query, universities?.map?.(u => u?.id), count, offset),
         [ universities ]
       )}
-      disabled={universities?.length === 0}
+      // disabled={universities?.length === 0}
       equals={(a, b) => a?.id === b?.id}
     />
   );
@@ -163,13 +163,10 @@ export const FacultyDropdown = ({
       }
 
       pagination={React.useCallback(async (count, offset, query) => 
-        (universities && universities?.length > 0) ? 
-          getFaculties(query, universities?.map?.(u => u?.id), count, offset)
-          :
-          [],
+        getFaculties(query, universities?.map?.(u => u?.id), count, offset),
         [ universities ]
       )}
-      disabled={universities?.length === 0}
+      // disabled={universities?.length === 0}
 
       equals={(a, b) => a?.id === b?.id}
     />

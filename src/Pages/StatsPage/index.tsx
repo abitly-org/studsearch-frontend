@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
@@ -18,6 +19,8 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import { Branch, Faculty, Speciality, getBranches, getFaculties, getSpecialities, getUniversities, Region, University, getRegions } from './api2';
 import useLoad from '../../Helpers/useLoad';
 import { Link } from 'react-router-dom';
+import { regionInlined, useQueryIdName } from '../../Blocks/Students';
+import useTitle from '../../Helpers/useTitle';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -25,11 +28,11 @@ type PositionType = 'budget' | 'contract';
 const StatsPage = () => {
   const { t, i18n } = useTranslation();
 
-  const [branch, setBranch] = React.useState<Branch | null>(null);
-  const [specialities, setSpecialities] = React.useState<Speciality[]>([]);
-  const [regions, setRegions] = React.useState<Region[]>([]);
+  const [branches, setBranches] = useQueryIdName<Branch[]>([], 'branches');
+  const [specialities, setSpecialities] = useQueryIdName<Speciality[]>([], 'specialties');
+  const [regions, setRegions] = useQueryIdName<Region[]>([], 'regions');
 
-  React.useEffect(() => setSpecialities([]), [ branch ]);
+  React.useEffect(() => setSpecialities([]), [ branches ]);
 
   const [expanded, setExpanded] = React.useState<number | null>(null);
 
@@ -39,7 +42,7 @@ const StatsPage = () => {
     React.useCallback(
       (count, offset) => 
         getUniversities(
-          branch?.id,
+          branches?.map?.(b => b?.id),
           specialities?.map?.(s => s?.id), 
           regions?.map?.(r => r?.id),
           positionType,
@@ -47,11 +50,38 @@ const StatsPage = () => {
           offset,
           true
         ), 
-      [ positionType, specialities, regions, branch ])
+      [ positionType, specialities, regions, branches ])
   );
+
+  let title = t('title-rating');
+  if (regions?.length === 1 && 
+      specialities?.length === 0 &&
+      branches?.length === 0) {
+    const region = regionInlined?.[regions?.[0]?.id] ?? regions?.[0]?.name;
+    title = t('title-rating-region', { region })
+  } else if (regions?.length === 0 &&
+           specialities?.length === 1 &&
+           branches?.length === 0) {
+    const specialty = (specialities?.[0]?.code ? specialities?.[0]?.code + ' ' : '') + specialities?.[0]?.name;
+    title = t('title-rating-specialty', { specialty });
+  } else if (regions?.length === 0 &&
+            specialities?.length === 0 &&
+            branches?.length === 0) {
+    const branch = (branches?.[0]?.name);
+    if (branch)
+      title = t('title-rating-branch', { branch });
+  }
+
+  useTitle(t('title') + ' — ' + title);
 
   return (
     <div className='StatsPage'>
+      {/* <Helmet>
+        <title>StudSearch — Рейтинги університетів України</title>
+        <meta name="title" content="StudSearch — Рейтинги університетів України" />
+        <meta property="og:title" content="StudSearch — Рейтинги університетів України" />
+        <meta name="twitter:title" content="StudSearch — Рейтинги університетів України" />
+      </Helmet> */}
       <div className='Content'>
         <H2>{t('stats-header')}</H2>
         <br />
@@ -68,9 +98,9 @@ const StatsPage = () => {
               []
             )}
             renderItem={v => v?.name}
-            multiple={false}
-            value={branch}
-            onChange={setBranch}
+            multiple={true}
+            value={branches}
+            onChange={setBranches}
 
             equals={(a, b) => a?.id === b?.id}
           />
@@ -80,10 +110,10 @@ const StatsPage = () => {
             name={t('stats-specialty')}
             // values={['1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь','1 Галузь', '2 Галузь', '3 Галузь']}
             pagination={React.useCallback(
-              (count, offset, query) => getSpecialities(branch?.id, [], undefined, undefined, count, offset, query),
-              [ branch ]
+              (count, offset, query) => getSpecialities(branches?.map?.(b => b?.id), [], undefined, undefined, count, offset, query),
+              [ branches ]
             )}
-            renderItem={v => v?.name}
+            renderItem={v => (v?.code ? v?.code + ' ' : '') + v?.name}
             multiple={true}
             value={specialities}
             onChange={setSpecialities}
@@ -119,8 +149,8 @@ const StatsPage = () => {
             {
               i18n.language?.startsWith?.('uk') &&
               (
-                branch ?
-                `Вищі навчальні заклади за галузю: ${branch?.name}` :
+                branches && branches?.length > 0 ?
+                `Вищі навчальні заклади за галузю: ${branches?.map?.(b => b?.name)?.join(', ')}` :
                 `Вищі навчальні заклади`
               )
             }
@@ -146,7 +176,7 @@ const StatsPage = () => {
             { universities.items.map((university, i) => 
               <UniversityComponent
                 place={i + 1}
-                branchId={branch?.id}
+                branchId={branches?.map?.(b => b?.id)}
                 positionType={positionType}
                 key={i}
                 expanded={expanded == university.id}
@@ -192,7 +222,7 @@ const UniversityComponent = ({
   place,
   university
 }: {
-  branchId?: number,
+  branchId: number | number[],
 
   expanded: boolean,
   setExpanded: (e: boolean) => void,
@@ -256,7 +286,7 @@ const Faculties = ({
 }: {
   university: University,
   speciality?: Speciality,
-  branchId?: number,
+  branchId: number | number[],
   positionType?: PositionType,
   root?: boolean
 }) => {
@@ -309,7 +339,7 @@ const Specialities = ({
 }: {
   university: University,
   faculty?: Faculty,
-  branchId?: number,
+  branchId: number | number[],
   positionType?: PositionType,
   root?: boolean
 }) => {
@@ -366,7 +396,7 @@ const FacultyComponent = ({
   faculty: Faculty,
   university: University,
   positionType?: PositionType,
-  branchId?: number,
+  branchId: number | number[],
   root?: boolean
 }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -413,7 +443,7 @@ const SpecialityComponent = ({
   place?: number,
   speciality: Speciality,
   university: University,
-  branchId?: number,
+  branchId: number | number[],
   positionType?: PositionType,
   root?: boolean
 }) => {

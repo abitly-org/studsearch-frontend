@@ -7,6 +7,7 @@ import {useTranslation} from "react-i18next";
 
 interface SocialItemProps {
   name: string;
+  social?: string;
   starter?: string;
   value: string | null;
   setValue?: (newValue: string) => void;
@@ -14,7 +15,7 @@ interface SocialItemProps {
   remove?: () => void;
 }
 
-export default function SocialInput({ name, starter, value, setValue, remove, onSave }: SocialItemProps) {
+export default function SocialInput({ name, social, starter, value, setValue, remove, onSave }: SocialItemProps) {
   const { t, i18n } = useTranslation();
 
   const title = `${t('cabinet-social-user-name')} ${name}`;
@@ -34,6 +35,7 @@ export default function SocialInput({ name, starter, value, setValue, remove, on
           onChange={setValue}
           title={title}
           placeholder={name}
+          name={social}
           onSave={onSave}
           starter={starter}
           onRemove={() => {

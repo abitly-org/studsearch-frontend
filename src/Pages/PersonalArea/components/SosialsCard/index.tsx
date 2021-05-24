@@ -37,6 +37,7 @@ export default function SocialCard({
               :
               <SocialItem
                 name={displayName}
+                social={name}
                 value={contacts?.[name]}
                 starter={({
                   'telegram': '@',

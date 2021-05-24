@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const useLoadPagination = <T extends unknown>(
   request?: (count: number, offset: number) => Promise<T[]>,
-  pageCount = 10,
+  pageCount: number | ((offset: number) => number) = 10,
   timeout?: number
 ) => {
   const [state, setState] = useState({
@@ -36,14 +36,19 @@ const useLoadPagination = <T extends unknown>(
     setTimeout(() => {
       if (unmounted)
         return;
-      request?.(pageCount, state.offset)
+      const count = (
+        typeof pageCount === 'function' ?
+          pageCount?.(state.offset) :
+          pageCount
+      );
+      request?.(count, state.offset)
         .then((res) => {
           if (unmounted)
             return;
           setState({
             ...state,
             items: [...state.items, ...res],
-            hasMore: res.length === pageCount,
+            hasMore: res.length === count,
             loading: false,
             offset: state.offset + res.length,
           });

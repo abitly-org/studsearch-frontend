@@ -17,7 +17,6 @@ const StudentsPage = () => {
 
   return (
     <div className="StudentsPage">
-      <Header/>
       <div className="Brief" style={{ backgroundImage: `url(${bg})` }}>
         <div>
           <div className="Info">

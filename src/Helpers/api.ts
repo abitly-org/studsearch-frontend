@@ -4,14 +4,14 @@ export const DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'developmen
 
 export const baseURL = DEV ? "https://localhost.test" : "https://studsearch.org";
 // export const endpoint = DEV ? "https://server.studsearch.org:2324" : "https://server.studsearch.org:2323";
-export const endpoint = DEV ? "https://06dc153833d2.ngrok.io" : "https://server.studsearch.org:2323";
+export const endpoint = DEV ? "http://192.168.3.7:2323" : "https://server.studsearch.org:2323";
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
 const arr = (v?: any | any[]) : string | undefined => 
     v ? (Array.isArray(v) ? v.join(',') : String(v)) : undefined
 
-const getQueryString = (url = window.location.href) => {
+export const getQueryString = (url = window.location.href) => {
     const questionMarkIndex = url.indexOf('?');
     if (questionMarkIndex < 0)
         return '';
@@ -52,7 +52,7 @@ export const makeQuery = (query?: {[key: string]: QueryValue}) => {
         return '';
     if (Object.keys(query).length === 0)
         return '';
-    return '?' + 
+    const queryString = (
         Object.entries(query)
             .filter(([key, value]) => value !== undefined && value !== null && !((typeof value === 'string' || Array.isArray(value)) && value.length === 0))
             .map(([key, value]) => {
@@ -62,7 +62,11 @@ export const makeQuery = (query?: {[key: string]: QueryValue}) => {
                     return value.map(val => encodeURIComponent(key) + '=' + encodeURIComponent(val)).join('&');
                 return encodeURIComponent(key) + '=' + encodeURIComponent(value)
             })
-            .join('&');
+            .join('&')
+    );
+    if (queryString)
+        return '?' + queryString;
+    return '';
 };
 export const getQuery = (name : string, url : string = window.location.href) => {
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -196,6 +200,7 @@ export const getRegions = async () : Promise<RegionsData> => {
 export interface University {
     id: number;
     name: FieldEntry;
+    short?: string;
     studentsCount?: number;
 };
 export const getUniversities = (query: string = '', regionId?: number | number[], count: number = 50, offset: number = 0) : Promise<University[]> => 
@@ -252,7 +257,7 @@ export const getStudents = async (
     specialityId?: number | number[],
     facultyId?: number | number[],
     courses?: number | number[]
-) : Promise<Student[]> =>
+) : Promise<[number, Student[]]> =>
   __reqjson("/students/", {
       regionId: arr(regionId),
       universityId: arr(universityId),
@@ -280,7 +285,8 @@ export const getStudents = async (
     
 export const Students = (regionId?: number, universityId?: number, facultyId?: number, specialityId?: number) =>
     new DataSource<Student>(async (_, count, offset) => 
-        await getStudents(count, offset, regionId, universityId, specialityId, facultyId),
+        await getStudents(count, offset, regionId, universityId, specialityId, facultyId)
+                .then(s => s?.[1]),
         12
     );
 
@@ -296,8 +302,38 @@ export const login = async (socialName: string, data: any) =>
 export const instagramLink = () =>
     `https://www.instagram.com/oauth/authorize?client_id=${instagramClientId}&redirect_uri=${baseURL}/callback/instagram/&response_type=code&scope=user_profile`
 
-export const count = async () : Promise<{studentsCount: number, universitiesCount: number}> =>
-    await __reqjson('/count/');
+export const count = async (
+    regionId?: number | number[],
+    universityId?: number | number[],
+    specialityId?: number | number[],
+    facultyId?: number | number[],
+    courses?: number | number[]
+) : Promise<{studentsCount: number, universitiesCount: number}> =>
+    await __reqjson(`/count/${makeQuery({
+        regionId: arr(regionId),
+        universityId: arr(universityId),
+        specialityId: arr(specialityId),
+        facultyId: arr(facultyId),
+        course: arr(courses)
+    })}`);
+
+export const getFilterNames = async (
+    regionId?: number | number[],
+    universityId?: number | number[],
+    specialityId?: number | number[],
+    facultyId?: number | number[]
+) : Promise<{
+    regions?: Region[],
+    universities?: University[],
+    specialties?: Speciality[],
+    faculties?: Faculty[],   
+}> => 
+    await __reqjson(`/filters/${makeQuery({
+        regionId: arr(regionId),
+        universityId: arr(universityId),
+        specialityId: arr(specialityId),
+        facultyId: arr(facultyId)
+    })}`)
 
 export const register = async (
     name: string,

@@ -29,7 +29,7 @@ const HeaderLanguages = () => {
             children={<P2>{text}</P2>}
             onClick={() => {
               i18n.changeLanguage(code)
-              localStorage.setItem('studsearch-lng', code);
+              window?.localStorage?.setItem?.('studsearch-lng', code);
             }}
           />
         )
@@ -38,9 +38,89 @@ const HeaderLanguages = () => {
   )
 }
 
-const MobileMenu = ({ closeMenu, session, startRefreshing }: {
+const AuthButtons = ({ reverse, session, refreshing, setRefreshing, onClick }: {
+  session: ReturnType<typeof useSession>,
+  refreshing?: boolean,
+  setRefreshing?: (b: boolean) => void,
+  reverse?: boolean,
+  onClick?: () => void
+}) => {
+  const { t } = useTranslation();
+
+  const location = useLocation();
+  const atCabinet = location.pathname === '/cabinet/';
+
+  return (
+    <>
+      { session?.loading && !refreshing &&
+        <LoadingSpinner size={16} />
+      }
+      { !session?.verified && (!session?.loading || refreshing) && <>
+        { reverse ? 
+          <>
+            <Button
+              className="Header_Buttons_Register"
+              to='/register'
+              onClick={onClick}
+            >
+              <P2>{t('header-register')}</P2>
+            </Button>
+            <Button
+              className="Header_Buttons_Login"
+              href={session?.loginHref}
+              onClick={() => {
+                setRefreshing?.(true);
+                onClick?.();
+              }}
+              target='_blank' outline
+            >
+              <P2>{t('header-login')}</P2>
+            </Button>
+          </> : 
+          <>
+            <Button
+              className="Header_Buttons_Login"
+              href={session?.loginHref}
+              onClick={() => {
+                setRefreshing?.(true);
+                onClick?.();
+              }}
+              target='_blank' outline
+            >
+              <P2>{t('header-login')}</P2>
+            </Button>
+            <Button
+              className="Header_Buttons_Register"
+              to='/register'
+              onClick={onClick}
+            >
+              <P2>{t('header-register')}</P2>
+            </Button>
+          </>
+        }
+      </> }
+      { session?.verified && session?.studentUuid &&
+        <Link
+          className={cx('CabinetLink', { selected: atCabinet })}
+          to='/cabinet/'
+            
+          onClick={onClick}
+        >
+          <StudentPhoto
+            uuid={session?.studentUuid}
+            size={36}
+          />
+          <P1>{t('header-cabinet')}</P1>
+        </Link>
+      }
+    </>
+  )
+}
+
+const MobileMenu = ({ closeMenu, session, refreshing, startRefreshing }: {
   closeMenu?: () => void,
   session: ReturnType<typeof useSession>,
+  refreshing?: boolean,
   startRefreshing?: () => void
 }) => {
   const { i18n, t } = useTranslation();
@@ -48,13 +128,18 @@ const MobileMenu = ({ closeMenu, session, startRefreshing }: {
         location = useLocation();
   const atCabinet = location.pathname === '/cabinet/';
 
+  const closeAndScroll = () => {
+    window?.scrollTo?.(0, 0);
+    closeMenu?.();
+  }
+
   return (
     <div className="Header_Menu">
-      <Link className="Header_Logo" to='/' onClick={closeMenu}>
+      <Link className="Header_Logo" to='/' onClick={closeAndScroll}>
         <img alt="StudSearch" aria-label="StudSearch" src={logo} />
       </Link>
       <span className="Header_CloseButton" onClick={closeMenu}>
-        <RippleEffect />
+        <RippleEffect onClick={closeMenu} />
         <img src={close} />
       </span>
       <div className="Buttons">
@@ -64,50 +149,24 @@ const MobileMenu = ({ closeMenu, session, startRefreshing }: {
             className={cx('Page', { selected: location?.pathname === page?.path })}
             onClick={((page) => () => {
               history.push(page?.path, location?.state);
-              closeMenu?.();
+              closeAndScroll?.();
             })(page)}
           >
-            <RippleEffect />
+            <RippleEffect onClick={((page) => () => {
+              history.push(page?.path, location?.state);
+              closeAndScroll?.();
+            })(page)} />
             <H3>{t(page?.textKey)}</H3>
           </div>
         ) }
         <div className="LoginButtons">
-          { (session?.verified && session?.studentUuid) ?
-            <Link
-              to='/cabinet/'
-              className={cx('CabinetLink', { selected: atCabinet })}
-              onClick={() => closeMenu?.()}
-            >
-              <StudentPhoto
-                uuid={session?.studentUuid}
-                size={36}
-              />
-              <P1>{t('header-cabinet')}</P1>
-            </Link>
-            :
-            <>
-              <Button
-                className="Header_Buttons_Register"
-                to='/register'
-                onClick={() => {
-                  closeMenu?.();
-                }}
-              >
-                <P2>{t('header-register')}</P2>
-              </Button>
-              <Button
-                className="Header_Buttons_Login"
-                href={session?.loginHref}
-                onClick={() => {
-                  startRefreshing?.();
-                  closeMenu?.();
-                }}
-                target='_blank' outline
-              >
-                <P2>{t('header-login')}</P2>
-              </Button>
-            </>
-          }
+          <AuthButtons
+            session={session}
+            refreshing={refreshing}
+            setRefreshing={startRefreshing}
+            reverse
+            onClick={closeAndScroll}
+          />
         </div>
         <HeaderLanguages />
       </div>
@@ -124,10 +183,7 @@ const MIN_TIMEOUT = 1000;
 const Header = () => {
   const { i18n, t } = useTranslation();
 
-  const history = useHistory(),
-        location = useLocation();
-  const atCabinet = location.pathname === '/cabinet/';
-
+  const history = useHistory();
   const session = useSession();
 
   const [atTop, setAtTop] = React.useState(true);
@@ -159,6 +215,7 @@ const Header = () => {
       <MobileMenu
         closeMenu={() => setMobileMenu(null)}
         session={session}
+        refreshing={refreshing}
         startRefreshing={() => setRefreshing(true)}
       />
     );
@@ -177,38 +234,17 @@ const Header = () => {
               className="Header_MenuButton"
               onClick={openMobileMenu}
             >
-              <RippleEffect />
+              <RippleEffect
+                onClick={openMobileMenu}
+              />
               <img src={menu} />
             </span>
             <span className="Header_Buttons">
-              { session?.loading &&
-                <LoadingSpinner size={16} />
-              }
-              { !session?.verified && !session?.loading && <>
-                <Button
-                  className="Header_Buttons_Login"
-                  href={session?.loginHref}
-                  onClick={() => setRefreshing(true)}
-                  target='_blank' outline
-                >
-                  <P2>{t('header-login')}</P2>
-                </Button>
-                <Button
-                  className="Header_Buttons_Register"
-                  to='/register'
-                >
-                  <P2>{t('header-register')}</P2>
-                </Button>
-              </> }
-              { session?.verified && session?.studentUuid &&
-                <Link to='/cabinet/' className={cx('CabinetLink', { selected: atCabinet })}>
-                  <StudentPhoto
-                    uuid={session?.studentUuid}
-                    size={36}
-                  />
-                  <P1>{t('header-cabinet')}</P1>
-                </Link>
-              }
+              <AuthButtons
+                session={session}
+                refreshing={refreshing}
+                setRefreshing={setRefreshing}
+              />
             </span>
           </div>
           <div className="Header_Bottom">
@@ -227,7 +263,7 @@ const pages = [
   { textKey: 'header-tab-main', path: '/' },
   { textKey: 'header-tab-rating', path: '/rating' },
   { textKey: 'header-tab-about', path: '/about', hideInMobile: true },
-  { textKey: 'header-tab-help', path: '/help', hideInMobile: true }
+  // { textKey: 'header-tab-help', path: '/help', hideInMobile: true }
   // { textKey: 'header-tab-students', path: '/students' }
 ];
 
@@ -242,8 +278,17 @@ const HeaderTabs = () => {
         const selected = location.pathname === path;
         return (
           <span key={key} className={cx('HeaderTabs_Tab', { selected, hideInMobile })}>
-            <span onClick={() => history.push(path)}>
-              <RippleEffect disabled={selected} />
+            <span onClick={() => {
+              history.push(path);
+              window?.scrollTo?.(0, 0);
+            }}>
+              <RippleEffect
+                onClick={() => {
+                  history.push(path);
+                  window?.scrollTo?.(0, 0);
+                }}
+                disabled={selected}
+              />
               <P2>{t(textKey)}</P2>
             </span>
           </span>

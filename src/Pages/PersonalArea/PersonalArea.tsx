@@ -17,6 +17,8 @@ import useSession from "../../Helpers/session";
 import { endpoint, Faculty, makeQuery, Region, Speciality, University } from "../../Helpers/api";
 import useLoad, { useLoadState } from "../../Helpers/useLoad";
 import Button from "../../Components/Button";
+import { ForceRedirect } from "../Registration/components/RegistrationForm/RegistrationForm";
+import useTitle from "../../Helpers/useTitle";
 
 export type Cabinet = {
   about?: string,
@@ -86,6 +88,8 @@ function PersonalArea() {
   const { i18n, t } = useTranslation();
   const history = useHistory();
 
+  useTitle(t('title') + ' — ' + t('cabinet-title'));
+
   const [refreshId, setRefreshId] = React.useState(0);
   const refresh = () => setRefreshId(r => r + 1);
 
@@ -109,8 +113,13 @@ function PersonalArea() {
     refresh();
   };
 
+  React.useEffect(() => {
+    if (session?.verified)
+      session.refresh();
+  }, [ session?.verified ]);
+
   if (session?.status && !session?.verified)
-    return <Redirect to='/' />;
+    return <ForceRedirect to='/' />;
 
   return (
     <>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { endpoint, makeQuery, __reqjson } from './api';
 import useLoad from './useLoad';
 
@@ -9,25 +10,31 @@ export type Session = {
   studentUuid?: string;
 }
 
+
 const getSession = async (token?: string | null) : Promise<Session> => 
   fetch(`${endpoint}/v2/session/`, { headers: token ? [['Auth-Token', token]] : undefined, credentials: 'include' })
     .then(r => r?.json?.());
 
 const useSession = () => {
-  const token = localStorage.getItem('studsearch-token');
+  const token = window?.localStorage?.getItem?.('studsearch-token');
   const [refreshId, setRefreshId] = React.useState(0);
   const refresh = () => setRefreshId(id => id + 1);
 
   const session = useLoad(async () => {
     const session = await getSession(token);
     if (session?.token) {
-      localStorage.setItem('studsearch-token', session?.token);
+      window?.localStorage?.setItem?.('studsearch-token', session?.token);
     } else if (!session?.status) {
-      localStorage.removeItem('studsearch-token');
+      window.localStorage.removeItem('studsearch-token');
       return await getSession();
     }
+    changeRegistered?.(session?.verified ?? false);
     return session;
   }, [ refreshId ]);
+
+  React.useEffect(() => {
+    changeRegistered?.(session?.verified ?? false);
+  }, [ session?.verified ])
 
   return {
     loading: session === null,
@@ -44,3 +51,23 @@ const useSession = () => {
   };
 }
 export default useSession;
+
+const useRegisteredSubscribers: {[id: string]: Function} = {};
+const changeRegistered = (newRegistered: boolean) => {
+  for (const id in (useRegisteredSubscribers ?? {}))
+    useRegisteredSubscribers?.[id]?.(newRegistered);
+}
+
+export const useRegistered = (): boolean => {
+  const [state, setState] = React.useState(false);
+
+  const id = React.useMemo(() => String(Math.random()), []);
+  React.useEffect(() => {
+    useRegisteredSubscribers[id] = setState;
+    return () => {
+      delete useRegisteredSubscribers[id];
+    }
+  }, [ id, setState ]);
+
+  return state;
+}

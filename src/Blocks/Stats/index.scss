@@ -52,9 +52,6 @@ $width: 1200px;
 
     > .p2 {
       color: #787A87;
-      @include mobile {
-        color: $black;
-      }
     }
     text-align: center;
     > h1, > button {

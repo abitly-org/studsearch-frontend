@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
 import { Courses, Student, studentLink, studentPhoto, takeString } from '../../Helpers/api';
-import { P1, P2, P3 } from '../Text';
+import { H4, P1, P2, P3 } from '../Text';
 
 import Button from '../Button';
 import RippleEffect from '../Button/RippleEffect';
@@ -11,6 +11,7 @@ import RippleEffect from '../Button/RippleEffect';
 import specialty from './specialty.svg';
 import university from './university.svg';
 import quote from './quote.svg';
+import register from './register.svg';
 import { ReactComponent as PhotoPlaceholder } from './photoPlaceholder.svg';
 import { ReactComponent as TelegramIcon } from './telegram.svg';
 import { ReactComponent as InstagramIcon } from './instagram.svg';
@@ -60,6 +61,21 @@ export const StudentPhoto = ({ uuid, size = 100 } : { uuid: string, size?: numbe
   );
 }
 
+export const RegisterCard = () => {
+  const { i18n, t } = useTranslation();
+
+  return (
+    <div className='RegisterCard'>
+      <img src={register} />      
+      <H4>{t('register-header')}</H4>
+      <P2>{t('register-text')}</P2>
+      <Button to="/register/">
+        <P2>{t('register-button')}</P2>
+      </Button>
+    </div>
+  )
+}
+
 const StudentCard = ({ student }: {
   student: Student
 }) => {
@@ -107,9 +123,13 @@ const StudentCard = ({ student }: {
               className={social}
               target="_blank"
               href={studentLink(student?.uuid, social)}
-              rel='nofollow noopener'
+              rel='noindex nofollow noopener'
             >
-              <RippleEffect />
+              <RippleEffect
+                onClick={() => {
+                  window.open(studentLink(student?.uuid, social), '_blank');
+                }}
+              />
               <P2>
                 {t('student-contact')}
                 { Icon ? <Icon /> : ' ' }

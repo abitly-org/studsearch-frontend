@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import Button from '../../Components/Button';
 import { H1, P1, P2 } from '../../Components/Text';
+import { useRegistered } from '../../Helpers/session';
 
 import bg from './bg.png';
 
@@ -10,6 +11,8 @@ import './index.scss';
 
 const BlockDiscover = () => {
   const { t } = useTranslation();
+  const registered = useRegistered();
+  
   return (
     <div className="BlockDiscover" style={{ backgroundImage: `url(${bg})` }}>
       <div>
@@ -31,9 +34,11 @@ const BlockDiscover = () => {
           {/* <Button to="/students">
             <P2>{t('block-discover-button')}</P2>
           </Button> */}
-          <Button to="/register">
-            <P2>{t('block-discover-button-register')}</P2>
-          </Button>
+          { !registered &&
+            <Button to="/register">
+              <P2>{t('block-discover-button-register')}</P2>
+            </Button>
+          }
         </div>
       </div>
     </div>

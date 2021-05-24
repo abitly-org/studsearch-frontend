@@ -26,13 +26,14 @@ import Dropdown2 from "../../../../Components/Dropdown2";
 import { CourseDropdown, FacultyDropdown, RegionDropdown, SpecialityDropdown, UniversityDropdown } from "../../../../Components/Dropdown2/custom";
 import useSession from "../../../../Helpers/session";
 import { Redirect } from "react-router-dom";
+import useUTM from "../../../../Helpers/useUTM";
 
 type FormProps = {};
 type CoursesType = { id?: number; name?: string };
 
 const useCachedState = <T extends unknown>(cache: string, initialState: T) => {
   const fromCache = React.useMemo(() => {
-    const str = localStorage.getItem('studsearch-reg-' + cache);
+    const str = window?.localStorage?.getItem?.('studsearch-reg-' + cache);
     if (!str)
       return null;
     try {
@@ -45,10 +46,18 @@ const useCachedState = <T extends unknown>(cache: string, initialState: T) => {
   return [
     state,
     (newState: T) => {
-      localStorage.setItem('studsearch-reg-' + cache, JSON.stringify(newState));
+      window?.localStorage?.setItem?.('studsearch-reg-' + cache, JSON.stringify(newState));
       setState(newState);
     }
   ] as const;
+}
+
+export const ForceRedirect = ({ to }: { to: string }) => {
+  React.useEffect(() => {
+    window.open(to, '_self');
+  }, [ ]);
+
+  return null;
 }
 
 export default function RegistrationForm() {
@@ -77,8 +86,10 @@ export default function RegistrationForm() {
   });
 
   const regions = React.useMemo(() => region ? [ region ] : [], [ region ]);
-  const universities = React.useMemo(() => university ? [ university ] : [], [ university ])
+  const universities = React.useMemo(() => university ? [ university ] : [], [ university ]);
 
+  const utm = useUTM(),
+        utmString = makeQuery(utm ?? {})?.substring?.(1);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.checked;
@@ -139,8 +150,13 @@ export default function RegistrationForm() {
   }
   const { t, i18n } = useTranslation();
 
+  React.useEffect(() => {
+    if (session?.verified)
+      session.refresh();
+  }, [ session?.verified ]);
+
   if (session?.verified)
-    return <Redirect to='/' />;
+    return <ForceRedirect to='/' />;
 
   return (
     <div className={`SignForm`}>
@@ -243,9 +259,8 @@ export default function RegistrationForm() {
         <MultiInput
           name={`textValue`}
           value={aboutMyself}
-          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setAboutMyself(event.target.value);
-          }}
+          onChange={setAboutMyself}
+          max={120}
           field={true}
         />
         <div className="checkBoxBlock">
@@ -268,29 +283,30 @@ export default function RegistrationForm() {
             {t('registration-checkBox-helper-text')}
         </p>
 
-          <div className="authTelegram">
-            <a
-              className={`regButton`}
-              onClick={SubmitStates}
-              href={`${endpoint}/v2/register/${makeQuery({
-                name: nameSurname,
-                gender,
-                about: aboutMyself,
-                universityID: university?.id,
-                facultyID: faculty?.id,
-                specialityID: speciality?.id,
-                course: course?.id,
-                hostel: false,
-                telegramPhoto: checkBoxState?.tg,
-                token: session?.token
-              })}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={tgPhoto} alt="tgPhoto" />
-              <span>{t('registration-confirm-telegram')}</span>
-            </a>
-           </div>
+        <div className="authTelegram">
+          <a
+            className={`regButton`}
+            onClick={SubmitStates}
+            href={`${endpoint}/v2/register/${makeQuery({
+              name: nameSurname,
+              gender,
+              about: aboutMyself,
+              universityID: university?.id,
+              facultyID: faculty?.id,
+              specialityID: speciality?.id,
+              course: course?.id,
+              hostel: false,
+              telegramPhoto: checkBoxState?.tg,
+              token: session?.token,
+              utm: utmString
+            })}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={tgPhoto} alt="tgPhoto" />
+            <span>{t('registration-confirm-telegram')}</span>
+          </a>
+        </div>
       </form>
     </div>
   );

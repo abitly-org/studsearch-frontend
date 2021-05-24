@@ -12,6 +12,7 @@ export interface IInput {
   onChange?: (newValue: string) => void;
   error?: boolean;
   title?: string;
+  name?: string;
   placeholder?: string;
   onFocusHandler?: Function;
   onSave?: () => void;
@@ -28,7 +29,7 @@ const useOnEnter = (callback: () => void) => {
 export default function Input(props: IInput): JSX.Element {
 
   const { t, i18n } = useTranslation();
-  const { value, onChange, onRemove, title, placeholder, editingHandler, onSave } = props;
+  const { value, onChange, onRemove, name, title, placeholder, editingHandler, onSave } = props;
   const starterString = props?.starter;
   const [focus, setFocus] = useState(!value || value.length === 0);
   const [emptyValue, setEmptyValue] = useState(false);
@@ -92,7 +93,18 @@ export default function Input(props: IInput): JSX.Element {
           }
         }}
         onChange={(event) => {
-          if (focus) onChange?.(event.target.value);
+          if (focus) {
+            let value = event.target.value;
+            const regexp = ({
+              telegram: /^(@|https?\:\/\/(?:www\.?)?t(?:elegram\.com|\.me)\/?)/g,
+              instagram: /^(@|https?\:\/\/(?:www\.?)instagram\.com\/?)/g,
+              linkedin: /^(https?\:\/\/(?:www\.?)linkedin\.com\/?(?:in\/?)?)/g,
+              facebook: /^(https?\:\/\/(?:www\.?)facebook\.com\/?)/g
+            } as any)[name ?? ''] as RegExp;
+            if (regexp)
+              value = value.replace(regexp, '');
+            onChange?.(value);
+          }
         }}
       />
       <span ref={starter} className='starter'>{starterString}</span>

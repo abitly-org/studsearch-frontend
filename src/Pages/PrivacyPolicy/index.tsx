@@ -1,12 +1,30 @@
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
+
 import { H1 } from '../../Components/Text';
+import useTitle from '../../Helpers/useTitle';
+import { GoBack } from '../Registration/registration';
 
 import './index.scss';
 
 const PrivacyPolicyPage = () => {
+  const { t } = useTranslation();
+  
+  useTitle(t('title') + ' — ' + t('privacy-policy-title'));
+
   return (
     <div className="PrivacyPolicy">
+      {/* <Helmet>
+        <title>StudSearch — Політика конфіденційності</title>
+        <meta name="title" content="StudSearch — Політика конфіденційності" />
+        <meta property="og:title" content="StudSearch — Політика конфіденційності" />
+        <meta name="twitter:title" content="StudSearch — Політика конфіденційності" />
+      </Helmet> */}
       <div className="Content">
+        <GoBack />
+        <br />
+        <br />
         <h1>Політика конфіденційності</h1>
         <p>Цей документ «Політика конфіденційності» (далі - за текстом - «Політика») являє собою правила використання сайтом - studsearch.org (далі - Організація) персональної інформації Користувача, яку Організація, включаючи всіх осіб, що входять в одну групу з Організацією, можуть отримати про Користувача під час використання ним будь-якого з сайтів, сервісів, служб, програм, продуктів або послуг Організації (далі - Сайт) і в ході виконання Сайтом будь-яких угод і договорів з Користувачем. Згода Користувача з Політикою, висловлену ним в рамках відносин з одним з перерахованих осіб, поширюється на всі інші перераховані особи. Використання Сайту означає беззастережну згоду Користувача з цією Політикою і зазначеними в ній умовами обробки його персональної інформації; в разі незгоди з цими умовами користувач повинен утриматися від використання Сайту.</p>
         <p>1. Загальні положення політики конфіденційності Організації</p>

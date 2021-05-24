@@ -72,6 +72,17 @@ export type Dropdown2State<T> = {
   pageCount?: number;
 });
 
+function getOffset( el: any ) {
+  var _x = 0;
+  var _y = 0;
+  while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+      _x += el.offsetLeft - el.scrollLeft;
+      _y += el.offsetTop - el.scrollTop;
+      el = el.offsetParent;
+  }
+  return { top: _y, left: _x };
+}
+
 const Dropdown2 = <T extends unknown>({
   className, style,
 
@@ -169,6 +180,16 @@ const Dropdown2 = <T extends unknown>({
       ref?.current?.scrollIntoView?.();
   }, [ error ]);
 
+  const scroll = () => {
+    setTimeout(() => {
+      if (!ref?.current)
+        return;
+      const bounds = getOffset(ref?.current);//ref?.current?.getBoundingClientRect?.();
+      if (bounds?.top)
+        window.scrollTo({ left: 0, top: Math.max(0, bounds?.top - 114), behavior: 'smooth' })
+    }, 10);
+  }
+
   return (
     <div
       ref={ref}
@@ -184,6 +205,8 @@ const Dropdown2 = <T extends unknown>({
       // onBlur={() => setOpen(false)}
       onClick={e => {
         if (!disabled) {
+          if (!open && isMobile())
+            scroll();
           setOpen(o => !o)
           e?.stopPropagation?.();
         }
@@ -192,7 +215,7 @@ const Dropdown2 = <T extends unknown>({
       <div
         className={cx('Value', { focused: open })}
       >
-        <P2 className={cx('Name', { float: hasValue || !!searchQuery })}>
+        <P2 className={cx('Name', { float: hasValue || (open && !!searchQuery) })}>
           {name}
         </P2>
         { state.multiple &&

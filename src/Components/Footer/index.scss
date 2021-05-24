@@ -1,0 +1,16 @@
+.Footer {
+  display: flex;
+  text-align: center;
+
+  padding: 16px 0;
+
+  p {
+    line-height: 50%;
+    &:first-child {
+      opacity: 0.7;
+    }
+    &:last-child {
+      opacity: 0.5;
+    }
+  }
+}

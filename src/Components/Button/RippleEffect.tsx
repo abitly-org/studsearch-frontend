@@ -3,6 +3,7 @@ import rgba from 'color-rgba';
 import { findDOMNode } from 'react-dom';
 
 import './RippleEffect.scss';
+import isMobile from '../../Helpers/isMobile';
 
 function takeXY(event : MouseEvent | TouchEvent) : [number, number] | null {
   if (event instanceof MouseEvent)
@@ -29,13 +30,15 @@ const nextFrame = (callback: () => void) => {
 class RippleEffect extends React.Component<{
   disabled?: boolean;
   color?: string;
-  onClick?: (event: MouseEvent) => void;
+  onClick?: () => void;
   duration?: number;
   fadeOutDuration?: number;
 }> {
 
+  container: React.RefObject<HTMLSpanElement>;
   constructor(props: any) {
     super(props);
+    this.container = React.createRef();
   }
 
   onDown(element: HTMLElement, event: MouseEvent | TouchEvent) {
@@ -67,7 +70,11 @@ class RippleEffect extends React.Component<{
     if (this.props.color)
       ripple.style.backgroundColor = `rgba(${rgba(this.props.color)?.slice(0, 3)}, 0.24)`;
     ripple.setAttribute('data-start', Date.now().toString());
-    ripple.addEventListener('click', e => this.props?.onClick?.(e));
+    // ripple.addEventListener('click', () => this.props?.onClick?.());
+    // ripple.addEventListener('touchend', e => {
+    //   e?.stopPropagation?.();
+    //   this.props?.onClick?.()
+    // });
     nextFrame(() => {
       ripple.style.top = (y - radius) + 'px';
       ripple.style.left = (x - radius) + 'px';
@@ -109,7 +116,7 @@ class RippleEffect extends React.Component<{
   onDownListener: any;
   onUpListener: any;
   componentDidMount() {
-    const div = findDOMNode(this);
+    const div = this.container.current;
     if (div === null)
       return;
     // @ts-ignore
@@ -132,8 +139,14 @@ class RippleEffect extends React.Component<{
   }
   
   render() {  
+    if (isMobile())
+      return null;
     return (
-      <span className="ripples">
+      <span
+        className="ripples"
+        ref={this.container}
+        // onClick={this.props.onClick}
+      >
         { this.props.children }
       </span>
     );

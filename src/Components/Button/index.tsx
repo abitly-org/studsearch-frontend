@@ -8,7 +8,7 @@ import RippleEffect from './RippleEffect';
 const Button = ({
   children,
   className, style,
-  href, target,
+  href, target = '_self',
   outline, to, onClick
 }: {
   children?: React.ReactNode,
@@ -35,8 +35,14 @@ const Button = ({
     return (
       <Link
         component={React.forwardRef<HTMLAnchorElement>(({ children, className, href, navigate, style} : any, ref) => (
-          <a ref={ref} href={href} target={target} style={style} className={className} onClick={onClick as any}>
-            <RippleEffect />
+          <a
+            ref={ref}
+            href={href} target={target}
+            style={style}
+            className={className}
+            onClick={onClick as any}
+          >
+            <RippleEffect onClick={() => window.open(href, target)} />
             {children}
           </a>
         ))}
@@ -48,7 +54,13 @@ const Button = ({
     );
   } else if (href) {
     return (
-      <a href={href} target={target} style={style} className={cx('Button', { outline }, className)} children={children} onClick={onClick as any} />
+      <a
+        href={href} target={target}
+        style={style}
+        className={cx('Button', { outline }, className)}
+        children={children}
+        onClick={onClick as any}
+      />
     )
   } else {
     return (
@@ -57,7 +69,9 @@ const Button = ({
         style={style}
         onClick={onClick as any}
       >
-        <RippleEffect />
+        <RippleEffect
+          onClick={onClick as any}
+        />
         {children}
       </button>
     );

@@ -142,10 +142,17 @@ $height: 100%;
   }
 }
 
+.authTelegram {
+  margin-bottom: 32px !important;
+}
+
 .GoBack {
   width: 75px;
   height: 28px;
-  margin: 21px 0 30px calc(50% - 40px);
+  // margin: 21px 0 30px calc(50% - 40px);
+  // text-align: center;
+  margin: 16px;
+
 }
 
 .GoBack-btn {
@@ -153,10 +160,32 @@ $height: 100%;
   letter-spacing: 0.05em;
   text-decoration-skip-ink: none;
   color: $black;
+  text-decoration: none;
+  cursor: pointer;
 
+  border-bottom: 2px solid $black;
   &:hover {
+    border-bottom: 2px solid #6a6a6a;
     color: #6a6a6a;
+    svg { 
+      fill: #6a6a6a;
+    }
   }
+
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  svg {
+    width: 16px;
+    margin-right: 8px;
+    flex: 0 0 auto;
+    fill: $black;
+  }
+  span {
+    flex: 1;
+  }
+
 }
 
 .specialityCourseBlock {

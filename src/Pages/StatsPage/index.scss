@@ -17,6 +17,9 @@ $width: 1100px;
     > h2 {
       width: 100%;
       text-align: center;
+      @include mobile {
+        font-size: 40px;
+      }
     }
 
     > .row {

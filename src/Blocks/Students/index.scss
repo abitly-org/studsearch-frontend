@@ -51,19 +51,25 @@ $width: 1200px;
         flex: 0 0 auto;
         margin-left: auto;
         p {
+          flex: 0 0 auto;
           text-align: center;
           vertical-align: middle;
         }
         img.student {
+          flex: 0 0 auto;
           height: 20px;
           margin: 0 6px 0 0;
           vertical-align: middle;
         }
         img.university {
+          flex: 0 0 auto;
           height: 18px;
           margin: 0 8px;
           vertical-align: middle;
         }
+
+        display: flex;
+        align-items: center;
       }
     }
   }
@@ -100,6 +106,22 @@ $width: 1200px;
 
     .space {
       height: 50%; 
+    }
+  }
+
+  .load-more-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .StudentsHeader {
+    margin: 32px 0;
+    h1, h2, h3, h4 {
+      @include mobile {
+        font-size: 20px;
+        line-height: 22px;
+      }
     }
   }
 }

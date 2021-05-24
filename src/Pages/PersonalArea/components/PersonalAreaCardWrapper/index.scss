@@ -3,8 +3,8 @@
 .card-outer {
   display: flex;
   justify-content: center;
-  padding: 20px 20px 0 20px;
-
+  padding: 20px 20px 4px 20px;
+  
   > .card-wrapper {
     padding: 40px;
     max-width: 1030px;
@@ -15,7 +15,7 @@
     font-family: Montserrat Alternates, sans-serif;
     color: #3b3c44;
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
 
     > .card-header {
       display: flex;

@@ -40,7 +40,7 @@ export type University = {
 } & Stats;
 
 export const getUniversities = (
-  branchId: number | undefined,
+  branchId: number | number[],
   specialityId: number[],
   regionId: number[],
   positionType: 'contract' | 'budget' = 'contract',
@@ -55,12 +55,11 @@ export const getUniversities = (
 export type Speciality = {
   id: number;
   name: string;
-
-  // TODO: stat
+  code?: string;
 } & Stats;
 
 export const getSpecialities = (
-  branchId: number | undefined,
+  branchId: number | number[],
   specialityId: number[],
   universityId: number | undefined,
   facultyId: number | undefined,
@@ -79,7 +78,7 @@ export type Faculty = {
 } & Stats;
 
 export const getFaculties = (
-  branchId: number | undefined,
+  branchId: number | number[],
   universityId: number,
   specialityId: number[] | number | undefined,
   count: number,

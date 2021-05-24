@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
+
 import Button from '../../Components/Button';
 import { H2, H3, H4, P1, P2, P3 } from '../../Components/Text';
+import useTitle from '../../Helpers/useTitle';
 
 import './index.scss';
 
 const HelpPage = () => {
   const { t } = useTranslation();
+
+  useTitle(t('title') + ' — ' + t('title-help'));
 
   return (
     <div className='HelpPage'>
