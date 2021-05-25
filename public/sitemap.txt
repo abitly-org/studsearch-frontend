@@ -1,5 +1,6 @@
 https://studsearch.org/
 https://studsearch.org/rating/
+https://studsearch.org/rating/about/
 https://studsearch.org/about/
 https://studsearch.org/register/
 https://studsearch.org/?region=4
