@@ -76,6 +76,15 @@ export const RegisterCard = () => {
   )
 }
 
+const removePostfix = (src: string, dest: string) => {
+  const l = Math.min(src?.length ?? 0, dest?.length ?? 0);
+  let i = 0;
+  for (i = 0; i < l; ++i)
+    if (src[src.length - i] !== dest[dest.length - i])
+      break;
+  return dest?.substring?.(0, dest?.length - i)?.trim?.();
+}
+
 const StudentCard = ({ student }: {
   student: Student
 }) => {
@@ -88,6 +97,10 @@ const StudentCard = ({ student }: {
   //   socials.push('viber')
   // if (Math.random() > 0.5)
   //   socials.push('facebook')
+
+  let universityName = takeString(student?.university, i18n.language),
+      facultyName = removePostfix(universityName, takeString(student?.faculty, i18n.language));
+  
 
   return (
     <div className="StudentCard">
@@ -102,11 +115,15 @@ const StudentCard = ({ student }: {
       </div>
       <div className="University">
         <img src={university} />
-        <P2>{ takeString(student?.university, i18n.language) }</P2>
+        <P2><b>{ universityName }</b></P2>
       </div>
       <div className="Specialty">
         <img src={specialty} />
-        <P2>{ takeString(student?.speciality, i18n.language) }</P2>
+        <P2>
+          <b>{ facultyName }</b>
+          <br />
+          { takeString(student?.speciality, i18n.language) }
+        </P2>
       </div>
       { student?.about &&
         <div className="Bio">
