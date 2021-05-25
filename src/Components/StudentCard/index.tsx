@@ -82,6 +82,8 @@ const removePostfix = (src: string, dest: string) => {
   for (i = 0; i < l; ++i)
     if (src[src.length - i] !== dest[dest.length - i])
       break;
+  if (i < 2)
+    return dest?.trim?.();
   return dest?.substring?.(0, dest?.length - i)?.trim?.();
 }
 
