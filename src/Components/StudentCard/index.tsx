@@ -109,7 +109,7 @@ const StudentCard = ({ student }: {
       <div className="Top">
         <StudentPhoto uuid={student?.uuid} />
         <div>
-          <P1>{student?.name}</P1>
+          <P1><b>{student?.name}</b></P1>
           <span className="Course">
             <P2>{t(`student-course-${student?.course}`)}</P2>
           </span>

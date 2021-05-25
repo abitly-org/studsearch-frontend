@@ -16,7 +16,7 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import Button from '../../Components/Button';
 import { FacultyDropdown, RegionDropdown, SpecialityDropdown, UniversityDropdown } from '../../Components/Dropdown2/custom';
 import { useRegistered } from '../../Helpers/session';
-import useTitle from '../../Helpers/useTitle';
+import useTitle, { useDescription } from '../../Helpers/useTitle';
 import plural from '../../Helpers/plural';
 
 export const regionInlined = {
@@ -282,6 +282,7 @@ const BlockStudents = ({
       header = t(plural('block-students-header-university-n', n), { university, n });
   }
   useTitle(title);
+  useDescription(t('description-main'));
 
   // const loadMore = React.useRef<HTMLSpanElement>(null);
   // useOnScroll?.(() => {

@@ -4,6 +4,7 @@ h1, h2, h3, h4, h5, h6, p,
 ul, li,
 button, input {
   font-family: 'Montserrat', sans-serif;
+  color: $black;
 }
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
@@ -12,9 +13,9 @@ h1, h2, h3, h4, h5, h6, p {
 
 h1 { 
   font-weight: 600;
-  font-size: 50px;
+  font-size: 40px;
   color: $black;
-  line-height: 60px;
+  line-height: 50px;
   @include mobile {
     font-size: 38px;
     line-height: 40px;
@@ -40,17 +41,17 @@ h4 {
 }
 
 p.p1 {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   color: $black;
-  line-height: 22px;
+  line-height: 24px;
   @include mobile {
     font-size: 16px;
     line-height: 20px;
   }
 }
 p.p2 {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   color: $black;
   line-height: 20px;
@@ -78,7 +79,7 @@ ul.ul {
   padding: 0;
   margin: 0;
   li {
-    padding-left: 1.5em;
+    padding-left: 1.2em;
     margin: 15px 0;
     &:before {
       position: absolute;
@@ -86,12 +87,13 @@ ul.ul {
       // font-size: 35px;
       // color: $carrot;
       content: "";
-      width: 12px;
-      height: 12px;
-      margin-top: 4px;
+      width: 9px;
+      height: 9px;
+      margin-top: 5px;
       border-radius: 50%;
       background-color: $carrot;
       left: 0;
     }
+
   }
 }

@@ -100,10 +100,12 @@
       > span.Course {
         margin-top: 8px;
         padding: 4px 8px;
-        background-color: $darkBlue;
+        background-color: $lightBlue;
         border-radius: 4px;
         > p {
-          color: $white;
+          color: $black;
+          font-weight: 500;
+          // color: $white;
         }
       }
     }
@@ -172,6 +174,7 @@
         justify-content: center;
         align-items: center;
         transition: color $duration ease-in-out;
+        font-weight: 500;
         > svg {
           width: 24px;
           margin: 0 8px;

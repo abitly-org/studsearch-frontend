@@ -7,7 +7,7 @@ import Button from '../../Components/Button';
 import Dropdown2 from '../../Components/Dropdown2';
 import Header from '../../Components/Header';
 import { Column, Row } from '../../Components/Layout';
-import { H1, H2, H3, P1, P3 } from '../../Components/Text';
+import { H1, H2, H3, H4, P1, P2, P3 } from '../../Components/Text';
 
 import { ReactComponent as Arrow } from '../../Components/Dropdown2/Arrow.svg';
 
@@ -20,7 +20,7 @@ import { Branch, Faculty, Speciality, getBranches, getFaculties, getSpecialities
 import useLoad from '../../Helpers/useLoad';
 import { Link } from 'react-router-dom';
 import { regionInlined, useQueryIdName } from '../../Blocks/Students';
-import useTitle from '../../Helpers/useTitle';
+import useTitle, { useDescription } from '../../Helpers/useTitle';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -73,6 +73,7 @@ const StatsPage = () => {
   }
 
   useTitle(t('title') + ' — ' + title);
+  useDescription(t('description-rating'));
 
   return (
     <div className='StatsPage'>
@@ -85,6 +86,45 @@ const StatsPage = () => {
       <div className='Content'>
         <H2>{t('stats-header')}</H2>
         <br />
+        <br />
+        <div className='Text'>
+          {
+            i18n.language === 'uk-UA' ?
+              <>
+                <br />
+                <P1><b>Потужний інструмент у порівнянні та пошуку закладів вищої освіти на основі вступної кампанії 2020 року</b></P1>
+                <br />
+                <br />
+                <P1>Він допоможе тобі:</P1>
+                <ul className='ul'>
+                  <li className='li'><P1>Порівняти заклади вищої освіти на основі вступної кампанії 2020 року</P1></li>
+                  <li className='li'><P1>Знайти, в яких закладах є цікавлячі тебе галузі / спеціальності / факультети</P1></li>
+                  <li className='li'><P1>Знайти та порівняти факультети і спеціальності</P1></li>
+                </ul>
+                <P1>Обирай потрібні тобі фільтри та порівнюй університети за обраними спеціальностями та параметрами!</P1>
+                <br />
+                <br />
+                <P1>Читай більше про те, <Link to="/rating/about">як рахуються рейтинги та як їх слід використовувати у нашій статті</Link>.</P1>
+              </>
+              :
+              <>
+                <br />
+                <P1><b>A powerful tool for comparing and finding higher education institutions based on the 2020 admission campaign</b></P1>
+                <br />
+                <br />
+                <P1>It can help you with:</P1>
+                <ul className='ul'>
+                  <li className='li'><P1>Сomparing higher education institutions on the basis of the 2020 admission campaign</P1></li>
+                  <li className='li'><P1>Finding out which institutions have the industry fields / specialties / faculties you are interested in</P1></li>
+                  <li className='li'><P1>Finding and comparing faculties and specialties</P1></li>
+                </ul>
+                <P1>Choose the filters you need and compare universities by selected specialties and parameters!</P1>
+                <br />
+                <br />
+                <P1>Read more about <Link to="/rating/about">how ratings are calculated and how they should be used in our article</Link>.</P1>
+              </>
+          }
+        </div>
         <br />
         <br />
         <div className='row'>

@@ -33,11 +33,24 @@ const ua = {
     'title-rating-region': 'Рейтинг університетів у {{region}}',
     'title-rating-specialty': 'Рейтинг університетів на {{specialty}} спеціальності',
     'title-rating-branch': 'Рейтинг університетів у галузі \'{{branch}}\'',
-    'about-title': 'Про нас',
-    'help-title': 'Як нам допомогти',
-    'register-title': 'Реєстрація',
-    'cabinet-title': 'Мій кабінет',
-    'privacy-policy-title': 'Політика конфіденційності',
+    'title-rating-about': 'Як ми рахуємо рейтинги університетів України',
+    'title-about': 'Про нас',
+    'title-help': 'Як нам допомогти',
+    'title-register': 'Реєстрація волонтера',
+    'title-cabinet': 'Мій кабінет',
+    'title-privacy-policy': 'Політика конфіденційності',
+
+    'description-main': 
+`Студенти готові відповісти на важливі питання абітурієнтів:
+Яку спеціальність обрати?
+Як навчають в університеті?
+Які умови в гуртожитку?
+Чи складно знайти роботу за спеціальністю?`,
+    'description-rating': 'Потужний інструмент у порівнянні та пошуку закладів вищої освіти на основі вступної кампанії 2020 року',
+    'description-rating-about': 'Потужний інструмент у порівнянні та пошуку закладів вищої освіти на основі вступної кампанії 2020 року',
+    'description-about': 'StudSearch — це сервіс, в якому ми прагнемо полегшити абітуріентам вибір ЗВО, факультета та спеціальності.',
+    'description-help': 'Ми шукаємо волонтерів!',
+    'description-register': 'Розкажи про своє навчання та студенське життя абітурієнтам',
 
     'header-login': 'Вхід',
     'header-register': 'Зареєструватись',
@@ -202,7 +215,7 @@ const ua = {
 
     'from': 'з',
 
-    'footer-love': 'Зроблено з ❤️',
+    'footer-love': 'Зроблено з',
     'footer-for': 'Абітурієнтами для абітурієнтів'
 };
 const ru = {
@@ -362,7 +375,7 @@ const ru = {
 
     'from': 'из',
 
-    'footer-love': 'Сделано с ❤️',
+    'footer-love': 'Сделано с',
     'footer-for': 'Абитуриентами для абитуриентов'
 };
 const en = {
@@ -477,7 +490,7 @@ const en = {
 
     'cabinet-logout': 'Logout',
 
-    'footer-love': 'Made with ❤️',
+    'footer-love': 'Made with',
     'footer-for': 'By applicants for applicants'
 };
 

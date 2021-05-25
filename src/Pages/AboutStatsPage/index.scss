@@ -1,0 +1,54 @@
+@import '../../palette.scss';
+
+$width: 1000px;
+
+.AboutStatsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 147px;
+  @include mobile {
+    padding-top: 125px;
+  }
+
+  .Content {
+    position: relative;
+
+    width: 100%;
+    max-width: $width;
+
+    padding: 0 32px;
+    box-sizing: border-box;
+
+    p {
+      margin: 4px 0;
+      color: $black;
+    }
+    h1 {
+      display: block;
+      margin: 0 0 16px 0;
+      text-align: center;
+      @include mobile {
+        font-size: 30px;
+        line-height: 30px;
+      }
+    }
+    h3 {
+      display: block;
+      @include mobile {
+        font-size: 20px;
+        line-height: 27px;
+      }
+      margin-bottom: 4px;
+    }
+
+    ul li {
+      margin: 8px 0;
+      &:before {
+        margin-top: 9px;
+      }
+    }
+  }
+}

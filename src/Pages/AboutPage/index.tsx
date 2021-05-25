@@ -8,11 +8,12 @@ import BlockStats from '../../Blocks/Stats';
 import './index.scss';
 
 import { useTranslation } from 'react-i18next';
-import useTitle from '../../Helpers/useTitle';
+import useTitle, { useDescription } from '../../Helpers/useTitle';
 
 const AboutPage = () => {
   const { t } = useTranslation();
   useTitle(t('title') + ' — ' + t('title-about'));
+  useDescription(t('description-about'));
 
   return (
     <div className="AboutPage">

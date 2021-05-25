@@ -9,9 +9,9 @@ import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import UserPageInfo from "../../Components/UserPageInfo/UserPageInfo";
 import {useTranslation} from "react-i18next";
 import Header from "../../Components/Header";
-import useTitle from '../../Helpers/useTitle';
+import useTitle, { useDescription } from '../../Helpers/useTitle';
 
-export const GoBack = () => {
+export const GoBack = ({ to }: { to?: string }) => {
     const { t } = useTranslation();
     const history = useHistory();
 
@@ -20,7 +20,7 @@ export const GoBack = () => {
             if (history?.length > 2)
                 history?.goBack?.();
             else
-                history?.push?.('/');
+                history?.push?.(to ?? '/');
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"></path><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"></path></svg>
             <span>{t('back')}</span>
@@ -31,7 +31,8 @@ export const GoBack = () => {
 export default function Registration(): JSX.Element {
     const { t } = useTranslation();
     
-    useTitle(t('title') + ' — ' + t('register-title'));
+    useTitle(t('title') + ' — ' + t('title-register'));
+    useDescription(t('description-register'));
 
     return (
         <div className="SignUpPage">

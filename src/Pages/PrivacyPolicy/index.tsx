@@ -11,7 +11,7 @@ import './index.scss';
 const PrivacyPolicyPage = () => {
   const { t } = useTranslation();
   
-  useTitle(t('title') + ' — ' + t('privacy-policy-title'));
+  useTitle(t('title') + ' — ' + t('title-privacy-policy'));
 
   return (
     <div className="PrivacyPolicy">

@@ -21,6 +21,12 @@ $width: 1100px;
         font-size: 40px;
       }
     }
+    
+    > .Text {
+      display: block;
+      margin: 0 auto;
+      // max-width: 1000px;
+    }
 
     > .row {
       display: flex;
@@ -258,12 +264,16 @@ $tableTransitionDuration: 0.08s;
                     0px -1px 8px rgba(120, 122, 135, 0.15);
         border-radius: 15px;
 
+        > span.column.place {
+          flex: 0 0 auto;
+        }
         > span.column.zno { 
           flex: 0;
           opacity: 0;
         }
         > span.column.name {
           text-align: center;
+          p { text-align: center; width: 100%; }
           .full { opacity: 1; display: inline-block; }
           .short { opacity: 0; display: none; }
         }
@@ -272,7 +282,7 @@ $tableTransitionDuration: 0.08s;
           opacity: 0;
         }
         > span.column.city {
-          flex: 0.4 0 0;
+          flex: 0 0 auto;
           padding-right: 16px;
         }
         > span.column.website {
@@ -381,12 +391,14 @@ $tableTransitionDuration: 0.08s;
 .university-content {
   display: none;
 
-  max-height: 0;
-  transition: all 0.1s ease-in-out;
+  // max-height: 0;
+  transform: scaleY(0);
+  transition: transform 0.1s ease-in-out;
   &.expanded {
     display: block;
-    max-height: 1000px;
-    overflow: auto;
+    transform: scaleY(1);
+    // max-height: 1000px;
+    // overflow: auto;
   }
   // overflow: auto;
 }
@@ -416,7 +428,7 @@ $tableTransitionDuration: 0.08s;
     &.selected {
       color: #2653AF;
       border-bottom: 1px solid #2653AF;
-      border-radius: 5px;
+      // border-radius: 5px;
       p {
         color: #2653AF;
       }

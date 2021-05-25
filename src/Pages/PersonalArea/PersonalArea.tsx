@@ -88,7 +88,7 @@ function PersonalArea() {
   const { i18n, t } = useTranslation();
   const history = useHistory();
 
-  useTitle(t('title') + ' — ' + t('cabinet-title'));
+  useTitle(t('title') + ' — ' + t('title-cabinet'));
 
   const [refreshId, setRefreshId] = React.useState(0);
   const refresh = () => setRefreshId(r => r + 1);

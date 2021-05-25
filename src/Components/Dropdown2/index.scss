@@ -1,3 +1,5 @@
+@import '../../palette.scss';
+
 $transitionDuration: 0.08s;
 
 .Dropdown2 {
@@ -38,6 +40,7 @@ $transitionDuration: 0.08s;
       min-height: 21px;
       margin-top: 1px;
       margin-left: 2px;
+      font-weight: 500;
     }
 
     > input {
@@ -67,6 +70,7 @@ $transitionDuration: 0.08s;
       transition-timing-function: ease-in-out;
       transition-property: top, color, font-size, background-color;
       font-size: 16px;
+      font-weight: 500;
       opacity: 1;
       border-radius: 8px;
       &.float {
@@ -99,7 +103,10 @@ $transitionDuration: 0.08s;
 
   > .Menu {
     position: absolute;
-    max-height: 270px;
+    max-height: 500px;
+    @include mobile {
+      max-height: 270px;
+    }
     
     top: 100%;
     width: 100%;

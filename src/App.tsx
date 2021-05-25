@@ -17,6 +17,7 @@ import StatsPage from './Pages/StatsPage';
 import AboutPage from './Pages/AboutPage';
 import PrivacyPolicyPage from './Pages/PrivacyPolicy';
 import Page404 from './Pages/404';
+import AboutStatsPage from './Pages/AboutStatsPage';
 import HelpPage from './Pages/HelpPage';
 
 import Header from './Components/Header';
@@ -37,6 +38,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 {/* <Route exact path="/students" component={StudentsPage}/> */}
+                <Route exact path="/rating/about" component={AboutStatsPage}/>
                 <Route exact path="/rating/" component={StatsPage}/>
                 <Route exact path="/register/" component={Registration}/>
                 <Route exact path="/cabinet/" component={PersonalArea}/>
