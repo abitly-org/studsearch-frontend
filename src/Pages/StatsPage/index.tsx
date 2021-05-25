@@ -628,6 +628,7 @@ const TableItem = ({
               href={abit_link}
               target='_blank'
               children={num}
+              onClick={e => e?.stopPropagation?.()}
             /> :
             num
           }

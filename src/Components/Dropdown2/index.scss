@@ -103,7 +103,7 @@ $transitionDuration: 0.08s;
 
   > .Menu {
     position: absolute;
-    max-height: 500px;
+    max-height: 370px;
     @include mobile {
       max-height: 270px;
     }
