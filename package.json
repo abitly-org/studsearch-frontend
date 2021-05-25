@@ -35,7 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "cors": "node cors.js 4344",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build && npm run cproutes && echo studsearch.org > build/CNAME",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build && npm run cproutes && echo studsearch.org > build/CNAME && cp -r ./build ./build-cache",
     "cproutes": "cp build/index.html build/404.html && mkdir build/rating && cp build/index.html build/rating/index.html && mkdir build/about && cp build/index.html build/about/index.html && mkdir build/help && cp build/index.html build/help/index.html && mkdir build/register && cp build/index.html build/register/index.html && mkdir build/cabinet && cp build/index.html build/cabinet/index.html && mkdir build/privacy-policy && cp build/index.html build/privacy-policy/index.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -33,6 +33,7 @@ node_modules
 
 # production
 /build
+/build-cache
 
 # misc
 .DS_Store
