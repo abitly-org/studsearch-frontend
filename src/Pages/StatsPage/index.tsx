@@ -290,6 +290,7 @@ const UniversityComponent = ({
 
       city={university?.city}
       website={university?.website}
+      abit_link={university?.abit_link}
   
       children={expanded => 
         <div className={cx('university-content', { expanded })}>
@@ -566,7 +567,7 @@ const TableItem = ({
 
   place, shortName, fullName, num, zno, znoColor,
   city, sub,
-  website,
+  abit_link, website,
 
   children
 }: {
@@ -582,6 +583,8 @@ const TableItem = ({
   city?: string,
   sub?: boolean,
   website?: string,
+
+  abit_link?: string,
 
   children?: (expanded?: boolean) => JSX.Element
 }) => (
@@ -610,36 +613,64 @@ const TableItem = ({
       <span className='column name'>
         <P1>
           <span className='short'>{shortName ?? fullName}</span>
-          <span className='full'>{fullName ?? shortName}</span>
+          <span className='full'>
+            {website ? 
+              <a href={website} target='_blank' onClick={e => e?.stopPropagation?.()}>{fullName ?? shortName}</a> :
+              fullName ?? shortName
+            }
+          </span>
         </P1>
       </span>
       <span className='column num'>
-        <P1>{num}</P1>
+        <P1>
+          { abit_link ?
+            <a
+              href={abit_link}
+              target='_blank'
+              children={num}
+            /> :
+            num
+          }
+        </P1>
       </span>
       <span className='column zno'>
         { zno !== undefined &&
           <span className='bar'>
-            <span
-              className='value'
-              style={{
-                width: zno / 200 * 100 + '%',
-                backgroundColor: ({ 
-                  university: '#FFC13D',
-                  speciality: '#CFE5FF',
-                  faculty: '#6DB5CA'
-                })[znoColor]
-              }}
-            >
-              <P1>{ (~~(zno * 10) / 10).toFixed(1) }</P1>
-            </span>
+            {/* { abit_link ? 
+              <a
+                className='value clickable'
+                href={abit_link}
+                target='_blank'
+                style={{
+                  width: zno / 200 * 100 + '%',
+                  backgroundColor: ({ 
+                    university: '#FFC13D',
+                    speciality: '#CFE5FF',
+                    faculty: '#6DB5CA'
+                  })[znoColor]
+                }}
+                onClick={e => e?.stopPropagation?.()}
+              >
+                <P1>{ (~~(zno * 10) / 10).toFixed(1) }</P1>
+              </a>
+              : */}
+              <span
+                className='value'
+                style={{
+                  width: zno / 200 * 100 + '%',
+                  backgroundColor: ({ 
+                    university: '#FFC13D',
+                    speciality: '#CFE5FF',
+                    faculty: '#6DB5CA'
+                  })[znoColor]
+                }}
+              >
+                <P1>{ (~~(zno * 10) / 10).toFixed(1) }</P1>
+              </span>
+            {/* } */}
           </span>
         }
       </span>
-      { website &&
-        <span className='column website'>
-          <P1><Link to={website}>Сайт</Link></P1>
-        </span>
-      }
       <span className='column city'>
         <P1>{city}</P1>
       </span>

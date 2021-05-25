@@ -150,6 +150,11 @@ $tableTransitionDuration: 0.08s;
                       transform $tableTransitionDuration ease-in-out;
           transform: rotate(180deg);
         }
+        &:hover {
+          > svg {
+            stroke: mix(#2653AF, #787A87, 50%);
+          }
+        }
       }
       > span.column.place {
         flex: 0.1 0 0;
@@ -184,6 +189,9 @@ $tableTransitionDuration: 0.08s;
           max-width: 100%;
           text-overflow: ellipsis;
           overflow: hidden;
+          > a {
+            color: $primary;
+          }
         }
       }
 
@@ -194,6 +202,9 @@ $tableTransitionDuration: 0.08s;
         @include mobile {
           margin-right: 8px;
           flex: 0.35 0 0;
+        }
+        a {
+          color: $primary;
         }
         transition: all $tableTransitionDuration ease-in-out;
       }
@@ -218,6 +229,8 @@ $tableTransitionDuration: 0.08s;
             display: flex;
             border-radius: 6px;
             box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
 
             justify-content: flex-end;
             padding: 0 8px;
@@ -226,6 +239,25 @@ $tableTransitionDuration: 0.08s;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+            }
+
+            &.clickable {
+              text-decoration: none;
+              &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                opacity: 0;
+                background-color:rgba(120, 122, 135, 0.15);
+                transition: opacity 0.05s ease-in-out;
+              }
+              cursor: pointer;
+              &:hover {
+                &:before { opacity: 1; }
+              }
             }
           }
         }

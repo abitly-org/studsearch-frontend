@@ -36,7 +36,7 @@ const ua = {
     'title-rating-about': 'Як ми рахуємо рейтинги університетів України',
     'title-about': 'Про нас',
     'title-help': 'Як нам допомогти',
-    'title-register': 'Реєстрація волонтера',
+    'title-register': 'Реєстрація студента-волонтера',
     'title-cabinet': 'Мій кабінет',
     'title-privacy-policy': 'Політика конфіденційності',
 

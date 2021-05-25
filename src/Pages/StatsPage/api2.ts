@@ -37,6 +37,7 @@ export type University = {
 
   city?: string;
   website?: string;
+  abit_link?: string;
 } & Stats;
 
 export const getUniversities = (
