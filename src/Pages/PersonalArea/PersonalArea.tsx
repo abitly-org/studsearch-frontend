@@ -113,10 +113,11 @@ function PersonalArea() {
     refresh();
   };
 
-  React.useEffect(() => {
-    if (session?.verified)
-      session.refresh();
-  }, [ session?.verified ]);
+  // React.useEffect(() => {
+  //   if (!session?.loading && session?.verified) {
+  //     session.refresh();
+  //   }
+  // }, [ !session?.loading && session?.verified ]);
 
   if (session?.status && !session?.verified)
     return <ForceRedirect to='/' />;

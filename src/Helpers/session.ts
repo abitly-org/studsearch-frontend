@@ -18,7 +18,10 @@ const getSession = async (token?: string | null) : Promise<Session> =>
 const useSession = () => {
   const token = window?.localStorage?.getItem?.('studsearch-token');
   const [refreshId, setRefreshId] = React.useState(0);
-  const refresh = () => setRefreshId(id => id + 1);
+  const refresh = () => {
+    console.log('refresh()')
+    setRefreshId(id => id + 1)
+  };
 
   const session = useLoad(async () => {
     const session = await getSession(token);
