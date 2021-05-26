@@ -39,7 +39,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 8px;
     &.two {
-      grid-template-columns: repeat(1, 2fr);
+      grid-template-columns: repeat(2, 1fr);
       > * { width: 33%; }
     }
     &.one {
