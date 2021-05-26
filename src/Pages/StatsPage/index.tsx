@@ -21,6 +21,7 @@ import useLoad from '../../Helpers/useLoad';
 import { Link } from 'react-router-dom';
 import { regionInlined, useQueryIdName } from '../../Blocks/Students';
 import useTitle, { useDescription } from '../../Helpers/useTitle';
+import isMobile from '../../Helpers/isMobile';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -210,7 +211,7 @@ const StatsPage = () => {
           setIndex={i => setPositionType((['budget', 'contract'])[i] as 'budget' | 'contract')}
         />
         <br />
-        <div>
+        <div className='StatsTable'>
           <Table>
             <TableHeaders />
             { universities.items.map((university, i) => 
@@ -550,13 +551,15 @@ const TableHeaders = () => {
         <span>
           <P3>{t('stats-table-header-zno')}</P3>
         </span>
-        <span className='scale'>
-          <P3><span></span>0</P3>
-          <P3><span></span>50</P3>
-          <P3><span></span>100</P3>
-          <P3><span></span>150</P3>
-          <P3><span></span>200</P3>
-        </span>
+        { !isMobile() &&
+          <span className='scale'>
+            <P3><span></span>0</P3>
+            <P3><span></span>50</P3>
+            <P3><span></span>100</P3>
+            <P3><span></span>150</P3>
+            <P3><span></span>200</P3>
+          </span>
+        }
       </span>
     </div>
   );
@@ -613,12 +616,18 @@ const TableItem = ({
       <span className='column name'>
         <P1>
           <span className='short'>{shortName ?? fullName}</span>
-          <span className='full'>
-            {website ? 
-              <a href={website} target='_blank' onClick={e => e?.stopPropagation?.()}>{fullName ?? shortName}</a> :
-              fullName ?? shortName
-            }
-          </span>
+          { !isMobile() &&
+            <span className='full'>
+              {website ? 
+                <a
+                  href={website?.startsWith?.('http') ? website : `http://${website}`}
+                  target='_blank'
+                  onClick={e => e?.stopPropagation?.()}
+                >{fullName ?? shortName}</a> :
+                fullName ?? shortName
+              }
+            </span>
+          }
         </P1>
       </span>
       <span className='column num'>
@@ -658,7 +667,12 @@ const TableItem = ({
               <span
                 className='value'
                 style={{
-                  width: zno / 200 * 100 + '%',
+                  width: (
+                    (isMobile() ?
+                      (zno - 100) :
+                      zno / 200 * 100
+                    )
+                  ) + '%',
                   backgroundColor: ({ 
                     university: '#FFC13D',
                     speciality: '#CFE5FF',
@@ -675,6 +689,18 @@ const TableItem = ({
       <span className='column city'>
         <P1>{city}</P1>
       </span>
+      { isMobile() && expanded &&
+        <span className='mobile-name'>
+          <P1>{website ? 
+            <a
+              href={website?.startsWith?.('http') ? website : `http://${website}`}
+              target='_blank'
+              onClick={e => e?.stopPropagation?.()}
+            >{fullName ?? shortName}</a> :
+            fullName ?? shortName
+          }</P1>
+        </span>
+      }
     </div>
     <div className='Content'>
       { children?.(expanded) }

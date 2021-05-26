@@ -189,8 +189,14 @@ $tableTransitionDuration: 0.08s;
           max-width: 100%;
           text-overflow: ellipsis;
           overflow: hidden;
+          @include mobile {
+            font-size: 15px;
+          }
           > a {
             color: $primary;
+            &:visited {
+              color: rgb(85, 26, 139);
+            }
           }
         }
       }
@@ -205,13 +211,16 @@ $tableTransitionDuration: 0.08s;
         }
         a {
           color: $primary;
+          &:visited {
+            color: rgb(85, 26, 139);
+          }
         }
         transition: all $tableTransitionDuration ease-in-out;
       }
       > span.column.zno {
         flex: 2 0 0;
         @media (max-width: 800px) {
-          flex: 1.5 0 0;
+          flex: 1 0 0;
         }
         padding-left: 5px;
         margin-right: 5px;
@@ -269,9 +278,13 @@ $tableTransitionDuration: 0.08s;
         flex: 0 0 8px;
       }
       > span.column.city {
-        flex: 0 0 0;
+        flex: 0 1 0;
         text-align: right;
         overflow: hidden;
+        max-width: 100px;
+        @include mobile {
+          max-width: none;
+        }
       }
       > span.column.website {
         flex: 0 0 0;
@@ -290,6 +303,7 @@ $tableTransitionDuration: 0.08s;
         &:first-child {
           margin-top: 0;
         }
+        flex-wrap: wrap;
     
         background-color: white;
         box-shadow: 0px 8px 10px rgba(120, 122, 135, 0.2),
@@ -328,6 +342,17 @@ $tableTransitionDuration: 0.08s;
           }
         }
 
+        > span.mobile-name {
+          text-align: center;
+          margin: 4px 0;
+          a {
+            color: $primary;
+            &:visited {
+              color: rgb(85, 26, 139);
+            }
+          }
+        }
+
         user-select: none;
       }
     }
@@ -357,16 +382,15 @@ $tableTransitionDuration: 0.08s;
     > span.num {
       flex: 0.2 0 0;
       padding-right: 16px;
-
-      position: relative;
+      min-width: 0;
       > p {
-        position: absolute;
-        right: 16px;
-        top: 0;
-        display: block;
-        left: -100%;
+        // margin-right: 16px;
         text-align: right;
+        line-height: 16px;
       }
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
 
       @include mobile {
         padding-right: 8px;
@@ -376,10 +400,11 @@ $tableTransitionDuration: 0.08s;
     > span.zno {
       flex: 2 0 0;
       @media (max-width: 800px) {
-        flex: 1.5 0 0;
+        flex: 1 0 0;
       }
       display: flex;
       flex-direction: column;
+      justify-content: flex-end;
 
       > span.scale {
         display: flex;
@@ -388,6 +413,7 @@ $tableTransitionDuration: 0.08s;
         > p {
           width: 25px;
           text-align: center;
+          line-height: 16px;
           // flex: 1 0 0;
           @include mobile {
             display: none;

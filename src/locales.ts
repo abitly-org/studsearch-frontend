@@ -208,7 +208,7 @@ const ua = {
     'stats-budget': 'Бюджет',
     'stats-contract': 'Контракт',
     'stats-table-header-num': 'Кількість вступників',
-    'stats-table-header-zno': 'Середньозваженний бал ЗНО',
+    'stats-table-header-zno': 'Середній бал ЗНО',
     'stats-faculties': 'Факультети',
     'stats-specialties': 'Спеціальності',
     'stats-load-more': 'Завантажити ще',

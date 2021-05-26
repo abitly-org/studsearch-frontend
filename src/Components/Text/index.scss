@@ -97,3 +97,10 @@ ul.ul {
 
   }
 }
+
+a {
+  color: $primary;
+  &:visited {
+    color: rgb(85, 26, 139);
+  }
+}
