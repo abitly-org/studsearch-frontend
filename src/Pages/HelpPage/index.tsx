@@ -88,6 +88,13 @@ const HelpPage = () => {
             </Button>
           </div>
         </div>
+
+
+        <iframe
+          width={400}
+          height={500}
+          src="/widget/students?region=4"
+        />
       </div>
     </div>
   )

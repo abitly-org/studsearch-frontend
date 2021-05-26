@@ -87,8 +87,10 @@ const removePostfix = (src: string, dest: string) => {
   return dest?.substring?.(0, dest?.length - i)?.trim?.();
 }
 
-const StudentCard = ({ student }: {
-  student: Student
+const StudentCard = ({ student, showUniversity = true, small }: {
+  student: Student,
+  showUniversity?: boolean,
+  small?: boolean
 }) => {
   const { i18n, t } = useTranslation();
   
@@ -105,9 +107,9 @@ const StudentCard = ({ student }: {
   
 
   return (
-    <div className="StudentCard">
+    <div className={cx("StudentCard", { small })}>
       <div className="Top">
-        <StudentPhoto uuid={student?.uuid} />
+        <StudentPhoto size={small ? 48 : 100} uuid={student?.uuid} />
         <div>
           <P1><b>{student?.name}</b></P1>
           <span className="Course">
@@ -115,10 +117,12 @@ const StudentCard = ({ student }: {
           </span>
         </div>
       </div>
-      <div className="University">
-        <img src={university} />
-        <P2><b>{ universityName }</b></P2>
-      </div>
+      { showUniversity &&
+        <div className="University">
+          <img src={university} />
+          <P2><b>{ universityName }</b></P2>
+        </div>
+      }
       <div className="Specialty">
         <img src={specialty} />
         <P2>

@@ -4,7 +4,8 @@ import {
     Route,
     Switch,
     useHistory,
-    useLocation
+    useLocation,
+    Redirect
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
@@ -19,18 +20,25 @@ import PrivacyPolicyPage from './Pages/PrivacyPolicy';
 import Page404 from './Pages/404';
 import AboutStatsPage from './Pages/AboutStatsPage';
 import HelpPage from './Pages/HelpPage';
+import WidgetsPage from './Pages/Widgets';
+
+import StudentsWidget from './Widgets/Students';
 
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import useUTM from './Helpers/useUTM';
+
+const shouldShowHeader = (url: string) =>
+    !url?.startsWith?.('/register') &&
+    !url?.startsWith?.('/widget/')
 
 function App() {
     useUTM();
 
     const history = React.useMemo(() => createBrowserHistory(), []);
 
-    const [showHeader, setShowHeader] = React.useState(!history?.location?.pathname?.startsWith?.('/register'));
-    history.listen(() => setShowHeader(!history?.location?.pathname?.startsWith?.('/register')));
+    const [showHeader, setShowHeader] = React.useState(shouldShowHeader(history?.location?.pathname));
+    history.listen(() => setShowHeader(shouldShowHeader(history?.location?.pathname)));
 
     return (
         <Router history={history}>
@@ -47,6 +55,10 @@ function App() {
                 {/* <Route exact path="/delete-page" component={DeletePage}/> */}
 
                 <Route exact path="/privacy-policy/" component={PrivacyPolicyPage}/>
+
+                <Route exact path="/widget" component={WidgetsPage} />
+                <Route exact path="/widgets" render={() => <Redirect to="/widget" />} />
+                <Route exact path="/widget/students" component={StudentsWidget} />
 
                 <Route component={Page404} />
             </Switch>

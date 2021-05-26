@@ -77,6 +77,19 @@
 
   padding: 16px;
   box-sizing: border-box;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: $white;
+  }
+
+  overflow: hidden;
 
   border-radius: 15px;
   box-shadow: -1px 0px 4px rgba(202, 201, 199, 0.4),
@@ -112,6 +125,16 @@
 
     margin-bottom: 16px;
   }
+  &.small {
+    span.Course {
+      margin-top: 3px !important;
+      padding: 2px 5px !important;
+      > p {
+        font-size: 14px;
+      }
+    }
+  }
+
   > .Specialty,
   > .University {
     display: flex;
@@ -134,6 +157,22 @@
     width: 32px;
     margin: 0 8px 0 0;
   }
+  &.small {
+    > .University > img {
+      width: 19px;
+    }
+    > .Specialty > img {
+      width: 25px;
+    }
+    > .Specialty,
+    > .University {
+      p {
+        font-size: 15px;
+        line-height: 16px;
+      }
+    }
+  }
+
   > .Bio {
     position: relative;
     padding-top: 12px;
@@ -143,6 +182,15 @@
       left: -3px;
       opacity: 0.075;
       width: 34px;
+      pointer-events: none;
+    }
+  }
+  &.small {
+    > .Bio {
+      p {
+        font-size: 15px;
+        line-height: 19px;
+      }
     }
   }
 
@@ -203,7 +251,8 @@
           z-index: -1;
           margin: -2px; /* !importanté */
           border-radius: inherit; /* !importanté */
-          background: #179cde; 
+          background: #179cde;
+          pointer-events: none;
         }
         > p {
           color: #179cde;

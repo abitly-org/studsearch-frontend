@@ -100,4 +100,10 @@ $width: 1000px;
       }
     }
   }
+
+  iframe {
+    border: 1px solid rgba($black, 0.1);
+    // border: none;
+    border-radius: 4px;
+  }
 }

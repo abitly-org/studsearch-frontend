@@ -98,10 +98,21 @@ export const useQueryId = <T extends { id?: number | any }[] = { id?: number | a
   useQueryState<T>(
     initialState,
     queryKey,
-    objs => objs?.map?.(o => String(o?.id))?.join?.(',') ?? '',
-    str => (str ?? '').split(/\,/g).map(rs => ({ id: parseFloat(rs) })) as T,
+    objs => objs?.map?.(o => String(o?.id))?.join?.(' ') ?? '',
+    str => (str ?? '').split(/ |\+/g).map(rs => ({ id: parseFloat(rs) })) as T,
     preferInitial
   );
+export const useQueryNumberArray = (queryKey: string) =>
+  useQueryState<number[] | undefined>(
+    undefined,
+    queryKey,
+    c => c === undefined ? undefined : c?.join?.(' ') ?? undefined,
+    str => {
+      if (!str)
+        return undefined;
+      return (str ?? '').split(/ |\+/g).map(s => parseInt(s)).filter(n => !isNaN(n))
+    }
+  )
 const useOnScroll = (callback: () => void, deps: React.DependencyList = []) => 
   React.useEffect(() => {
     window.addEventListener('scroll', callback);
@@ -121,25 +132,19 @@ const useNotFirstEffect = (callback: React.EffectCallback, deps: React.Dependenc
 
 const CoursesCount = 7;
 
-const BlockStudentsWrapper = () => {
-  const [ queryRegions, setQueryRegions ] = useQueryId<any>([], 'region');
-  const [ queryUniversities, setQueryUniversities ] = useQueryId<any>([], 'university');
+export type StudentFiltersProps = {
+  _regions: Region[],
+  _universities: University[],
+  _specialties: Speciality[],
+  _faculties: Faculty[]
+};
+export const LoadStudentFilters = ({ children }: {
+  children: React.ComponentType<StudentFiltersProps>
+}) => {
+  const [ queryRegions ] = useQueryId<any>([], 'region');
+  const [ queryUniversities ] = useQueryId<any>([], 'university');
   const [ querySpecialties ] = useQueryId([], 'specialty');
   const [ queryFaculties ] = useQueryId([], 'faculty');
-
-  const [refreshId, setRefreshId] = React.useState(0);
-  const refresh = () => setRefreshId(i => i + 1);
-
-  // @ts-ignore
-  window.setRegionId = (regionId?: number) => {
-    setQueryRegions(regionId ? [{ id: regionId }] : []);
-    refresh();
-  }
-  // @ts-ignore
-  window.setUniversityId = (universityId?: number) => {
-    setQueryUniversities(universityId ? [{ id: universityId }] : [])
-    refresh();
-  }
 
   const loaded = useLoad(() => 
     getFilterNames(
@@ -147,15 +152,16 @@ const BlockStudentsWrapper = () => {
       queryUniversities?.map?.((u: any) => u?.id),
       querySpecialties?.map?.((s: any) => s?.id),
       queryFaculties?.map?.((f: any) => f?.id)
-    ),
-    [ refreshId ]
+    )
   );
 
   if (!loaded)
     return <LoadingSpinner center />;
 
+  const Component = children;
+
   return (
-    <BlockStudents
+    <Component
       _regions={loaded?.regions ?? []}
       _universities={loaded?.universities ?? []}
       _specialties={loaded?.specialties ?? []}
@@ -163,6 +169,44 @@ const BlockStudentsWrapper = () => {
     />
   )
 }
+
+const BlockStudentsWrapper = () => 
+  <LoadStudentFilters children={BlockStudents} />;
+
+export const CoursesTabs = ({ courses, setCourses }: {
+  courses?: number[],
+  setCourses?: (newCourses: number[] | undefined) => void
+}) => {
+  const { t } = useTranslation();
+  return (
+    <TabFilter<{ id?: number, name: string }>
+      className='Course'
+      tabs={[
+        { name: t(`student-course-all`), id: undefined },
+        ...[...Array(CoursesCount)]
+          .map((_, id) => ({ name: t(`student-course-${id}`), id }))
+      ]}
+      renderItem={c => c?.name}
+      isSelected={({ id }) => 
+        (id === undefined && courses === undefined) ||
+        (id !== undefined && courses !== undefined && courses.includes(id))
+      }
+      onClick={(value, { id }) => {
+        if (id === undefined)
+          setCourses?.(undefined);
+        else {
+          if (!value) {
+            const newCourses = [...(courses ?? []), id];
+            setCourses?.(newCourses.length === CoursesCount ? undefined : newCourses);
+          } else {
+            const newCourses = (courses ?? []).filter(c => c !== id);
+            setCourses?.(newCourses.length <= 0 ? undefined : newCourses);
+          }
+        }
+      }}
+    />
+  );
+};
 
 const BlockStudents = ({
   _regions = [],
@@ -185,16 +229,8 @@ const BlockStudents = ({
   const [universities, setUniversities] = useQueryId<University[]>(_universities, 'university', true);
   const [specialties, setSpecialities] = useQueryId<Speciality[]>(_specialties, 'specialty', true);
   const [faculties, setFaculties] = useQueryId<Faculty[]>(_faculties, 'faculty', true);
-  const [courses, setCourses] = useQueryState<number[] | undefined>(
-    undefined,
-    'course',
-    c => c === undefined ? undefined : c?.join?.(',') ?? undefined,
-    str => {
-      if (!str)
-        return undefined;
-      return (str ?? '').split(/\,/g).map(s => parseInt(s)).filter(n => !isNaN(n))
-    }
-  );
+  const [courses, setCourses] = useQueryNumberArray('course');
+  
 
   useNotFirstEffect(() =>
     setUniversities([]),
@@ -341,31 +377,9 @@ const BlockStudents = ({
           onChange={setSpecialities}
         />
         <div className='Bottom'>
-          <TabFilter<{ id?: number, name: string }>
-            className='Course'
-            tabs={[
-              { name: t(`student-course-all`), id: undefined },
-              ...[...Array(CoursesCount)]
-                .map((_, id) => ({ name: t(`student-course-${id}`), id }))
-            ]}
-            renderItem={c => c?.name}
-            isSelected={({ id }) => 
-              (id === undefined && courses === undefined) ||
-              (id !== undefined && courses !== undefined && courses.includes(id))
-            }
-            onClick={(value, { id }) => {
-              if (id === undefined)
-                setCourses(undefined);
-              else {
-                if (!value) {
-                  const newCourses = [...(courses ?? []), id];
-                  setCourses(newCourses.length === CoursesCount ? undefined : newCourses);
-                } else {
-                  const newCourses = (courses ?? []).filter(c => c !== id);
-                  setCourses(newCourses.length <= 0 ? undefined : newCourses);
-                }
-              }
-            }}
+          <CoursesTabs
+            courses={courses}
+            setCourses={setCourses}
           />
           { stats && stats?.studentsCount > 0 &&
             <div className='Stats'>

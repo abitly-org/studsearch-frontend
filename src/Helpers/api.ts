@@ -28,7 +28,7 @@ export const parseQuery = (query: string = getQueryString()) : {[key: string]: Q
     for (const [keyStr, valueStr] of params) {
         const key = decodeURIComponent(keyStr);
         // empty string => empty value => only key mentioned
-        let value : QueryValue = !valueStr ? true : decodeURIComponent(valueStr);
+        let value : QueryValue = !valueStr ? true : decodeURIComponent(valueStr.replace(/\+/g, ' '));
         if (value === 'true' || value === 'false')
             value = value === 'true';
         // if (typeof value === 'string' && /^[\d\.]+$/) {
@@ -59,8 +59,8 @@ export const makeQuery = (query?: {[key: string]: QueryValue}) => {
                 if (value === undefined || value === null)
                     return '';
                 if (Array.isArray(value))
-                    return value.map(val => encodeURIComponent(key) + '=' + encodeURIComponent(val)).join('&');
-                return encodeURIComponent(key) + '=' + encodeURIComponent(value)
+                    return value.map(val => encodeURIComponent(key) + '=' + encodeURIComponent(val).replace(/%20/g, "+")).join('&');
+                return encodeURIComponent(key) + '=' + encodeURIComponent(value).replace(/%20/g, "+")
             })
             .join('&')
     );
@@ -79,7 +79,7 @@ export const getQuery = (name : string, url : string = window.location.href) => 
 export const addQuery = (name: string, value: QueryValue, url = window.location.href, pathname = window.location.pathname) : string => {
     const questionMarkIndex = url.indexOf('?');
     if (questionMarkIndex < 0)
-        return pathname + makeQuery({[name]: value});
+        return pathname + makeQuery({ [name]: value });
     const path = pathname ?? url.substring(0, questionMarkIndex);
     const queryString = url.substring(questionMarkIndex + 1);
     const query = parseQuery(queryString);

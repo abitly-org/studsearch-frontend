@@ -1,0 +1,45 @@
+@import '../../palette.scss';
+
+$width: 1000px;
+
+.WidgetsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 147px;
+  @include mobile {
+    padding-top: 125px;
+  }
+
+  .Content {
+    position: relative;
+
+    width: 100%;
+    max-width: $width;
+
+    box-sizing: border-box;
+    padding: 0 32px;
+    
+
+    .Code {
+      border: 1px solid rgba($black, 0.2);
+      border-radius: 4px;
+      padding: 4px;
+      background-color: #FAFAFA;
+      font-size: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+    }
+
+    .Filters {
+      grid-gap: 8px;
+    }
+
+    iframe {
+      border: 1px solid rgba($black, 0.2);
+      border-radius: 4px;
+    }
+  }
+}
