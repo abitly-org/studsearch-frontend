@@ -143,21 +143,32 @@ const MobileMenu = ({ closeMenu, session, refreshing, startRefreshing }: {
         <img src={close} />
       </span>
       <div className="Buttons">
-        { pages?.map?.((page, i) => 
-          <div
-            key={i}
-            className={cx('Page', { selected: location?.pathname === page?.path })}
-            onClick={((page) => () => {
-              history.push(page?.path, location?.state);
-              closeAndScroll?.();
-            })(page)}
-          >
-            <RippleEffect onClick={((page) => () => {
-              history.push(page?.path, location?.state);
-              closeAndScroll?.();
-            })(page)} />
-            <H3>{t(page?.textKey)}</H3>
-          </div>
+        { pages?.map?.((page, key) => 
+          React.createElement(
+            page?.path ? 'div' : 'a',
+            {
+              key,
+              className: cx('Page', { selected: location?.pathname === page?.path, black: page?.black }),
+              onClick: ((page) => () => {
+                if (page?.path) {
+                  history.push(page?.path, location?.state);
+                  closeAndScroll?.();
+                }
+              })(page),
+              ...(page?.url ? {
+                href: page?.url,
+                target: '_blank'
+              } : {}),
+              children: <>
+                <RippleEffect onClick={((page) => () => {
+                  if (page?.path) {
+                    history.push(page?.path, location?.state);
+                    closeAndScroll?.();
+                  }
+                })(page)} />
+                <H3>{t(page?.textKey)}</H3>
+              </>
+          })
         ) }
         <div className="LoginButtons">
           <AuthButtons
@@ -263,6 +274,7 @@ const pages = [
   { textKey: 'header-tab-main', path: '/' },
   { textKey: 'header-tab-rating', path: '/rating' },
   { textKey: 'header-tab-about', path: '/about', hideInMobile: true },
+  { textKey: 'header-tab-donate', url: 'https://send.monobank.ua/jar/3UNSF6txsH', hideInMobile: true, black: true }
   // { textKey: 'header-tab-help', path: '/help', hideInMobile: true }
   // { textKey: 'header-tab-students', path: '/students' }
 ];
@@ -274,24 +286,39 @@ const HeaderTabs = () => {
 
   return (
     <div className="HeaderTabs">
-      { pages.map(({ textKey, path, hideInMobile }, key) => {
+      { pages.map(({ textKey, path, url, hideInMobile, black }, key) => {
         const selected = location.pathname === path;
         return (
-          <span key={key} className={cx('HeaderTabs_Tab', { selected, hideInMobile })}>
-            <span onClick={() => {
-              history.push(path);
-              window?.scrollTo?.(0, 0);
-            }}>
-              <RippleEffect
-                onClick={() => {
-                  history.push(path);
-                  window?.scrollTo?.(0, 0);
-                }}
-                disabled={selected}
-              />
-              <P2>{t(textKey)}</P2>
-            </span>
-          </span>
+          React.createElement(
+            path ? 'span' : 'a',
+            {
+              key,
+              className: cx('HeaderTabs_Tab', { selected, hideInMobile, black }),
+              ...(url ? {
+                href: url,
+                target: '_blank'
+              } : {}),
+              children: (
+                <span onClick={() => {
+                  if (path) {
+                    history.push(path);
+                    window?.scrollTo?.(0, 0);
+                  }
+                }}>
+                  <RippleEffect
+                    onClick={() => {
+                      if (path) {
+                        history.push(path);
+                        window?.scrollTo?.(0, 0);
+                      }
+                    }}
+                    disabled={selected}
+                  />
+                  <P2>{t(textKey)}</P2>
+                </span>
+              )
+            }
+          )
         );
       }) }
     </div>

@@ -106,8 +106,6 @@ div.Header {
           //   margin: 0;
           // }
         }
-
-        
       }
 
       > .Header_MenuButton {
@@ -244,12 +242,15 @@ div.Header {
     box-sizing: border-box;
 
     > .Page {
+      display: block;
+
       padding: 10px 48px;
       cursor: pointer;
       box-sizing: border-box;
 
       position: relative;
       overflow: hidden;
+      text-decoration: none;
 
       > h3 {
         font-weight: normal;
@@ -264,6 +265,16 @@ div.Header {
 
       .ripple {
         background-color: rgba($primary, 0.2);
+      }
+
+      &.black {
+        background-color: mix($accent, $black, 95%);
+        > h3 {
+          color: $white;
+        }
+        .ripple {
+          background-color: rgba($carrot, 0.2);
+        }
       }
     }
 
@@ -297,15 +308,30 @@ div.Header {
 
   user-select: none;
 
-  > span.HeaderTabs_Tab {
+  > .HeaderTabs_Tab {
     // flex: 1 0 0;
 
     display: inline-flex;
     justify-content: center;
+    text-decoration: none;
 
     &.hideInMobile {
       @include mobile {
         display: none;
+      }
+    }
+
+    &.black {
+      > span {
+        background-color: mix($accent, $black, 95%);
+        padding: 6px 16px;
+        &:hover {
+          background-color: mix($accent, $black, 100%) !important; 
+        }
+        .ripple {
+          background-color: rgba($carrot, 0.2);
+        }
+        > p { color: $white; }
       }
     }
     

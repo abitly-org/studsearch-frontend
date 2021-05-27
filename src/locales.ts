@@ -387,6 +387,7 @@ const en = {
     // 'header-tab-students': 'Students',
     'header-tab-rating': 'Universities rating',
     'header-tab-help': 'How to help us',
+    'header-tab-donate': 'Donate',
 
     'header-cabinet': 'My cabinet',
 
