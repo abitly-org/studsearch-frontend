@@ -270,7 +270,7 @@ div.Header {
       &.black {
         background-color: mix($accent, $black, 95%);
         > h3 {
-          color: $white;
+          // color: $white;
         }
         .ripple {
           background-color: rgba($carrot, 0.2);
@@ -331,7 +331,7 @@ div.Header {
         .ripple {
           background-color: rgba($carrot, 0.2);
         }
-        > p { color: $white; }
+        // > p { color: $white; }
       }
     }
     
