@@ -13,7 +13,7 @@ export default [
 
   undefined, // \n
 
-  // { photo: AlinaMatvieieva, name: 'Аліна Матвієіева', role: 'Graphic Designer', link: '' },
+  { photo: AlinaMatvieieva, name: 'Аліна Матвєєва', role: 'Graphic Designer', link: 'https://www.linkedin.com/in/alina-matvieieva-400b64201' },
   { photo: SergeiSamohval, name: 'Сергій Самохвал', role: 'Front-End Developer', link: 'https://www.linkedin.com/in/serghey-samokhval-15a729212/' },
   { photo: ValentinElkin, name: 'Валентин Єлькін', role: 'Front-End Developer', link: 'https://www.linkedin.com/in/valentyn-yelkin-94a40517a/' }
 ];

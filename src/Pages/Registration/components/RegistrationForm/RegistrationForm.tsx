@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import tgPhoto from "./tgPhoto.svg";
+import fbPhoto from "./fbPhoto.png";
 import "./registrationForm.scss";
 
 import {
@@ -337,7 +338,7 @@ export default function RegistrationForm() {
             })}`}
             rel="noopener noreferrer"
           >
-            <img src={tgPhoto} alt="tgPhoto" />
+            <img src={fbPhoto} width='24' height='24' alt="fbPhoto" />
             <span>{t('registration-confirm-facebook')}</span>
           </a>
         </div>
