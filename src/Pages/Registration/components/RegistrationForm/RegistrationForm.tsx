@@ -27,6 +27,7 @@ import { CourseDropdown, FacultyDropdown, RegionDropdown, SpecialityDropdown, Un
 import useSession from "../../../../Helpers/session";
 import { Redirect } from "react-router-dom";
 import useUTM from "../../../../Helpers/useUTM";
+import { P2 } from "../../../../Components/Text";
 
 type FormProps = {};
 type CoursesType = { id?: number; name?: string };
@@ -279,15 +280,18 @@ export default function RegistrationForm() {
             error={error?.politic}
           />
         </div>
-        <p className={`useTelegram`}>
+        {/* <p className={`useTelegram`}>
             {t('registration-checkBox-helper-text')}
-        </p>
+        </p> */}
 
-        <div className="authTelegram">
+        <br />
+        <br />
+
+        <div className="authSocial telegram">
           <a
             className={`regButton`}
             onClick={SubmitStates}
-            href={`${endpoint}/v2/register/${makeQuery({
+            href={`${endpoint}/v2/register/telegram/${makeQuery({
               name: nameSurname,
               gender,
               about: aboutMyself,
@@ -305,6 +309,36 @@ export default function RegistrationForm() {
           >
             <img src={tgPhoto} alt="tgPhoto" />
             <span>{t('registration-confirm-telegram')}</span>
+          </a>
+        </div>
+
+        <div className='or'>
+          <span>
+            <P2>{t('registration-confirm-or')}</P2>
+          </span>
+        </div>
+
+        <div className="authSocial facebook">
+          <a
+            className={`regButton`}
+            onClick={SubmitStates}
+            href={`${endpoint}/v2/register/facebook/${makeQuery({
+              name: nameSurname,
+              gender,
+              about: aboutMyself,
+              universityID: university?.id,
+              facultyID: faculty?.id,
+              specialityID: speciality?.id,
+              course: course?.id,
+              hostel: false,
+              telegramPhoto: checkBoxState?.tg,
+              token: session?.token,
+              utm: utmString
+            })}`}
+            rel="noopener noreferrer"
+          >
+            <img src={tgPhoto} alt="tgPhoto" />
+            <span>{t('registration-confirm-facebook')}</span>
           </a>
         </div>
       </form>

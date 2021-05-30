@@ -226,6 +226,7 @@
         > svg {
           width: 24px;
           margin: 0 8px;
+          margin-right: 10px;
           transition: fill $duration ease-in-out;
         }
         
@@ -346,18 +347,30 @@
           z-index: -1;
           margin: -2px; /* !importanté */
           border-radius: inherit; /* !importanté */
-          background: #3b5998; 
+          background: #1778F2; 
         }
         > p {
-          color: #3b5998;
+          color: #1778F2;
           > svg {
-            fill: #3b5998;
-            width: 32px;
-            margin: 0 4px 0 6px;
+            fill: #1778F2;
+            width: 28px;
+            height: 28px;
+            margin: -3px 8px 0 8px;
+
+            .circle { fill: #1778F2; }
+            .f { fill: white; }
+
+            .circle, .f {
+              transition: fill 0.1s ease-in-out;
+            }
           }
         }
         &:hover {
-          background-color: #3b5998;
+          background-color: #1778F2;
+          svg {
+            .circle { fill: white; }
+            .f { fill: #1778F2; }
+          }
         }
       }
 

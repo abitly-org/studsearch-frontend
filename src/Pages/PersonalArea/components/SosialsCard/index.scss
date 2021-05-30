@@ -1,3 +1,13 @@
-.social-card{
+.social-card {
     margin: 57px 0 40px 0;
+
+    > .item {
+        max-width: 100%;
+        overflow: hidden;
+
+        > .item-data {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
 }

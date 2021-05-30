@@ -44,13 +44,19 @@ const useSession = () => {
     ...(session ?? {}),
     token: session?.token ?? token,
 
-    loginHref: `${endpoint}/v2/login/${makeQuery({ token: session?.token ?? token })}`,
+    login: {
+      telegram: `${endpoint}/v2/login/telegram/${makeQuery({ token: session?.token ?? token })}`,
+      facebook: `${endpoint}/v2/login/facebook/${makeQuery({ token: session?.token ?? token })}`
+    },
 
     refreshId,
     refresh,
 
     logout: () => 
-      fetch(`${endpoint}/v2/logout${makeQuery({ token: session?.token ?? token })}`, { credentials: 'include', method: 'POST' })
+      fetch(`${endpoint}/v2/logout${makeQuery({ token: session?.token ?? token })}`, { credentials: 'include', method: 'POST' }),
+
+    delete: () =>
+      fetch(`${endpoint}/v2/delete${makeQuery({ token: session?.token ?? token })}`, { credentials: 'include', method: 'DELETE' })
   };
 }
 export default useSession;

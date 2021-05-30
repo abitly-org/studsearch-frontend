@@ -8,9 +8,9 @@ import { Contacts } from "../../PersonalArea";
 
 const Socials = {
   'telegram': 'Telegram',
+  'facebook': 'Facebook',
   'instagram': 'Instagram',
   'linkedin': 'LinkedIn',
-  'facebook': 'Facebook'
   // 'viber': 'Viber'
 };
 
@@ -29,11 +29,15 @@ export default function SocialCard({
       {
         Object.entries(Socials ?? {})
           .map(([name, displayName], key) =>
-            name === 'telegram' ?
-              <Item
-                title={`${t('cabinet-social-user-name')} Telegram`}
-                itemData={contacts?.telegram ?? ''}
-              />
+            name === 'telegram' || name === 'facebook' ?
+              ( contacts?.[name] ? 
+                <Item
+                  title={`${t('cabinet-social-user-name')} ${displayName}`}
+                  itemData={contacts?.[name] ?? ''}
+                />
+                :
+                null
+              )
               :
               <SocialItem
                 name={displayName}
@@ -42,7 +46,7 @@ export default function SocialCard({
                 starter={({
                   'telegram': '@',
                   'instagram': '@',
-                  'facebook': 'facebook.com/',
+                  // 'facebook': 'facebook.com/',
                   'linkedin': 'linkedin.com/in/'
                 } as any)[name]}
                 setValue={value => setContacts?.({ ...contacts, [name]: value })}

@@ -297,7 +297,61 @@ div.Header {
 }
 
 .Header_Buttons_Login {
+  position: relative;
   min-width: 80px;
+  > .Button {
+    width: 100%;
+  }
+  > .Dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 5;
+
+    margin-top: 8px;
+    opacity: 1;
+    transition: opacity 0.075s ease-in-out, margin-top 0.075s ease-in-out;
+    &.hiding {
+      margin-top: 6px;
+      opacity: 0;
+    }
+
+    padding: 8px;
+    background-color: $white;
+
+    box-shadow: 4px 0px 14px rgba(120, 122, 135, 0.2), 8px 0px 10px rgba(120, 122, 135, 0.2);
+    border-radius: 10px;
+
+    @include mobile {
+      right: initial;
+      left: 0;
+      > .Arrow {
+        right: initial;
+        left: 16px;
+      }
+    }
+
+    > .Arrow {
+      position: absolute;
+      top: -18px;
+      right: 16px;
+    }
+
+    > .Button {
+      width: 100%;
+
+      img {
+        display: inline-block;
+        width: 24px;
+        margin-right: 8px;
+      }
+
+      margin-bottom: 8px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 .HeaderTabs {
@@ -360,7 +414,7 @@ div.Header {
       }
       
       p {
-        font-weight: 500;
+        // font-weight: 500;
       }
     }
 

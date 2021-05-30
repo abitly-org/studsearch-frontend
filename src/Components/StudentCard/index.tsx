@@ -16,6 +16,7 @@ import { ReactComponent as PhotoPlaceholder } from './photoPlaceholder.svg';
 import { ReactComponent as TelegramIcon } from './telegram.svg';
 import { ReactComponent as InstagramIcon } from './instagram.svg';
 import { ReactComponent as ViberIcon } from './viber.svg';
+import { ReactComponent as FacebookIcon } from './facebook.svg';
 import './index.scss';
 import useLoad from '../../Helpers/useLoad';
 
@@ -28,7 +29,8 @@ const withFirstLetterUppercase = (str: string) => {
 const SocialIcons = {
   telegram: TelegramIcon,
   instagram: InstagramIcon,
-  viber: ViberIcon
+  viber: ViberIcon,
+  facebook: FacebookIcon
 } as {[social: string]: React.ComponentType}
 
 const imagesCache : {[src: string]: HTMLImageElement} = {};
@@ -154,8 +156,9 @@ const StudentCard = ({ student, showUniversity = true, small }: {
                 }}
               />
               <P2>
+                {Icon && <Icon />}
                 {t('student-contact')}
-                { Icon ? <Icon /> : ' ' }
+                {' '}
                 {withFirstLetterUppercase(social)}
               </P2>
             </a>

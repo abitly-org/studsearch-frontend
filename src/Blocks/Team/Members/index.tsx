@@ -1,9 +1,10 @@
-import VladislavBandurin from './vladislav-bandurin.png';
-import DmytroKaraush from './dmytro-karaush.png';
-import KaterinaMalutina from './katerina-malutina.png';
+import VladislavBandurin from './vladislav-bandurin.jpg';
+import DmytroKaraush from './dmytro-karaush.jpg';
+import KaterinaMalutina from './katerina-malutina.jpg';
 
-import SergeiSamohval from './sergei-samohval.png';
-import ValentinElkin from './valentin-elkin.png';
+import AlinaMatvieieva from './alina-matvieieva.jpg';
+import SergeiSamohval from './sergei-samohval.jpg';
+import ValentinElkin from './valentin-elkin.jpg';
 
 export default [
   { photo: VladislavBandurin, name: 'Владислав Бандурін', role: 'Co-Founder & CEO', link: 'https://www.linkedin.com/in/vladislavbandurin/' },
@@ -12,6 +13,7 @@ export default [
 
   undefined, // \n
 
+  // { photo: AlinaMatvieieva, name: 'Аліна Матвієіева', role: 'Graphic Designer', link: '' },
   { photo: SergeiSamohval, name: 'Сергій Самохвал', role: 'Front-End Developer', link: 'https://www.linkedin.com/in/serghey-samokhval-15a729212/' },
   { photo: ValentinElkin, name: 'Валентин Єлькін', role: 'Front-End Developer', link: 'https://www.linkedin.com/in/valentyn-yelkin-94a40517a/' }
 ];

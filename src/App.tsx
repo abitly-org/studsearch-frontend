@@ -52,7 +52,7 @@ function App() {
                 <Route exact path="/cabinet/" component={PersonalArea}/>
                 <Route exact path="/about/" component={AboutPage} />
                 {/* <Route exact path="/help" component={HelpPage} /> */}
-                {/* <Route exact path="/delete-page" component={DeletePage}/> */}
+                <Route exact path="/delete" component={DeletePage}/>
 
                 <Route exact path="/privacy-policy/" component={PrivacyPolicyPage}/>
 

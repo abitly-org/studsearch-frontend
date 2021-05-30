@@ -3,13 +3,12 @@
 @mixin pageStyle() {
   margin: 0 auto;
   max-width: 1160px;
-  padding: 0 20px;
+  padding: 0 32px;
   height: 100vh;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+  margin-top: 250px;
 }
 
 @mixin style-text($ff, $fs, $fw, $fSize, $lHeight) {

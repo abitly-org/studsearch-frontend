@@ -9,11 +9,13 @@ const Button = ({
   children,
   className, style,
   href, target = '_self',
+  color,
   outline, to, onClick
 }: {
   children?: React.ReactNode,
   className?: string,
   style?: React.CSSProperties,
+  color?: string,
   outline?: boolean
 } & ({
   href?: never,
@@ -38,7 +40,11 @@ const Button = ({
           <a
             ref={ref}
             href={href} target={target}
-            style={style}
+            style={color ? {
+              backgroundColor: color,
+              borderColor: color,
+              ...style 
+            } : style}
             className={className}
             onClick={onClick as any}
           >
@@ -56,17 +62,29 @@ const Button = ({
     return (
       <a
         href={href} target={target}
-        style={style}
+        style={color ? {
+          backgroundColor: color,
+          borderColor: color,
+          ...style
+        } : style}
         className={cx('Button', { outline }, className)}
-        children={children}
         onClick={onClick as any}
-      />
+      >
+        <RippleEffect
+          onClick={onClick as any}
+        />
+        {children}
+      </a>
     )
   } else {
     return (
       <button
         className={cx('Button', { outline }, className)}
-        style={style}
+        style={color ? {
+          backgroundColor: color,
+          borderColor: color,
+          ...style
+        } : style}
         onClick={onClick as any}
       >
         <RippleEffect

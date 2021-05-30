@@ -2,10 +2,14 @@ import * as React from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useClickAway } from 'react-use';
 
 import logo from './logo.svg';
 import menu from './menu.svg';
+import arrow from './arrow.svg';
 import close from './close.svg';
+import tgPhoto from '../../Pages/Registration/components/RegistrationForm/tgPhoto.svg';
+import fbPhoto from '../../Pages/Registration/components/RegistrationForm/fbPhoto.png';
 
 import './index.scss';
 import Button from '../Button';
@@ -38,6 +42,78 @@ const HeaderLanguages = () => {
   )
 }
 
+const useDeferred = <T extends unknown>(
+  value: T,
+  ms: number
+) => {
+  const [state, setState] = React.useState(value);
+  React.useEffect(() => {
+    let unmounted = false;
+    setTimeout(() => {
+      if (!unmounted)
+        setState(value);
+    }, ms);
+    return () => { unmounted = true; }
+  }, [ value ]);
+  return state;
+}
+
+const LoginButton = ({
+  session, onClick
+}: {
+  session: ReturnType<typeof useSession>,
+  onClick?: () => void
+}) => {
+  const { t } = useTranslation();
+
+  const ref = React.useRef(null);
+  const [dropdown, setDropdown] = React.useState(false);
+  const dropdownDeferred = useDeferred(dropdown, 75);
+
+  useClickAway(ref, () => setDropdown(false));
+  
+  return (
+    <div ref={ref} className="Header_Buttons_Login">
+      <Button
+        onClick={() => {
+          // setRefreshing?.(true);
+          // onClick?.();
+          setDropdown(d => !d);
+        }}
+        outline
+      >
+        <P2>{t('header-login')}</P2>
+      </Button>
+      { (dropdown || dropdownDeferred) &&
+        <div className={cx('Dropdown', { hiding: !dropdown || !dropdownDeferred })}>
+          <img src={arrow} className='Arrow' />
+          <Button
+            href={session.login.telegram}
+            color='#68A8E5'
+            target='_blank'
+            onClick={onClick}
+          >
+            <img src={tgPhoto} />
+            <P2 style={{color: 'white'}}>
+              Telegram
+            </P2>
+          </Button>
+          <Button
+            href={session.login.facebook}
+            color='#1778f2'
+            onClick={onClick}
+          >
+            <img src={fbPhoto} />
+            <P2 style={{color: 'white'}}>
+              Facebook
+            </P2>
+          </Button>
+        </div>
+      }
+    </div>
+  )
+}
+
 const AuthButtons = ({ reverse, session, refreshing, setRefreshing, onClick }: {
   session: ReturnType<typeof useSession>,
   refreshing?: boolean,
@@ -65,30 +141,22 @@ const AuthButtons = ({ reverse, session, refreshing, setRefreshing, onClick }: {
             >
               <P2>{t('header-register')}</P2>
             </Button>
-            <Button
-              className="Header_Buttons_Login"
-              href={session?.loginHref}
+            <LoginButton
+              session={session}
               onClick={() => {
                 setRefreshing?.(true);
                 onClick?.();
               }}
-              target='_blank' outline
-            >
-              <P2>{t('header-login')}</P2>
-            </Button>
+            />
           </> : 
           <>
-            <Button
-              className="Header_Buttons_Login"
-              href={session?.loginHref}
+            <LoginButton
+              session={session}
               onClick={() => {
                 setRefreshing?.(true);
                 onClick?.();
               }}
-              target='_blank' outline
-            >
-              <P2>{t('header-login')}</P2>
-            </Button>
+            />
             <Button
               className="Header_Buttons_Register"
               to='/register'
