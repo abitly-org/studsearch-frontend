@@ -105,7 +105,8 @@ const StudentCard = ({ student, showUniversity = true, small }: {
   //   socials.push('facebook')
 
   let universityName = takeString(student?.university, i18n.language),
-      facultyName = removePostfix(universityName, takeString(student?.faculty, i18n.language));
+      facultyName = removePostfix(universityName, takeString(student?.faculty, i18n.language)),
+      specialtyName = takeString(student?.speciality, i18n.language)
   
 
   return (
@@ -128,9 +129,9 @@ const StudentCard = ({ student, showUniversity = true, small }: {
       <div className="Specialty">
         <img src={specialty} />
         <P2>
-          <b>{ facultyName }</b>
-          <br />
-          { takeString(student?.speciality, i18n.language) }
+          { facultyName && <b>{ facultyName }</b> }
+          { facultyName && specialtyName && <br /> }
+          { specialtyName }
         </P2>
       </div>
       { student?.about &&

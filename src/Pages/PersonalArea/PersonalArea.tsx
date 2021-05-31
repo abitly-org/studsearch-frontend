@@ -19,6 +19,7 @@ import useLoad, { useLoadState } from "../../Helpers/useLoad";
 import Button from "../../Components/Button";
 import { ForceRedirect } from "../Registration/components/RegistrationForm/RegistrationForm";
 import useTitle from "../../Helpers/useTitle";
+import { P1, P2 } from "../../Components/Text";
 
 export type Cabinet = {
   about?: string,
@@ -204,11 +205,13 @@ function PersonalArea() {
           window.open('/', '_self');
         }}
       />
-      {/* <footer className={`Footer`}>
-        <p>{t("cabinet-delete-profile")}</p>
-        <span>{t("cabinet-delete-text")}</span>
-        <Link to={`delete-page`}>{t("cabinet-delete-link")}</Link>
-      </footer> */}
+      <footer className={`PersonalFooter`}>
+        <P1>{t("cabinet-delete-profile")}</P1>
+        <P2>{t("cabinet-delete-text")}</P2>
+        <Link to={`/delete`}>
+          {t("cabinet-delete-link")}
+        </Link>
+      </footer>
       <br />
       <br />
       <br />

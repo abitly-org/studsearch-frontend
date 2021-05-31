@@ -7,6 +7,7 @@ import useLoadPagination from '../LoadPagination/useLoadPagination';
 import Checkbox from '../CheckBox/Checkbox';
 import { P2, P3, P4 } from '../Text';
 import { ReactComponent as Arrow } from './Arrow.svg';
+import { ReactComponent as Reset } from './Reset.svg';
 import { ReactComponent as Check } from '../CheckBox/check.svg';
 import Chip, { Chips } from '../Chip';
 import LoadingSpinner from '../LoadingSpinner';
@@ -14,6 +15,7 @@ import hierarchyContains from '../../Helpers/hierarchyContains';
 
 import './index.scss';
 import isMobile from '../../Helpers/isMobile';
+import RequiredAsterisk from '../RequiredAsterisk';
 
 const dropdowns = {} as {[id: string]: Function};
 const useOtherClicked = (
@@ -53,6 +55,9 @@ export type Dropdown2State<T> = {
    * Can put here a comparison by ids, f.ex
    */
   equals?: (a: T, b: T) => boolean;
+
+  required?: boolean;
+  resetable?: boolean;
 
 } & ({
   multiple: true;
@@ -98,6 +103,9 @@ const Dropdown2 = <T extends unknown>({
   equals = (a, b) => a === b,
   disabled,
   error,
+
+  resetable,
+  required,
 
   ...state
 }: Dropdown2State<T>) => {
@@ -193,7 +201,7 @@ const Dropdown2 = <T extends unknown>({
   return (
     <div
       ref={ref}
-      className={cx('Dropdown2', className, { disabled, withShadow, singleBorder, error })}
+      className={cx('Dropdown2', className, { disabled, withShadow, singleBorder, error, resetable })}
       style={style}
       // onFocus={e => {
       //   console.log('div.onFocus (open=', open, ')')
@@ -216,7 +224,7 @@ const Dropdown2 = <T extends unknown>({
         className={cx('Value', { focused: open })}
       >
         <P2 className={cx('Name', { float: hasValue || (open && !!searchQuery) })}>
-          {name}
+          {name}{required && RequiredAsterisk}
         </P2>
         { state.multiple &&
             <Chips>{
@@ -259,6 +267,20 @@ const Dropdown2 = <T extends unknown>({
             // }}
             // onBlur={() => setOpen(false)}
             onChange={e => setSearchQuery(e.target.value)}
+          />
+        }
+        { resetable && (
+          state.multiple ? state.value && state.value?.length > 0 : state.value !== null
+        ) && 
+          <span
+            className='Reset'
+            onClick={() => {
+              if (state.multiple)
+                state.onChange?.([]);
+              else 
+                state.onChange?.(null);
+            }}
+            children={<Reset />}
           />
         }
         <span className='Arrow' children={<Arrow />} />

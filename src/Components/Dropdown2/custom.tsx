@@ -46,6 +46,8 @@ export type CustomDropdownProps<I> = {
   singleBorder?: boolean
   error?: boolean,
   name: string,
+  resetable?: boolean,
+  required?: boolean
 } & ({
   multiple: true;
   value: I[];
@@ -136,6 +138,7 @@ export const SpecialityDropdown = ({
         getSpecialities(query, universities?.map?.(u => u?.id), count, offset),
         [ universities ]
       )}
+      resetable
       // disabled={universities?.length === 0}
       equals={(a, b) => a?.id === b?.id}
     />

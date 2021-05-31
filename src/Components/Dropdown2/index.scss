@@ -91,6 +91,20 @@ $transitionDuration: 0.08s;
       right: 19px;
       transform: rotate(180deg);
     }
+    > .Reset {
+      position: absolute;
+      stroke: #787A87;
+      transition: stroke $transitionDuration ease-in-out,
+                  transform $transitionDuration ease-in-out;
+      padding: 5px;
+
+      width: 13px;
+      height: 13px;
+      box-sizing: content-box;
+
+      top: 14px;
+      right: 56px;
+    }
 
     > .Error {
       position: absolute;
@@ -99,6 +113,9 @@ $transitionDuration: 0.08s;
       color: #ff4255;
       font-weight: bold;
     }
+  }
+  &.resetable > .Value {
+    padding-right: 86px !important;
   }
 
   > .Menu {
@@ -207,6 +224,8 @@ $transitionDuration: 0.08s;
       > .Name {
         padding: 2px;
         margin-left: 0;
+        margin-top: 3px;
+        opacity: 0.5;
         &.float {
           font-size: 12px;
           opacity: 0.7;

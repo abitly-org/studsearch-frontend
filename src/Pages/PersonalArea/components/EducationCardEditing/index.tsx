@@ -56,7 +56,7 @@ export default function EducationCardEdited({
     gender: false,
     region: false,
     university: false,
-    faculty: false,
+    // faculty: false,
     speciality: false,
     course: false,
   });
@@ -65,6 +65,7 @@ export default function EducationCardEdited({
       <div className="wrapper">
         <div className={`regionBlock`}>
           <RegionDropdown
+            required
             name={t('cabinet-region')}
             error={error.region}
             singleBorder
@@ -76,6 +77,7 @@ export default function EducationCardEdited({
         </div>
         <div className={`universityBlock`}>
           <UniversityDropdown
+            required
             name={t('cabinet-university')}
             error={error.university}
             singleBorder
@@ -87,21 +89,9 @@ export default function EducationCardEdited({
             onChange={university => setCabinet({ ...cabinet, university: university ?? undefined })}
           />
         </div>
-        <div className={`facultyBlock`}>
-          <FacultyDropdown
-            name={t('cabinet-faculty')}
-            error={error.faculty}
-            singleBorder
-
-            universities={universities}
-            
-            multiple={false}
-            value={cabinet?.faculty ?? null}
-            onChange={faculty => setCabinet({ ...cabinet, faculty: faculty ?? undefined })}
-          />
-        </div>
         <div className={`specialityCourseBlock`}>
           <SpecialityDropdown
+            required
             name={t('cabinet-speciality')}
             error={error.speciality}
             singleBorder
@@ -112,8 +102,11 @@ export default function EducationCardEdited({
             multiple={false}
             value={cabinet?.speciality ?? null}
             onChange={speciality => setCabinet({ ...cabinet, speciality: speciality ?? undefined })}
+
+            resetable
           />
           <CourseDropdown
+            required
             name={t('cabinet-course')}
             error={error.course}
             singleBorder
@@ -124,6 +117,20 @@ export default function EducationCardEdited({
               Courses(t)?.find?.(c => c?.id === cabinet?.course) ?? null
             }
             onChange={course => setCabinet({ ...cabinet, course: course?.id ?? undefined })}
+          />
+        </div>
+        <div className={`facultyBlock`}>
+          <FacultyDropdown
+            resetable
+            name={t('cabinet-faculty')}
+            // error={error.faculty}
+            singleBorder
+
+            universities={universities}
+            
+            multiple={false}
+            value={cabinet?.faculty ?? null}
+            onChange={faculty => setCabinet({ ...cabinet, faculty: faculty ?? undefined })}
           />
         </div>
 

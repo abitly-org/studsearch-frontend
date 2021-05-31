@@ -76,28 +76,23 @@
     display: none;
   }
 }
+.PersonalFooter {
+  max-width: 687px;
+  margin: 100px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  @include style-text(14px, 18px);
+  color: #3B3C44;
 
-// .Footer {
-//   max-width: 687px;
-//   margin: 100px auto 0 auto;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   text-align: center;
-//   @include style-text(14px, 18px);
-//   color: #3B3C44;
+  p {
+    margin-bottom: 30px;
+  }
 
-//   p {
-//     margin-bottom: 18px;
-//   }
-
-//   span {
-//     margin-bottom: 30px;
-//   }
-
-//   a {
-//     text-decoration-line: underline;
-//     color: #3B3C44;
-//     margin-bottom: 30px;
-//   }
-// }
+  a {
+    margin-bottom: 30px;
+    font-family: Montserrat;
+    font-size: 15px;
+  }
+}

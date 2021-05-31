@@ -28,7 +28,7 @@ $height: 100%;
     width: 100%;
     max-width: $width;
     height: $height;
-    min-height: 1136px;
+    min-height: 1072px;
   }
 
   .secondPhoto {
@@ -47,7 +47,7 @@ $height: 100%;
 
 //------------------------------------//
 .SignForm {
-  padding: 0 35px;
+  padding: 0 35px 35px 35px;
 
   .flName {
     margin-top: 20px;
@@ -62,7 +62,7 @@ $height: 100%;
   }
 
   .facultyBlock {
-    margin-top: 30px;
+    margin-top: 20px;
   }
 
   .specialityCourseBlock {
@@ -117,6 +117,7 @@ $height: 100%;
     display: flex;
     border-radius: 6px;
 
+    transition: box-shadow 0.1s ease-in-out;
     &:hover {
       box-shadow: 2px 3px 4px rgba(120, 122, 135, 0.5);
       -webkit-box-shadow: 2px 3px 4px rgba(120, 122, 135, 0.5);
@@ -133,10 +134,12 @@ $height: 100%;
       border-radius: 6px;
       cursor: pointer;
       text-decoration: none;
+      justify-content: center;
       &:focus {
         outline: none;
       }
 
+      transition: background-color 0.1s ease-in-out;
       &:active {
         background-color:  #68A8E5 ;
         opacity: .8;
@@ -162,7 +165,7 @@ $height: 100%;
     }
 
     img {
-      padding: 0 22px 0 29px;
+      padding: 0 22px 0 0;
     }
 
     span {

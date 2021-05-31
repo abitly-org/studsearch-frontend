@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import "./index.scss";
 import { useTranslation } from "react-i18next";
+import RequiredAsterisk from "../RequiredAsterisk";
 
 export interface IInput {
   value?: string;
@@ -12,6 +13,7 @@ export interface IInput {
   title?: string;
   enabled?: boolean;
   onFocusHandler?: Function;
+  required?: boolean;
 }
 
 export default function Input(props: IInput): JSX.Element {
@@ -22,7 +24,8 @@ export default function Input(props: IInput): JSX.Element {
     placeholder, 
     title,
     enabled = true,
-    onFocusHandler
+    onFocusHandler,
+    required
   } = props;
   const { t } = useTranslation();
   
@@ -74,7 +77,10 @@ export default function Input(props: IInput): JSX.Element {
         }}
       />
       <div className={"error-icon"} />
-      <span className={"title"}>{title}</span>
+      <span className={"title"}>
+        {title}
+        {required && RequiredAsterisk}
+      </span>
       <span className={"text-error"}>{t('error-required')}</span>
     </div>
   );

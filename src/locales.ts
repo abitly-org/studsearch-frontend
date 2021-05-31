@@ -151,7 +151,8 @@ const ua = {
     'registration-course-placeholder': 'Курс',
     'registration-about': 'Про себе',
     'registration-about-helper-text': 'Це поле не є обов’язковим. Проте ми будемо вдячні якщо ти скажеш декілька слів про своє навчання та студентське життя.',
-    'registration-checkBox-tg-photo': 'Додати моє фото з Telegram/Facebook',
+    'registration-checkBox-tg-photo': 'Додати моє фото з Telegram',
+    'registration-checkBox-tgfb-photo': 'Додати моє фото з Telegram/Facebook',
     'registration-checkBox-confidential-part-1': 'Погоджуюся з',
     'registration-checkBox-confidential-part-2': 'Політикою конфіденційності',
     'registration-checkBox-helper-text': 'Ми використовуемо Telegram для зв’язку між абітурієнтом та студентом, тому просимо тебе підтвердити свій аккаунт через Telegram-бота',
@@ -190,7 +191,7 @@ const ua = {
     'cabinet-delete-profile': 'Видалити профіль?',
     'cabinet-delete-text': 'Ти можеш видалити свій обліковий запис StudSearch у будь-який момент. ' +
         'Це призведе до видалення твого профілю та пов\'язаної з ним інформації.',
-    'cabinet-delete-link': 'Хочеш видалити обліковий запис?',
+    'cabinet-delete-link': 'Видалити обліковий запис',
 
     'block-students-region': 'Регіон',
     'block-students-university': 'Заклад вищої освіти',
@@ -315,7 +316,8 @@ const ru = {
     'registration-course-placeholder': 'Курс',
     'registration-about':'О себе',
     'registration-about-helper-text': 'Это поле не является обязательным. Однако мы будем благодарны если ты скажешь несколько слов о своей учебе и студенческой жизни.',
-    'registration-checkBox-tg-photo': 'Добавить мое фото с Telegram/Facebook',
+    'registration-checkBox-tg-photo': 'Добавить мое фото с Telegram',
+    'registration-checkBox-tgfb-photo': 'Добавить мое фото с Telegram/Facebook',
     'registration-checkBox-confidential-part-1': 'Согласен с',
     'registration-checkBox-confidential-part-2': 'Политикой конфиденциальности',
     'registration-checkBox-helper-text': 'Мы используем Telegram для связи между абитуриентом и студентом, поэтому просим тебя подтвердить свой аккаунт через Telegram-бота',
@@ -353,7 +355,7 @@ const ru = {
     'cabinet-delete-profile': 'Удалить профиль?',
     'cabinet-delete-text': 'Ты можешь удалить свой аккаунт StudSearch в любой момент.'+
         ' Это приведет к удалению твоего профиля и связанной с ним информации.',
-    'cabinet-delete-link': 'Хочешь удалить учетную запись?',
+    'cabinet-delete-link': 'Удалить учетную запись',
 
     'block-students-region': 'Регион',
     'block-students-university': 'Высшее учебное заведение',

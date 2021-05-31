@@ -108,7 +108,7 @@ export default function RegistrationForm() {
     gender: false,
     region: false,
     university: false,
-    faculty: false,
+    // faculty: false,
     speciality: false,
     course: false,
     politic: false
@@ -124,7 +124,7 @@ export default function RegistrationForm() {
       gender,
       region,
       university,
-      faculty,
+      // faculty,
       speciality,
       course,
       aboutMyself,
@@ -166,6 +166,7 @@ export default function RegistrationForm() {
       <form>
         <div className={`flName`}>
           <Input
+            required
             value={nameSurname}
             error={error.nameSurname}
             placeholder="Олександр Забудько"
@@ -185,6 +186,7 @@ export default function RegistrationForm() {
         />
         <div className={`regionBlock`}>
           <RegionDropdown
+            required
             name={t('registration-region-placeholder')}
             singleBorder
             error={error.region}
@@ -200,6 +202,7 @@ export default function RegistrationForm() {
         </div>
         <div className={`universityBlock`}>
           <UniversityDropdown
+            required
             name={t('registration-university-placeholder')}
             singleBorder
             error={error.university}
@@ -215,25 +218,9 @@ export default function RegistrationForm() {
             }}
           />
         </div>
-        <div className={`facultyBlock`}>
-          <FacultyDropdown
-            name={t('registration-faculty-placeholder')}
-            singleBorder
-            error={error.faculty}
-
-            universities={universities}
-
-            multiple={false}
-            value={faculty}
-            onChange={f => {
-              if (f)
-                fixError('faculty');
-              setFaculty(f);
-            }}
-          />
-        </div>
         <div className={`specialityCourseBlock`}>
           <SpecialityDropdown
+            required
             name={t('registration-speciality-placeholder')}
             singleBorder
             error={error.speciality}
@@ -247,6 +234,7 @@ export default function RegistrationForm() {
             }}
           />
           <CourseDropdown
+            required
             name={t('registration-course-placeholder')}
             error={error.course}
             singleBorder
@@ -259,6 +247,24 @@ export default function RegistrationForm() {
             }}
           />
         </div>
+        <div className={`facultyBlock`}>
+          <FacultyDropdown
+            name={t('registration-faculty-placeholder')}
+            singleBorder
+            // error={error.faculty}
+
+            universities={universities}
+
+            multiple={false}
+            value={faculty}
+            onChange={f => {
+              // if (f)
+              //   fixError('faculty');
+              setFaculty(f);
+            }}
+            resetable
+          />
+        </div>
         <MultiInput
           name={`textValue`}
           value={aboutMyself}
@@ -269,7 +275,7 @@ export default function RegistrationForm() {
         <div className="checkBoxBlock">
           <Checkbox
             label="tg"
-            value={t('registration-checkBox-tg-photo')}
+            value={t(`registration-checkBox-tg${SHOW_FB ? 'fb' : ''}-photo`)}
             checked={checkBoxState.tg}
             onChange={handleChange}
           />
@@ -285,10 +291,7 @@ export default function RegistrationForm() {
         {/* <p className={`useTelegram`}>
             {t('registration-checkBox-helper-text')}
         </p> */}
-
         <br />
-        <br />
-
         <div className="authSocial telegram">
           <a
             className={`regButton`}
@@ -345,6 +348,8 @@ export default function RegistrationForm() {
             </div>
           </>
         }
+        <br />
+        <p>Після реєстрації ти завжди зможеш видалити свої контакти з головної сторінки.</p>
       </form>
     </div>
   );
