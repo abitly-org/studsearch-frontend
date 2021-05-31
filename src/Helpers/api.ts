@@ -8,6 +8,8 @@ export const endpoint = DEV ? "https://3d846de85546.ngrok.io" : "https://server.
 export const telegramBot = DEV ? "StudSearch_TestBot" : "StudSearchBot";
 export const instagramClientId = '710477512866503';
 
+export const SHOW_FB = false;
+
 const arr = (v?: any | any[]) : string | undefined => 
     v ? (Array.isArray(v) ? v.join(',') : String(v)) : undefined
 

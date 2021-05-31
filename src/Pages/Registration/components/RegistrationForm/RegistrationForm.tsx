@@ -15,6 +15,7 @@ import {
   Speciality,
   endpoint,
   makeQuery,
+  SHOW_FB,
 } from "../../../../Helpers/api";
 import DropDown from "../../../../Components/DropDown";
 import Input from "../../../../Components/Input";
@@ -312,36 +313,38 @@ export default function RegistrationForm() {
             <span>{t('registration-confirm-telegram')}</span>
           </a>
         </div>
-
-        <div className='or'>
-          <span>
-            <P2>{t('registration-confirm-or')}</P2>
-          </span>
-        </div>
-
-        <div className="authSocial facebook">
-          <a
-            className={`regButton`}
-            onClick={SubmitStates}
-            href={`${endpoint}/v2/register/facebook/${makeQuery({
-              name: nameSurname,
-              gender,
-              about: aboutMyself,
-              universityID: university?.id,
-              facultyID: faculty?.id,
-              specialityID: speciality?.id,
-              course: course?.id,
-              hostel: false,
-              telegramPhoto: checkBoxState?.tg,
-              token: session?.token,
-              utm: utmString
-            })}`}
-            rel="noopener noreferrer"
-          >
-            <img src={fbPhoto} width='24' height='24' alt="fbPhoto" />
-            <span>{t('registration-confirm-facebook')}</span>
-          </a>
-        </div>
+        { SHOW_FB &&
+          <>
+            <div className='or'>
+              <span>
+                <P2>{t('registration-confirm-or')}</P2>
+              </span>
+            </div>
+            <div className="authSocial facebook">
+              <a
+                className={`regButton`}
+                onClick={SubmitStates}
+                href={`${endpoint}/v2/register/facebook/${makeQuery({
+                  name: nameSurname,
+                  gender,
+                  about: aboutMyself,
+                  universityID: university?.id,
+                  facultyID: faculty?.id,
+                  specialityID: speciality?.id,
+                  course: course?.id,
+                  hostel: false,
+                  telegramPhoto: checkBoxState?.tg,
+                  token: session?.token,
+                  utm: utmString
+                })}`}
+                rel="noopener noreferrer"
+              >
+                <img src={fbPhoto} width='24' height='24' alt="fbPhoto" />
+                <span>{t('registration-confirm-facebook')}</span>
+              </a>
+            </div>
+          </>
+        }
       </form>
     </div>
   );

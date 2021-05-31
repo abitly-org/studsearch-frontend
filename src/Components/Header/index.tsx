@@ -18,7 +18,7 @@ import RippleEffect from '../Button/RippleEffect';
 import useSession, { Session } from '../../Helpers/session';
 import LoadingSpinner from '../LoadingSpinner';
 import { StudentPhoto } from '../StudentCard';
-import { takeString } from '../../Helpers/api';
+import { SHOW_FB, takeString } from '../../Helpers/api';
 
 const HeaderLanguages = () => {
   const { i18n, t } = useTranslation();
@@ -74,11 +74,21 @@ const LoginButton = ({
   
   return (
     <div ref={ref} className="Header_Buttons_Login">
+      {/* @ts-ignore */}
       <Button
+        {...(SHOW_FB ? 
+          {} :
+          {
+            href: session.login.telegram,
+            target: '_blank'
+          }  
+        )}
         onClick={() => {
-          // setRefreshing?.(true);
-          // onClick?.();
-          setDropdown(d => !d);
+          if (SHOW_FB)
+            setDropdown(d => !d);
+          else {
+            onClick?.();
+          }
         }}
         outline
       >
