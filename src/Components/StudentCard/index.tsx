@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
-import { Courses, Student, studentLink, studentPhoto, takeString } from '../../Helpers/api';
+import { Courses, makeQuery, Student, studentLink, studentPhoto, takeString } from '../../Helpers/api';
 import { H4, P1, P2, P3 } from '../Text';
 
 import Button from '../Button';
@@ -19,6 +19,8 @@ import { ReactComponent as ViberIcon } from './viber.svg';
 import { ReactComponent as FacebookIcon } from './facebook.svg';
 import './index.scss';
 import useLoad from '../../Helpers/useLoad';
+import useUTM from '../../Helpers/useUTM';
+import useRef from '../../Helpers/useRef';
 
 const withFirstLetterUppercase = (str: string) => {
   str = str?.trim?.();
@@ -95,6 +97,9 @@ const StudentCard = ({ student, showUniversity = true, small }: {
   small?: boolean
 }) => {
   const { i18n, t } = useTranslation();
+
+  const utm = makeQuery(useUTM() ?? {})?.substring?.(1);
+  const ref = useRef();
   
   const socials = [...(student?.social ?? [])];
   // if (Math.random() > 0.5)
@@ -148,7 +153,7 @@ const StudentCard = ({ student, showUniversity = true, small }: {
               key={key}
               className={social}
               target="_blank"
-              href={studentLink(student?.uuid, social)}
+              href={studentLink(student?.uuid, social, utm, ref)}
               rel='noindex nofollow noopener'
             >
               <RippleEffect

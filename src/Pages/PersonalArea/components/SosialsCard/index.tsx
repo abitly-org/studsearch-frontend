@@ -32,6 +32,7 @@ export default function SocialCard({
             name === 'telegram' || name === 'facebook' ?
               ( contacts?.[name] ? 
                 <Item
+                  key={key}
                   title={`${t('cabinet-social-user-name')} ${displayName}`}
                   itemData={contacts?.[name] ?? ''}
                 />

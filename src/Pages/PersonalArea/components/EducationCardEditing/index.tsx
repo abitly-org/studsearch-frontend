@@ -121,7 +121,6 @@ export default function EducationCardEdited({
         </div>
         <div className={`facultyBlock`}>
           <FacultyDropdown
-            resetable
             name={t('cabinet-faculty')}
             // error={error.faculty}
             singleBorder

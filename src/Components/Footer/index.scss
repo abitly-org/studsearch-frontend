@@ -1,20 +1,101 @@
 .Footer {
+  margin-top: 16px;
   display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  box-shadow: 0 -3px 4px rgba(59, 60, 68, 0.2);
+  > div {
+    display: flex;
+    justify-content: center;
 
-  padding: 16px 0;
+    padding: 16px 0;
 
-  p {
-    line-height: 50%;
-    margin-bottom: 4px;
-    &:first-child {
-      opacity: 0.7;
+    &.loveletter {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      p {
+        line-height: 50%;
+        margin-bottom: 4px;
+        &:first-child {
+          opacity: 0.7;
+        }
+        &:last-child {
+          opacity: 0.5;
+        }
+      }
     }
-    &:last-child {
-      opacity: 0.5;
+    &.socials {
+      flex-direction: row;
+      width: 100%;
+      max-width: 1200px;
+      box-sizing: border-box;
+      padding: 0 32px;
+      margin: 0 auto;
+
+      > div {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-right: 32px;
+        padding: 16px 0;
+        min-width: 0;
+
+        > p {
+          max-width: 100%;
+          min-width: 0;
+          overflow: hidden;
+        }
+      }
+
+
+      .social {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 4px;
+        &.telegram {
+          .social-icon {
+            svg {
+              fill: #179cde;
+              stroke: #179cde;
+              width: 18px;
+            }
+            margin-right: 8px;
+          }
+          p { color: #179cde; }
+        }
+        &.instagram {
+          .social-icon {
+            svg {
+              fill: #e6683c;
+              stroke: #e6683c;
+              width: 18px;
+            }
+            margin-right: 8px;
+          }
+          p { color: #e6683c; }
+        }
+        
+      }
+
+      .nav {
+        align-items: flex-start;
+        .HeaderTabs {
+          flex-direction: column;
+          align-items: flex-start;
+          > .HeaderTabs_Tab {
+            margin-bottom: 4px;
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            > span p {
+              text-align: left;
+            }
+          }
+        }
+      }
     }
   }
 }

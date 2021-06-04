@@ -20,7 +20,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import { StudentPhoto } from '../StudentCard';
 import { SHOW_FB, takeString } from '../../Helpers/api';
 
-const HeaderLanguages = () => {
+export const HeaderLanguages = () => {
   const { i18n, t } = useTranslation();
 
   return (
@@ -357,7 +357,7 @@ const pages = [
   // { textKey: 'header-tab-students', path: '/students' }
 ];
 
-const HeaderTabs = () => {
+export const HeaderTabs = ({ showAll = false }: { showAll?: boolean }) => {
   const { i18n, t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
@@ -371,7 +371,7 @@ const HeaderTabs = () => {
             path ? 'span' : 'a',
             {
               key,
-              className: cx('HeaderTabs_Tab', { selected, hideInMobile, black }),
+              className: cx('HeaderTabs_Tab', { selected, hideInMobile: hideInMobile && !showAll, black }),
               ...(url ? {
                 href: url,
                 target: '_blank'

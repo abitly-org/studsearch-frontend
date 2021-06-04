@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import tgPhoto from "./tgPhoto.svg";
+import * as React from "react";
+import { ReactComponent as TgPhoto } from "./tgPhoto.svg";
 import fbPhoto from "./fbPhoto.png";
 import "./registrationForm.scss";
 
@@ -30,6 +30,7 @@ import useSession from "../../../../Helpers/session";
 import { Redirect } from "react-router-dom";
 import useUTM from "../../../../Helpers/useUTM";
 import { P2 } from "../../../../Components/Text";
+import useRef from "../../../../Helpers/useRef";
 
 type FormProps = {};
 type CoursesType = { id?: number; name?: string };
@@ -93,6 +94,7 @@ export default function RegistrationForm() {
 
   const utm = useUTM(),
         utmString = makeQuery(utm ?? {})?.substring?.(1);
+  const ref = useRef();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.checked;
@@ -262,8 +264,12 @@ export default function RegistrationForm() {
               //   fixError('faculty');
               setFaculty(f);
             }}
-            resetable
           />
+        </div>
+        <div>
+          <P2 style={{ fontSize: '75%', fontWeight: 500, marginTop: 8 }}>
+            Немає твого універу, факультету чи спеціальності? — <a href="https://t.me/VladBandurin">Напиши нам</a>!
+          </P2>
         </div>
         <MultiInput
           name={`textValue`}
@@ -307,12 +313,13 @@ export default function RegistrationForm() {
               hostel: false,
               telegramPhoto: checkBoxState?.tg,
               token: session?.token,
-              utm: utmString
+              utm: utmString,
+              ref
             })}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={tgPhoto} alt="tgPhoto" />
+            <TgPhoto />
             <span>{t('registration-confirm-telegram')}</span>
           </a>
         </div>
@@ -338,7 +345,8 @@ export default function RegistrationForm() {
                   hostel: false,
                   telegramPhoto: checkBoxState?.tg,
                   token: session?.token,
-                  utm: utmString
+                  utm: utmString,
+                  ref
                 })}`}
                 rel="noopener noreferrer"
               >

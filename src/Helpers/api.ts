@@ -294,8 +294,8 @@ export const Students = (regionId?: number, universityId?: number, facultyId?: n
 
 // export const getStudentLink = (studentUUID: string, social: string) => 
 //     __reqjson(`/link/${studentUUID}/${social}/`);
-export const studentLink = (studentUUID: string, social: string) =>
-    `${endpoint}/link/${studentUUID}/${social}/`;
+export const studentLink = (studentUUID: string, social: string, utm?: string, ref?: string) =>
+    `${endpoint}/link/${studentUUID}/${social}/${makeQuery({ utm, ref })}`;
 export const studentPhoto = (studentUUID: string) =>
     `${endpoint}/photo/${studentUUID}`
 
