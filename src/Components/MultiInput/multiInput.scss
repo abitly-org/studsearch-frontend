@@ -25,6 +25,8 @@
     margin-left: auto;
     flex: 0 0 auto;
     min-width: 0;
+    width: 100px;
+    text-align: right;
     &.max {
       color: $carrot;
     }
