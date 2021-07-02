@@ -4,7 +4,7 @@ import cx from "classnames";
 
 interface CheckboxProps {
     label?: string;
-    value?: string;
+    value?: JSX.Element;
     checked: (boolean | undefined);
     onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
     tag?: JSX.Element;
@@ -30,7 +30,6 @@ const Checkbox = ({
                 className={cx({"disabled": disabled})}>
                 <div className={`checkBoxTitle`}>
                     <div>{value}</div>
-                    {tag}
                 </div>
             </label>
         }
