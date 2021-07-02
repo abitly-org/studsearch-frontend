@@ -293,7 +293,9 @@ export default function RegistrationForm() {
                 <a href={`/privacy-policy`}>
                   {t('registration-checkBox-confidential-part-2')}
                 </a>
+                {' '}
                 {t('registration-checkBox-confidential-part-3')}
+                {' '}
                 <a href={`https://zakon.rada.gov.ua/laws/show/2297-17`}>
                   {t('registration-checkBox-confidential-part-4')}
                 </a>
