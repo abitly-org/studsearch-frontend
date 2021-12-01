@@ -24,13 +24,17 @@ import WidgetsPage from './Pages/Widgets';
 
 import StudentsWidget from './Widgets/Students';
 
+import redesignRoutes from './NEW/index';
+
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import useUTM from './Helpers/useUTM';
 
 const shouldShowHeader = (url: string) =>
     !url?.startsWith?.('/register') &&
-    !url?.startsWith?.('/widget/')
+    !url?.startsWith?.('/widget/') &&
+    // NEW
+    !url?.startsWith?.('/myrating')
 
 function App() {
     useUTM();
@@ -59,6 +63,8 @@ function App() {
                 <Route exact path="/widget" component={WidgetsPage} />
                 <Route exact path="/widgets" render={() => <Redirect to="/widget" />} />
                 <Route exact path="/widget/students" component={StudentsWidget} />
+
+                { redesignRoutes }
 
                 <Route component={Page404} />
             </Switch>

@@ -1,0 +1,35 @@
+.MyRatingStart {
+  background-color: #F9F4EF;
+  > div {
+    padding: 64px 25px 22px 25px;
+
+    .MyRatingStartText {
+      display: flex;
+      flex-direction: row;
+      > p {
+        color: #6D757A;
+        font-size: 16px;
+        font-weight: 400;
+
+        margin-top: 24px;
+      }
+      > img {
+        margin-left: auto;
+        @media (min-width: 750px) {
+          margin-left: 5%;
+        }
+      }
+    }s
+
+    > .AppButton,
+    > .AppButtonLink {
+      display: block;
+      margin-top: 24px;
+    }
+  }
+  
+  background-image: url(./avramenko.svg);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 50vh;
+}

@@ -1,0 +1,18 @@
+.AppContent {
+  flex: 1;
+  
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  
+  min-height: 0;
+  overflow: auto;
+
+  > div {
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+  }
+}

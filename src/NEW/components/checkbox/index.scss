@@ -1,0 +1,48 @@
+.AppCheckbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  > .AppCheckboxBox { 
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+
+    border-radius: 8px;
+    border: 1px solid #F59D33;
+    background-color: #FFFFFF;
+
+    transition: background-color 0.05s ease-in-out;
+    > img {
+      opacity: 0;
+      transition: opacity 0.05s ease-in-out;
+    }
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &.radio {
+    > .AppCheckboxBox {
+      border-radius: 50%;
+    }
+  }
+  &.checked {
+    > .AppCheckboxBox {
+      background-color: #F59D33;
+      > img {
+        opacity: 1;
+      }
+    }
+  }
+  > .AppCheckboxText {
+    flex: 1;
+    margin-left: 18px;
+
+    font-family: Mariupol;
+    font-size: 16px;
+  }
+
+  cursor: pointer;
+}

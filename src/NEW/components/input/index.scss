@@ -1,0 +1,61 @@
+.AppInput {
+  min-height: 50px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 25px 20px 9px 20px;
+  box-sizing: border-box;
+
+  position: relative;
+  > .Placeholder {
+    font-family: Mariupol;
+    font-weight: 400;
+    font-size: 14px;
+    color: #9DA3A7;
+    transition: all 0.05s ease-in-out;
+
+    position: absolute;
+    left: 20px;
+    top: 19px;
+    pointer-events: none;
+  }
+  &.filled {
+    > .Placeholder {
+      top: 7px;
+      font-size: 10px;
+      font-weight: 400;
+      color: #6D757A;
+    }
+  }
+  > input {
+    outline: none;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-family: Mariupol;
+    font-weight: 500;
+    font-size: 16px;
+
+    transition: transform 0.05s ease-in-out;
+    transform: translateY(-9px);
+  }
+  &.filled {
+    > input {
+      transform: translateY(0);
+    }
+  }
+  > .AppInputClear {
+    cursor: pointer;
+
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

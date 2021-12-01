@@ -1,0 +1,45 @@
+.MyRatingLoading {
+  background-color: #F9F4EF;
+  > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > .MyRatingLoadingSpinner {
+      width: 112px;
+      height: 112px;
+      position: relative;
+      > span {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 112px;
+        height: 56px;
+        overflow: hidden;
+        > span {
+          display: block;
+          width: 110px;
+          height: 110px;
+          box-sizing: border-box;
+          border-top-left-radius: 110px;
+          border-top-right-radius: 110px;
+          border: 3.5px solid #F59D33;
+          border-bottom: none;
+        }
+        transform-origin: center bottom;
+        animation: rotating 1s infinite;
+      }
+      > img {
+        padding: 7px;
+      }
+    }
+  }
+}
+
+@keyframes rotating {
+    0% { transform: rotate(0deg); }
+   50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}

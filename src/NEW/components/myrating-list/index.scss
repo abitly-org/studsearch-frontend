@@ -1,0 +1,23 @@
+.MyRatingList {
+  background-color: #F9F4EF;
+  > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    > div {
+      flex: 1;
+      padding: 25px;
+      overflow: auto;
+      > * {
+        margin-bottom: 24px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    > .AppButton,
+    > .AppButtonLink {
+      margin: 0 25px 25px 25px;
+    }
+  }
+}

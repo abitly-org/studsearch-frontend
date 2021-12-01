@@ -1,0 +1,59 @@
+.AppHeader {
+  flex: 0 0 auto;
+
+  display: block;
+  width: 100%;
+
+  background-color: #F9F4EF;
+  border-bottom: 1px solid #FDEBD6;
+
+  > div {
+    display: flex;
+    max-width: 800px;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+    padding: 16px 24px;
+
+    justify-content: space-between;
+    align-items: center;
+
+    > a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.AppHeaderBurgerButton {
+  position: relative;
+  width: 24px;
+  height: 24px;
+
+  cursor: pointer;
+
+  > span {
+    position: absolute;
+    width: 24px;
+    height: 3px;
+    border-radius: 15px;
+
+    background-color: #000000;
+
+    transition:
+      transform 0.1s ease-in-out,
+      opacity 0.1s ease-in-out;
+    &:nth-child(1) { top: 4px; }
+    &:nth-child(2) { top: 11px; }
+    &:nth-child(3) { top: 18px; }
+  }
+
+  &.open {
+    > span {
+      &:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      &:nth-child(2) { opacity: 0; }
+      &:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+  }
+}
