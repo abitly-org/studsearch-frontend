@@ -1,0 +1,51 @@
+$fontFamily: 'Mariupol';
+
+$white: #FFFFFF;
+
+$darkest100:#0B1922;
+$darkest80: #3C474E;
+$darkest60: #6D757A;
+$darkest40: #9DA3A7;
+$darkest20: #CED1D3;
+$darkest10: #E7E8E9;
+$darkest5:  #F3F3F4;
+
+$primary100:#F59D33;
+$primary60: #F9C485;
+$primary40: #FBD8AD;
+$primary20: #FDEBD6;
+$primary15: #FDF0E0;
+$primary10: #FEF5EB;
+
+$secondaryBlue100:  #22DDE9;
+$secondaryPink100:  #FF3950;
+$secondaryPurple100:#9912F5;
+
+@mixin h1 {
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 109%;
+}
+@mixin h2 {
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 116%;
+}
+@mixin p1 {
+    font-family: $fontFamily;// Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 100%;
+}
+@mixin p2 {
+    font-family: $fontFamily;// Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 123.5%;
+}

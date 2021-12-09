@@ -1,3 +1,5 @@
+@import '../../index.scss';
+
 .AppCheckbox {
   display: flex;
   flex-direction: row;
@@ -10,8 +12,8 @@
     height: 32px;
 
     border-radius: 8px;
-    border: 1px solid #F59D33;
-    background-color: #FFFFFF;
+    border: 1px solid $primary100;
+    background-color: $white;
 
     transition: background-color 0.05s ease-in-out;
     > img {
@@ -30,7 +32,7 @@
   }
   &.checked {
     > .AppCheckboxBox {
-      background-color: #F59D33;
+      background-color: $primary100;
       > img {
         opacity: 1;
       }

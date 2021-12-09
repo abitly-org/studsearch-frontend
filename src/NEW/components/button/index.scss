@@ -1,3 +1,5 @@
+@import '../../index.scss';
+
 .AppButton {
   flex: 0 0 auto;
 
@@ -7,7 +9,7 @@
   justify-content: center;
   padding: 24px;
 
-  background-color: #F59D33;
+  background-color: $primary100;
   color: white;
   font-weight: 700;
   font-size: 16px;
@@ -17,12 +19,26 @@
   
   cursor: pointer;
   user-select: none;
-
-  transition: opacity 0.1s ease-in-out;
+  
+  transition:
+    opacity 0.1s ease-in-out,
+    transform 0.1s cubic-bezier(0.32, 0, 0.15, 1.75);
   &.disabled {
     opacity: .5;
   }
+
+  &:hover {
+    transform: scale(0.99);
+  }
+  &:active {
+    transform: scale(0.97);
+  }
+
+  position: relative;
 }
 .AppButtonLink {
   text-decoration: none;
+  &.disabled {
+    pointer-events: none;
+  }
 }

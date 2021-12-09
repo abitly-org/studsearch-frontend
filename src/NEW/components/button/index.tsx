@@ -16,7 +16,11 @@ const Button = ({
   onClick?: () => void,
   children?: React.ReactNode
 }) => (
-  <div className={cx('AppButton', { disabled }, className)} style={style} onClick={onClick}>
+  <div
+    className={cx('AppButton', { disabled }, className)}
+    style={style}
+    onClick={onClick}
+  >
     { children }
   </div>
 );

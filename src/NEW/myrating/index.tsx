@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import cx from 'classnames';
 
 import App from '../components/app';
+import useDelayed from '../utils/useDelayed';
 import Header from '../header';
 
 import StartPage from './start';
@@ -9,19 +12,90 @@ import SelectYearPage from './select-year';
 import SelectSubjectsPage from './select-subjects';
 import SelectScorePage from './select-score';
 import LoadingPage from './loading';
+import ResultPage from './result';
 
-const MyRatingApp = (props: any) => {
+import './index.scss';
+import AppContent from '../components/app/content';
+
+const AppContentAnimated = ({ children }: { children: React.ReactElement }) => {
+  const index = React.useRef(0);
+  const olderPage = React.useRef<React.ReactNode>(null);
+  const oldPage = React.useRef<React.ReactNode>(null);
+  // const [olderPage, setOlderPage] = React.useState<React.ReactElement | null>(null);
+  // const [oldPage, setOldPage] = React.useState<React.ReactElement | null>(null);
+
+  // const prevPage = useDelayed(children, 1000);
+
+  // React.useEffect(() => {
+  //   let changed = lastChildren.current !== children && lastChildren.current !== null;
+  //   if (changed) {
+  //     setOldPage( 
+  //       <div key={index.current++} className='AppContentAnimated_Block old'>
+  //         { lastChildren.current }
+  //       </div>
+  //     );
+  //   }
+
+  //   lastChildren.current = children;
+
+  //   if (changed) {
+  //     const timeout = setTimeout(() => setOldPage(null), 500);
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [ children ]);
+
+  if (oldPage.current !== children) {
+    if (index.current > 1) {
+      olderPage.current = oldPage.current;
+      oldPage.current = children;
+    }
+    index.current++;
+  }
+
+  const indexNum = Math.max(2, index.current);
+
+  return (
+    <div className='AppContentAnimated'>
+      <div
+        className={cx('AppContentAnimated_Block', { first: indexNum <= 3 })}
+        key={indexNum}
+      >
+        { children }
+      </div>
+      {
+        olderPage.current && 
+          <div
+            className='AppContentAnimated_Block old'
+            key={indexNum + 1}
+          >
+            { olderPage.current }
+          </div>
+      }
+    </div>
+  )
+}
+
+const MyRatingApp = () => {
+  let location = useLocation();
 
   return (
     <App>
       <Header />
-      <Switch>
-        <Route exact path="/myrating/loading" component={LoadingPage} />
-        <Route exact path="/myrating/score" component={SelectScorePage} />
-        <Route exact path="/myrating/subjects" component={SelectSubjectsPage} />
-        <Route exact path="/myrating/year" component={SelectYearPage} />
-        <Route exact path="/myrating/" component={StartPage} />
-      </Switch>
+      <AppContentAnimated>
+          <CSSTransition
+            key={location.pathname}
+            timeout={100}
+          >
+            <Switch location={location}>
+              <Route exact path="/myrating/result" component={ResultPage} />
+              <Route exact path="/myrating/loading" component={LoadingPage} />
+              <Route exact path="/myrating/score" component={SelectScorePage} />
+              <Route exact path="/myrating/subjects" component={SelectSubjectsPage} />
+              <Route exact path="/myrating/year" component={SelectYearPage} />
+              <Route exact path="/myrating/" component={StartPage} />
+            </Switch>
+          </CSSTransition>
+      </AppContentAnimated>
     </App>
   );
 }
