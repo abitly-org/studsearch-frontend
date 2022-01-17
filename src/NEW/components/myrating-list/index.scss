@@ -6,14 +6,8 @@
     flex-direction: column;
     > div {
       flex: 1;
-      padding: 25px;
+      padding: 9px 0;
       overflow: auto;
-      > * {
-        margin-bottom: 24px;
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
     }
     > .AppButton,
     > .AppButtonLink {

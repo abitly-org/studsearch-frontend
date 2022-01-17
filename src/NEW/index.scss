@@ -1,4 +1,5 @@
-$fontFamily: 'Mariupol';
+$fontFamily1: 'Mariupol';
+$fontFamily2: 'Inter';
 
 $white: #FFFFFF;
 
@@ -22,35 +23,35 @@ $secondaryPink100:  #FF3950;
 $secondaryPurple100:#9912F5;
 
 @mixin h1 {
-    font-family: $fontFamily;
+    font-family: $fontFamily1;
     font-style: normal;
     font-weight: bold;
     font-size: 40px;
     line-height: 109%;
 }
 @mixin h2 {
-    font-family: $fontFamily;
+    font-family: $fontFamily1;
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
     line-height: 116%;
 }
 @mixin p1 {
-    font-family: $fontFamily;// Inter;
+    font-family: $fontFamily2;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 100%;
 }
 @mixin p2 {
-    font-family: $fontFamily;// Inter;
+    font-family: $fontFamily2;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 123.5%;
 }
 @mixin p3 {
-    font-family: $fontFamily;// Inter;
+    font-family: $fontFamily2;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;

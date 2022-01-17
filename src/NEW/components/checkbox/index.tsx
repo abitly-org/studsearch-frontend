@@ -4,6 +4,7 @@ import cx from 'classnames';
 import check from './check.svg';
 
 import './index.scss';
+import Ripples, { RippleColor } from '../ripple';
 
 const Checkbox = ({
   style, className,
@@ -22,8 +23,12 @@ const Checkbox = ({
   >
     <span className='AppCheckboxBox'>
       <img src={check} alt="Checkbox"/>
+      <span />
     </span>
     <span className='AppCheckboxText'>{ children }</span>
+    <Ripples
+      color={RippleColor.primary100}
+    />
   </div>
 );
 

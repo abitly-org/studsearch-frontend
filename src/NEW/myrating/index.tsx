@@ -84,7 +84,7 @@ const MyRatingApp = () => {
       <AppContentAnimated>
           <CSSTransition
             key={location.pathname}
-            timeout={100}
+            timeout={150}
           >
             <Switch location={location}>
               <Route exact path="/myrating/result" component={ResultPage} />

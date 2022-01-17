@@ -13,11 +13,11 @@ const MyRatingStart = () => {
 
   return (
     <AppContent className='MyRatingStart'>
-      <h1>Дізнайся наскільки ти краще за інших склав/ла ЗНО?{/* ‍‍🎓*/}</h1>
-      <div className='MyRatingStartText'>
+      <h1>Дізнайся наскільки твої бали ЗНО кращі за бали інших</h1>
+      {/* <div className='MyRatingStartText'>
         <p>Доведи мамі, що ти крутий!</p>
         <img src={arrow} />
-      </div>
+      </div> */}
       <Link className="AppButtonLink" to="/myrating/year">
         <Button>
           Розрахувати рівень крутості

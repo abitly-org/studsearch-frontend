@@ -6,6 +6,10 @@
   align-items: center;
   justify-content: flex-start;
 
+  position: relative;
+  overflow: hidden;
+  padding: 16px 25px;
+
   > .AppCheckboxBox { 
     flex: 0 0 auto;
     width: 32px;
@@ -13,17 +17,37 @@
 
     border-radius: 8px;
     border: 1px solid $primary100;
-    background-color: $white;
-
-    transition: background-color 0.05s ease-in-out;
-    > img {
-      opacity: 0;
-      transition: opacity 0.05s ease-in-out;
-    }
+    overflow: hidden;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    > img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      transition: opacity 0.05s ease-in-out;
+      z-index: 2;
+    }
+
+    background-color: $white;
+    transition: background-color 0.05s ease-in-out;
+    position: relative;
+    > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: scale(0);
+      background-color: $primary100;
+      border-radius: 50%;
+      transition:
+        transform 0.1s ease-in-out,
+        0.05s border-radius 0.1s ease-in-out;
+      z-index: 1;
+    }
   }
   &.radio {
     > .AppCheckboxBox {
@@ -32,9 +56,13 @@
   }
   &.checked {
     > .AppCheckboxBox {
-      background-color: $primary100;
+      // background-color: $primary100;
       > img {
         opacity: 1;
+      }
+      > span {
+        transform: scale(1.1);
+        border-radius: 4px;
       }
     }
   }

@@ -10,15 +10,23 @@ import nextFrame from '../utils/nextFrame';
 export const BurgerButton = ({ value, setValue }: {
   value?: boolean,
   setValue?: (v: boolean) => void
-}) => (
-  <div
-    className={cx('AppHeaderBurgerButton', { open: value })}
-    onClick={() => setValue?.(!value)}
-  >
-    <span />
-    <span />
-  </div>
-);
+}) => {
+  const [index, setIndex] = React.useState(0);
+  React.useEffect(() => {
+    if (!value)
+      setIndex(i => i + 1);
+  }, [ value ]);
+  return (
+    <div
+      className={cx('AppHeaderBurgerButton', { open: value, right: index % 2 == 1 })}
+      onClick={() => setValue?.(!value)}
+    >
+      <span />
+      <span />
+      <div className='AppHeaderBurgerButton_Background' />
+    </div>
+  );
+}
 
 export const HeaderMenuButton = ({ emoji, name }: { emoji: string, name: string }) => (
   <div className='AppHeaderMenuButton'>

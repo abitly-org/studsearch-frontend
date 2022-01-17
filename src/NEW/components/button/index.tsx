@@ -21,6 +21,9 @@ const Button = ({
     style={style}
     onClick={onClick}
   >
+    <div
+      className='AppButton_Background'
+    />
     { children }
   </div>
 );
