@@ -16,12 +16,13 @@ const MyRatingHeader = ({
   <div className='MyRatingHeader'>
     <div>
       <div className='MyRatingHeaderTop'>
-        <div className='MyRatingHeaderBack' onClick={onBack}>
+        {/* <div className='MyRatingHeaderBack' onClick={onBack}>
           <img src={back} /><span>Назад</span>
-        </div>
-        <div className='MyRatingHeaderSteps'>
-          Крок {step} з {stepsCount}
-        </div>
+        </div> */}
+        <button className='MyRatingHeaderSteps' onClick={onBack}>
+          <img src={back} />
+          <span>Крок {step} з {stepsCount}</span>
+        </button>
       </div>
       <div className='MyRatingHeaderBottom'>
         <h1>{header}</h1>

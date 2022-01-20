@@ -1,92 +1,122 @@
 @import '../../index.scss';
 
 .MyRatingResult {
-    > div {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        > .MyRatingResult_Cards {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: stretch;
-            overflow: auto;
-        }
-        > .MyRatingResult_Bottom {
-            padding: 0 25px 25px 25px;
-            flex: 0 0 auto;
-        }
-    }
-}
+    width: 100%;
+    height: 100%;
 
-.MyRatingResultCard {
-    flex: 1 0 auto;
-
-    border-radius: 30px;
-    width: 70vw;
-    max-width: 300px;
-    margin: 25px 16px 25px 0;
-    &:first-child {
-        margin: 25px 16px 25px 25px;
-    }
-    &:last-child {
-        margin: 25px 25px 25px 0;
-    }
-
-    &:nth-child(1) { background-color: $secondaryPurple100; }
-    &:nth-child(2) { background-color: $primary100; }
-    &:nth-child(3) { background-color: $secondaryPink100; }
-    &:nth-child(4) { background-color: $secondaryPurple100; }
-    &:nth-child(5) { background-color: $primary100; }
-    &:nth-child(6) { background-color: $secondaryPink100; }
-    &:nth-child(7) { background-color: $secondaryPurple100; }
-    &:nth-child(8) { background-color: $primary100; }
-    &:nth-child(9) { background-color: $secondaryPink100; }
-
-    padding: 30px 26px;
     display: flex;
     flex-direction: column;
 
-    > .MyRatingResultCard_Top {
-        flex: 0 0 auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        > img {
-            opacity: 0.45;
-        }
-        > span.MyRatingResultCard_Num {
-            @include p3;
-            color: $white;
-            opacity: .6;
-        }
-    }
-
-    > .MyRatingResultCard_Content {
+    > .MyRatingResult_Cards {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        padding: 24px 0;
-        
-        > h2 {
-            @include h2;
-            color: $white;
-            margin-bottom: 20px;
-        }
-        > p {
-            @include p3;
-            color: $white;
-            opacity: .7;
+        // display: flex;
+        // flex-direction: row;
+        // align-items: stretch;
+        // overflow: auto;
+        .slick-list {
+            box-sizing: border-box;
+            height: 100%;
+            .slick-track {
+                height: 100%;
+                box-sizing: border-box;
+                .slick-slide {
+                    height: 100%;
+                    box-sizing: border-box;
+                    > div {
+                        height: 100%;
+                        box-sizing: border-box;
+                    }
+                }
+            }
         }
     }
+    > .MyRatingResult_Bottom {
+        padding: 0 25px 25px 25px;
+        flex: 0 0 auto;
+    }
+}
+.slick-slide {
 
-    > .MyRatingResultCard_Chart {
-        flex: .6;
+    &:nth-child(1) .MyRatingResultCard { background-color: $secondaryPurple100; }
+    &:nth-child(2) .MyRatingResultCard { background-color: $primary100; }
+    &:nth-child(3) .MyRatingResultCard { background-color: $secondaryPink100; }
+    &:nth-child(4) .MyRatingResultCard { background-color: $secondaryPurple100; }
+    &:nth-child(5) .MyRatingResultCard { background-color: $primary100; }
+    &:nth-child(6) .MyRatingResultCard { background-color: $secondaryPink100; }
+    &:nth-child(7) .MyRatingResultCard { background-color: $secondaryPurple100; }
+    &:nth-child(8) .MyRatingResultCard { background-color: $primary100; }
+    &:nth-child(9) .MyRatingResultCard { background-color: $secondaryPink100; }
+    
+    > div > div {
+        padding: 25px 8px 25px 8px;
+    }
+    &:first-child > div > div {
+        padding: 25px 8px 25px 25px;
+    }
+    &:last-child > div > div {
+        padding: 25px 25px 25px 8px;
+    }
+
+    > div {
+        
+        > div {
+            height: 100%;
+            box-sizing: border-box;
+
+            .MyRatingResultCard {
+                // flex: 1 0 auto;
+                height: 100%;
+            
+                border-radius: 30px;
+                // width: 70vw;
+                // max-width: 300px;
+                box-sizing: border-box;
+                padding: 30px 26px;
+                display: flex;
+                flex-direction: column;
+            
+                > .MyRatingResultCard_Top {
+                    flex: 0 0 auto;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+            
+                    > img {
+                        opacity: 0.45;
+                    }
+                    > span.MyRatingResultCard_Num {
+                        @include p3;
+                        color: $white;
+                        opacity: .6;
+                    }
+                }
+            
+                > .MyRatingResultCard_Content {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+            
+                    padding: 24px 0;
+                    
+                    > h2 {
+                        @include h2;
+                        color: $white;
+                        margin-bottom: 20px;
+                    }
+                    > p {
+                        @include p3;
+                        color: $white;
+                        opacity: .7;
+                    }
+                }
+            
+                > .MyRatingResultCard_Chart {
+                    flex: .6;
+                }
+            }
+        }
     }
 }
 

@@ -1,3 +1,5 @@
+@import '../../index.scss';
+
 .MyRatingHeader {
   background-color: #FDF0E0;
   flex: 0 0 auto;
@@ -23,42 +25,61 @@
       flex: 0 0 auto;
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
-      > .MyRatingHeaderBack {
-        flex: 0 0 auto;
-        position: absolute;
-        left: 0;
+      // > .MyRatingHeaderBack {
+      //   flex: 0 0 auto;
+      //   position: absolute;
+      //   left: 0;
 
+      //   display: flex;
+      //   flex-direction: row;
+      //   align-items: center;
+      //   justify-content: center;
+
+      //   > img {
+      //     margin-right: 7px;
+      //   }
+      //   > span {
+      //     margin-top: 2px;
+      //   }
+
+      //   color: #CABBA9;
+      //   font-family: Mariupol;
+
+      //   padding: 8px;
+      //   margin: -8px 0 0 -8px;
+      //   border-radius: 4px;
+      //   cursor: pointer;
+      //   user-select: none;
+      //   transition: background-color 0.05s ease-in-out;
+      //   &:hover  { background-color: rgba(#000000, 0.025); }
+      //   &:active { background-color: rgba(#000000, 0.05); }
+      // }
+      > .MyRatingHeaderSteps {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+        @include p3;
+        font-weight: bold;
+        color: $primary100;
         display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
         > img {
-          margin-right: 7px;
+          margin-right: 10px;
         }
-        > span {
-          margin-top: 2px;
-        }
-
-        color: #CABBA9;
-        font-family: Mariupol;
+        align-items: center;
 
         padding: 8px;
         margin: -8px 0 0 -8px;
         border-radius: 4px;
         cursor: pointer;
         user-select: none;
-        transition: background-color 0.05s ease-in-out;
-        &:hover  { background-color: rgba(#000000, 0.025); }
-        &:active { background-color: rgba(#000000, 0.05); }
-      }
-      > .MyRatingHeaderSteps {
-        font-family: Mariupol;
-        font-weight: 700;
-        color: #F59D33;
+        transition: background-color 0.1s ease-in-out;
+        &:hover  { background-color: rgba($primary60, 0.15); }
+        &:active { background-color: rgba($primary60, 0.35); }
       }
       margin-bottom: 24px;
     }

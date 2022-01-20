@@ -11,7 +11,7 @@
 
     opacity: 0;
     user-select: none;
-    animation: 0.1s forwards AppContentAnimated_Block_FadeIn ease-out;
+    animation: 0.15s forwards AppContentAnimated_Block_FadeIn ease-out;
     &.first {
       opacity: 1;
       user-select: auto;
@@ -29,7 +29,7 @@
   }
 
   > .AppContentAnimated_Block.old {
-    animation: 0.1s forwards AppContentAnimated_Block_FadeOut ease-in-out;
+    animation: 0.15s forwards AppContentAnimated_Block_FadeOut ease-in-out;
     pointer-events: none;
 
     z-index: 1;
@@ -39,7 +39,7 @@
 @keyframes AppContentAnimated_Block_FadeIn {
   0% {
     opacity: 0;
-    transform: translateX(64px);
+    transform: translateX(128px);
   }
   100% {
     opacity: 1;
@@ -54,6 +54,6 @@
   }
   100% {
     opacity: 1;
-    transform: translateX(-64px);
+    transform: translateX(-128px);
   }
 }
