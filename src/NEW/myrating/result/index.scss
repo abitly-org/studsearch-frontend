@@ -16,6 +16,8 @@
         .slick-list {
             box-sizing: border-box;
             height: 100%;
+            max-width: 760px;
+            margin: 0 auto;
             .slick-track {
                 height: 100%;
                 box-sizing: border-box;
@@ -29,9 +31,26 @@
                 }
             }
         }
+
+        > .slick-dots {
+            bottom: 0;
+
+            & li {
+                width: 10px;
+            }
+            
+            & li button::before {
+                color: $primary60;
+                font-size: 7px;
+            }
+
+            & .slick-active button::before {
+                color: $primary100;
+            }
+        }
     }
     > .MyRatingResult_Bottom {
-        padding: 0 25px 25px 25px;
+        padding: 0 0px 25px 0px;
         flex: 0 0 auto;
     }
 }
@@ -47,77 +66,161 @@
     &:nth-child(8) .MyRatingResultCard { background-color: $primary100; }
     &:nth-child(9) .MyRatingResultCard { background-color: $secondaryPink100; }
     
-    > div > div {
-        padding: 25px 8px 25px 8px;
-    }
-    &:first-child > div > div {
-        padding: 25px 8px 25px 25px;
-    }
-    &:last-child > div > div {
-        padding: 25px 25px 25px 8px;
-    }
-
     > div {
-        
-        > div {
-            height: 100%;
-            box-sizing: border-box;
+        padding: 10px 0px 25px 20px;
 
-            .MyRatingResultCard {
-                // flex: 1 0 auto;
-                height: 100%;
+    }
+
+    &:first-child > div {
+        padding-left: 0;
+    }
+
+    @media (max-width: 768px) {
+        &:first-child > div {
+            padding: 10px 0px 25px 25px;
+        }
+        &:last-child > div {
+            padding: 10px 25px 25px 20px;
+        }   
+    }
+
+    height: 100%;
+    box-sizing: border-box;
+    outline: none;
+
+    .MyRatingResultCard {
+        // flex: 1 0 auto;
+        height: 100%;
+    
+        border-radius: 30px;
+        // width: 70vw;
+        // max-width: 300px;
+        box-sizing: border-box;
+        padding: 30px 26px;
+        display: flex;
+        flex-direction: column;
+    
+        > .MyRatingResultCard_Top {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+    
+            > img {
+                opacity: 0.45;
+            }
+            > span.MyRatingResultCard_Num {
+                @include p3;
+                color: $white;
+                opacity: .6;
+            }
+        }
+    
+        > .MyRatingResultCard_Content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+    
+            padding: 24px 0;
             
-                border-radius: 30px;
-                // width: 70vw;
-                // max-width: 300px;
-                box-sizing: border-box;
-                padding: 30px 26px;
-                display: flex;
-                flex-direction: column;
-            
-                > .MyRatingResultCard_Top {
-                    flex: 0 0 auto;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
-            
-                    > img {
-                        opacity: 0.45;
-                    }
-                    > span.MyRatingResultCard_Num {
-                        @include p3;
-                        color: $white;
-                        opacity: .6;
-                    }
+            > h2 {
+                @include h2;
+                color: $white;
+                margin-bottom: 20px;
+            }
+            > p {
+                @include p3;
+                color: $white;
+                opacity: .7;
+            }
+        }
+    
+        > .MyRatingResultCard_Chart {
+            flex: .6;
+        }
+
+        &.LastCard{
+            border: 2px dashed #F59D33;
+            background-color: $primary15;
+            > .MyRatingResultCard_Content {
+                > h2 {
+                    color: $darkest100;
+                    max-width: unset;
+                    margin: 0 auto;
                 }
-            
-                > .MyRatingResultCard_Content {
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-            
-                    padding: 24px 0;
-                    
-                    > h2 {
-                        @include h2;
-                        color: $white;
-                        margin-bottom: 20px;
-                    }
-                    > p {
-                        @include p3;
-                        color: $white;
-                        opacity: .7;
-                    }
-                }
-            
-                > .MyRatingResultCard_Chart {
-                    flex: .6;
+    
+                > .AppButton {
+                    margin-top: 20px;
                 }
             }
         }
     }
+}
+
+.AppContent {
+    &.DonateCard {
+        overflow: unset;
+        flex: 0 auto;
+    }
+    .MyRatingDonateCard {
+        background-color: $primary15;
+        margin-top: 10px;
+        border: 2px dashed #F59D33;
+        padding: 20px;
+        max-width: 800px;
+        border-radius: 20px;
+        > .MyRatingDonateCard_Content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+    
+            @media (min-width: 640px) {
+                flex-direction: unset;
+                justify-content: space-between;
+            }
+    
+            >.MyRatingDonateCard_Header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;   
+                
+                @media (min-width: 640px) {
+                    align-items: flex-start;
+                }
+                > h2 {
+                    @include h2;
+                    color: $darkest100;
+                    max-width: 300px;
+                    text-align: center;
+                    margin-bottom: 5px;
+                }
+                > p {
+                    @include p3;
+                    color: $darkest40;
+                    max-width: 100%;
+                    margin-top: 0;
+                    text-align: center;
+                    opacity: .7;
+    
+                    @media (min-width: 640px) {
+                        text-align: left;
+                        max-width: 400px;
+                    }
+                }
+            }
+            > button {
+                margin-top: 15px;
+                flex: 0 0 auto;
+                // width: 45%;
+                @media (min-width: 640px) {
+                    max-width: 30%;
+                    margin-top: 0;
+                }
+            }
+        }
+    }    
 }
 
 .MyRatingResultCardChart {

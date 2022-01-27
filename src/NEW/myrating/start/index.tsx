@@ -19,9 +19,7 @@ const MyRatingStart = () => {
         <img src={arrow} />
       </div> */}
       <Link className="AppButtonLink" to="/myrating/year">
-        <Button>
-          Розрахувати рівень крутості
-        </Button>
+        Розрахувати рівень крутості
       </Link>
     </AppContent>
   );

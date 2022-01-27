@@ -17,7 +17,7 @@
     display: flex;
     max-width: 800px;
     margin: 0 auto;
-
+    padding: 0 20px;
     box-sizing: border-box;
 
     justify-content: space-between;
@@ -150,10 +150,7 @@
 
     > .AppHeaderMenuGroup {
       background-color: $white;
-      // border-radius: 12px; // TODO: smoothing
-      --smooth-corners: 12px;
-      mask-image: paint(smooth-corners);
-      -webkit-mask-image: paint(smooth-corners);
+      border-radius: 12px;
       overflow: hidden;
 
       transition:

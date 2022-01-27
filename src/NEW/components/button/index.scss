@@ -11,6 +11,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background-color: $primary100;
   padding: 20px;
   box-sizing: border-box;
 
@@ -20,7 +21,7 @@
   font-size: 16px;
   text-align: center;
 
-  // border-radius: 12px; // TODO: smoother border radius
+  border-radius: 12px; // TODO: smoother border radius
   
   cursor: pointer;
   user-select: none;
@@ -39,18 +40,15 @@
     transform: scale(0.95);
   }
 
-  position: relative;
-  > .AppButton_Background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: $primary100;
-    --smooth-corners: 12px 12px;
-    mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners);
-  }
+  // position: relative;
+  // > .AppButton_Background {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   background-color: $primary100;
+  // }
 }
 .AppButtonLink {
   text-decoration: none;

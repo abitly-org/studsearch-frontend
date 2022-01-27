@@ -16,16 +16,16 @@ const Button = ({
   onClick?: () => void,
   children?: React.ReactNode
 }) => (
-  <div
+  <button
     className={cx('AppButton', { disabled }, className)}
     style={style}
     onClick={onClick}
   >
-    <div
+    {/* <div
       className='AppButton_Background'
-    />
+    /> */}
     { children }
-  </div>
+  </button>
 );
 
 export default Button;

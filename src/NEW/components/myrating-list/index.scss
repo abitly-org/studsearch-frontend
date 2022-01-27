@@ -1,9 +1,11 @@
 .MyRatingList {
   background-color: #F9F4EF;
+  padding-top: 20px;
   > div {
     height: 100%;
     display: flex;
     flex-direction: column;
+
     > div {
       flex: 1;
       padding: 9px 0;
@@ -11,7 +13,24 @@
     }
     > .AppButton,
     > .AppButtonLink {
-      margin: 0 25px 25px 25px;
+      margin: 0 0px 25px 0px;
     }
   }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f4ef;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #f59d33;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

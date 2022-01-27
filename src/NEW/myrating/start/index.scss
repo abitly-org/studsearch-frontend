@@ -21,7 +21,64 @@
           margin-left: 5%;
         }
       }
-    }s
+    }
+
+    .AppButtonLink {
+      flex: 0 0 auto;
+
+      border: none;
+      outline: none;
+      width: 100%;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: $primary100;
+      padding: 20px;
+      box-sizing: border-box;
+
+      color: white;
+      font-family: $fontFamily2;
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+
+      border-radius: 12px; // TODO: smoother border radius
+      
+      cursor: pointer;
+      user-select: none;
+      
+      transition:
+        opacity 0.1s ease-in-out,
+        transform 0.2s cubic-bezier(0.32, 0, 0.15, 1.75);
+      &.disabled {
+        opacity: .5;
+      }
+
+      &:hover {
+        transform: scale(0.99);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+
+      // position: relative;
+      // > .AppButton_Background {
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   bottom: 0;
+      //   right: 0;
+      //   background-color: $primary100;
+      // }
+    }
+    .AppButtonLink {
+      text-decoration: none;
+      &.disabled {
+        pointer-events: none;
+      }
+    }
 
     > .AppButton,
     > .AppButtonLink {
