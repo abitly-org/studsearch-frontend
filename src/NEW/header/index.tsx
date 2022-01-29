@@ -124,8 +124,20 @@ const useAnimated = (def: boolean, delay: number = 250) => {
 }
 
 const Header = () => {
-
   const [open, openDelayed, setOpen] = useAnimated(false);
+
+  React.useEffect(() => {
+    const handleEsc = (event: any) => {
+      if (event.keyCode === 27)  {
+        setOpen(false)
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
 
   return (
     <>
