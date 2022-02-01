@@ -1,24 +1,24 @@
 @import '../../index.scss';
 
 .AppInput {
-  min-height: 50px;
+  min-height: 65px;
   background-color: #FFFFFF;
   border-radius: 12px;
-  padding: 25px 20px 9px 20px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 
   position: relative;
   > .Placeholder {
-    font-family: $fontFamily2;
+    font-family: "Inter";
     font-weight: 400;
     font-size: 14px;
-    color: $darkest40;
+    color: #9DA3A7;
+    
     transition: all 0.05s ease-in-out;
-
     position: absolute;
     left: 20px;
-    top: 19px;
     pointer-events: none;
   }
   &.filled {
@@ -41,7 +41,8 @@
     font-size: 16px;
 
     transition: transform 0.05s ease-in-out;
-    transform: translateY(-9px);
+    padding-left: 20px;
+    min-height: 65px;
   }
   &.filled {
     > input {
