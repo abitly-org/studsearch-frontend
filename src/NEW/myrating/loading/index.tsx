@@ -12,7 +12,7 @@ const MyRatingLoading = () => {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       history.push('/myrating/result')
-    }, 1500);
+    }, 2500);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -23,6 +23,10 @@ const MyRatingLoading = () => {
           <span />
         </span>
         <img src={zhdun} />
+        <div>
+          <h3>Рівень крутості розраховується️</h3>
+          <p>Але тут і без розрахунків все ясно)))</p>
+        </div>
       </div>
     </AppContent>
   );
