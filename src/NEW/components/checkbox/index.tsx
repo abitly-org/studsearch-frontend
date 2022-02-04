@@ -17,7 +17,7 @@ const Checkbox = ({
   radio?: boolean
 }) => (
   <div
-    className={cx('AppCheckbox', { radio, checked: !!value }, className)}
+    className={cx('AppCheckbox', { radio, checked: value }, className)}
     style={style}
     onClick={() => onChange?.(!value)}
   >

@@ -6,62 +6,89 @@ import Button from '../../components/button';
 import fulllogo from '../../header/fulllogo.svg';
 import share from './share.svg';
 import marker from './marker.svg';
-import fulllogoRedhead from './fulllogo-redhead.svg';
+import fulllogoRedhead from './fulllogoRedhead.svg';
+import ukraine from './ukraine.png';
+import geography from './geography.png';
+import english from './english.png';
+import france from './france.png';
+import dna from './dna.png';
+import spain from './spain.png';
+import testTube from './testTube.png';
+import abacus from './abacus.png';
+import germany from './germany.png';
+import microscope from './microscope.png';
+import sunflower from './sunflower.png';
+import scroll from './scroll.png';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import './index.scss';
-import { createPrinter } from 'typescript';
+// import { createPrinter } from 'typescript';
 
 const GeoBallData =  {[100]:1356,[101]:1584,[103]:1814,[105]:1974,[106]:2128,[108]:2343,[110]:2511,[112]:2597,[114]:2797,[116]:2919,[118]:2971,[120]:2975,[122]:2979,[124]:3098,[127]:3041,[129]:3081,[131]:3121,[133]:3045,[135]:2980,[138]:2915,[140]:2864,[142]:2726,[144]:2610,[146]:2587,[148]:2549,[150]:2324,[152]:2353,[154]:2148,[155]:2123,[157]:2096,[159]:2022,[161]:1859,[162]:1755,[164]:1716,[165]:1652,[167]:1614,[168]:1535,[170]:1410,[171]:1389,[173]:1345,[174]:1219,[176]:1166,[177]:1057,[178]:1021,[179]:940,[181]:922,[182]:841,[183]:761,[184]:757,[185]:663,[186]:616,[187]:574,[188]:548,[189]:513,[190]:430,[191]:416,[192]:323,[193]:274,[194]:292,[195]:259,[196]:194,[197]:134,[198]:170,[199]:39,[200]:10};
 const UkrBallData =  {[100]:5041,[102]:5173,[104]:5386,[106]:5742,[107]:5740,[109]:6026,[111]:6204,[113]:6152,[115]:6304,[118]:6407,[120]:6551,[122]:6574,[124]:6787,[126]:6782,[128]:6779,[130]:6821,[132]:6746,[135]:6735,[137]:6652,[139]:6559,[141]:6406,[143]:6258,[145]:6229,[147]:6048,[149]:5873,[151]:5786,[153]:5628,[155]:5264,[157]:5189,[159]:5063,[160]:4848,[162]:4752,[164]:4592,[166]:4455,[167]:4509,[169]:4268,[171]:4185,[173]:4145,[174]:4140,[176]:4034,[177]:3929,[179]:3779,[181]:3708,[182]:3579,[184]:3536,[185]:3351,[187]:3338,[188]:2958,[190]:2722,[191]:2494,[192]:2179,[194]:1752,[195]:1378,[196]:978,[197]:628,[198]:334,[199]:126,[200]:33};
 const MathBallData = {[100]:12726,[105]:11024,[109]:9520,[113]:8133,[116]:7186,[119]:6377,[122]:5844,[124]:5247,[127]:4955,[129]:4586,[131]:4375,[133]:4157,[136]:4123,[138]:3918,[140]:3862,[142]:3609,[144]:3514,[146]:3386,[147]:3298,[149]:3184,[151]:3024,[153]:2888,[155]:2795,[156]:2688,[158]:2541,[160]:2369,[161]:2350,[163]:2244,[164]:2165,[166]:2009,[167]:1973,[169]:1777,[170]:1853,[172]:1705,[173]:1687,[174]:1586,[176]:1563,[177]:1539,[178]:1326,[180]:1463,[181]:1364,[182]:1377,[184]:1221,[185]:1266,[186]:1090,[187]:1077,[188]:986,[190]:942,[191]:925,[192]:787,[193]:656,[194]:525,[195]:468,[196]:365,[197]:293,[198]:237,[199]:73,[200]:148};
 const BioBallData =  {[100]:592,[101]:716,[102]:872,[104]:1045,[105]:1235,[107]:1427,[109]:1767,[111]:1926,[113]:1996,[115]:2353,[117]:2523,[120]:2665,[122]:2741,[125]:2938,[127]:3006,[130]:2903,[133]:2909,[135]:2821,[138]:2774,[140]:2759,[143]:2577,[146]:2520,[148]:2339,[150]:2258,[152]:2020,[155]:1861,[157]:1748,[159]:1598,[160]:1483,[162]:1346,[164]:1285,[165]:1181,[167]:1077,[169]:988,[170]:900,[171]:899,[173]:857,[174]:775,[175]:756,[177]:705,[178]:690,[179]:668,[181]:592,[182]:576,[183]:573,[184]:530,[185]:494,[186]:527,[188]:402,[189]:424,[190]:391,[191]:384,[192]:357,[193]:319,[194]:285,[195]:273,[196]:240,[197]:209,[198]:179,[199]:145,[200]:115};
 
-
-interface ICards {
-  emoji?: string,
-  header?: string,
-  text?: string,
-  points?: number,
+interface Emojis {
+  subject: string,
+  emoji: any
 }
 
-const cards: ICards[] = [
+const emojis: Emojis[] = [
   {
-    emoji: '🇺🇦',
-    header: 'Твій бал ЗНО з Укр. мови і літератури краще ніж у 76.2% абітурієнтів', 
-    text: 'які здавали цей предмет в 2021 році',
-    points: 192,
+    subject: 'Українська мова і література',
+    emoji: sunflower 
   },
   {
-    emoji: '📐',
-    header: 'Твій бал ЗНО з Укр. мови і літератури краще ніж у 76.2% абітурієнтів', 
-    text: 'які здавали цей предмет в 2021 році',
-    points: 192,
+    subject: 'Українська мова',
+    emoji: ukraine
   },
   {
-    emoji: '🧬',
-    header: 'Твій бал ЗНО з Укр. мови і літератури краще ніж у 76.2% абітурієнтів', 
-    text: 'які здавали цей предмет в 2021 році',
-    points: 192,
+    subject: 'Історія України',
+    emoji: scroll 
   },
   {
-    emoji: '🧬',
-    header: 'Твій бал ЗНО з Укр. мови і літератури краще ніж у 76.2% абітурієнтів', 
-    text: 'які здавали цей предмет в 2021 році',
-    points: 192,
+    subject: 'Математика',
+    emoji: abacus
   },
   {
-    emoji: '🗺',
-    header: 'Твій бал ЗНО з Укр. мови і літератури краще ніж у 76.2% абітурієнтів', 
-    text: 'які здавали цей предмет в 2021 році',
-    points: 192,
+    subject: 'Біологія',
+    emoji: dna 
+  },
+  {
+    subject: 'Географія',
+    emoji: geography 
+  },
+  {
+    subject: 'Фізика',
+    emoji: microscope
+  },
+  {
+    subject: 'Хімія',
+    emoji: testTube 
+  },
+  {
+    subject: 'Англійська мова',
+    emoji: english 
+  },
+  {
+    subject: 'Французька мова',
+    emoji: france 
+  },
+  {
+    subject: 'Німецька мова',
+    emoji: germany 
+  },
+  {
+    subject: 'Іспанська мова',
+    emoji: spain 
   }
 ];
 
 const ResultCardChart = ({ score, data }: {
-  score: number,
+  score: any,
   data: {[score: number]: number}
 }) => {
 
@@ -208,13 +235,12 @@ const ResultCard = ({
 }: {
   index?: number, count?: number,
   
-  emoji?: string,
+  emoji?: any,
   header?: string,
   text?: string,
 
   chart?: React.ReactNode
 }) => {
-  // console.log(chart)
   return (
     <div className='MyRatingResultCard'>
       <div className='MyRatingResultCard_Top'>
@@ -224,7 +250,7 @@ const ResultCard = ({
         </span>
       </div>
       <div className='MyRatingResultCard_Content'>
-        <h2>🔥{emoji}🔥</h2>
+        <img src={emoji} alt="emoji" />
         <h2>{header}</h2>
         <p>{text}</p>
       </div>
@@ -235,18 +261,14 @@ const ResultCard = ({
   );
 }
 
-const LastResultCard = ({
-  header,
-}: {
-  header?: string,
-}) => {
+const LastResultCard = () => {
   return (
     <div className='MyRatingResultCard LastCard'>
       <div className='MyRatingResultCard_Top'>
         <img src={fulllogoRedhead} style={{ opacity: 1 }}/>
       </div>
       <div className='MyRatingResultCard_Content'>
-        <h2>{header}</h2>
+        <h2>Куди я зможу вступити з моїми балами?</h2>
         <Button
           onClick={() => {}}
         >
@@ -257,20 +279,14 @@ const LastResultCard = ({
   );
 }
 
-const DonateCard = ({
-  header,
-  text
-}: {
-  header?: string,
-  text?: string
-}) => {
+const DonateCard = () => {
   return (
     <AppContent className='DonateCard'>
       <div className='MyRatingDonateCard'>
         <div className='MyRatingDonateCard_Content'>
           <div className='MyRatingDonateCard_Header'>
-            <h2>{header}</h2>
-            <p>{text}</p>
+            <h2>Дай 22 гривні</h2>
+            <p>Розробники abitly теж люди студенти. Тож ми будемо дуже вдячні якщо ти задонатиш нам на поїсти в столовці</p>
           </div>
           <Button
             onClick={() => {}}
@@ -284,43 +300,64 @@ const DonateCard = ({
 }
   
 const MyRatingResult = () => {
+  const year: string = JSON.parse(localStorage.getItem('year') || '');
+  const subjects: string[] = JSON.parse(localStorage.getItem('subjects') || '[]');
+  const scores: string[] = JSON.parse(localStorage.getItem('scores') || '[]');
+
+  console.log(scores,'scores')
+
+  function findEmoji(subject: string) {
+    let j = emojis.find(i => {
+      if (i.subject === subject) {
+        return i;
+      };
+    });
+    return j?.emoji
+  }
+
+  // function myZNORating(subjectId: number, mark: any) {
+  //   const subject = marks[subjectId];
+  //   let allPupils = 0, worsePupils = 0;
+  //   for (const statmark in subject.stats) {
+  //     allPupils += subject.stats[statmark];
+  //     if (Number(statmark) < mark) {
+  //       worsePupils += subject.stats[statmark];
+  //     }
+  //   }
+  //   return (worsePupils / allPupils * 100).toFixed(2) + '%';
+  // }
+  
   return (
     <div className='MyRatingResult'>
-      <DonateCard
-        header='Дай 22 гривні'
-        text='Риозробники abitly теж люди студенти. Тож ми будемо дуже вдячні якщо ти задонатиш нам на поїсти в столовці'
-      />
+      <DonateCard/>
       <Slider
         className='MyRatingResult_Cards'
-        speed={500} dots
-        
+        dots={true}
         slidesToShow={1.1}
         slidesToScroll={1}
         arrows={false}
         infinite={false}
       >
-          {cards?.map((card, i) => 
-            <ResultCard
-              key={i}
+        { subjects?.map((subject, i) => 
+          <ResultCard
+            key={i}
 
-              index={i+1}
-              count={cards.length}
-    
-              emoji={card.emoji}
-              header={card.header}
-              text={card.text}
-    
-              chart={
-                <ResultCardChart
-                  score={170}
-                  data={UkrBallData}
-                />
-              }
-            />
-          )}
-          <LastResultCard
-            header='Куди я зможу вступити з моїми балами?'
-          /> 
+            index={i+1}
+            count={subjects.length}
+
+            emoji={findEmoji(subject)}
+            header={`Твій бал ЗНО з ${subject} краще ніж у 90 абітурієнтів`}
+            text={`які здавали цей предмет в ${year} році`}
+  
+            chart={
+              <ResultCardChart
+                score={scores[i]}
+                data={UkrBallData}
+              />
+            }
+          />
+        )}
+        <LastResultCard/> 
       </Slider>
       <AppContent className='MyRatingResult_Bottom'>
         <Button

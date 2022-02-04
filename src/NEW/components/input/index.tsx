@@ -13,24 +13,19 @@ const Input = ({
   value?: string,
   onChange?: (newValue: string) => void
 }) => {
-  React.useEffect(() => {
-    const handleEsc = (event: any) => {
-      if (event.keyCode === 27)  {
-        onChange?.('')
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-
-    return () => {
-      window.removeEventListener('keydown', handleEsc);
-    };
-  }, [])
+  const handleEsc = (event: any) => {
+    if (event.keyCode === 27)  {
+      event.preventDefault();
+      onChange?.('')
+    }
+  };
 
   return (
     <div className={cx('AppInput', { filled: !!value })}>
       <div className='Placeholder'>{name}</div>
       <input
         maxLength={3} 
+        onKeyDown={handleEsc}
         value={value}
         onChange={(e) => (e?.target?.value.replace(/\D/g, '') && e?.target?.value <= '200' ? onChange?.(e?.target?.value) : onChange?.(''))}
       />

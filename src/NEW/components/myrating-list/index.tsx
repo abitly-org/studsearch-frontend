@@ -9,11 +9,11 @@ import './index.scss';
 
 const MyRatingList = ({
   children,
-  nextLink, nextDisabled, nextLabel = 'Далі'
+  nextLink, nextDisabled, nextLabel = 'Далі',
 }: {
   children?: React.ReactNode,
   nextLink: string,
-  nextDisabled?: boolean,
+  nextDisabled?: boolean | any,
   nextLabel?: string
 }) => (
   <AppContent className='MyRatingList'>

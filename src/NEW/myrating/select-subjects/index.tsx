@@ -1,12 +1,17 @@
 import * as React from 'react';
-import AppContent from '../../components/app/content';
+
 import Checkbox from '../../components/checkbox';
 import MyRatingHeader from '../../components/myrating-header';
 import MyRatingList from '../../components/myrating-list';
 
+import books from './books.png';
+
+import useLocalStorage from '../../utils/localStorage';
+
 const MyRatingSelectSubjectsPage = () => {
-  const allSubjects = [
+  const allSubjects: string[] = [
     'Українська мова і література',
+    'Українська мова',
     'Історія України',
     'Математика',
     'Біологія',
@@ -18,25 +23,27 @@ const MyRatingSelectSubjectsPage = () => {
     'Німецька мова',
     'Іспанська мова'
   ];
-  const [subjects, setSubjects] = React.useState([ allSubjects[0] ]);
 
+  const [subjects, setSubjects] = useLocalStorage('subjects', [allSubjects[0]])
+  
   return (
     <>
       <MyRatingHeader
         step={2} stepsCount={3}
-        header={'Оберіть предмети, які ви здававали на ЗНО 📚'}
+        header={`Оберіть предмети, які ви здававали на ЗНО`}
+        emoji={books}
         onBack={() => window.history.back()}
       />
       <MyRatingList
         nextLink='/myrating/score/'
-        nextDisabled={subjects.length <= 0}
+        nextDisabled={subjects.length <= 0 || subjects.length > 5}
       >
         { allSubjects?.map?.(subject => 
           <Checkbox
             key={subject}
             
             value={subjects.includes(subject)}
-            onChange={v => setSubjects(s => v ? [...s, subject] : s.filter(s => s !== subject))}
+            onChange={v => setSubjects((s: string[]) => v ? [...s, subject] : s.filter((s: string) => s !== subject))}
             children={subject}
           />  
         ) }

@@ -19,6 +19,7 @@
     border: 1px solid $primary100;
     overflow: hidden;
 
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,6 +58,7 @@
   &.checked {
     > .AppCheckboxBox {
       // background-color: $primary100;
+      border: none;
       > img {
         opacity: 1;
       }

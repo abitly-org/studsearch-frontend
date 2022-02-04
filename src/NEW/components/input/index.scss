@@ -11,10 +11,10 @@
 
   position: relative;
   > .Placeholder {
-    font-family: "Inter";
+    font-family: $fontFamily2;
     font-weight: 400;
     font-size: 14px;
-    color: #9DA3A7;
+    color: $darkest40;
     
     transition: all 0.05s ease-in-out;
     position: absolute;

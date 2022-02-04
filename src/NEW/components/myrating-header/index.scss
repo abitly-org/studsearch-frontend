@@ -85,6 +85,13 @@
     }
     > .MyRatingHeaderBottom {
       flex: 0 0 auto;
+      & img {
+        width: 40px;
+        height: auto;
+        margin-left: 10px;
+        margin-bottom: -5px;
+        -webkit-user-drag: none;
+      }
     }
   }
 }

@@ -4,6 +4,13 @@ import cx from 'classnames';
 import AppRipples, { RippleColor } from '../components/ripple';
 
 import logo from './logo.svg';
+import wavingHand from './wavingHand.png';
+import callMeHand from './callMeHand.png';
+import thumbsUp from './thumbsUp.png';
+import chartIncreasing from './chartIncreasing.png';
+import graduationCap from './graduationCap.png';
+import moneyWithWings from './moneyWithWings.png';
+
 import './index.scss';
 import nextFrame from '../utils/nextFrame';
 
@@ -28,9 +35,9 @@ export const BurgerButton = ({ value, setValue }: {
   );
 }
 
-export const HeaderMenuButton = ({ emoji, name }: { emoji: string, name: string }) => (
+export const HeaderMenuButton = ({ emoji, name}: { emoji?: any, name: string }) => (
   <div className='AppHeaderMenuButton'>
-    <span className='AppHeaderMenuButton_Emoji'>{ emoji }</span>
+    <img className='AppHeaderMenuButton_Emoji' src={emoji} alt="emoji"/>
     <span className='AppHeaderMenuButton_Name'>{ name }</span>
     <AppRipples
       color={RippleColor.primary100}
@@ -63,15 +70,15 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
       <HeaderMenuGroup
         buttons={[
           <HeaderMenuButton
-            emoji='🎓'
+            emoji={graduationCap}
             name='Спитати у студентів (StudSearch)'
           />,
           <HeaderMenuButton
-            emoji='📈'
+            emoji={chartIncreasing}
             name='Рейтинг університетів'
           />,
           <HeaderMenuButton
-            emoji='👍'
+            emoji={thumbsUp}
             name='Наскільки твої бали ЗНО кращі за бали інших'
           />
         ]}
@@ -79,11 +86,11 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
       <HeaderMenuGroup
         buttons={[
           <HeaderMenuButton
-            emoji='👋'
+            emoji={wavingHand}
             name='Про нас'
           />,
           <HeaderMenuButton
-            emoji='🤙'
+            emoji={callMeHand}
             name='Зв’язатись з нами'
           />
         ]}
@@ -91,7 +98,7 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
       <HeaderMenuGroup
         buttons={[
           <HeaderMenuButton
-            emoji='💸'
+            emoji={moneyWithWings}
             name='Задонатити на сервери'
           />
         ]}

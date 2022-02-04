@@ -6,10 +6,12 @@ import './index.scss';
 const MyRatingHeader = ({
   step, stepsCount,
   header,
+  emoji,
   onBack
 }: {
   step?: number,
   stepsCount?: number,
+  emoji?: any,
   header?: string,
   onBack?: () => void
 }) => (
@@ -25,7 +27,7 @@ const MyRatingHeader = ({
         </button>
       </div>
       <div className='MyRatingHeaderBottom'>
-        <h1>{header}</h1>
+        <h1>{header}<img src={emoji} alt='emoji'/></h1>
       </div>
     </div>
   </div>
