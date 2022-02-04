@@ -33,53 +33,64 @@ const BioBallData =  {[100]:592,[101]:716,[102]:872,[104]:1045,[105]:1235,[107]:
 
 interface Emojis {
   subject: string,
-  emoji: any
+  emoji: any,
+  id?: number
 }
 
 const emojis: Emojis[] = [
   {
     subject: 'Українська мова і література',
-    emoji: sunflower 
+    emoji: sunflower,
   },
   {
     subject: 'Українська мова',
-    emoji: ukraine
+    emoji: ukraine,
+    id: 1
   },
   {
     subject: 'Історія України',
-    emoji: scroll 
+    emoji: scroll,
+    id: 6
   },
   {
     subject: 'Математика',
-    emoji: abacus
+    emoji: abacus,
+    id: 14
   },
   {
     subject: 'Біологія',
-    emoji: dna 
+    emoji: dna,
+    id: 18
   },
   {
     subject: 'Географія',
-    emoji: geography 
+    emoji: geography,
+    id: 19
   },
   {
     subject: 'Фізика',
-    emoji: microscope
+    emoji: microscope,
+    id: 21
   },
   {
     subject: 'Хімія',
-    emoji: testTube 
+    emoji: testTube,
+    id: 22
   },
   {
     subject: 'Англійська мова',
-    emoji: english 
+    emoji: english,
+    id: 29
   },
   {
     subject: 'Французька мова',
-    emoji: france 
+    emoji: france,
+    id: 31
   },
   {
     subject: 'Німецька мова',
-    emoji: germany 
+    emoji: germany,
+    id: 32
   },
   {
     subject: 'Іспанська мова',
@@ -300,11 +311,10 @@ const DonateCard = () => {
 }
   
 const MyRatingResult = () => {
+  const [marks, setMarks] = React.useState([]);
   const year: string = JSON.parse(localStorage.getItem('year') || '');
   const subjects: string[] = JSON.parse(localStorage.getItem('subjects') || '[]');
   const scores: string[] = JSON.parse(localStorage.getItem('scores') || '[]');
-
-  console.log(scores,'scores')
 
   function findEmoji(subject: string) {
     let j = emojis.find(i => {
@@ -315,17 +325,41 @@ const MyRatingResult = () => {
     return j?.emoji
   }
 
-  // function myZNORating(subjectId: number, mark: any) {
-  //   const subject = marks[subjectId];
-  //   let allPupils = 0, worsePupils = 0;
-  //   for (const statmark in subject.stats) {
-  //     allPupils += subject.stats[statmark];
-  //     if (Number(statmark) < mark) {
-  //       worsePupils += subject.stats[statmark];
-  //     }
-  //   }
-  //   return (worsePupils / allPupils * 100).toFixed(2) + '%';
-  // }
+  const getData = () => {
+    fetch(`/data/zno_${year}.json`,{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+    .then(function(response){
+      console.log(response)
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(myJson);
+      setMarks(myJson)
+    });
+  }
+
+  React.useEffect(() => {
+    getData()
+  },[])
+
+  console.log(marks,'data')
+
+  function myZNORating(subjectId: number, mark: any) {
+    const subject: any = marks[subjectId];
+    console.log(subject,'subjectsubjectsubject')
+    // let allPupils = 0, worsePupils = 0;
+    // for (const statmark in subject.stats) {
+    //   allPupils += subject.stats[statmark];
+    //   if (Number(statmark) < mark) {
+    //     worsePupils += subject.stats[statmark];
+    //   }
+    // }
+    // return (worsePupils / allPupils * 100).toFixed(2) + '%';
+  }
   
   return (
     <div className='MyRatingResult'>
@@ -346,7 +380,7 @@ const MyRatingResult = () => {
             count={subjects.length}
 
             emoji={findEmoji(subject)}
-            header={`Твій бал ЗНО з ${subject} краще ніж у 90 абітурієнтів`}
+            header={`Твій бал ЗНО з ${subject} краще ніж у ${myZNORating(1, scores[i])} абітурієнтів`}
             text={`які здавали цей предмет в ${year} році`}
   
             chart={
