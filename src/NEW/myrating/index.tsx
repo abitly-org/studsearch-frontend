@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import cx from 'classnames';
 
@@ -11,8 +11,9 @@ import StartPage from './start';
 import SelectYearPage from './select-year';
 import SelectSubjectsPage from './select-subjects';
 import SelectScorePage from './select-score';
-import LoadingPage from './loading';
-import ResultPage from './result';
+import MyRatingLoading from './result';
+import MyRatingResult from './result';
+
 
 import './index.scss';
 import AppContent from '../components/app/content';
@@ -81,21 +82,21 @@ const MyRatingApp = () => {
   return (
     <App>
       <Header />
-      <AppContentAnimated>
+      {/* <AppContentAnimated>
           <CSSTransition
             key={location.pathname}
             timeout={150}
-          >
+          > */}
             <Switch location={location}>
-              <Route exact path="/myrating/result" component={ResultPage} />
-              <Route exact path="/myrating/loading" component={LoadingPage} />
-              <Route exact path="/myrating/score" component={SelectScorePage} />
-              <Route exact path="/myrating/subjects" component={SelectSubjectsPage} />
-              <Route exact path="/myrating/year" component={SelectYearPage} />
-              <Route exact path="/myrating/" component={StartPage} />
+              <Route path="/myrating/result/:year/:subject/:scores" component={MyRatingResult} />
+              <Route path="/myrating/loading/:year/:subject/:scores" component={MyRatingLoading} />
+              <Route path="/myrating/scores/:year/:subject" component={SelectScorePage} />
+              <Route path="/myrating/subjects/:year" component={SelectSubjectsPage} />
+              <Route path="/myrating/years" component={SelectYearPage} />
+              <Route path="/myrating" component={StartPage} />
             </Switch>
-          </CSSTransition>
-      </AppContentAnimated>
+          {/* </CSSTransition>
+      </AppContentAnimated> */}
     </App>
   );
 }

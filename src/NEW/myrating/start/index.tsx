@@ -13,7 +13,7 @@ const MyRatingStart = () => {
         <p>Доведи мамі, що ти крутий!</p>
         <img src={arrow} />
       </div> */}
-      <Link className="AppButtonLink" to="/myrating/year">
+      <Link className="AppButtonLink" to={`/myrating/years`}>
         Розрахувати рівень крутості
       </Link>
     </AppContent>

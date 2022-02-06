@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider from 'react-slick';
+import { useParams } from 'react-router-dom';
 import AppContent from '../../components/app/content';
 import Button from '../../components/button';
 
@@ -15,6 +16,7 @@ import dna from './dna.png';
 import spain from './spain.png';
 import testTube from './testTube.png';
 import abacus from './abacus.png';
+import zhdun from './zhdun.png';
 import germany from './germany.png';
 import microscope from './microscope.png';
 import sunflower from './sunflower.png';
@@ -33,6 +35,7 @@ const BioBallData =  {[100]:592,[101]:716,[102]:872,[104]:1045,[105]:1235,[107]:
 
 interface Emojis {
   subject: string,
+  subjectEnglish: string,
   emoji: any,
   id?: number
 }
@@ -40,63 +43,128 @@ interface Emojis {
 const emojis: Emojis[] = [
   {
     subject: 'Українська мова і література',
+    subjectEnglish: 'Ukrainian literature',
     emoji: sunflower,
   },
   {
     subject: 'Українська мова',
+    subjectEnglish: 'Ukrainian',
     emoji: ukraine,
     id: 1
   },
   {
     subject: 'Історія України',
+    subjectEnglish: 'History of Ukraine',
     emoji: scroll,
     id: 6
   },
   {
     subject: 'Математика',
+    subjectEnglish: 'Maths',
     emoji: abacus,
     id: 14
   },
   {
     subject: 'Біологія',
+    subjectEnglish: 'Biology',
     emoji: dna,
     id: 18
   },
   {
     subject: 'Географія',
+    subjectEnglish: 'Geography',
     emoji: geography,
     id: 19
   },
   {
     subject: 'Фізика',
+    subjectEnglish: 'Physics',
     emoji: microscope,
     id: 21
   },
   {
     subject: 'Хімія',
+    subjectEnglish: 'Chemistry',
     emoji: testTube,
     id: 22
   },
   {
     subject: 'Англійська мова',
+    subjectEnglish: 'English',
     emoji: english,
     id: 29
   },
   {
     subject: 'Французька мова',
+    subjectEnglish: 'French',
     emoji: france,
     id: 31
   },
   {
     subject: 'Німецька мова',
+    subjectEnglish: 'German',
     emoji: germany,
     id: 32
   },
   {
     subject: 'Іспанська мова',
+    subjectEnglish: 'Spanish',
     emoji: spain 
   }
 ];
+
+const MyRatingLoading = () => {
+  const params: any = useParams();
+  React.useEffect(() => {
+    const fetchData = async () => {
+      let response = await fetch(`/data/zno_${params.year}.json`);
+      response = await response.json()
+      
+      // return marks;
+    }
+    fetchData()
+
+    // console.log(result)
+  }, [])
+
+
+
+  // function myZNORating(subjectId: number, mark: any) {
+  //   const subject: any = marks[subjectId];
+  //   console.log(subject,'subjectsubjectsubject')
+    // let allPupils = 0, worsePupils = 0;
+    // for (const statmark in subject.stats) {
+    //   allPupils += subject.stats[statmark];
+    //   if (Number(statmark) < mark) {
+    //     worsePupils += subject.stats[statmark];
+    //   }
+    // }
+    // return (worsePupils / allPupils * 100).toFixed(2) + '%';
+  // }
+
+  // React.useEffect(() => {
+    // const timeout = setTimeout(() => {
+    //   // history.push('/myrating/result')
+    // }, 2500);
+    // return () => clearTimeout(timeout);
+  //   console.log(params)
+  // }, []);
+
+  return (
+    <AppContent className='MyRatingLoading'>
+      <div className='MyRatingLoadingSpinner'>
+        <span>
+          <span />
+        </span>
+        <img src={zhdun} />
+        <div>
+          <h3>Рівень крутості розраховується️</h3>
+          <p>Але тут і без розрахунків все ясно)))</p>
+        </div>
+      </div>
+    </AppContent>
+  );
+};
 
 const ResultCardChart = ({ score, data }: {
   score: any,
@@ -311,11 +379,10 @@ const DonateCard = () => {
 }
   
 const MyRatingResult = () => {
-  const [marks, setMarks] = React.useState([]);
-  const year: string = JSON.parse(localStorage.getItem('year') || '');
-  const subjects: string[] = JSON.parse(localStorage.getItem('subjects') || '[]');
-  const scores: string[] = JSON.parse(localStorage.getItem('scores') || '[]');
-
+  const params: any = useParams();
+  const subjects: string[] = JSON.parse(params.subject)
+  const year: string = JSON.parse(params.year)
+  const scores: string = JSON.parse(params.scores)
   function findEmoji(subject: string) {
     let j = emojis.find(i => {
       if (i.subject === subject) {
@@ -325,41 +392,6 @@ const MyRatingResult = () => {
     return j?.emoji
   }
 
-  const getData = () => {
-    fetch(`/data/zno_${year}.json`,{
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-    .then(function(response){
-      console.log(response)
-      return response.json();
-    })
-    .then(function(myJson) {
-      console.log(myJson);
-      setMarks(myJson)
-    });
-  }
-
-  React.useEffect(() => {
-    getData()
-  },[])
-
-  console.log(marks,'data')
-
-  function myZNORating(subjectId: number, mark: any) {
-    const subject: any = marks[subjectId];
-    console.log(subject,'subjectsubjectsubject')
-    // let allPupils = 0, worsePupils = 0;
-    // for (const statmark in subject.stats) {
-    //   allPupils += subject.stats[statmark];
-    //   if (Number(statmark) < mark) {
-    //     worsePupils += subject.stats[statmark];
-    //   }
-    // }
-    // return (worsePupils / allPupils * 100).toFixed(2) + '%';
-  }
   
   return (
     <div className='MyRatingResult'>
@@ -380,7 +412,7 @@ const MyRatingResult = () => {
             count={subjects.length}
 
             emoji={findEmoji(subject)}
-            header={`Твій бал ЗНО з ${subject} краще ніж у ${myZNORating(1, scores[i])} абітурієнтів`}
+            header={`Твій бал ЗНО з ${subject} краще ніж у 90 абітурієнтів`}
             text={`які здавали цей предмет в ${year} році`}
   
             chart={
@@ -407,4 +439,4 @@ const MyRatingResult = () => {
   );
 }
 
-export default MyRatingResult;
+export default MyRatingLoading;

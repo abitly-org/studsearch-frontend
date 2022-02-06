@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 
 import Input from '../../components/input';
 import MyRatingHeader from '../../components/myrating-header';
@@ -6,23 +7,20 @@ import MyRatingList from '../../components/myrating-list';
 
 import bullseye from './bullseye.png';
 
-import useLocalStorage from '../../utils/localStorage';
-
 const MyRatingSelectScorePage = () => {
-  const subjects: string[] = JSON.parse(localStorage.getItem('subjects') || '[]');
-  const [scores, setScores] = useLocalStorage('scores', ["","","","",""]);
+  const params: any = useParams();
+  const subjects: string[] = JSON.parse(params.subject)
+  const [scores, setScores] = React.useState(fillingArray(subjects));
 
-  // React.useEffect(() => {
-  //   fillingArray(subjects);
-  // }, []);
-  
-  //function fillingArray(subjects: string[]) {
-  //  let scores: string[] = [];
-  //  for(let i = 0; i < subjects.length; i++) {
-  //    scores.push("");
-  //  }
-  //  return scores;
-  //}
+  console.log(params.subject)
+  console.log(scores)
+  function fillingArray(subjects: string[]) {
+   let scores: string[] = [];
+   for(let i = 0; i < subjects.length; i++) {
+     scores.push("");
+   }
+   return scores;
+  }
 
   // function test() {
   //   for(let i = 0; i < scores.length; i++) {
@@ -40,14 +38,14 @@ const MyRatingSelectScorePage = () => {
         step={3} stepsCount={3}
         header={'Введіть бали які ви отримали з цих предметів'}
         emoji={bullseye}
-        onBack={() => window.history.back()}
+        onBack={`/myrating/subjects/${params.year}`}
       />
       <MyRatingList
-        nextLink='/myrating/loading/'
+        nextLink={`/myrating/loading/${params.year}/${params.subject}/${JSON.stringify(scores)}`}
         nextDisabled={scores.every((s: string) => !s)}
         nextLabel='Розрахувати рівень крутості'
       >
-        { subjects?.map?.((subject, i) => 
+        { subjects?.map?.((subject: string, i: number) => 
           <Input
             key={i}
             name={'Бал з' + ' ' + subject}
