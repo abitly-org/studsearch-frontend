@@ -1,6 +1,5 @@
 @import '../../index.scss';
 
-
 .MyRatingLoading {
     background-color: #F9F4EF;
     > div {
@@ -265,25 +264,28 @@
                 @media (min-width: 640px) {
                     align-items: flex-start;
                 }
-                > h2 {
-                    @include h2;
-                    color: $darkest100;
-                    max-width: 300px;
-                    font-size: 25px;
-                    text-align: center;
-                    margin-bottom: 5px;
-                }
                 > p {
                     @include p3;
                     color: $darkest40;
                     max-width: 100%;
                     margin-top: 0;
+                    color: #e17b00;
+
                     text-align: center;
                     opacity: .7;
+
+                    > span {
+                        text-decoration: line-through;
+                    }
+
+                    > img {
+                        width: 15px;
+                        height: auto;
+                    }
     
                     @media (min-width: 640px) {
                         text-align: left;
-                        max-width: 400px;
+                        max-width: 420px;
                     }
                 }
             }

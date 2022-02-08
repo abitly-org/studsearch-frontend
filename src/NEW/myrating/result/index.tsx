@@ -14,6 +14,7 @@ import english from './english.png';
 import france from './france.png';
 import dna from './dna.png';
 import spain from './spain.png';
+import hands from './hands.png';
 import testTube from './testTube.png';
 import abacus from './abacus.png';
 import zhdun from './zhdun.png';
@@ -324,11 +325,10 @@ const DonateCard = () => {
       <div className='MyRatingDonateCard'>
         <div className='MyRatingDonateCard_Content'>
           <div className='MyRatingDonateCard_Header'>
-            <h2>Дай 22 гривні</h2>
-            <p>Розробники abitly теж люди студенти. Тож ми будемо дуже вдячні якщо ти задонатиш нам на поїсти в столовці</p>
+            <p>Розробники abitly теж <span>люди</span> студенти. Тож ми будемо дуже вдячні якщо ти задонатиш нам на поїсти в столовці <img src={hands} alt="hands emoji"/></p>
           </div>
           <Button
-            onClick={() => {}}
+            onClick={() => {window.location.href='https://send.monobank.ua/jar/3UNSF6txsH';}}
           >
             Дати 22 гривні
           </Button>
