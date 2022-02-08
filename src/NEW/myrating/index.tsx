@@ -11,8 +11,7 @@ import StartPage from './start';
 import SelectYearPage from './select-year';
 import SelectSubjectsPage from './select-subjects';
 import SelectScorePage from './select-score';
-import MyRatingLoading from './result';
-import MyRatingResult from './result';
+import {MyRatingLoading, MyRatingResult} from './result';
 
 
 import './index.scss';
@@ -88,9 +87,9 @@ const MyRatingApp = () => {
             timeout={150}
           > */}
             <Switch location={location}>
-              <Route path="/myrating/result/:year/:subject/:scores" component={MyRatingResult} />
-              <Route path="/myrating/loading/:year/:subject/:scores" component={MyRatingLoading} />
-              <Route path="/myrating/scores/:year/:subject" component={SelectScorePage} />
+              <Route path="/myrating/result/:year/:subjects/:scores" component={MyRatingResult} />
+              <Route path="/myrating/loading/:year/:subjects/:scores" component={MyRatingLoading} />
+              <Route path="/myrating/scores/:year/:subjects" component={SelectScorePage} />
               <Route path="/myrating/subjects/:year" component={SelectSubjectsPage} />
               <Route path="/myrating/years" component={SelectYearPage} />
               <Route path="/myrating" component={StartPage} />

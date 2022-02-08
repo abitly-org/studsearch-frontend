@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Slider from 'react-slick';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import AppContent from '../../components/app/content';
 import Button from '../../components/button';
 
@@ -35,7 +35,6 @@ const BioBallData =  {[100]:592,[101]:716,[102]:872,[104]:1045,[105]:1235,[107]:
 
 interface Emojis {
   subject: string,
-  subjectEnglish: string,
   emoji: any,
   id?: number
 }
@@ -43,113 +42,74 @@ interface Emojis {
 const emojis: Emojis[] = [
   {
     subject: 'Українська мова і література',
-    subjectEnglish: 'Ukrainian literature',
     emoji: sunflower,
   },
   {
     subject: 'Українська мова',
-    subjectEnglish: 'Ukrainian',
     emoji: ukraine,
     id: 1
   },
   {
     subject: 'Історія України',
-    subjectEnglish: 'History of Ukraine',
     emoji: scroll,
     id: 6
   },
   {
     subject: 'Математика',
-    subjectEnglish: 'Maths',
     emoji: abacus,
     id: 14
   },
   {
     subject: 'Біологія',
-    subjectEnglish: 'Biology',
     emoji: dna,
     id: 18
   },
   {
     subject: 'Географія',
-    subjectEnglish: 'Geography',
     emoji: geography,
     id: 19
   },
   {
     subject: 'Фізика',
-    subjectEnglish: 'Physics',
     emoji: microscope,
     id: 21
   },
   {
     subject: 'Хімія',
-    subjectEnglish: 'Chemistry',
     emoji: testTube,
     id: 22
   },
   {
     subject: 'Англійська мова',
-    subjectEnglish: 'English',
     emoji: english,
     id: 29
   },
   {
     subject: 'Французька мова',
-    subjectEnglish: 'French',
     emoji: france,
     id: 31
   },
   {
     subject: 'Німецька мова',
-    subjectEnglish: 'German',
     emoji: germany,
     id: 32
   },
   {
     subject: 'Іспанська мова',
-    subjectEnglish: 'Spanish',
     emoji: spain 
   }
 ];
 
-const MyRatingLoading = () => {
+export const MyRatingLoading = () => {
   const params: any = useParams();
+  const history = useHistory();
+
   React.useEffect(() => {
-    const fetchData = async () => {
-      let response = await fetch(`/data/zno_${params.year}.json`);
-      response = await response.json()
-      
-      // return marks;
-    }
-    fetchData()
-
-    // console.log(result)
-  }, [])
-
-
-
-  // function myZNORating(subjectId: number, mark: any) {
-  //   const subject: any = marks[subjectId];
-  //   console.log(subject,'subjectsubjectsubject')
-    // let allPupils = 0, worsePupils = 0;
-    // for (const statmark in subject.stats) {
-    //   allPupils += subject.stats[statmark];
-    //   if (Number(statmark) < mark) {
-    //     worsePupils += subject.stats[statmark];
-    //   }
-    // }
-    // return (worsePupils / allPupils * 100).toFixed(2) + '%';
-  // }
-
-  // React.useEffect(() => {
-    // const timeout = setTimeout(() => {
-    //   // history.push('/myrating/result')
-    // }, 2500);
-    // return () => clearTimeout(timeout);
-  //   console.log(params)
-  // }, []);
-
+    const timeout = setTimeout(() => {
+      history.push(`/myrating/result/${params.year}/${params.subjects}/${params.scores}`);
+    }, 2500);
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <AppContent className='MyRatingLoading'>
       <div className='MyRatingLoadingSpinner'>
@@ -377,12 +337,79 @@ const DonateCard = () => {
     </AppContent>
   );
 }
-  
-const MyRatingResult = () => {
+
+async function fetchData(year: number) {
+  let data = await fetch(`/data/zno_${year}.json`);
+  let res = await data.json(); 
+  return res;
+}
+
+export const MyRatingResult = () => {
   const params: any = useParams();
-  const subjects: string[] = JSON.parse(params.subject)
-  const year: string = JSON.parse(params.year)
-  const scores: string = JSON.parse(params.scores)
+  const subjects: string[] = [];
+  let scores: number[] = []
+
+  function filterSubjects() {
+    let index = params.subjects.match(/\d+/g);
+    for (let i = 0; i < index.length; i++) {
+      for (let j = 0; j < emojis.length; j++) {
+        if (j == +index[i]) {
+          subjects.push(emojis[j].subject)
+        }
+      }
+    }
+    return subjects
+  }
+  filterSubjects()
+
+  function filterScores() {
+    for(let i = 0; i < params.scores.length; i++) {
+      scores = params.scores.split(',')
+    }
+  }
+  filterScores()
+
+  let __localcache: any = null;
+  function useZNOData(year: number) {
+    const [data, setData] = React.useState(__localcache);
+    React.useEffect(() => {
+        let unmounted = false;
+        if (data == null) {
+          // TODO: load data, check if it is still mounted (!unmounted), setState(data), save local cache
+          let res = fetchData(year);
+          res.then((d: any) => {
+            setData(d)
+            __localcache = d
+          })
+          unmounted = !unmounted
+        }
+        return () => { unmounted = true };
+    }, [ year ]);
+    return data;
+  }
+  const marks = useZNOData(+params.year);
+
+  function myZNORating(subjectId: any, mark: any) {
+    let subject: any = marks[subjectId];
+    console.log(subject,'subject myZNORating')
+    let allPupils = 0, worsePupils = 0;
+    for (const statmark in subject.stats) {
+      allPupils += subject.stats[statmark];
+      if (Number(statmark) < mark) {
+        worsePupils += subject.stats[statmark];
+      }
+    }
+    return (worsePupils / allPupils * 100).toFixed(2) + '%';
+  }
+
+  function findSubjectId(subject: string) {
+    for (let i = 0; i < emojis.length; i++) {
+      if (emojis[i].subject === subject) {
+        return emojis[i].id
+      }
+    }
+  }
+
   function findEmoji(subject: string) {
     let j = emojis.find(i => {
       if (i.subject === subject) {
@@ -391,8 +418,6 @@ const MyRatingResult = () => {
     });
     return j?.emoji
   }
-
-  
   return (
     <div className='MyRatingResult'>
       <DonateCard/>
@@ -412,12 +437,12 @@ const MyRatingResult = () => {
             count={subjects.length}
 
             emoji={findEmoji(subject)}
-            header={`Твій бал ЗНО з ${subject} краще ніж у 90 абітурієнтів`}
-            text={`які здавали цей предмет в ${year} році`}
+            header={`Твій бал ЗНО з ${subject} краще ніж у ${marks ? myZNORating(findSubjectId(subject), +scores[i]) : ''} абітурієнтів`}
+            text={`які здавали цей предмет в ${+params.year} році`}
   
             chart={
               <ResultCardChart
-                score={scores[i]}
+                score={+scores[i]}
                 data={UkrBallData}
               />
             }
@@ -438,5 +463,3 @@ const MyRatingResult = () => {
     </div>
   );
 }
-
-export default MyRatingLoading;
