@@ -14,6 +14,7 @@ import english from './english.png';
 import france from './france.png';
 import dna from './dna.png';
 import spain from './spain.png';
+import fire from './fire.png';
 import hands from './hands.png';
 import testTube from './testTube.png';
 import abacus from './abacus.png';
@@ -290,7 +291,11 @@ const ResultCard = ({
         </span>
       </div>
       <div className='MyRatingResultCard_Content'>
-        <img src={emoji} alt="emoji" />
+        <div>
+          <img src={fire} alt="emoji fire" />
+          <img src={emoji} alt="emoji" />
+          <img src={fire} alt="emoji fire" />
+        </div>
         <h2>{header}</h2>
         <p>{text}</p>
       </div>

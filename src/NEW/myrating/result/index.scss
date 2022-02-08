@@ -87,6 +87,7 @@
             .slick-track {
                 height: 100%;
                 box-sizing: border-box;
+                // transition: .7s !important;
                 .slick-slide {
                     height: 100%;
                     box-sizing: border-box;
@@ -191,11 +192,14 @@
             justify-content: center;
     
             padding-bottom: 10px;
-
-            > img {
-                height: auto;
-                max-width: 40px;
+            > div {
+                display: flex;
+                align-items: center;
                 margin: 10px 0;
+                > img {
+                    height: auto;
+                    max-width: 35px;
+                }
             }
 
             > h2 {
@@ -207,6 +211,7 @@
             }
             > p {
                 @include p3;
+                font-weight: bold;
                 color: $white;
                 opacity: .7;
             }
