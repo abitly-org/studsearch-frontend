@@ -84,7 +84,7 @@ const emojis: Emojis[] = [
   {
     subject: 'Англійська мова',
     emoji: english,
-    id: 29
+    id: 30
   },
   {
     subject: 'Французька мова',

@@ -23,15 +23,15 @@ const MyRatingSelectSubjectsPage = () => {
     'Іспанська мова'
   ];
 
-  const params: any = useParams()
-  const [subjects, setSubjects] = React.useState([allSubjects[0]])
+  const params: any = useParams();
+  const [subjects, setSubjects] = React.useState([allSubjects[0]]);
 
   function indexSubjects() {
-    let index: string[] = []
+    let index: string[] = [];
     for (let i = 0; i < subjects.length; i++) {
-      index.push(JSON.stringify(allSubjects.indexOf(subjects[i])))
+      index.push(JSON.stringify(allSubjects.indexOf(subjects[i])));
     }
-    return index
+    return index;
   }
 
   return (
@@ -49,7 +49,8 @@ const MyRatingSelectSubjectsPage = () => {
         { allSubjects?.map?.((subject) => 
           <Checkbox
             key={subject}
-            
+            limiter={subjects.length >= 4}
+
             value={subjects.includes(subject)}
             onChange={v => setSubjects((s: string[]) => v ? [...s, subject] : s.filter((s: string) => s !== subject))}
             children={subject}

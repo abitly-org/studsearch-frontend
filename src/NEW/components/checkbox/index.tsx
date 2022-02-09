@@ -8,16 +8,17 @@ import Ripples, { RippleColor } from '../ripple';
 
 const Checkbox = ({
   style, className,
-  value, onChange, children, radio
+  value, onChange, children, radio, limiter
 }: {
   style?: React.CSSProperties, className?: string,
   value?: boolean,
+  limiter?: boolean,
   onChange?: (value: boolean) => void,
   children?: React.ReactNode,
   radio?: boolean
 }) => (
   <div
-    className={cx('AppCheckbox', { radio, checked: value }, className)}
+    className={cx('AppCheckbox', { radio, checked: value, limiter: limiter }, className)}
     style={style}
     onClick={() => onChange?.(!value)}
   >

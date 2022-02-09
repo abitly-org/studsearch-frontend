@@ -191,7 +191,7 @@
             flex-direction: column;
             justify-content: center;
     
-            padding-bottom: 10px;
+            padding-bottom: 5px;
             > div {
                 display: flex;
                 align-items: center;
@@ -208,6 +208,10 @@
                 line-height: 100%;
                 margin-bottom: 10px;
                 max-width: 430px;
+
+                @media (max-width: 768px) {
+                    font-size: 25px;
+                }
             }
             > p {
                 @include p3;
@@ -243,6 +247,9 @@
     &.DonateCard {
         overflow: unset;
         flex: 0 auto;
+        @media (max-height: 600px) {
+            display: none;
+        }
     }
     .MyRatingDonateCard {
         background-color: $primary15;

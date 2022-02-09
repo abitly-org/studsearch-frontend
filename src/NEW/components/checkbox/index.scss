@@ -9,6 +9,7 @@
   position: relative;
   overflow: hidden;
   padding: 16px 0;
+  transition: .5s;
 
   > .AppCheckboxBox { 
     flex: 0 0 auto;
@@ -67,6 +68,15 @@
         border-radius: 4px;
       }
     }
+
+    &.limiter {
+      pointer-events: visible;
+      opacity: 1;
+    }
+  }
+  &.limiter {
+    pointer-events: none;
+    opacity: .3;
   }
   > .AppCheckboxText {
     flex: 1;
