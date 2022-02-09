@@ -11,8 +11,9 @@ const Input = ({
 }: {
   name?: string,
   value?: string,
-  onChange?: (newValue: string) => void
+  onChange: (newValue: string) => void
 }) => {
+
   const handleEsc = (event: any) => {
     if (event.keyCode === 27)  {
       event.preventDefault();
@@ -20,19 +21,40 @@ const Input = ({
     }
   };
 
+  // const debounce = (func: any, wait: number) => {
+    // let timeout: any;
+
+    // return function executedFunction(...args: any[]) {
+      // const later = () => {
+        // timeout = null;
+        // func(...args);
+      // };
+      // clearTimeout(timeout);
+      // 
+      // timeout = setTimeout(later, wait);
+    // };
+  // };
+ 
+  // const handleInput = (event: any) => {
+    // console.log(,'shsdfhsldkjf;sd')
+    // onChange(event.nativeEvent.data)    
+  // }
+ 
+  // let returnedFunction = debounce(handleInput, 250)
+ 
   return (
     <div className={cx('AppInput', { filled: !!value })}>
       <div className='Placeholder'>{name}</div>
       <input
-        maxLength={3} 
+        type='number'
         onKeyDown={handleEsc}
         value={value}
-        onChange={(e) => (e?.target?.value.replace(/\D/g, '') && e?.target?.value <= '200' ? onChange?.(e?.target?.value) : onChange?.(''))}
+        onChange={(e) => {onChange(e.target.value)}}
       />
       { value && 
         <span
           className='AppInputClear'
-          onClick={() => onChange?.('')}
+          onClick={() => onChange('')}
         >
           <img src={close} />
         </span>

@@ -2,11 +2,16 @@ import * as React from 'react';
 import Slider from 'react-slick';
 import { useHistory, useParams } from 'react-router-dom';
 import AppContent from '../../components/app/content';
+import cx from 'classnames';
 import Button from '../../components/button';
+
+import { HeaderMenuGroup, HeaderMenuButton } from '../../header';
 
 import fulllogo from '../../header/fulllogo.svg';
 import share from './share.svg';
 import marker from './marker.svg';
+import copy from './copy.svg';
+import download from './download.svg';
 import fulllogoRedhead from './fulllogoRedhead.svg';
 import ukraine from './ukraine.png';
 import geography from './geography.png';
@@ -35,17 +40,17 @@ const UkrBallData =  {[100]:5041,[102]:5173,[104]:5386,[106]:5742,[107]:5740,[10
 const MathBallData = {[100]:12726,[105]:11024,[109]:9520,[113]:8133,[116]:7186,[119]:6377,[122]:5844,[124]:5247,[127]:4955,[129]:4586,[131]:4375,[133]:4157,[136]:4123,[138]:3918,[140]:3862,[142]:3609,[144]:3514,[146]:3386,[147]:3298,[149]:3184,[151]:3024,[153]:2888,[155]:2795,[156]:2688,[158]:2541,[160]:2369,[161]:2350,[163]:2244,[164]:2165,[166]:2009,[167]:1973,[169]:1777,[170]:1853,[172]:1705,[173]:1687,[174]:1586,[176]:1563,[177]:1539,[178]:1326,[180]:1463,[181]:1364,[182]:1377,[184]:1221,[185]:1266,[186]:1090,[187]:1077,[188]:986,[190]:942,[191]:925,[192]:787,[193]:656,[194]:525,[195]:468,[196]:365,[197]:293,[198]:237,[199]:73,[200]:148};
 const BioBallData =  {[100]:592,[101]:716,[102]:872,[104]:1045,[105]:1235,[107]:1427,[109]:1767,[111]:1926,[113]:1996,[115]:2353,[117]:2523,[120]:2665,[122]:2741,[125]:2938,[127]:3006,[130]:2903,[133]:2909,[135]:2821,[138]:2774,[140]:2759,[143]:2577,[146]:2520,[148]:2339,[150]:2258,[152]:2020,[155]:1861,[157]:1748,[159]:1598,[160]:1483,[162]:1346,[164]:1285,[165]:1181,[167]:1077,[169]:988,[170]:900,[171]:899,[173]:857,[174]:775,[175]:756,[177]:705,[178]:690,[179]:668,[181]:592,[182]:576,[183]:573,[184]:530,[185]:494,[186]:527,[188]:402,[189]:424,[190]:391,[191]:384,[192]:357,[193]:319,[194]:285,[195]:273,[196]:240,[197]:209,[198]:179,[199]:145,[200]:115};
 
-interface Emojis {
+interface InfoSubjects {
   subject: string,
   emoji: any,
   id?: number
 }
 
-const emojis: Emojis[] = [
-  {
-    subject: 'Українська мова і література',
-    emoji: sunflower,
-  },
+const infoSubjects: InfoSubjects[] = [
+  // {
+  //   subject: 'Українська мова і література',
+  //   emoji: sunflower,
+  // },
   {
     subject: 'Українська мова',
     emoji: ukraine,
@@ -96,10 +101,10 @@ const emojis: Emojis[] = [
     emoji: germany,
     id: 32
   },
-  {
-    subject: 'Іспанська мова',
-    emoji: spain 
-  }
+  // {
+  //   subject: 'Іспанська мова',
+  //   emoji: spain 
+  // }
 ];
 
 export const MyRatingLoading = () => {
@@ -324,6 +329,32 @@ const LastResultCard = () => {
   );
 }
 
+let open: any = false;
+
+const ShareMenu = ({ open }: { open?: boolean }) => {
+  
+  return (
+    <div className={cx('AppHeaderMenu ShareMenu', { open })}>
+      <div>
+        <h3>Поділитись</h3>
+        <button onClick={() => {}}>close</button>
+        <HeaderMenuGroup
+          buttons={[
+            <HeaderMenuButton
+              emoji={download}
+              name='Завантажити картинку'
+            />,
+            <HeaderMenuButton
+              emoji={copy}
+              name='Скопіювати посилання'
+            />
+          ]}
+        />
+      </div>
+    </div>
+  )
+}
+
 const DonateCard = () => {
   return (
     <AppContent className='DonateCard'>
@@ -333,7 +364,7 @@ const DonateCard = () => {
             <p>Розробники abitly теж <span>люди</span> студенти. Тож ми будемо дуже вдячні якщо ти задонатиш нам на поїсти в столовці <img src={hands} alt="hands emoji"/></p>
           </div>
           <Button
-            onClick={() => {window.location.href='https://send.monobank.ua/jar/3UNSF6txsH';}}
+            onClick={() => {window.location.href='https://send.monobank.ua/jar/3UNSF6txsH'}}
           >
             Дати 22 гривні
           </Button>
@@ -357,9 +388,9 @@ export const MyRatingResult = () => {
   function filterSubjects() {
     let index = params.subjects.match(/\d+/g);
     for (let i = 0; i < index.length; i++) {
-      for (let j = 0; j < emojis.length; j++) {
+      for (let j = 0; j < infoSubjects.length; j++) {
         if (j == +index[i]) {
-          subjects.push(emojis[j].subject)
+          subjects.push(infoSubjects[j].subject)
         }
       }
     }
@@ -408,15 +439,15 @@ export const MyRatingResult = () => {
   }
 
   function findSubjectId(subject: string) {
-    for (let i = 0; i < emojis.length; i++) {
-      if (emojis[i].subject === subject) {
-        return emojis[i].id
+    for (let i = 0; i < infoSubjects.length; i++) {
+      if (infoSubjects[i].subject === subject) {
+        return infoSubjects[i].id
       }
     }
   }
 
   function findEmoji(subject: string) {
-    let j = emojis.find(i => {
+    let j = infoSubjects.find(i => {
       if (i.subject === subject) {
         return i;
       };
@@ -465,6 +496,7 @@ export const MyRatingResult = () => {
           </span>
         </Button>
       </AppContent>
+      <ShareMenu open={open}/>
     </div>
   );
 }

@@ -107,7 +107,7 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
   </div>
 );
 
-const useAnimated = (def: boolean, delay: number = 250) => {
+export const useAnimated = (def: boolean, delay: number = 250) => {
   const [state, setState] = React.useState<boolean>(def);
   const [delayedState, setDelayedState] = React.useState(state);
   React.useEffect(() => {
@@ -130,7 +130,7 @@ const useAnimated = (def: boolean, delay: number = 250) => {
   ] as const;
 }
 
-const Header = () => {
+export const Header = () => {
   const [open, openDelayed, setOpen] = useAnimated(false);
 
   React.useEffect(() => {

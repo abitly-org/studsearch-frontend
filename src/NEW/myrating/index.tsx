@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import App from '../components/app';
 import useDelayed from '../utils/useDelayed';
-import Header from '../header';
+import { Header } from '../header';
 
 import StartPage from './start';
 import SelectYearPage from './select-year';
@@ -44,14 +44,13 @@ const AppContentAnimated = ({ children }: { children: React.ReactElement }) => {
   //   }
   // }, [ children ]);
 
-  if (oldPage.current !== children) {
-    if (index.current > 1) {
-      olderPage.current = oldPage.current;
-      oldPage.current = children;
-    }
-    index.current++;
-  }
-
+  //if (oldPage.current !== children) {
+  //  if (index.current > 1) {
+  //    olderPage.current = oldPage.current;
+  //    oldPage.current = children;
+  //  }
+  //  index.current++;
+  //}
   const indexNum = Math.max(2, index.current);
 
   return (
@@ -62,18 +61,18 @@ const AppContentAnimated = ({ children }: { children: React.ReactElement }) => {
       >
         { children }
       </div>
-      {
-        olderPage.current && 
-          <div
-            className='AppContentAnimated_Block old'
-            key={indexNum + 1}
-          >
-            { olderPage.current }
-          </div>
-      }
     </div>
   )
-}
+  // {
+  //   olderPage.current && 
+  //     <div
+  //       className='AppContentAnimated_Block old'
+  //       key={indexNum + 1}
+  //     >
+  //       { olderPage.current }
+  //     </div>
+  // }
+}// 
 
 const MyRatingApp = () => {
   let location = useLocation();
@@ -81,8 +80,8 @@ const MyRatingApp = () => {
   return (
     <App>
       <Header />
-      {/* <AppContentAnimated>
-          <CSSTransition
+      <AppContentAnimated>
+          {/* <CSSTransition
             key={location.pathname}
             timeout={150}
           > */}
@@ -94,8 +93,8 @@ const MyRatingApp = () => {
               <Route path="/myrating/years" component={SelectYearPage} />
               <Route path="/myrating" component={StartPage} />
             </Switch>
-          {/* </CSSTransition>
-      </AppContentAnimated> */}
+          {/* </CSSTransition> */}
+      </AppContentAnimated>
     </App>
   );
 }

@@ -9,7 +9,7 @@ import books from './books.png';
 
 const MyRatingSelectSubjectsPage = () => {
   const allSubjects: string[] = [
-    'Українська мова і література',
+    // 'Українська мова і література',
     'Українська мова',
     'Історія України',
     'Математика',
@@ -20,7 +20,7 @@ const MyRatingSelectSubjectsPage = () => {
     'Англійська мова',
     'Французька мова',
     'Німецька мова',
-    'Іспанська мова'
+    // 'Іспанська мова'
   ];
 
   const params: any = useParams();

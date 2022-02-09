@@ -9,7 +9,7 @@ import bullseye from './bullseye.png';
 
 const MyRatingSelectScorePage = () => {
   const allSubjects: string[] = [
-    'Українська мова і література',
+    // 'Українська мова і література',
     'Українська мова',
     'Історія України',
     'Математика',
@@ -20,7 +20,7 @@ const MyRatingSelectScorePage = () => {
     'Англійська мова',
     'Французька мова',
     'Німецька мова',
-    'Іспанська мова'
+    // 'Іспанська мова'
   ];
 
   const params: any = useParams();
@@ -76,7 +76,7 @@ const MyRatingSelectScorePage = () => {
           <Input
             key={i}
             name={'Бал з' + ' ' + subject}
-            value={scores?.[i]}
+            value={scores[i]}
             onChange={(value: string) => setScores((s: string[]) => s.map((v: string, j: number) => i === j ? value : v))}
           />
         ) }

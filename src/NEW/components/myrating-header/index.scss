@@ -82,16 +82,29 @@
         &:hover  { background-color: rgba($primary60, 0.15); }
         &:active { background-color: rgba($primary60, 0.35); }
       }
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+
+      @media (max-height: 600px) {
+        margin-bottom: 10px;
+      }
     }
     > .MyRatingHeaderBottom {
       flex: 0 0 auto;
+      > h1 {
+        @media (max-height: 600px) {
+          font-size: 30px;
+        }
+      }
       & img {
         width: 40px;
         height: auto;
         margin-left: 10px;
         margin-bottom: -5px;
         -webkit-user-drag: none;
+        
+        @media (max-height: 600px) {
+          width: 30px;
+        }
       }
     }
   }
