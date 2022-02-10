@@ -174,12 +174,13 @@
           flex: 0 0 auto;
           max-width: 30px;
           height: auto;
-          padding: 15px 0 15px 15px;
+          padding: 15px;
         }
         > span.AppHeaderMenuButton_Name {
           flex: 1;
-          padding: 15px;
+          padding: 15px 0;
           @include p1;
+          font-size: 18px;
 
           @media (max-width: 768px) {
             font-size: 16px;
@@ -219,11 +220,22 @@
     transform: translateY(100%);
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
-    transition: 1s;
+    transition: .5s;
     &.open {
       transform: translateY(0%);
     }
-  
+    > div {
+      & .HeaderMenu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      & .AppHeaderMenuGroup {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 

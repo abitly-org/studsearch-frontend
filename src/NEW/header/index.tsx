@@ -35,14 +35,14 @@ export const BurgerButton = ({ value, setValue }: {
   );
 }
 
-export const HeaderMenuButton = ({ emoji, name}: { emoji?: any, name: string }) => (
-  <div className='AppHeaderMenuButton'>
+export const HeaderMenuButton = ({ emoji, name, href, onClick}: { emoji?: any, name: string, href?: string, onClick?: (value: any) => void }) => (
+  <a className='AppHeaderMenuButton' href={href} onClick={onClick}>
     <img className='AppHeaderMenuButton_Emoji' src={emoji} alt="emoji"/>
     <span className='AppHeaderMenuButton_Name'>{ name }</span>
     <AppRipples
       color={RippleColor.primary100}
     />
-  </div>
+  </a>
 );
 
 export const HeaderMenuGroup = ({ buttons }: {
@@ -72,14 +72,17 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
           <HeaderMenuButton
             emoji={graduationCap}
             name='Спитати у студентів (StudSearch)'
+            href={'/'}
           />,
           <HeaderMenuButton
             emoji={chartIncreasing}
             name='Рейтинг університетів'
+            href={'/rating'}
           />,
           <HeaderMenuButton
             emoji={thumbsUp}
             name='Наскільки твої бали ЗНО кращі за бали інших'
+            href={'/'}
           />
         ]}
       />
@@ -88,10 +91,12 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
           <HeaderMenuButton
             emoji={wavingHand}
             name='Про нас'
+            href={'/about'}
           />,
           <HeaderMenuButton
             emoji={callMeHand}
             name='Зв’язатись з нами'
+            href={'https://t.me/dkaraush'}
           />
         ]}
       />
@@ -100,6 +105,7 @@ export const HeaderMenu = ({ open }: { open?: boolean }) => (
           <HeaderMenuButton
             emoji={moneyWithWings}
             name='Задонатити на сервери'
+            href={'https://send.monobank.ua/jar/3UNSF6txsH'}
           />
         ]}
       />

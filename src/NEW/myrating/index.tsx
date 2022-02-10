@@ -79,7 +79,7 @@ const MyRatingApp = () => {
 
   return (
     <App>
-      <Header />
+      <Header /> 
       <AppContentAnimated>
           {/* <CSSTransition
             key={location.pathname}

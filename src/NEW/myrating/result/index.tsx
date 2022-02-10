@@ -3,9 +3,10 @@ import Slider from 'react-slick';
 import { useHistory, useParams } from 'react-router-dom';
 import AppContent from '../../components/app/content';
 import cx from 'classnames';
+import html2canvas from 'html2canvas';
 import Button from '../../components/button';
 
-import { HeaderMenuGroup, HeaderMenuButton } from '../../header';
+import { BurgerButton, HeaderMenuGroup, HeaderMenuButton, useAnimated } from '../../header';
 
 import fulllogo from '../../header/fulllogo.svg';
 import share from './share.svg';
@@ -110,11 +111,12 @@ const infoSubjects: InfoSubjects[] = [
 export const MyRatingLoading = () => {
   const params: any = useParams();
   const history = useHistory();
+  useZNOData(+params.year)
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       history.push(`/myrating/result/${params.year}/${params.subjects}/${params.scores}`);
-    }, 2500);
+    }, 1000);
     return () => clearTimeout(timeout);
   }, []);
   return (
@@ -329,24 +331,70 @@ const LastResultCard = () => {
   );
 }
 
-let open: any = false;
+const ShareMenu = ({ open, setOpen }: { open?: boolean,setOpen:any }) => {
+  const [copied, setCopied] = React.useState(false);
+  // const [download, setDownload] = React.useState(false);
 
-const ShareMenu = ({ open }: { open?: boolean }) => {
-  
+  React.useEffect(() => {
+    const handleEsc = (event: any) => {
+      if (event.keyCode === 27)  {
+        setOpen(false)
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
+  function downloadImage() {
+    let mo: any = document.getElementsByName('body')
+    html2canvas(mo[0]).then(function(canvas) {
+      console.log("done ... ");
+      document.body.appendChild(canvas);
+    });
+  }
+
+  function copyToClipboard(textToCopy: any) {
+    if (navigator.clipboard && window.isSecureContext) {
+      setCopied(true)
+      return navigator.clipboard.writeText(textToCopy);
+    } else {
+      let textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise((res: any, rej: any) => {
+        setCopied(true)
+        document.execCommand('copy') ? res() : rej();
+        textArea.remove();
+      });
+    }
+  }
+
   return (
     <div className={cx('AppHeaderMenu ShareMenu', { open })}>
       <div>
-        <h3>Поділитись</h3>
-        <button onClick={() => {}}>close</button>
+        <div className='HeaderMenu'>
+          <h2>Поділитись</h2>
+          <BurgerButton value={open} setValue={setOpen}/>
+        </div>
         <HeaderMenuGroup
           buttons={[
             <HeaderMenuButton
               emoji={download}
+              onClick={downloadImage}
               name='Завантажити картинку'
             />,
             <HeaderMenuButton
               emoji={copy}
-              name='Скопіювати посилання'
+              onClick={(e) => {copyToClipboard(window.location.toString())}}
+              name={!copied ? 'Скопіювати посилання' : 'Скопійовано!'}
             />
           ]}
         />
@@ -380,10 +428,32 @@ async function fetchData(year: number) {
   return res;
 }
 
+let localcache: any = null
+function useZNOData(year: number) {
+  const [data, setData] = React.useState(localcache);
+  React.useEffect(() => {
+      let unmounted = false;
+      if (data == null) {
+        let res = fetchData(year);
+        res.then((d: any) => {
+          setData(d)
+          localcache = d
+        })
+        unmounted = !unmounted
+      }
+      return () => { unmounted = true };
+  }, [ year ]);
+  return data;
+}
+
 export const MyRatingResult = () => {
   const params: any = useParams();
   const subjects: string[] = [];
   let scores: number[] = []
+  
+  const [open, openDelayed, setOpen] = useAnimated(false);
+
+  let marks = useZNOData(+params.year)
 
   function filterSubjects() {
     let index = params.subjects.match(/\d+/g);
@@ -396,38 +466,18 @@ export const MyRatingResult = () => {
     }
     return subjects
   }
-  filterSubjects()
 
   function filterScores() {
     for(let i = 0; i < params.scores.length; i++) {
       scores = params.scores.split(',')
     }
   }
-  filterScores()
 
-  let __localcache: any = null;
-  function useZNOData(year: number) {
-    const [data, setData] = React.useState(__localcache);
-    React.useEffect(() => {
-        let unmounted = false;
-        if (data == null) {
-          // TODO: load data, check if it is still mounted (!unmounted), setState(data), save local cache
-          let res = fetchData(year);
-          res.then((d: any) => {
-            setData(d)
-            __localcache = d
-          })
-          unmounted = !unmounted
-        }
-        return () => { unmounted = true };
-    }, [ year ]);
-    return data;
-  }
-  const marks = useZNOData(+params.year);
+  filterSubjects()
+  filterScores()
 
   function myZNORating(subjectId: any, mark: any) {
     let subject: any = marks[subjectId];
-    console.log(subject,'subject myZNORating')
     let allPupils = 0, worsePupils = 0;
     for (const statmark in subject.stats) {
       allPupils += subject.stats[statmark];
@@ -488,7 +538,7 @@ export const MyRatingResult = () => {
       </Slider>
       <AppContent className='MyRatingResult_Bottom'>
         <Button
-          onClick={() => {}}
+          onClick={() => {setOpen(true)}}
         >
           <span style={{ display: 'flex', alignItems: 'center' }}>
             <img src={share} style={{ marginRight: 12 }} />
@@ -496,7 +546,9 @@ export const MyRatingResult = () => {
           </span>
         </Button>
       </AppContent>
-      <ShareMenu open={open}/>
+      { (open || openDelayed) && 
+        <ShareMenu open={open} setOpen={setOpen}/>
+      }
     </div>
   );
 }
