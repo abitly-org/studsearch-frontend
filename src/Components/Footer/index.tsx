@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as TgPhoto } from '../../Pages/Registration/components/RegistrationForm/tgPhoto.svg';
 import { P1, P2, P4 } from '../Text';
 import { ReactComponent as InstagramIcon } from '../../Components/StudentCard/instagram.svg';
 
@@ -25,7 +24,6 @@ const Footer = () => {
         <div>
           <a className='social telegram' href="https://t.me/StudSearch" target="_blank">
             <span className='social-icon'>
-              <TgPhoto />
             </span>
             <P2>Telegram</P2>
           </a>

@@ -8,8 +8,6 @@ import logo from './logo.svg';
 import menu from './menu.svg';
 import arrow from './arrow.svg';
 import close from './close.svg';
-import tgPhoto from '../../Pages/Registration/components/RegistrationForm/tgPhoto.svg';
-import fbPhoto from '../../Pages/Registration/components/RegistrationForm/fbPhoto.png';
 
 import './index.scss';
 import Button from '../Button';
@@ -26,7 +24,7 @@ export const HeaderLanguages = () => {
   return (
     <span className="Header_Languages">
       {
-        languages.map(({ text, code }) => 
+        languages.map(({ text, code }) =>
           <span
             key={code}
             className={cx({ selected: i18n.language === code })}
@@ -71,17 +69,17 @@ const LoginButton = ({
   const dropdownDeferred = useDeferred(dropdown, 75);
 
   useClickAway(ref, () => setDropdown(false));
-  
+
   return (
     <div ref={ref} className="Header_Buttons_Login">
       {/* @ts-ignore */}
       <Button
-        {...(SHOW_FB ? 
+        {...(SHOW_FB ?
           {} :
           {
             href: session.login.telegram,
             target: '_blank'
-          }  
+          }
         )}
         onClick={() => {
           if (SHOW_FB)
@@ -103,7 +101,6 @@ const LoginButton = ({
             target='_blank'
             onClick={onClick}
           >
-            <img src={tgPhoto} />
             <P2 style={{color: 'white'}}>
               Telegram
             </P2>
@@ -113,7 +110,6 @@ const LoginButton = ({
             color='#1778f2'
             onClick={onClick}
           >
-            <img src={fbPhoto} />
             <P2 style={{color: 'white'}}>
               Facebook
             </P2>
@@ -142,7 +138,7 @@ const AuthButtons = ({ reverse, session, refreshing, setRefreshing, onClick }: {
         <LoadingSpinner size={16} />
       }
       { !session?.verified && (!session?.loading || refreshing) && <>
-        { reverse ? 
+        { reverse ?
           <>
             <Button
               className="Header_Buttons_Register"
@@ -158,7 +154,7 @@ const AuthButtons = ({ reverse, session, refreshing, setRefreshing, onClick }: {
                 onClick?.();
               }}
             />
-          </> : 
+          </> :
           <>
             <LoginButton
               session={session}
@@ -181,7 +177,7 @@ const AuthButtons = ({ reverse, session, refreshing, setRefreshing, onClick }: {
         <Link
           className={cx('CabinetLink', { selected: atCabinet })}
           to='/cabinet/'
-            
+
           onClick={onClick}
         >
           <StudentPhoto
@@ -221,7 +217,7 @@ const MobileMenu = ({ closeMenu, session, refreshing, startRefreshing }: {
         <img src={close} />
       </span>
       <div className="Buttons">
-        { pages?.map?.((page, key) => 
+        { pages?.map?.((page, key) =>
           React.createElement(
             page?.path ? 'div' : 'a',
             {
