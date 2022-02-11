@@ -279,18 +279,19 @@ const ResultCardChart = ({ score, data }: {
 const ResultCard = ({
   index, count,
   emoji, header, text,
-  chart
+  chart, indexImg
 }: {
   index?: number, count?: number,
   
   emoji?: any,
   header?: string,
   text?: string,
+  indexImg: number,
 
   chart?: React.ReactNode
 }) => {
   return (
-    <div id='el' className='MyRatingResultCard'>
+    <div data-img={indexImg} className='MyRatingResultCard'>
       <div className='MyRatingResultCard_Top'>
         <img src={fulllogo} />
         <span className='MyRatingResultCard_Num'>
@@ -331,7 +332,7 @@ const LastResultCard = () => {
   );
 }
 
-const ShareMenu = ({ open, setOpen }: { open?: boolean,setOpen:any }) => {
+const ShareMenu = ({ open, setOpen, index }: { open?: boolean, setOpen: any, index: number }) => {
   const [copied, setCopied] = React.useState(false);
   const [downloadImg, setDownloadImg] = React.useState(false);
 
@@ -349,10 +350,10 @@ const ShareMenu = ({ open, setOpen }: { open?: boolean,setOpen:any }) => {
   }, []);
 
   function downloadImage() {
-    let el: any = document.querySelector('#el');
+    console.log(`div.MyRatingResultCard[data-img='${index}']`, index)
+    let el: any = document.querySelector(`div.MyRatingResultCard[data-img='${index}']`);
     html2canvas(el).then(function(canvas) {
-      console.log(canvas);
-      saveAs(canvas.toDataURL(), 'result.png');
+      saveAs(canvas.toDataURL(), 'your-result.png');
     });
   }
 
@@ -465,10 +466,10 @@ function useZNOData(year: number) {
 export const MyRatingResult = () => {
   const params: any = useParams();
   const subjects: string[] = [];
-  let scores: number[] = []
+  let scores: any = []
   
   const [open, openDelayed, setOpen] = useAnimated(false);
-
+  const [currentIndex, setCurrentIndex] = React.useState(0)
   let marks = useZNOData(+params.year)
 
   function filterSubjects() {
@@ -484,9 +485,7 @@ export const MyRatingResult = () => {
   }
 
   function filterScores() {
-    for(let i = 0; i < params.scores.length; i++) {
-      scores = params.scores.split(',')
-    }
+    scores = params.scores.split(',')
   }
 
   filterSubjects()
@@ -525,6 +524,7 @@ export const MyRatingResult = () => {
       <DonateCard/>
       <Slider
         className='MyRatingResult_Cards'
+        afterChange={(index = 0) => {setCurrentIndex(index)}}
         dots={true}
         slidesToShow={1.1}
         slidesToScroll={1}
@@ -535,6 +535,7 @@ export const MyRatingResult = () => {
           <ResultCard
             key={i}
             
+            indexImg={i}
             index={i+1}
             count={subjects.length}
 
@@ -563,7 +564,7 @@ export const MyRatingResult = () => {
         </Button>
       </AppContent>
       { (open || openDelayed) && 
-        <ShareMenu open={open} setOpen={setOpen}/>
+        <ShareMenu open={open} setOpen={setOpen} index={currentIndex}/>
       }
     </div>
   );
