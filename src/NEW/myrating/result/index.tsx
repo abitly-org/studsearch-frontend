@@ -290,7 +290,7 @@ const ResultCard = ({
   chart?: React.ReactNode
 }) => {
   return (
-    <div className='MyRatingResultCard'>
+    <div id='el' className='MyRatingResultCard'>
       <div className='MyRatingResultCard_Top'>
         <img src={fulllogo} />
         <span className='MyRatingResultCard_Num'>
@@ -322,7 +322,7 @@ const LastResultCard = () => {
       <div className='MyRatingResultCard_Content'>
         <h2>Куди я зможу вступити з моїми балами?</h2>
         <Button
-          onClick={() => {}}
+          onClick={() => {window.location.href='/'}}
         >
           Дізнатись
         </Button>
@@ -333,7 +333,7 @@ const LastResultCard = () => {
 
 const ShareMenu = ({ open, setOpen }: { open?: boolean,setOpen:any }) => {
   const [copied, setCopied] = React.useState(false);
-  // const [download, setDownload] = React.useState(false);
+  const [downloadImg, setDownloadImg] = React.useState(false);
 
   React.useEffect(() => {
     const handleEsc = (event: any) => {
@@ -349,11 +349,27 @@ const ShareMenu = ({ open, setOpen }: { open?: boolean,setOpen:any }) => {
   }, []);
 
   function downloadImage() {
-    let mo: any = document.getElementsByName('body')
-    html2canvas(mo[0]).then(function(canvas) {
-      console.log("done ... ");
-      document.body.appendChild(canvas);
+    let el: any = document.querySelector('#el');
+    html2canvas(el).then(function(canvas) {
+      console.log(canvas);
+      saveAs(canvas.toDataURL(), 'result.png');
     });
+  }
+
+  function saveAs(uri: any, filename: any) {
+    let link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+      setDownloadImg(true)
+      link.href = uri;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    } 
+
+    window.open(uri);
   }
 
   function copyToClipboard(textToCopy: any) {
@@ -389,7 +405,7 @@ const ShareMenu = ({ open, setOpen }: { open?: boolean,setOpen:any }) => {
             <HeaderMenuButton
               emoji={download}
               onClick={downloadImage}
-              name='Завантажити картинку'
+              name={!downloadImg ? 'Завантажити картинку' : 'Завантажилась!'}
             />,
             <HeaderMenuButton
               emoji={copy}
@@ -518,7 +534,7 @@ export const MyRatingResult = () => {
         { subjects?.map((subject, i) => 
           <ResultCard
             key={i}
-
+            
             index={i+1}
             count={subjects.length}
 

@@ -178,7 +178,7 @@
         }
         > span.AppHeaderMenuButton_Name {
           flex: 1;
-          padding: 15px 0;
+          padding: 15px 15px 15px 0;
           @include p1;
           font-size: 18px;
 
@@ -218,18 +218,24 @@
   &.ShareMenu {
     top: unset;
     transform: translateY(100%);
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
     transition: .5s;
     &.open {
       transform: translateY(0%);
     }
     > div {
+      border-top-right-radius: 25px;
+      border-top-left-radius: 25px;
       & .HeaderMenu {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 10px;
+      }
+
+      & .AppHeaderMenuButton_Emoji {
+        max-width: 20px !important;
       }
 
       & .AppHeaderMenuGroup {
