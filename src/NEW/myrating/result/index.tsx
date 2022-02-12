@@ -29,6 +29,7 @@ import germany from './germany.png';
 import microscope from './microscope.png';
 import sunflower from './sunflower.png';
 import scroll from './scroll.png';
+import instagram from './instagram.svg';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -321,18 +322,21 @@ const LastResultCard = () => {
         <img src={fulllogoRedhead} style={{ opacity: 1 }}/>
       </div>
       <div className='MyRatingResultCard_Content'>
-        <h2>Куди я зможу вступити з моїми балами?</h2>
-        <Button
-          onClick={() => {window.location.href='/'}}
+        <h2>Завітай до нашого інстаграму!</h2>
+        <a
+          href='https://www.instagram.com/abitly.io/'
+          target="_blank"
+          className='AppButton'
         >
-          Дізнатись
-        </Button>
+          Перейти в
+          <img src={instagram} alt="instagram icon" />
+        </a>
       </div>
     </div>
   );
 }
 
-const ShareMenu = ({ open, setOpen, index }: { open?: boolean, setOpen: any, index: number }) => {
+const ShareMenu = ({ open, setOpen, index, length }: { open?: boolean, setOpen: any, index: number, length: any }) => {
   const [copied, setCopied] = React.useState(false);
   const [downloadImg, setDownloadImg] = React.useState(false);
 
@@ -350,7 +354,6 @@ const ShareMenu = ({ open, setOpen, index }: { open?: boolean, setOpen: any, ind
   }, []);
 
   function downloadImage() {
-    console.log(`div.MyRatingResultCard[data-img='${index}']`, index)
     let el: any = document.querySelector(`div.MyRatingResultCard[data-img='${index}']`);
     html2canvas(el).then(function(canvas) {
       saveAs(canvas.toDataURL(), 'your-result.png');
@@ -403,11 +406,13 @@ const ShareMenu = ({ open, setOpen, index }: { open?: boolean, setOpen: any, ind
         </div>
         <HeaderMenuGroup
           buttons={[
+            index !== length-.1 ? 
             <HeaderMenuButton
               emoji={download}
               onClick={downloadImage}
               name={!downloadImg ? 'Завантажити картинку' : 'Завантажилась!'}
-            />,
+            />
+            : false,
             <HeaderMenuButton
               emoji={copy}
               onClick={(e) => {copyToClipboard(window.location.toString())}}
@@ -428,11 +433,13 @@ const DonateCard = () => {
           <div className='MyRatingDonateCard_Header'>
             <p>Розробники abitly теж <span>люди</span> студенти. Тож ми будемо дуже вдячні якщо ти задонатиш нам на поїсти в столовці <img src={hands} alt="hands emoji"/></p>
           </div>
-          <Button
-            onClick={() => {window.location.href='https://send.monobank.ua/jar/3UNSF6txsH'}}
+          <a
+            target="_blank"
+            href='https://send.monobank.ua/jar/3UNSF6txsH'
+            className='AppButton'
           >
             Дати 22 гривні
-          </Button>
+          </a>
         </div>
       </div>
     </AppContent>
@@ -564,7 +571,7 @@ export const MyRatingResult = () => {
         </Button>
       </AppContent>
       { (open || openDelayed) && 
-        <ShareMenu open={open} setOpen={setOpen} index={currentIndex}/>
+        <ShareMenu open={open} setOpen={setOpen} length={subjects.length} index={currentIndex}/>
       }
     </div>
   );

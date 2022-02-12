@@ -15,7 +15,8 @@
   padding: 20px;
   box-sizing: border-box;
 
-  color: white;
+  text-decoration: none;
+  color: white !important;
   font-family: $fontFamily2;
   font-weight: 700;
   font-size: 16px;
@@ -38,6 +39,11 @@
   }
   &:active {
     transform: scale(0.95);
+  }
+
+  > img {
+    max-width: 20px;
+    margin-left: 5px;
   }
 
   // position: relative;
